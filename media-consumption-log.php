@@ -170,11 +170,12 @@ function media_consumption_log() {
                     continue;
                 
                 $tag_filtered = apply_filters('get_post_tag', $tag);
-                $name         = $tag_filtered = htmlspecialchars(
-                    $tag_filtered->name);
+                $name = htmlspecialchars($tag_filtered->name);
+                $name =  str_replace("&amp;", "&", $name);
                 
                 $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
+                $html .= $name . "\">" . $name;
+                $html .= "</a></td><th nowrap>{$tag->count}";
                 $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
             }
         }
