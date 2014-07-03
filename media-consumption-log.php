@@ -68,9 +68,13 @@ function get_tags_by_category($category_id) {
 		ORDER BY name
 	");
     
+    // Get the link of every tag
     foreach ($tags as $tag) {
         $tag->tag_link = get_tag_link($tag->tag_id);
     }
+    
+    // Replace the place holder with the commas
+    $tags = comma_tags_filter($tags);
     
     return $tags;
 }
@@ -172,8 +176,7 @@ function media_consumption_log() {
                 if (empty($last_post_data))
                     continue;
                 
-                $tag_filtered = apply_filters('get_post_tag', $tag);
-                $name = htmlspecialchars($tag_filtered->name);
+                $name = htmlspecialchars($tag->name);
                 $name =  str_replace("&amp;", "&", $name);
                 
                 $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
