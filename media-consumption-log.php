@@ -33,6 +33,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+// Source:
+// http://wordpress.org/support/topic/get-tags-specific-to-category?replies=38
+// by various people in this thread 
 function get_tags_by_category($category_id) {
     global $wpdb;
     
@@ -189,7 +192,9 @@ function media_consumption_log() {
 add_shortcode('mcl', 'media_consumption_log');
 
 
-// http://blog.foobored.com/all/wordpress-tags-with-commas/ by foo bored
+// Source:
+// http://blog.foobored.com/all/wordpress-tags-with-commas/
+// by foo bored
 
 // filter for tags with comma
 //  replace '--' with ', ' in the output - allow tags with comma this way
