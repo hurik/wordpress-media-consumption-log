@@ -100,9 +100,12 @@ function media_consumption_log() {
     
     // Group the data
     $data = array();
+    $data_count = array();
     foreach ($categories as $category) {
         // Get the tags of the category
         $tags = get_tags_by_category($category->term_id);
+        
+        $data_count[$category->term_id] = count($tags);
         
         // Group the tags by the first letter
         foreach ($tags as $tag) {
@@ -140,8 +143,8 @@ function media_consumption_log() {
     // Create the tables
     foreach ($categories as $category) {
         // Category header
-        $html .= "<h4 id=\"mediastatus-{$category->slug}\">";
-        $html .= "{$category->name}</h4><hr />";
+        $html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $html .= " ({$data_count[$category->term_id]})</h4><hr />";
         
         // Create the navigation
         $html .= "<div>";
@@ -163,6 +166,7 @@ function media_consumption_log() {
         foreach (array_keys($data[$category->term_id]) as $key) {
             $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
             $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $html .= " (" . count($data[$category->term_id][$key]) . ")";
             $html .= "</div></th></tr>";
             
             $html .= "<tr><th>Name</th><th nowrap>#</th>";
@@ -180,8 +184,7 @@ function media_consumption_log() {
                 $name =  str_replace("&amp;", "&", $name);
                 
                 $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                $html .= $name . "\">" . $name;
-                $html .= "</a></td><th nowrap>{$tag->count}";
+                $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
                 $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
             }
         }
