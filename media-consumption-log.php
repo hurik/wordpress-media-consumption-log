@@ -378,6 +378,9 @@ function mcl_plugin_options() {
 	<?php
 }
 
+// Source:
+// http://wordpress.stackexchange.com/a/134711
+// by Milo
 function mcl_load_post_new() {
     if (array_key_exists('tag', $_REQUEST)) {
         add_action('wp_insert_post', 'mcl_insert_post_tag');
