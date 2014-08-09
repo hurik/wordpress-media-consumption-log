@@ -8,7 +8,6 @@ Author: Andreas Giemza
 Author URI: http://www.andreasgiemza.de
 License: MIT
 */
-
 /*
 The MIT License
 
@@ -35,7 +34,8 @@ THE SOFTWARE.
 
 // Source:
 // http://wordpress.org/support/topic/get-tags-specific-to-category?replies=38
-// by various people in this thread 
+// by various people in this thread
+
 function get_tags_by_category($category_id) {
     global $wpdb;
     
@@ -74,22 +74,37 @@ function get_tags_by_category($category_id) {
     }
     
     // Replace the place holder with the commas
-    $tags = comma_tags_filter($tags);
+    if (!is_admin()) {
+        $tags = comma_tags_filter($tags);
+    }
     
     return $tags;
 }
 
-function get_latest_post_of_tag_in_category($tag_id, $category_id) {
+function get_latest_post_of_tag_in_category_data($tag_id, $category_id) {
+    
     // Get post with the tag
-    $posts          = get_posts("tag_id={$tag_id}&category={$category_id}");
+    $posts = get_posts("tag_id={$tag_id}&category={$category_id}");
+    
     // Get the last post
-    $post           = array_shift($posts);
+    $post = array_shift($posts);
+    
+    return $post;
+}
+
+function get_latest_post_of_tag_in_category($tag_id, $category_id) {
+    
+    // Get the last post data
+    $post = get_latest_post_of_tag_in_category_data($tag_id, $category_id);
+    
     // Explode the title
     $title_exploded = explode(' - ', $post->post_title);
+    
     // Get the last part, so we have the chapter/episode/...
-    $status         = array_pop($title_exploded);
+    $status = array_pop($title_exploded);
+    
     // Get link
-    $link           = get_permalink($post->ID);
+    $link = get_permalink($post->ID);
     
     return "<a href='{$link}' title='{$post->post_title}'>{$status}</a>";
 }
@@ -99,16 +114,16 @@ function media_consumption_log() {
     $categories = get_categories('exclude=45,75');
     
     // Group the data
-    $data = array();
+    $data       = array();
     $data_count = array();
     foreach ($categories as $category) {
         // Get the tags of the category
-        $tags = get_tags_by_category($category->term_id);
-        
+        $tags                           = get_tags_by_category($category->term_id);
         $data_count[$category->term_id] = count($tags);
         
         // Group the tags by the first letter
         foreach ($tags as $tag) {
+            
             // Tags which start with a number get their own group #
             if (preg_match('/^[a-z]/i', trim($tag->name[0]))) {
                 $data[$category->term_id][$tag->name[0]][] = $tag;
@@ -120,19 +135,17 @@ function media_consumption_log() {
     
     // Create categories navigation
     $html = "<table border=\"1\">";
-    
     foreach ($categories as $category) {
         $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
         $html .= "{$category->slug}\">{$category->name}</a></strong>";
         $html .= "</tr></td>";
-        
         $html .= "<tr><td>";
         foreach (array_keys($data[$category->term_id]) as $key) {
             $html .= "<a href=\"#mediastatus-{$category->slug}-";
             $html .= strtolower($key) . "\">{$key}</a>";
-            
-            if ($key != end((array_keys($data[$category->term_id]))))
+            if ($key != end((array_keys($data[$category->term_id])))) {
                 $html .= " | ";
+            }
         }
         
         $html .= "</tr></td>";
@@ -148,41 +161,33 @@ function media_consumption_log() {
         
         // Create the navigation
         $html .= "<div>";
-        
         foreach (array_keys($data[$category->term_id]) as $key) {
             $html .= "<a href=\"#mediastatus-{$category->slug}-";
             $html .= strtolower($key) . "\">{$key}</a>";
-            
-            if ($key != end((array_keys($data[$category->term_id]))))
+            if ($key != end((array_keys($data[$category->term_id])))) {
                 $html .= " | ";
+            }
         }
         
-        $html .= "</div><br>";
+        $html .= "</div><br />";
         
         // Table
         $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
         $html .= "<col width=\"1%\">";
-        
         foreach (array_keys($data[$category->term_id]) as $key) {
             $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
             $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
             $html .= " (" . count($data[$category->term_id][$key]) . ")";
             $html .= "</div></th></tr>";
-            
             $html .= "<tr><th>Name</th><th nowrap>#</th>";
             $html .= "<th nowrap>Kapitel/Folge</th></tr>";
-            
             foreach ($data[$category->term_id][$key] as $tag) {
-                $last_post_data = get_latest_post_of_tag_in_category(
-                    $tag->tag_id,
-                    $category->term_id);
-                
-                if (empty($last_post_data))
+                $last_post_data = get_latest_post_of_tag_in_category($tag->tag_id, $category->term_id);
+                if (empty($last_post_data)) {
                     continue;
-                
+                }
                 $name = htmlspecialchars($tag->name);
-                $name =  str_replace("&amp;", "&", $name);
-                
+                $name = str_replace("&amp;", "&", $name);
                 $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
                 $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
                 $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
@@ -197,21 +202,22 @@ function media_consumption_log() {
 
 add_shortcode('mcl', 'media_consumption_log');
 
-
 // Source:
 // http://blog.foobored.com/all/wordpress-tags-with-commas/
 // by foo bored
-
 // filter for tags with comma
 //  replace '--' with ', ' in the output - allow tags with comma this way
+
 if (!is_admin()) { // make sure the filters are only called in the frontend
     function comma_tag_filter($tag_arr) {
         $tag_arr_new = $tag_arr;
         if ($tag_arr->taxonomy == 'post_tag' && strpos($tag_arr->name, '--')) {
             $tag_arr_new->name = str_replace('--', ', ', $tag_arr->name);
         }
+        
         return $tag_arr_new;
     }
+    
     add_filter('get_post_tag', 'comma_tag_filter');
     
     function comma_tags_filter($tags_arr) {
@@ -219,11 +225,133 @@ if (!is_admin()) { // make sure the filters are only called in the frontend
         foreach ($tags_arr as $tag_arr) {
             $tags_arr_new[] = comma_tag_filter($tag_arr);
         }
+        
         return $tags_arr_new;
     }
     
     add_filter('get_terms', 'comma_tags_filter');
     add_filter('get_the_terms', 'comma_tags_filter');
+}
+
+/** Step 2 (from text above). */
+add_action('admin_menu', 'mcl_plugin_menu');
+
+/** Step 1. */
+function mcl_plugin_menu() {
+    add_posts_page('My Plugin Options', 'MCL', 'manage_options', 'mcl', 'mcl_plugin_options');
+}
+
+/** Step 3. */
+function mcl_plugin_options() {
+    if (!current_user_can('manage_options')) {
+        wp_die(__('You do not have sufficient permissions to access this page.'));
+    }
+    
+    // Get the categories
+    $categories = get_categories('exclude=45,75');
+    
+    // Group the data
+    $data = array();
+    foreach ($categories as $category) {
+        
+        // Get the tags of the category
+        $tags = get_tags_by_category($category->term_id);
+        
+        // Group the tags by the first letter
+        foreach ($tags as $tag) {
+            
+            // Tags which start with a number get their own group #
+            if (preg_match('/^[a-z]/i', trim($tag->name[0]))) {
+                $data[$category->term_id][$tag->name[0]][] = $tag;
+            } else {
+                $data[$category->term_id]['#'][] = $tag;
+            }
+        }
+    }
+    
+    // Create categories navigation
+    $html = "<table border=\"1\">";
+    foreach ($categories as $category) {
+        $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
+        $html .= "{$category->slug}\">{$category->name}</a></strong>";
+        $html .= "</tr></td>";
+        $html .= "<tr><td>";
+        foreach (array_keys($data[$category->term_id]) as $key) {
+            $html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $html .= strtolower($key) . "\">{$key}</a>";
+            if ($key != end((array_keys($data[$category->term_id]))))
+                $html .= " | ";
+        }
+        
+        $html .= "</tr></td>";
+    }
+    
+    $html .= "</table>";
+    
+    // Create the tables
+    foreach ($categories as $category) {
+        
+        // Category header
+        $html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $html .= "</h4><hr />";
+        
+        // Create the navigation
+        $html .= "<div>";
+        foreach (array_keys($data[$category->term_id]) as $key) {
+            $html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $html .= strtolower($key) . "\">{$key}</a>";
+            if ($key != end((array_keys($data[$category->term_id]))))
+                $html .= " | ";
+        }
+        
+        $html .= "</div><br />";
+        
+        // Table
+        $html .= "<table border=\"1\">";
+        foreach (array_keys($data[$category->term_id]) as $key) {
+            $html .= "<tr><th><div id=\"mediastatus-";
+            $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $html .= "</div></th></tr>";
+            foreach ($data[$category->term_id][$key] as $tag) {
+                $last_post_data = get_latest_post_of_tag_in_category_data($tag->tag_id, $category->term_id);
+                if (empty($last_post_data))
+                    continue;
+                $name = htmlspecialchars($tag->name);
+                $name = str_replace("&amp;", "&", $name);
+                
+                $html .= "<tr><td><a href=\"post-new.php?post_title=";
+                $html .= "{$last_post_data->post_title}&tag={$tag->tag_id}";
+                $html .= "&category={$category->term_id}\" title=\"";
+                $html .= "{$name}\">{$name}</a></td></tr>";
+            }
+        }
+        
+        $html .= "</table>";
+    }
+    
+    echo $html;
+}
+
+function mcl_load_post_new() {
+    if (array_key_exists('tag', $_REQUEST)) {
+        add_action('wp_insert_post', 'mcl_insert_post_tag');
+    }
+    
+    if (array_key_exists('category', $_REQUEST)) {
+        add_action('wp_insert_post', 'mcl_insert_post_category');
+    }
+}
+
+add_filter('load-post-new.php', 'mcl_load_post_new');
+
+function mcl_insert_post_tag($post_id) {
+    wp_set_post_tags($post_id, get_tag($_REQUEST['tag'])->name);
+}
+
+function mcl_insert_post_category($post_id) {
+    wp_set_post_categories($post_id, array(
+        $_REQUEST['category']
+    ));
 }
 
 ?>
