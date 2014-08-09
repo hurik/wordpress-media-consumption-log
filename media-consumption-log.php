@@ -403,4 +403,21 @@ function mcl_insert_post_category($post_id) {
     ));
 }
 
+// Source:
+// http://stanislav.it/how-to-add-a-custom-button-in-wordpress-admin-bar/
+// by Stanislav Kostadinov
+function mcl_admin_bar_button($wp_admin_bar) {
+    $args = array(
+        'id' => 'mcl_admin_bar_button',
+        'title' => 'MCL - Quick Post',
+        'href' => admin_url("edit.php?page=mcl"),
+        'meta' => array(
+            'class' => 'mcl_admin_bar_button_class'
+        )
+    );
+    $wp_admin_bar->add_node($args);
+}
+
+add_action('admin_bar_menu', 'mcl_admin_bar_button', 75);
+
 ?>
