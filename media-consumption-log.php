@@ -339,6 +339,7 @@ function mcl_plugin_options() {
                 if (is_numeric($number)) {
                     $number = floatval($number);
                     $number++;
+                    $number = floor($number);
                 }
                 
                 if (preg_match('/[SE]/', $number)) {
