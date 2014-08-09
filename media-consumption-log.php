@@ -134,53 +134,53 @@ function media_consumption_log() {
     }
     
     // Create categories navigation
-    $html = "<table border=\"1\">";
+    $lists_html = "<table border=\"1\">";
     foreach ($categories as $category) {
-        $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
-        $html .= "{$category->slug}\">{$category->name}</a></strong>";
-        $html .= "</tr></td>";
-        $html .= "<tr><td>";
+        $lists_html .= "<tr><td><div><strong><a href=\"#mediastatus-";
+        $lists_html .= "{$category->slug}\">{$category->name}</a></strong>";
+        $lists_html .= "</tr></td>";
+        $lists_html .= "<tr><td>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $html .= strtolower($key) . "\">{$key}</a>";
+            $lists_html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $lists_html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id])))) {
-                $html .= " | ";
+                $lists_html .= " | ";
             }
         }
         
-        $html .= "</tr></td>";
+        $lists_html .= "</tr></td>";
     }
     
-    $html .= "</table>";
+    $lists_html .= "</table>";
     
     // Create the tables
     foreach ($categories as $category) {
         // Category header
-        $html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
-        $html .= " ({$data_count[$category->term_id]})</h4><hr />";
+        $lists_html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $lists_html .= " ({$data_count[$category->term_id]})</h4><hr />";
         
         // Create the navigation
-        $html .= "<div>";
+        $lists_html .= "<div>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $html .= strtolower($key) . "\">{$key}</a>";
+            $lists_html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $lists_html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id])))) {
-                $html .= " | ";
+                $lists_html .= " | ";
             }
         }
         
-        $html .= "</div><br />";
+        $lists_html .= "</div><br />";
         
         // Table
-        $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
-        $html .= "<col width=\"1%\">";
+        $lists_html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
+        $lists_html .= "<col width=\"1%\">";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
-            $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
-            $html .= " (" . count($data[$category->term_id][$key]) . ")";
-            $html .= "</div></th></tr>";
-            $html .= "<tr><th>Name</th><th nowrap>#</th>";
-            $html .= "<th nowrap>Kapitel/Folge</th></tr>";
+            $lists_html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
+            $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $lists_html .= " (" . count($data[$category->term_id][$key]) . ")";
+            $lists_html .= "</div></th></tr>";
+            $lists_html .= "<tr><th>Name</th><th nowrap>#</th>";
+            $lists_html .= "<th nowrap>Kapitel/Folge</th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category($tag->tag_id, $category->term_id);
                 if (empty($last_post_data)) {
@@ -188,13 +188,13 @@ function media_consumption_log() {
                 }
                 $name = htmlspecialchars($tag->name);
                 $name = str_replace("&amp;", "&", $name);
-                $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
-                $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
+                $lists_html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
+                $lists_html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
+                $lists_html .= "</th><td nowrap>{$last_post_data}</td></tr>";
             }
         }
         
-        $html .= "</table>";
+        $lists_html .= "</table>";
     }
     
     return $html;
@@ -238,7 +238,7 @@ add_action('admin_menu', 'mcl_plugin_menu');
 
 /** Step 1. */
 function mcl_plugin_menu() {
-    add_posts_page('My Plugin Options', 'MCL', 'manage_options', 'mcl', 'mcl_plugin_options');
+    add_posts_page('Media Consumption Log - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl', 'mcl_plugin_options');
 }
 
 /** Step 3. */
@@ -270,48 +270,49 @@ function mcl_plugin_options() {
     }
     
     // Create categories navigation
-    $html = "<table border=\"1\">";
+    $cat_nav_html = "";
+    
     foreach ($categories as $category) {
-        $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
-        $html .= "{$category->slug}\">{$category->name}</a></strong>";
-        $html .= "</tr></td>";
-        $html .= "<tr><td>";
+        $cat_nav_html .= "<tr><th><div><a href=\"#mediastatus-";
+        $cat_nav_html .= "{$category->slug}\">{$category->name}</a>";
+        $cat_nav_html .= "</tr></th>";
+        $cat_nav_html .= "<tr><td>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $html .= strtolower($key) . "\">{$key}</a>";
+            $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $cat_nav_html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id]))))
-                $html .= " | ";
+                $cat_nav_html .= " | ";
         }
         
-        $html .= "</tr></td>";
+        $cat_nav_html .= "</tr></td>";
     }
     
-    $html .= "</table>";
+    $lists_html = "";
     
     // Create the tables
     foreach ($categories as $category) {
         
         // Category header
-        $html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
-        $html .= "</h4><hr />";
+        $lists_html .= "<h3 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $lists_html .= "</h3><hr />";
         
         // Create the navigation
-        $html .= "<div>";
+        $lists_html .= "<div>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $html .= strtolower($key) . "\">{$key}</a>";
+            $lists_html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $lists_html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id]))))
-                $html .= " | ";
+                $lists_html .= " | ";
         }
         
-        $html .= "</div><br />";
+        $lists_html .= "</div><br />";
         
         // Table
-        $html .= "<table border=\"1\">";
+        $lists_html .= "<table  class=\"widefat fixed\">";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $html .= "<tr><th><div id=\"mediastatus-";
-            $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
-            $html .= "</div></th></tr>";
+            $lists_html .= "<tr><th><div id=\"mediastatus-";
+            $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $lists_html .= "</div></th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category_data($tag->tag_id, $category->term_id);
                 if (empty($last_post_data))
@@ -319,17 +320,32 @@ function mcl_plugin_options() {
                 $name = htmlspecialchars($tag->name);
                 $name = str_replace("&amp;", "&", $name);
                 
-                $html .= "<tr><td><a href=\"post-new.php?post_title=";
-                $html .= "{$last_post_data->post_title}&tag={$tag->tag_id}";
-                $html .= "&category={$category->term_id}\" title=\"";
-                $html .= "{$name}\">{$name}</a></td></tr>";
+                $lists_html .= "<tr><td><a href=\"post-new.php?post_title=";
+                $lists_html .= "{$last_post_data->post_title}&tag={$tag->tag_id}";
+                $lists_html .= "&category={$category->term_id}\" title=\"";
+                $lists_html .= "{$name}\">{$name}</a></td></tr>";
             }
         }
         
-        $html .= "</table>";
+        $lists_html .= "</table>";
     }
     
-    echo $html;
+?>
+	<div class="wrap">
+        <h2>Media Consumption Log - Quick Post</h2>
+        
+        <h3>Navigation</h3>
+        <table class="widefat fixed">
+        <?php
+        echo $cat_nav_html;
+        ?>
+        </table>
+        
+        <?php
+        echo $lists_html;
+        ?>
+	</div>	
+	<?php
 }
 
 function mcl_load_post_new() {
