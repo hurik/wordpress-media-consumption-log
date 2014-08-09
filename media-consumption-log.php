@@ -134,67 +134,70 @@ function media_consumption_log() {
     }
     
     // Create categories navigation
-    $lists_html = "<table border=\"1\">";
+    $html = "<table border=\"1\">";
     foreach ($categories as $category) {
-        $lists_html .= "<tr><td><div><strong><a href=\"#mediastatus-";
-        $lists_html .= "{$category->slug}\">{$category->name}</a></strong>";
-        $lists_html .= "</tr></td>";
-        $lists_html .= "<tr><td>";
+        $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
+        $html .= "{$category->slug}\">{$category->name}</a></strong>";
+        $html .= "</tr></td>";
+        $html .= "<tr><td>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $lists_html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $lists_html .= strtolower($key) . "\">{$key}</a>";
+            $html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id])))) {
-                $lists_html .= " | ";
+                $html .= " | ";
             }
         }
         
-        $lists_html .= "</tr></td>";
+        $html .= "</tr></td>";
     }
     
-    $lists_html .= "</table>";
+    $html .= "</table>";
     
     // Create the tables
     foreach ($categories as $category) {
         // Category header
-        $lists_html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
-        $lists_html .= " ({$data_count[$category->term_id]})</h4><hr />";
+        $html .= "<h4 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $html .= " ({$data_count[$category->term_id]})</h4><hr />";
         
         // Create the navigation
-        $lists_html .= "<div>";
+        $html .= "<div>";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $lists_html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $lists_html .= strtolower($key) . "\">{$key}</a>";
+            $html .= "<a href=\"#mediastatus-{$category->slug}-";
+            $html .= strtolower($key) . "\">{$key}</a>";
             if ($key != end((array_keys($data[$category->term_id])))) {
-                $lists_html .= " | ";
+                $html .= " | ";
             }
         }
         
-        $lists_html .= "</div><br />";
+        $html .= "</div><br />";
         
         // Table
-        $lists_html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
-        $lists_html .= "<col width=\"1%\">";
+        $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
+        $html .= "<col width=\"1%\">";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $lists_html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
-            $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
-            $lists_html .= " (" . count($data[$category->term_id][$key]) . ")";
-            $lists_html .= "</div></th></tr>";
-            $lists_html .= "<tr><th>Name</th><th nowrap>#</th>";
-            $lists_html .= "<th nowrap>Kapitel/Folge</th></tr>";
+            $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
+            $html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $html .= " (" . count($data[$category->term_id][$key]) . ")";
+            $html .= "</div></th></tr>";
+            $html .= "<tr><th>Name</th><th nowrap>#</th>";
+            $html .= "<th nowrap>Kapitel/Folge</th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category($tag->tag_id, $category->term_id);
+                
                 if (empty($last_post_data)) {
                     continue;
                 }
+                
                 $name = htmlspecialchars($tag->name);
                 $name = str_replace("&amp;", "&", $name);
-                $lists_html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                $lists_html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
-                $lists_html .= "</th><td nowrap>{$last_post_data}</td></tr>";
+                
+                $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
+                $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
+                $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
             }
         }
         
-        $lists_html .= "</table>";
+        $html .= "</table>";
     }
     
     return $html;
@@ -308,22 +311,27 @@ function mcl_plugin_options() {
         $lists_html .= "</div><br />";
         
         // Table
-        $lists_html .= "<table  class=\"widefat fixed\">";
+        $lists_html .= "<table class=\"widefat fixed\">";
         foreach (array_keys($data[$category->term_id]) as $key) {
-            $lists_html .= "<tr><th><div id=\"mediastatus-";
+            $lists_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
             $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
             $lists_html .= "</div></th></tr>";
+            $lists_html .= "<tr><th>Next Post</th><th>Current Post</th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category_data($tag->tag_id, $category->term_id);
+                
                 if (empty($last_post_data))
                     continue;
-                $name = htmlspecialchars($tag->name);
-                $name = str_replace("&amp;", "&", $name);
+                
+                $title = $last_post_data->post_title;
+                $title = preg_replace ( "/[A-Z0-9]+ bis /", "", $title);
+                $title = preg_replace ( "/[A-Z0-9]+ und /", "", $title);
+                $title++;
                 
                 $lists_html .= "<tr><td><a href=\"post-new.php?post_title=";
-                $lists_html .= "{$last_post_data->post_title}&tag={$tag->tag_id}";
+                $lists_html .= "{$title}&tag={$tag->tag_id}";
                 $lists_html .= "&category={$category->term_id}\" title=\"";
-                $lists_html .= "{$name}\">{$name}</a></td></tr>";
+                $lists_html .= "{$title}\">{$title}</a></td><td>{$last_post_data->post_title}</td></tr>";
             }
         }
         
