@@ -324,17 +324,17 @@ function mcl_plugin_options() {
                     continue;
                 
                 $title = trim($last_post_data->post_title);
-                $title = preg_replace ( "/[A-Z0-9]+ bis /", "", $title);
-                $title = preg_replace ( "/[A-Z0-9]+ und /", "", $title);
+                $title = preg_replace("/[A-Z0-9]+ bis /", "", $title);
+                $title = preg_replace("/[A-Z0-9]+ und /", "", $title);
                 
                 /*if (preg_match('/' . preg_quote(" 9", '/') . '$/', $title)) {
-                    $title = str_replace ( " 9", " 10" , $title);
+                $title = str_replace ( " 9", " 10" , $title);
                 } else {
-                 $title++;
+                $title++;
                 }*/
                 
-                $title_explode = explode(' ',$title);
-                $number = end($title_explode);
+                $title_explode = explode(' ', $title);
+                $number        = end($title_explode);
                 
                 if (is_numeric($number)) {
                     $number = floatval($number);
@@ -345,7 +345,7 @@ function mcl_plugin_options() {
                     $number++;
                 }
                 
-                $title = substr($title, 0, strrpos($title,  " "));
+                $title = substr($title, 0, strrpos($title, " "));
                 
                 $title .= " {$number}";
                 
@@ -366,13 +366,13 @@ function mcl_plugin_options() {
         <h3>Navigation</h3>
         <table class="widefat fixed">
         <?php
-        echo $cat_nav_html;
-        ?>
+    echo $cat_nav_html;
+?>
         </table>
         
         <?php
-        echo $lists_html;
-        ?>
+    echo $lists_html;
+?>
 	</div>	
 	<?php
 }
