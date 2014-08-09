@@ -323,10 +323,31 @@ function mcl_plugin_options() {
                 if (empty($last_post_data))
                     continue;
                 
-                $title = $last_post_data->post_title;
+                $title = trim($last_post_data->post_title);
                 $title = preg_replace ( "/[A-Z0-9]+ bis /", "", $title);
                 $title = preg_replace ( "/[A-Z0-9]+ und /", "", $title);
-                $title++;
+                
+                /*if (preg_match('/' . preg_quote(" 9", '/') . '$/', $title)) {
+                    $title = str_replace ( " 9", " 10" , $title);
+                } else {
+                 $title++;
+                }*/
+                
+                $title_explode = explode(' ',$title);
+                $number = end($title_explode);
+                
+                if (is_numeric($number)) {
+                    $number = floatval($number);
+                    $number++;
+                }
+                
+                if (preg_match('/[SE]/', $number)) {
+                    $number++;
+                }
+                
+                $title = substr($title, 0, strrpos($title,  " "));
+                
+                $title .= " {$number}";
                 
                 $lists_html .= "<tr><td><a href=\"post-new.php?post_title=";
                 $lists_html .= "{$title}&tag={$tag->tag_id}";
