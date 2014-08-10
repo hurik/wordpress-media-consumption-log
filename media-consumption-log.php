@@ -327,12 +327,12 @@ function mcl_plugin_options() {
         
         // Table
         $lists_html .= "<table class=\"widefat fixed\">";
+        $lists_html .= "<tr><th><strong>Next Post</strong></th><th><strong>Last Post</strong></th></tr>";
         foreach (array_keys($data[$category->term_id]) as $key) {
             $lists_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
             $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
             $lists_html .= " (" . count($data[$category->term_id][$key]) . ")";
             $lists_html .= "</div></th></tr>";
-            $lists_html .= "<tr><th>Next Post</th><th>Last Post</th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category_data($tag->tag_id, $category->term_id);
                 
