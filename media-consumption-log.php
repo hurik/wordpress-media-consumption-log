@@ -82,7 +82,6 @@ function get_tags_by_category($category_id) {
 }
 
 function get_latest_post_of_tag_in_category_data($tag_id, $category_id) {
-    
     // Get post with the tag
     $posts = get_posts("tag_id={$tag_id}&category={$category_id}");
     
@@ -93,7 +92,6 @@ function get_latest_post_of_tag_in_category_data($tag_id, $category_id) {
 }
 
 function get_latest_post_of_tag_in_category($tag_id, $category_id) {
-    
     // Get the last post data
     $post = get_latest_post_of_tag_in_category_data($tag_id, $category_id);
     
@@ -254,11 +252,12 @@ function mcl_plugin_options() {
     $categories = get_categories('exclude=45,75');
     
     // Group the data
-    $data = array();
+    $data       = array();
+    $data_count = array();
     foreach ($categories as $category) {
-        
         // Get the tags of the category
-        $tags = get_tags_by_category($category->term_id);
+        $tags                           = get_tags_by_category($category->term_id);
+        $data_count[$category->term_id] = count($tags);
         
         // Group the tags by the first letter
         foreach ($tags as $tag) {
@@ -297,7 +296,7 @@ function mcl_plugin_options() {
         
         // Category header
         $lists_html .= "<h3 id=\"mediastatus-{$category->slug}\">{$category->name}";
-        $lists_html .= "</h3><hr />";
+        $lists_html .= " ({$data_count[$category->term_id]})</h3><hr />";
         
         // Create the navigation
         $lists_html .= "<div>";
@@ -315,8 +314,9 @@ function mcl_plugin_options() {
         foreach (array_keys($data[$category->term_id]) as $key) {
             $lists_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
             $lists_html .= "{$category->slug}-" . strtolower($key) . "\">{$key}";
+            $lists_html .= " (" . count($data[$category->term_id][$key]) . ")";
             $lists_html .= "</div></th></tr>";
-            $lists_html .= "<tr><th>Next Post</th><th>Current Post</th></tr>";
+            $lists_html .= "<tr><th>Next Post</th><th>Last Post</th></tr>";
             foreach ($data[$category->term_id][$key] as $tag) {
                 $last_post_data = get_latest_post_of_tag_in_category_data($tag->tag_id, $category->term_id);
                 
@@ -350,10 +350,15 @@ function mcl_plugin_options() {
                 
                 $title .= " {$number}";
                 
+                $link = get_permalink($last_post_data->ID);
+                
                 $lists_html .= "<tr><td><a href=\"post-new.php?post_title=";
                 $lists_html .= "{$title}&tag={$tag->tag_id}";
                 $lists_html .= "&category={$category->term_id}\" title=\"";
-                $lists_html .= "{$title}\">{$title}</a></td><td>{$last_post_data->post_title}</td></tr>";
+                $lists_html .= "{$title}\">{$title}</a></td><td><a ";
+                $lists_html .= "href='{$link}' title='";
+                $lists_html .= "{$last_post_data->post_title}'>";
+                $lists_html .= "{$last_post_data->post_title}</a></td></tr>";
             }
         }
         
