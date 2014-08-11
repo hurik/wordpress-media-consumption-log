@@ -97,7 +97,7 @@ function mcl_stats() {
             height: data.getNumberOfRows() * 18,
             legend: { position: 'top', maxLines: 4 },
             bar: { groupWidth: '75%' },
-            chartArea:{left: 90, top: 80, width: \"100\%\", height: \"100%\"},
+            chartArea:{left: 100, top: 80, width: '70%', height: '90%'},
             isStacked: true,
         };
 
