@@ -97,10 +97,10 @@ function mcl_stats() {
         ]);
 
         var options = {
-            height: data.getNumberOfRows() * 18,
+            height: data.getNumberOfRows() * 15,
             legend: { position: 'top', maxLines: 4 },
             bar: { groupWidth: '75%' },
-            chartArea:{left: 100, top: 80, width: '70%', height: '90%'},
+            chartArea:{left: 80, top: 80, width: '80%', height: '90%'},
             isStacked: true,
         };
 
