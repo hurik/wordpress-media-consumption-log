@@ -48,6 +48,36 @@ function get_tags_by_category($category_id) {
     return $tags;
 }
 
+function get_posts_stats($category_id) {
+    global $wpdb;
+    
+    $stats = $wpdb->get_results("
+        SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, COUNT( post_date ) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+        AND term_taxonomy_id = $category_id
+        GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
+        ORDER BY date
+	");
+    
+    return $stats;
+}
+
+function get_first_post_date() {
+    global $wpdb;
+    
+    $min_date = $wpdb->get_results("
+        SELECT Min( DATE_FORMAT( post_date, '%Y-%m-%d' ) ) AS date
+        FROM wp_posts
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+	");
+    
+    return $min_date[0]->date;
+}
+
 function get_latest_post_of_tag_in_category_data($tag_id, $category_id) {
     // Get post with the tag
     $posts = get_posts("tag_id={$tag_id}&category={$category_id}");
@@ -72,24 +102,6 @@ function get_latest_post_of_tag_in_category($tag_id, $category_id) {
     $link = get_permalink($post->ID);
     
     return "<a href='{$link}' title='{$post->post_title}'>{$status}</a>";
-}
-
-
-function get_posts_stats($category_id) {
-    global $wpdb;
-    
-    $stats = $wpdb->get_results("
-        SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, COUNT( post_date ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
-        WHERE post_status = 'publish'
-        AND post_type = 'post'
-        AND term_taxonomy_id = $category_id
-        GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
-        ORDER BY date
-	");
-    
-    return $stats;
 }
 
 ?>
