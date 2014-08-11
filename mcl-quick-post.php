@@ -47,7 +47,7 @@ add_action('admin_bar_menu', 'mcl_admin_bar_button', 75);
 add_action('admin_menu', 'mcl_quick_post_menu');
 
 function mcl_quick_post_menu() {
-    add_posts_page('Media Consumption Log - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl', 'mcl_quick_post');
+    add_posts_page('MCL - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl', 'mcl_quick_post');
 }
 
 /** Step 3. */

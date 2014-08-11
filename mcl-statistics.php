@@ -69,7 +69,8 @@ function mcl_stats() {
         }
     }
     
-    $html .= "],";
+    $html .= "],
+";
     
     for ($i = 0; $i < count($dates); $i++) {
         $date = DateTime::createFromFormat('Y-m-d', $dates[$i]);
