@@ -3,23 +3,14 @@
 // Source:
 // http://wordpress.stackexchange.com/a/134711
 // by Milo
-function mcl_insert_post_tag($post_id) {
+function mcl_insert_post_category_and_tag($post_id) {
     wp_set_post_tags($post_id, get_tag($_REQUEST['tag'])->name);
-}
-
-function mcl_insert_post_category($post_id) {
-    wp_set_post_categories($post_id, array(
-        $_REQUEST['category']
-    ));
+    wp_set_post_categories($post_id, array($_REQUEST['category']));
 }
 
 function mcl_load_post_new_witch_category_and_tags() {
-    if (array_key_exists('tag', $_REQUEST)) {
-        add_action('wp_insert_post', 'mcl_insert_post_tag');
-    }
-    
-    if (array_key_exists('category', $_REQUEST)) {
-        add_action('wp_insert_post', 'mcl_insert_post_category');
+    if (array_key_exists('tag', $_REQUEST) || array_key_exists('category', $_REQUEST)) {
+        add_action('wp_insert_post', 'mcl_insert_post_category_and_tag');
     }
 }
 
