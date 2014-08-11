@@ -72,7 +72,9 @@ function mcl_stats() {
     $html .= "],";
     
     for ($i = 0; $i < count($dates); $i++) {
-        $html .= "            ['{$dates[$i]}', ";
+        $date = DateTime::createFromFormat('Y-m-d', $dates[$i]);
+    
+        $html .= "            ['{$date->format('j.m.Y')}', ";
         
         foreach ($categories as $category) {
             $html .= "{$data[$category->name][$i]}";
