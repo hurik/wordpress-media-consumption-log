@@ -1,0 +1,95 @@
+<?php
+
+// Source:
+// http://wordpress.org/support/topic/get-tags-specific-to-category?replies=38
+// by various people in this thread
+function get_tags_by_category($category_id) {
+    global $wpdb;
+    
+    $tags = $wpdb->get_results("
+		SELECT 
+			terms2.term_id AS tag_id,
+			terms2.name AS name,
+			COUNT(*) AS count,
+			NULL AS tag_link,
+			t2.taxonomy AS taxonomy
+		FROM
+			wp_posts AS p1
+			LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
+			LEFT JOIN wp_term_taxonomy AS t1 ON
+				r1.term_taxonomy_id = t1.term_taxonomy_id
+			LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
+			wp_posts AS p2
+			LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+			LEFT JOIN wp_term_taxonomy AS t2 ON
+				r2.term_taxonomy_id = t2.term_taxonomy_id
+			LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+		WHERE
+			t1.taxonomy = 'category'
+			AND p1.post_status = 'publish'
+			AND terms1.term_id = $category_id
+			AND t2.taxonomy = 'post_tag'
+			AND p2.post_status = 'publish'
+			AND p1.ID = p2.ID
+		GROUP BY name
+		ORDER BY name
+	");
+    
+    // Get the link of every tag
+    foreach ($tags as $tag) {
+        $tag->tag_link = get_tag_link($tag->tag_id);
+    }
+    
+    // Replace the place holder with the commas
+    if (!is_admin()) {
+        $tags = comma_tags_filter($tags);
+    }
+    
+    return $tags;
+}
+
+function get_latest_post_of_tag_in_category_data($tag_id, $category_id) {
+    // Get post with the tag
+    $posts = get_posts("tag_id={$tag_id}&category={$category_id}");
+    
+    // Get the last post
+    $post = array_shift($posts);
+    
+    return $post;
+}
+
+function get_latest_post_of_tag_in_category($tag_id, $category_id) {
+    // Get the last post data
+    $post = get_latest_post_of_tag_in_category_data($tag_id, $category_id);
+    
+    // Explode the title
+    $title_exploded = explode(' - ', $post->post_title);
+    
+    // Get the last part, so we have the chapter/episode/...
+    $status = array_pop($title_exploded);
+    
+    // Get link
+    $link = get_permalink($post->ID);
+    
+    return "<a href='{$link}' title='{$post->post_title}'>{$status}</a>";
+}
+
+
+function get_posts_stats($category_id) {
+    global $wpdb;
+    
+    $stats = $wpdb->get_results("
+        SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, COUNT( post_date ) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+        AND term_taxonomy_id = $category_id
+        GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
+        ORDER BY date
+	");
+    
+    return $stats;
+}
+
+?>
