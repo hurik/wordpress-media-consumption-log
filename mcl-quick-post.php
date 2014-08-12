@@ -126,12 +126,6 @@ function mcl_quick_post() {
                 $title = preg_replace("/[A-Z0-9]+ bis /", "", $title);
                 $title = preg_replace("/[A-Z0-9]+ und /", "", $title);
                 
-                /*if (preg_match('/' . preg_quote(" 9", '/') . '$/', $title)) {
-                $title = str_replace ( " 9", " 10" , $title);
-                } else {
-                $title++;
-                }*/
-                
                 $title_explode = explode(' ', $title);
                 $number        = end($title_explode);
                 

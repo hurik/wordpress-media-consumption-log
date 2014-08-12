@@ -14,7 +14,6 @@ function mcl_status() {
         
         // Group the tags by the first letter
         foreach ($tags as $tag) {
-            
             // Tags which start with a number get their own group #
             if (preg_match('/^[a-z]/i', trim($tag->name[0]))) {
                 $data[$category->term_id][$tag->name[0]][] = $tag;
