@@ -149,10 +149,12 @@ function mcl_quick_post() {
                 
                 $title .= " {$number}";
                 
+                $title_get = urlencode($title);
+                
                 $link = get_permalink($last_post_data->ID);
                 
                 $lists_html .= "<tr><td><a href=\"post-new.php?post_title=";
-                $lists_html .= "{$title}&tag={$tag->tag_id}";
+                $lists_html .= "{$title_get}&tag={$tag->tag_id}";
                 $lists_html .= "&category={$category->term_id}\" title=\"";
                 $lists_html .= "{$title}\">{$title}</a></td><td><a ";
                 $lists_html .= "href='{$link}' title='";
