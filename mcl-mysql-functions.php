@@ -65,6 +65,25 @@ function get_posts_stats($category_id) {
     return $stats;
 }
 
+function get_posts_stats_with_mcl_number($category_id) {
+    global $wpdb;
+    
+    $stats = $wpdb->get_results("
+        SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, SUM( meta_value ) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        LEFT OUTER JOIN wp_postmeta m ON m.post_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+        AND meta_key = 'mcl_number'
+        AND term_taxonomy_id = $category_id
+        GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
+        ORDER BY date
+	");
+    
+    return $stats;
+}
+
 function get_first_post_date() {
     global $wpdb;
     
