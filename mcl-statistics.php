@@ -13,86 +13,84 @@ function mcl_show_mcl_number() {
 
 add_filter('load-post-new.php', 'mcl_show_mcl_number');
 
-
 function mcl_check_mcl_number($post_id) {
-    if (get_post_status($post_id) != 'auto-draft') {
+    if (get_post_status($post_id) == 'publish') {
         $mcl_number = get_post_meta($post_id, 'mcl_number', true);
-        
+
         // Check if already set
         if (!empty($mcl_number)) {
             return;
         }
-        
+
         // Set it to one
         $mcl_number = 1;
-        
-        $post           = get_post($post_id);
-        $title_explode  = explode(' - ', $post->post_title);
+
+        $post = get_post($post_id);
+        $title_explode = explode(' - ', $post->post_title);
         $current_number = end($title_explode);
-        
+
         if (count($title_explode) < 2) {
             // Do nothing
         } else if (strpos($current_number, ' und ') !== false) {
             $mcl_number = 2;
         } else if (strpos($current_number, ' bis ') !== false) {
             preg_match_all('!\d+(?:\.\d+)?!', $current_number, $matches);
-            
+
             if (count($matches[0]) == 2) {
                 $mcl_number = ceil(floatval($matches[0][1]) - floatval($matches[0][0]) + 1);
             } else if (count($matches[0]) == 4) {
                 $mcl_number = ceil(floatval($matches[0][3]) - floatval($matches[0][1]) + 1);
             }
         }
-        
+
         update_post_meta($post_id, 'mcl_number', $mcl_number);
     }
 }
 
 add_action('save_post', 'mcl_check_mcl_number');
 
-
 function mcl_stats() {
     date_default_timezone_set(get_option('timezone_string'));
-    
+
     $current_date = date('Y-m-d');
-    $min_date     = get_first_post_date();
-    
-    
+    //$min_date = "2014-08-05";
+    $min_date = get_first_post_date();
+
     $dates = array();
-    
+
     $i = $current_date;
     while (true) {
         array_push($dates, $i);
         $i = date('Y-m-d', strtotime("-1 day", strtotime($i)));
-        
+
         if ($i == $min_date) {
             array_push($dates, $i);
             break;
         }
     }
-    
+
     // Get the categories
     $categories = get_categories();
-    
+
     $data = array();
-    
+
     foreach ($categories as $category) {
         $stats = get_posts_stats_with_mcl_number($category->term_id);
-        
+
         foreach ($dates as $date) {
             $found = 0;
-            
+
             foreach ($stats as $stat) {
                 if ($stat->date == $date) {
                     $found = $stat->number;
                     break;
                 }
             }
-            
+
             $data[$category->name][] = $found;
         }
     }
-    
+
     $html = "
     <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>
     <script type=\"text/javascript\">
@@ -112,47 +110,47 @@ function mcl_stats() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
             ['Date', ";
-    
+
     foreach ($categories as $category) {
         $html .= "'{$category->name}'";
-        
+
         if (end($categories) != $category) {
             $html .= ", ";
         }
     }
-    
+
     $html .= "],
 ";
-    
+
     for ($i = 0; $i < count($dates); $i++) {
         $date = DateTime::createFromFormat('Y-m-d', $dates[$i]);
-        
+
         $html .= "            ['{$date->format('j.m.Y')}', ";
-        
+
         foreach ($categories as $category) {
             $html .= "{$data[$category->name][$i]}";
-            
+
             if (end($categories) != $category) {
                 $html .= ", ";
             }
         }
-        
+
         $html .= "]";
-        
+
         if ($i != count($dates) - 1) {
             $html .= ",
 ";
         }
     }
-    
+
     $html .= "
         ]);
 
         var options = {
-            height: data.getNumberOfRows() * 15,
-            legend: { position: 'top', maxLines: 4 },
-            bar: { groupWidth: '75%' },
-            chartArea:{left: 80, top: 80, width: '80%', height: '90%'},
+            height: data.getNumberOfRows() * 15 + 100,
+            legend: { position: 'top', maxLines: 4, alignment: 'center' },
+            bar: { groupWidth: '70%' },
+            chartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},
             isStacked: true,
         };
 
@@ -168,13 +166,12 @@ function mcl_stats() {
     });
 </script>
 
-    <div id=\"chart_div\" style=\"width:100%\"></div>
+    <div id=\"chart_div\"></div>
     <br />
     ";
-    
+
     return $html;
 }
 
 add_shortcode('mcl-stats', 'mcl_stats');
-
 ?>
