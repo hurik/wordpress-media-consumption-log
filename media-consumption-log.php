@@ -32,7 +32,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-require_once dirname( __FILE__ ) .'/mcl-mysql-functions.php';
+require_once dirname( __FILE__ ) .'/mcl-functions.php';
 require_once dirname( __FILE__ ) .'/mcl-comma-in-tags.php';
 require_once dirname( __FILE__ ) .'/mcl-status.php';
 require_once dirname( __FILE__ ) .'/mcl-quick-post.php';
