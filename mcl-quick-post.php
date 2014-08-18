@@ -19,7 +19,7 @@ function mcl_admin_bar_button( $wp_admin_bar ) {
     $args = array(
         'id' => 'mcl_admin_bar_button',
         'title' => 'MCL - Quick Post',
-        'href' => admin_url( "edit.php?page=mcl" ),
+        'href' => admin_url( "edit.php?page=mcl-quick-post" ),
         'meta' => array(
             'class' => 'mcl_admin_bar_button_class'
         )
@@ -31,7 +31,7 @@ function mcl_admin_bar_button( $wp_admin_bar ) {
 add_action( 'admin_menu', 'mcl_quick_post_menu' );
 
 function mcl_quick_post_menu() {
-    add_posts_page( 'MCL - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl', 'mcl_quick_post' );
+    add_posts_page( 'MCL - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl-quick-post', 'mcl_quick_post' );
 }
 
 /** Step 3. */
@@ -44,12 +44,14 @@ function mcl_quick_post() {
     $categories = get_categories( 'exclude=45,75' );
 
     // Get the sorted data
-    $data = get_all_tags_sorted( $categories );
+    $data = get_all_tags_sorted( $categories, 0 );
 
     // Create categories navigation
     $cat_nav_html = "";
 
-    foreach ( $categories as $category ) {
+    foreach ( array_keys( $data ) as $cat_key ) {
+        $category = get_category( $cat_key );
+
         $cat_nav_html .= "<tr><th><div><a href=\"#mediastatus-";
         $cat_nav_html .= "{$category->slug}\">{$category->name}</a>";
         $cat_nav_html .= "</tr></th>";
@@ -68,7 +70,9 @@ function mcl_quick_post() {
     $cats_html = "";
 
     // Create the tables
-    foreach ( $categories as $category ) {
+    foreach ( array_keys( $data ) as $cat_key ) {
+        $category = get_category( $cat_key );
+
         $count = count_tags_of_category( $data, $category->term_id );
 
         // Category header

@@ -1,12 +1,12 @@
 <?php
 
-function get_all_tags_sorted( $categories ) {
+function get_all_tags_sorted( $categories, $finished ) {
     // Group the data
     $data = array();
 
     foreach ( $categories as $category ) {
         // Get the tags of the category
-        $tags = get_tags_of_category( $category->term_id );
+        $tags = get_tags_of_category( $category->term_id, $finished );
 
         // Group the tags by the first letter
         foreach ( $tags as $tag ) {
@@ -22,36 +22,49 @@ function get_all_tags_sorted( $categories ) {
     return $data;
 }
 
-function get_tags_of_category( $category_id ) {
+function get_tags_of_category( $category_id, $finished ) {
     global $wpdb;
 
     $tags = $wpdb->get_results( "
-		SELECT 
-			terms2.term_id AS tag_id,
-			terms2.name AS name,
-			COUNT(*) AS count,
-			NULL AS tag_link,
-			t2.taxonomy AS taxonomy
-		FROM
-			wp_posts AS p1
-			LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
-			LEFT JOIN wp_term_taxonomy AS t1 ON
-				r1.term_taxonomy_id = t1.term_taxonomy_id
-			LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
-			wp_posts AS p2
-			LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-			LEFT JOIN wp_term_taxonomy AS t2 ON
-				r2.term_taxonomy_id = t2.term_taxonomy_id
-			LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
-		WHERE
-			t1.taxonomy = 'category'
-			AND p1.post_status = 'publish'
-			AND terms1.term_id = $category_id
-			AND t2.taxonomy = 'post_tag'
-			AND p2.post_status = 'publish'
-			AND p1.ID = p2.ID
-		GROUP BY name
-		ORDER BY name
+            Select 
+                temp.tag_id,
+                temp.cat_id,
+                temp.name,
+                temp.count,
+                temp.tag_link,
+                temp.taxonomy,
+                IFNULL(mcl.finished, 0) AS finished
+            FROM 
+		(
+                    SELECT 
+                            terms2.term_id AS tag_id,
+                            t1.term_id AS cat_id,
+                            terms2.name AS name,
+                            COUNT(*) AS count,
+                            NULL AS tag_link,
+                            t2.taxonomy AS taxonomy
+                    FROM
+                            wp_posts AS p1
+                            LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
+                            LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                            LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
+                            wp_posts AS p2
+                            LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+                            LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                            LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+                    WHERE
+                            t1.taxonomy = 'category'
+                            AND p1.post_status = 'publish'
+                            AND terms1.term_id = $category_id
+                            AND t2.taxonomy = 'post_tag'
+                            AND p2.post_status = 'publish'
+                            AND p1.ID = p2.ID
+                    GROUP BY name
+                    ORDER BY name
+                ) AS temp
+            LEFT JOIN wp_mcl_finished AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+            WHERE
+                IFNULL(mcl.finished, 0) = $finished
 	" );
 
     // Get the link of every tag
@@ -61,20 +74,24 @@ function get_tags_of_category( $category_id ) {
 
     // Replace the place holder with the commas
     if ( !is_admin() ) {
-        $tags = commaTagsFilter( $tags );
+        $tags = comma_tags_filter( $tags );
     }
 
     return $tags;
 }
 
 function count_tags_of_category( $data, $categorie_id ) {
-    $count = 0;
+    if ( array_key_exists( $categorie_id, $data ) ) {
+        $count = 0;
 
-    foreach ( array_keys( $data[$categorie_id] ) as $key ) {
-        $count += count( $data[$categorie_id][$key] );
+        foreach ( array_keys( $data[$categorie_id] ) as $key ) {
+            $count += count( $data[$categorie_id][$key] );
+        }
+
+        return $count;
     }
 
-    return $count;
+    return 0;
 }
 
 function get_last_post_of_tag_in_category_data( $tag_id, $category_id ) {
