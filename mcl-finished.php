@@ -1,4 +1,5 @@
 <?php
+
 add_action( 'admin_menu', 'mcl_finished_menu' );
 
 function mcl_finished_menu() {
@@ -24,7 +25,6 @@ function mcl_finished() {
     $categories = get_categories( 'exclude=45,75' );
 
     // Get the sorted data
-    // Get the sorted data
     $data = get_all_tags_sorted( $categories, 0 );
     $data_finished = get_all_tags_sorted( $categories, 1 );
 
@@ -39,12 +39,12 @@ function mcl_finished() {
             continue;
         }
 
-        $cat_nav_html .= "<tr><td><div><strong><a href=\"#mediastatus-";
+        $cat_nav_html .= "<tr><th colspan=\"2\"><div><strong><a href=\"#mediastatus-";
         $cat_nav_html .= "{$category->slug}\">{$category->name}</a></strong>";
-        $cat_nav_html .= "</td></tr>";
+        $cat_nav_html .= "</th></tr>";
 
         if ( $count_running ) {
-            $cat_nav_html .= "<tr><td><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td></tr><tr><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td><td>";
 
             foreach ( array_keys( $data[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -58,7 +58,7 @@ function mcl_finished() {
         }
 
         if ( $count_finished ) {
-            $cat_nav_html .= "<tr><td><a href=\"#mediastatus-{$category->slug}-finished\">Beendet</a></td></tr><tr><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-finished\">Beendet</a></td><td>";
 
             foreach ( array_keys( $data_finished[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-finished-";
@@ -71,6 +71,7 @@ function mcl_finished() {
             $cat_nav_html .= "</td></tr>";
         }
     }
+
 
     $cats_html = "";
 
@@ -106,12 +107,11 @@ function mcl_finished() {
             $cats_html .= "</div><br />";
 
             // Table
-            $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"99%\">";
-            $cats_html .= "<col width=\"1%\"></colgroup>";
-            $cats_html .= "\n<tr><th>Name</th><th nowrap>Beendet</th></tr>";
+            $cats_html .= "\n<table class=\"widefat\">";
+            $cats_html .= "\n<tr><th><strong>Name</strong> (Draufklicken zum ändern!)</th></tr>";
 
             foreach ( array_keys( $data[$category->term_id] ) as $key ) {
-                $cats_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
+                $cats_html .= "\n<tr><th><div id=\"mediastatus-";
                 $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
                 $cats_html .= " (" . count( $data[$category->term_id][$key] ) . ")";
                 $cats_html .= "</div></th></tr>";
@@ -120,8 +120,7 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>";
-                    $cats_html .= "<td nowrap><strong>Laufend!</strong> - <a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Ändern\">Ändern</a></td></tr>";
+                    $cats_html .= "<tr><td><a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Status ändern!\">{$name}</a></td></tr>";
                 }
             }
 
@@ -145,12 +144,11 @@ function mcl_finished() {
             $cats_html .= "</div><br />";
 
             // Table
-            $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"99%\">";
-            $cats_html .= "<col width=\"1%\"></colgroup>";
-            $cats_html .= "\n<tr><th>Name</th><th nowrap>Beendet</th></tr>";
+            $cats_html .= "\n<table class=\"widefat\">";
+            $cats_html .= "\n<tr><th><strong>Name</strong> (Draufklicken zum ändern!)</th></tr>";
 
             foreach ( array_keys( $data_finished[$category->term_id] ) as $key ) {
-                $cats_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
+                $cats_html .= "<tr><th><div id=\"mediastatus-";
                 $cats_html .= "{$category->slug}-finished-" . strtolower( $key ) . "\">{$key}";
                 $cats_html .= " (" . count( $data_finished[$category->term_id][$key] ) . ")";
                 $cats_html .= "</div></th></tr>";
@@ -159,8 +157,7 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>";
-                    $cats_html .= "<td nowrap><strong>Beendet!</strong> - <a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Ändern\">Ändern</a></td></tr>";
+                    $cats_html .= "<tr><td><a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Status ändern!\">{$name}</a></td></tr>";
                 }
             }
 
@@ -172,7 +169,11 @@ function mcl_finished() {
         <h2>Media Consumption Log - Finished</h2>
 
         <h3>Navigation</h3>
-        <table class="widefat fixed">
+        <table class="widefat">
+            <colgroup>
+                <col width="1%">
+                <col width="99%">
+            </colgroup>
             <?php echo $cat_nav_html; ?>
         </table>
 
@@ -180,4 +181,5 @@ function mcl_finished() {
     </div>	
     <?php
 }
+
 ?>

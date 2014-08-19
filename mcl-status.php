@@ -11,7 +11,8 @@ function mcl_status() {
     $data_finished = get_all_tags_sorted( $categories, 1 );
 
     // Create categories navigation
-    $html = "<table border=\"1\">";
+    $html = "<table border=\"1\"><colgroup><col width=\"1%\">";
+    $html .= "<col width=\"99%\"></colgroup>";
 
     foreach ( $categories as $category ) {
         $count_running = count_tags_of_category( $data, $category->term_id );
@@ -21,12 +22,12 @@ function mcl_status() {
             continue;
         }
 
-        $html .= "<tr><td><div><strong><a href=\"#mediastatus-";
+        $html .= "<tr><th colspan=\"2\"><div><strong><a href=\"#mediastatus-";
         $html .= "{$category->slug}\">{$category->name}</a></strong>";
-        $html .= "</td></tr>";
+        $html .= "</th></tr>";
 
         if ( $count_running ) {
-            $html .= "<tr><td><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td></tr><tr><td>";
+            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td><td>";
 
             foreach ( array_keys( $data[$category->term_id] ) as $key ) {
                 $html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -40,7 +41,7 @@ function mcl_status() {
         }
 
         if ( $count_finished ) {
-            $html .= "<tr><td><a href=\"#mediastatus-{$category->slug}-finished\">Beendet</a></td></tr><tr><td>";
+            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-finished\">Beendet</a></td><td>";
 
             foreach ( array_keys( $data_finished[$category->term_id] ) as $key ) {
                 $html .= "<a href=\"#mediastatus-{$category->slug}-finished-";
