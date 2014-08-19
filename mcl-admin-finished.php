@@ -114,7 +114,7 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Status ändern!\">{$name}</a></td></tr>";
+                    $cats_html .= "<tr><td><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Status ändern!\">{$name}</a></td></tr>";
                 }
             }
 
@@ -151,7 +151,7 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"edit.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Status ändern!\">{$name}</a></td></tr>";
+                    $cats_html .= "<tr><td><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Status ändern!\">{$name}</a></td></tr>";
                 }
             }
 
