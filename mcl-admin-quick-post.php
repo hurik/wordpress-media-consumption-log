@@ -13,28 +13,6 @@ function mcl_insert_cat_and_tag_in_new_post( $post_id ) {
     wp_set_post_categories( $post_id, array( $_REQUEST['category'] ) );
 }
 
-add_action( 'admin_bar_menu', 'mcl_admin_bar_button', 75 );
-
-function mcl_admin_bar_button( $wp_admin_bar ) {
-    $args = array(
-        'id' => 'mcl_admin_bar_button',
-        'title' => 'MCL - Quick Post',
-        'href' => admin_url( "edit.php?page=mcl-quick-post" ),
-        'meta' => array(
-            'class' => 'mcl_admin_bar_button_class'
-        )
-    );
-
-    $wp_admin_bar->add_node( $args );
-}
-
-add_action( 'admin_menu', 'mcl_quick_post_menu' );
-
-function mcl_quick_post_menu() {
-    add_posts_page( 'MCL - Quick Post', 'MCL - Quick Post', 'manage_options', 'mcl-quick-post', 'mcl_quick_post' );
-}
-
-/** Step 3. */
 function mcl_quick_post() {
     if ( !current_user_can( 'manage_options' ) ) {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );

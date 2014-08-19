@@ -36,9 +36,11 @@
 
 require_once dirname( __FILE__ ) . '/mcl-functions.php';
 require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
+require_once dirname( __FILE__ ) . '/mcl-admin-menu.php';
+require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
+require_once dirname( __FILE__ ) . '/mcl-admin-finished.php';
+require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
 require_once dirname( __FILE__ ) . '/mcl-status.php';
-require_once dirname( __FILE__ ) . '/mcl-quick-post.php';
-require_once dirname( __FILE__ ) . '/mcl-finished.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
 
 ?>
