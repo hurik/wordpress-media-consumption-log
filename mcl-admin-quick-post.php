@@ -126,7 +126,7 @@ function mcl_quick_post() {
         <h2>Media Consumption Log - Quick Post</h2>
 
         <h3>Navigation</h3>
-        <table class="widefat fixed">
+        <table class="widefat">
             <?php
             echo $cat_nav_html;
             ?>

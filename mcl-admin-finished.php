@@ -101,8 +101,9 @@ function mcl_finished() {
             $cats_html .= "</div><br />";
 
             // Table
-            $cats_html .= "\n<table class=\"widefat\">";
-            $cats_html .= "\n<tr><th><strong>Name</strong> (Draufklicken zum ändern!)</th></tr>";
+            $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
+            $cats_html .= "<col width=\"99%\"></colgroup>";
+            $cats_html .= "\n<tr><th><strong>Change</strong></th><th><strong>Name</strong></th></tr>";
 
             foreach ( array_keys( $data[$category->term_id] ) as $key ) {
                 $cats_html .= "\n<tr><th><div id=\"mediastatus-";
@@ -114,7 +115,8 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Status ändern!\">{$name}</a></td></tr>";
+                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=1\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                    $cats_html .= "{$name}\">{$name}</a></td></tr>";
                 }
             }
 
@@ -138,8 +140,9 @@ function mcl_finished() {
             $cats_html .= "</div><br />";
 
             // Table
-            $cats_html .= "\n<table class=\"widefat\">";
-            $cats_html .= "\n<tr><th><strong>Name</strong> (Draufklicken zum ändern!)</th></tr>";
+            $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
+            $cats_html .= "<col width=\"99%\"></colgroup>";
+            $cats_html .= "\n<tr><th><strong>Change</strong></th><th><strong>Name</strong></th></tr>";
 
             foreach ( array_keys( $data_finished[$category->term_id] ) as $key ) {
                 $cats_html .= "<tr><th><div id=\"mediastatus-";
@@ -151,7 +154,8 @@ function mcl_finished() {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Status ändern!\">{$name}</a></td></tr>";
+                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-finished&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&finished=0\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                    $cats_html .= "{$name}\">{$name}</a></td></tr>";
                 }
             }
 
@@ -164,6 +168,10 @@ function mcl_finished() {
 
         <h3>Navigation</h3>
         <table class="widefat">
+            <colgroup>
+                <col width="1%">
+                <col width="99%">
+            </colgroup>
             <?php echo $cat_nav_html; ?>
         </table>
 
