@@ -52,8 +52,12 @@ function mcl_statistics() {
     date_default_timezone_set( get_option( 'timezone_string' ) );
 
     $current_date = date( 'Y-m-d' );
-    $start_date = "2014-08-05";
-    //$start_date = get_date_of_first_post();
+    
+    $start_date = get_option('mcl_settings_statistics_start_date');
+    
+    if (empty($start_date)) {
+        $start_date = get_date_of_first_post();
+    }
 
     $dates = array();
 
@@ -147,11 +151,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            height: data.getNumberOfRows() * 15 + 100,
-            legend: { position: 'top', maxLines: 4, alignment: 'center' },
-            bar: { groupWidth: '70%' },
-            chartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},
-            isStacked: true,
+            " . get_option('mcl_settings_statistics_google_charts_options') . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
