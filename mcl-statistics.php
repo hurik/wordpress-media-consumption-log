@@ -52,10 +52,10 @@ function mcl_statistics() {
     date_default_timezone_set( get_option( 'timezone_string' ) );
 
     $current_date = date( 'Y-m-d' );
-    
-    $start_date = get_option('mcl_settings_statistics_start_date');
-    
-    if (empty($start_date)) {
+
+    $start_date = get_option( 'mcl_settings_statistics_start_date' );
+
+    if ( empty( $start_date ) ) {
         $start_date = get_date_of_first_post();
     }
 
@@ -151,7 +151,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            " . get_option('mcl_settings_statistics_google_charts_options') . "
+            " . get_option( 'mcl_settings_statistics_google_charts_options' ) . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -169,6 +169,18 @@ function mcl_statistics() {
     <div id=\"chart_div\"></div>
     <br />
     ";
+
+    // Category
+    $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
+    $html .= "<tr><th>Kategorie</th><th nowrap>&#216</th></tr>";
+
+    foreach ( $categories as $category ) {
+        $average = round(array_sum( $data[$category->name] ) / count( $dates ), 2);
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
+    }
+
+    $html .= "</table>";
 
     return $html;
 }
