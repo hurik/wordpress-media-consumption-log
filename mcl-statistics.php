@@ -74,12 +74,18 @@ function mcl_statistics() {
     }
 
     // Get the categories
-    $categories = get_categories();
+    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_statistics_exclude_category' ) );
 
     $data = array();
 
     foreach ( $categories as $category ) {
-        $stats = get_post_with_mcl_number_of_category_sorted_by_date( $category->term_id );
+        $use_mcl_number = get_option( 'mcl_settings_statistics_mcl_number' );
+
+        if ( $use_mcl_number == "1" ) {
+            $stats = get_post_with_mcl_number_of_category_sorted_by_date( $category->term_id );
+        } else {
+            $stats = get_post_of_category_sorted_by_date( $category->term_id );
+        }
 
         foreach ( $dates as $date ) {
             $found = 0;
@@ -175,7 +181,7 @@ function mcl_statistics() {
     $html .= "<tr><th>Kategorie</th><th nowrap>&#216</th></tr>";
 
     foreach ( $categories as $category ) {
-        $average = round(array_sum( $data[$category->name] ) / count( $dates ), 2);
+        $average = round( array_sum( $data[$category->name] ) / count( $dates ), 2 );
 
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
     }
@@ -209,6 +215,23 @@ function get_post_with_mcl_number_of_category_sorted_by_date( $category_id ) {
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND meta_key = 'mcl_number'
+        AND term_taxonomy_id = $category_id
+        GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
+        ORDER BY date
+	" );
+
+    return $stats;
+}
+
+function get_post_of_category_sorted_by_date( $category_id ) {
+    global $wpdb;
+
+    $stats = $wpdb->get_results( "
+        SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, COUNT( post_date ) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
         AND term_taxonomy_id = $category_id
         GROUP BY DATE_FORMAT( post_date, '%Y-%m-%d' )
         ORDER BY date
