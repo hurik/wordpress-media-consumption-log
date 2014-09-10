@@ -19,7 +19,7 @@ function mcl_quick_post() {
     }
 
     // Get the categories
-    $categories = get_categories( 'exclude=45,75' );
+    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
 
     // Get the sorted data
     $data = get_all_tags_sorted( $categories, 0 );
