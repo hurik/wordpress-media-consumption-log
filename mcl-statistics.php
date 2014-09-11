@@ -140,8 +140,13 @@ function mcl_statistics() {
         <th nowrap>&#216</th>
     </tr>";
 
+    $date_first_post = new DateTime( get_date_of_first_post() );
+    $date_current = new DateTime( date( 'Y-m-d' ) );
+
+    $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
+
     foreach ( $categories as $category ) {
-        $average = round( array_sum( $data[$category->name] ) / count( $dates ), 2 );
+        $average = round( get_mcl_number_of_category( $category->term_id ) / $number_of_days, 2 );
 
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
     }
@@ -230,6 +235,23 @@ function get_post_of_category_sorted_by_date( $category_id ) {
 	" );
 
     return $stats;
+}
+
+function get_mcl_number_of_category( $category_id ) {
+    global $wpdb;
+
+    $stats = $wpdb->get_results( "
+        SELECT SUM( meta_value ) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        LEFT OUTER JOIN wp_postmeta m ON m.post_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+        AND meta_key = 'mcl_number'
+        AND term_taxonomy_id =  $category_id
+	" );
+
+    return $stats[0]->number;
 }
 
 ?>
