@@ -21,7 +21,6 @@ if ( !is_admin() ) {
         }
         return $tags_arr_new;
     }
-
 }
 
 ?>

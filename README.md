@@ -4,10 +4,10 @@
 This Table is needed:
 
 ```sql
-CREATE TABLE `wp_mcl_finished` (
+CREATE TABLE `wp_mcl_complete` (
   `tag_id` bigint(20) unsigned NOT NULL,
   `cat_id` bigint(20) unsigned NOT NULL,
-  `finished` tinyint(1) NOT NULL,
+  `complete` tinyint(1) NOT NULL,
   PRIMARY KEY (`tag_id`,`cat_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 ```

@@ -1,12 +1,12 @@
 <?php
 
-function get_all_tags_sorted( $categories, $finished ) {
+function get_all_tags_sorted( $categories, $complete ) {
     // Group the data
     $data = array();
 
     foreach ( $categories as $category ) {
         // Get the tags of the category
-        $tags = get_tags_of_category( $category->term_id, $finished );
+        $tags = get_tags_of_category( $category->term_id, $complete );
 
         // Group the tags by the first letter
         foreach ( $tags as $tag ) {
@@ -22,7 +22,7 @@ function get_all_tags_sorted( $categories, $finished ) {
     return $data;
 }
 
-function get_tags_of_category( $category_id, $finished ) {
+function get_tags_of_category( $category_id, $complete ) {
     global $wpdb;
 
     $tags = $wpdb->get_results( "
@@ -33,7 +33,7 @@ function get_tags_of_category( $category_id, $finished ) {
                 temp.count,
                 temp.tag_link,
                 temp.taxonomy,
-                IFNULL(mcl.finished, 0) AS finished
+                IFNULL(mcl.complete, 0) AS complete
             FROM 
 		(
                     SELECT 
@@ -62,9 +62,9 @@ function get_tags_of_category( $category_id, $finished ) {
                     GROUP BY name
                     ORDER BY name
                 ) AS temp
-            LEFT JOIN wp_mcl_finished AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+            LEFT JOIN wp_mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
             WHERE
-                IFNULL(mcl.finished, 0) = $finished
+                IFNULL(mcl.complete, 0) = $complete
 	" );
 
     // Get the link of every tag

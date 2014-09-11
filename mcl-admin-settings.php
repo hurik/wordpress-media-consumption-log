@@ -48,7 +48,7 @@ function mcl_settings() {
                     <th scope="row"></th>
                     <td>Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count.</td>
                 </tr>
-                
+
                 <tr valign="top">
                     <th scope="row">Start date</th>
                     <td><input type="text" name="mcl_settings_statistics_start_date" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_start_date' ) ); ?>" style="width:100%;" /></td>

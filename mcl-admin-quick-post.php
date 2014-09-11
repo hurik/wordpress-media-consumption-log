@@ -1,5 +1,4 @@
 <?php
-
 add_filter( 'load-post-new.php', 'mcl_new_post_with_cat_and_tag' );
 
 function mcl_new_post_with_cat_and_tag() {
