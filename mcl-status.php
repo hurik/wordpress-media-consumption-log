@@ -27,7 +27,7 @@ function mcl_status() {
         $html .= "</th></tr>";
 
         if ( $count_ongoing ) {
-            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td><td>";
+            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">Laufend</a></td><td>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -73,7 +73,7 @@ function mcl_status() {
         $html .= " ({$count})</h4><hr />";
 
         if ( $count_ongoing ) {
-            $html .= "<h6 id=\"mediastatus-{$category->slug}-running\">Laufend";
+            $html .= "<h6 id=\"mediastatus-{$category->slug}-ongoing\">Laufend";
             $html .= " ({$count_ongoing})</h6>";
 
             // Create the navigation

@@ -38,7 +38,7 @@ function mcl_complete() {
         $cat_nav_html .= "</th></tr>";
 
         if ( $count_ongoing ) {
-            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-running\">Laufend</a></td><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">Ongoing</a></td><td>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -52,7 +52,7 @@ function mcl_complete() {
         }
 
         if ( $count_complete ) {
-            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">Beendet</a></td><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">Complete</a></td><td>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-complete-";
@@ -85,7 +85,7 @@ function mcl_complete() {
         $cats_html .= " ({$count})</h3><hr />";
 
         if ( $count_ongoing ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-running\">Laufend";
+            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-ongoing\">Ongoing";
             $cats_html .= " ({$count_ongoing})</h4>";
 
             // Create the navigation
@@ -124,7 +124,7 @@ function mcl_complete() {
         }
 
         if ( $count_complete ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-complete\">Beendet";
+            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-complete\">Complete";
             $cats_html .= " ({$count_complete})</h4>";
 
             // Create the navigation

@@ -172,8 +172,14 @@ function mcl_statistics() {
     });
 </script>
 
+    <div>
+        <a href=\"#consumption-chart\">Konsum Diagramm</a> | <a href=\"#average-consumption\">Durchschnittlicher Konsum</a>
+    </div>
+    
+    <h4 id=\"consumption-chart\">Konsum Diagramm</h4><hr />
     <div id=\"chart_div\"></div>
-    <br />
+    
+    <h4 id=\"average-consumption\">Durchschnittlicher Konsum</h4><hr />
     ";
 
     // Category
