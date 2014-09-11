@@ -84,8 +84,8 @@ function mcl_quick_post() {
                 }
 
                 $title = trim( $last_post_data->post_title );
-                $title = preg_replace( "/[A-Z0-9]+ bis /", "", $title );
-                $title = preg_replace( "/[A-Z0-9]+ und /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_to' ) . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_and' ) . " /", "", $title );
 
                 $title_explode = explode( ' ', $title );
                 $number = end( $title_explode );

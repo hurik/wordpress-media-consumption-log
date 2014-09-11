@@ -109,7 +109,7 @@ function get_last_post_of_tag_in_category( $tag_id, $category_id ) {
     $post = get_last_post_of_tag_in_category_data( $tag_id, $category_id );
 
     // Explode the title
-    $titleExploded = explode( ' - ', $post->post_title );
+    $titleExploded = explode( " " . get_option( 'mcl_settings_other_separator' ) . " ", $post->post_title );
 
     // Get the last part, so we have the chapter/episode/...
     $status = array_pop( $titleExploded );

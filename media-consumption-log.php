@@ -42,5 +42,6 @@ require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
 require_once dirname( __FILE__ ) . '/mcl-status.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
+require_once dirname( __FILE__ ) . '/mcl-number.php';
 
 ?>
