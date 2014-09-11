@@ -127,18 +127,18 @@ function mcl_statistics() {
 </script>
 
     <div>
-        <a href=\"#consumption-chart\">Konsum Diagramm</a> | <a href=\"#average-consumption\">Durchschnittlicher Konsum</a>
+        <a href=\"#consumption-chart\">Konsum Diagramm</a> | <a href=\"#average-consumption\">Durchschnittlicher Konsum</a> | <a href=\"#consumption-count\">Konsum Menge</a>
     </div>
     
     <h4 id=\"consumption-chart\">Konsum Diagramm</h4><hr />
     <div id=\"chart_div\"></div>
     
     <h4 id=\"average-consumption\">Durchschnittlicher Konsum</h4><hr />
-    ";
-
-    // Category
-    $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
-    $html .= "<tr><th>Kategorie</th><th nowrap>&#216</th></tr>";
+    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
+    <tr>
+        <th>Kategorie</th>
+        <th nowrap>&#216</th>
+    </tr>";
 
     foreach ( $categories as $category ) {
         $average = round( array_sum( $data[$category->name] ) / count( $dates ), 2 );
@@ -146,7 +146,39 @@ function mcl_statistics() {
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
     }
 
-    $html .= "</table>";
+    $html .= "</table>
+    
+    <h4 id=\"consumption-count\">Konsum Menge</h4><hr />
+    <table border=\"1\"><col width=\"98%\"><col width=\"1%\"><col width=\"1%\">
+        <tr>
+            <th>Kategorie</th>
+            <th nowrap>Laufend</th>
+            <th nowrap>Beendet</th>
+        </tr>";
+
+    $data_ongoing = get_all_tags_sorted( $categories, 0 );
+    $data_complete = get_all_tags_sorted( $categories, 1 );
+
+    $count_ongoing_all = 0;
+    $count_complete_all = 0;
+
+    foreach ( $categories as $category ) {
+        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
+        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+
+        $count_ongoing_all += $count_ongoing;
+        $count_complete_all += $count_complete;
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td></tr>";
+    }
+
+    $html .= "
+        <tr>
+            <th>Insgesamt</th>
+            <th nowrap>{$count_ongoing_all}</th>
+            <th nowrap>{$count_complete_all}</th>
+        </tr>
+    </table>";
 
     return $html;
 }
