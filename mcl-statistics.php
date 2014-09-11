@@ -33,9 +33,7 @@ function mcl_statistics() {
     $data = array();
 
     foreach ( $categories as $category ) {
-        $use_mcl_number = get_option( 'mcl_settings_statistics_mcl_number' );
-
-        if ( $use_mcl_number == "1" ) {
+        if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
             $stats = get_post_with_mcl_number_of_category_sorted_by_date( $category->term_id );
         } else {
             $stats = get_post_of_category_sorted_by_date( $category->term_id );
@@ -58,7 +56,7 @@ function mcl_statistics() {
     $html = "
     <script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>
     <script type=\"text/javascript\">
-    
+
     // Load the Visualization API and the piechart package.
     google.load('visualization', '1.0', {
         'packages': ['corechart']
@@ -118,7 +116,7 @@ function mcl_statistics() {
         chart.draw(data, options);
 
     }
-    
+
     jQuery(document).ready(function($) {
         $(window).resize(function() {
             drawChart();
@@ -129,10 +127,10 @@ function mcl_statistics() {
     <div>
         <a href=\"#consumption-chart\">Konsum Diagramm</a> | <a href=\"#average-consumption\">Durchschnittlicher Konsum</a> | <a href=\"#consumption-count\">Konsum Menge</a>
     </div>
-    
+
     <h4 id=\"consumption-chart\">Konsum Diagramm</h4><hr />
     <div id=\"chart_div\"></div>
-    
+
     <h4 id=\"average-consumption\">Durchschnittlicher Konsum</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
     <tr>
@@ -146,42 +144,37 @@ function mcl_statistics() {
     $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
 
     foreach ( $categories as $category ) {
-        $average = round( get_mcl_number_of_category( $category->term_id ) / $number_of_days, 2 );
+        if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
+            $average = round( get_mcl_number_of_category( $category->term_id ) / $number_of_days, 2 );
+        } else {
+            $average = round( get_posts_of_category( $category->term_id ) / $number_of_days, 2 );
+        }
 
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
     }
 
     $html .= "</table>
-    
+
     <h4 id=\"consumption-count\">Konsum Menge</h4><hr />
-    <table border=\"1\"><col width=\"98%\"><col width=\"1%\"><col width=\"1%\">
+    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
         <tr>
             <th>Kategorie</th>
-            <th nowrap>Laufend</th>
-            <th nowrap>Beendet</th>
+            <th nowrap>#</th>
         </tr>";
 
-    $data_ongoing = get_all_tags_sorted( $categories, 0 );
-    $data_complete = get_all_tags_sorted( $categories, 1 );
-
-    $count_ongoing_all = 0;
-    $count_complete_all = 0;
+    $count_all = 0;
 
     foreach ( $categories as $category ) {
-        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
-        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+        $count = get_tags_count_of_category( $category->term_id );
+        $count_all += $count;
 
-        $count_ongoing_all += $count_ongoing;
-        $count_complete_all += $count_complete;
-
-        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td></tr>";
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count}</td></tr>";
     }
 
     $html .= "
         <tr>
             <th>Insgesamt</th>
-            <th nowrap>{$count_ongoing_all}</th>
-            <th nowrap>{$count_complete_all}</th>
+            <th nowrap>{$count_all}</th>
         </tr>
     </table>";
 
@@ -248,8 +241,54 @@ function get_mcl_number_of_category( $category_id ) {
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND meta_key = 'mcl_number'
-        AND term_taxonomy_id =  $category_id
+        AND term_taxonomy_id = $category_id
 	" );
+
+    return $stats[0]->number;
+}
+
+function get_posts_of_category( $category_id ) {
+    global $wpdb;
+
+    $stats = $wpdb->get_results( "
+        SELECT COUNT(*) AS number
+        FROM wp_posts p
+        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        WHERE post_status = 'publish'
+        AND post_type = 'post'
+        AND term_taxonomy_id = $category_id
+	" );
+
+    return $stats[0]->number;
+}
+
+function get_tags_count_of_category( $category_id ) {
+    global $wpdb;
+
+    $stats = $wpdb->get_results( "
+        SELECT count(*) as number
+        FROM (
+            SELECT
+                    terms2.name AS name
+            FROM
+                    wp_posts AS p1
+                    LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
+                    LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                    LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
+                    wp_posts AS p2
+                    LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+                    LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                    LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+            WHERE
+                    t1.taxonomy = 'category'
+                    AND p1.post_status = 'publish'
+                    AND terms1.term_id = $category_id
+                    AND t2.taxonomy = 'post_tag'
+                    AND p2.post_status = 'publish'
+                    AND p1.ID = p2.ID
+            GROUP BY name
+        ) AS temp
+    " );
 
     return $stats[0]->number;
 }
