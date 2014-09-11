@@ -142,6 +142,8 @@ function mcl_statistics() {
     $date_current = new DateTime( date( 'Y-m-d' ) );
 
     $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
+    
+    $average_all = 0;
 
     foreach ( $categories as $category ) {
         if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
@@ -149,11 +151,18 @@ function mcl_statistics() {
         } else {
             $average = round( get_posts_of_category( $category->term_id ) / $number_of_days, 2 );
         }
+        
+        $average_all += $average;
 
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
     }
 
-    $html .= "</table>
+    $html .= "
+        <tr>
+            <th>Insgesamt</th>
+            <th nowrap>{$average_all}</th>
+        </tr>
+    </table>
 
     <h4 id=\"consumption-count\">Konsum Menge</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
