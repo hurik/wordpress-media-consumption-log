@@ -89,10 +89,9 @@ function mcl_status() {
             $html .= "</div><br />";
 
             // Table
-            $html .= "<table border=\"1\"><colgroup><col width=\"98%\">";
-            $html .= "<col width=\"1%\"><col width=\"1%\"></colgroup>";
-            $html .= "<tr><th>Name</th><th nowrap>#</th>";
-            $html .= "<th nowrap>Kapitel/Folge</th></tr>";
+            $html .= "<table border=\"1\"><colgroup><col width=\"99%\">";
+            $html .= "<col width=\"1%\"></colgroup>";
+            $html .= "<tr><th>Name</th><th nowrap>Kapitel/Folge</th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
@@ -101,18 +100,14 @@ function mcl_status() {
                 $html .= "</div></th></tr>";
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
-                    $last_post_data = get_last_post_of_tag_in_category( $tag->tag_id, $category->term_id );
-
-                    if ( empty( $last_post_data ) ) {
-                        continue;
-                    }
-
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
+                    $last_consumed = get_last_consumed( $tag->tag_id, $category->term_id );
+
                     $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
-                    $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
+                    $html .= "{$name}\">{$name}</a></td>";
+                    $html .= "<td nowrap>{$last_consumed}</td></tr>";
                 }
             }
 
@@ -136,30 +131,20 @@ function mcl_status() {
             $html .= "</div><br />";
 
             // Table
-            $html .= "<table border=\"1\"><col width=\"98%\"><col width=\"1%\">";
-            $html .= "<col width=\"1%\">";
-            $html .= "<tr><th>Name</th><th nowrap>#</th>";
-            $html .= "<th nowrap>Kapitel/Folge</th></tr>";
+            $html .= "<table border=\"1\"><tr><th>Name</th>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
-                $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
+                $html .= "<tr><th><div id=\"mediastatus-";
                 $html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
                 $html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
                 $html .= "</div></th></tr>";
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
-                    $last_post_data = get_last_post_of_tag_in_category( $tag->tag_id, $category->term_id );
-
-                    if ( empty( $last_post_data ) ) {
-                        continue;
-                    }
-
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
                     $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $html .= "{$name}\">{$name}</a></td><th nowrap>{$tag->count}";
-                    $html .= "</th><td nowrap>{$last_post_data}</td></tr>";
+                    $html .= "{$name}\">{$name}</a></td></tr>";
                 }
             }
 
@@ -168,6 +153,26 @@ function mcl_status() {
     }
 
     return $html;
+}
+
+function get_last_consumed( $tag_id, $category_id ) {
+    $post = get_last_post_of_tag_in_category_data( $tag_id, $category_id );
+
+    // Get link
+    $link = get_permalink( $post->ID );
+
+    // Explode the title
+    $titleExploded = explode( " " . get_option( 'mcl_settings_other_separator' ) . " ", $post->post_title );
+
+    // Get the last part, so we have the chapter/episode/...
+    $status = end( $titleExploded );
+
+    $statusExploded = explode( " ", $status );
+
+    $first_part = reset( $statusExploded );
+    $last_part = end( $statusExploded );
+
+    return "<a href='{$link}' title='{$post->post_title}'>{$first_part} {$last_part}</a>";
 }
 
 ?>

@@ -10,6 +10,10 @@ function get_all_tags_sorted( $categories, $complete ) {
 
         // Group the tags by the first letter
         foreach ( $tags as $tag ) {
+            if ( $tag->count < 1 ) {
+                continue;
+            }
+
             // Tags which start with a number get their own group #
             if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
                 $data[$category->term_id][$tag->name[0]][] = $tag;
@@ -36,29 +40,29 @@ function get_tags_of_category( $category_id, $complete ) {
                 IFNULL(mcl.complete, 0) AS complete
             FROM 
 		(
-                    SELECT 
-                            terms2.term_id AS tag_id,
-                            t1.term_id AS cat_id,
-                            terms2.name AS name,
-                            COUNT(*) AS count,
-                            NULL AS tag_link,
-                            t2.taxonomy AS taxonomy
+                    SELECT
+                        terms2.term_id AS tag_id,
+                        t1.term_id AS cat_id,
+                        terms2.name AS name,
+                        COUNT(*) AS count,
+                        NULL AS tag_link,
+                        t2.taxonomy AS taxonomy
                     FROM
-                            wp_posts AS p1
-                            LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
-                            LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
-                            LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
-                            wp_posts AS p2
-                            LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-                            LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-                            LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+                        wp_posts AS p1
+                        LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
+                        LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                        LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
+                        wp_posts AS p2
+                        LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+                        LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                        LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
                     WHERE
-                            t1.taxonomy = 'category'
-                            AND p1.post_status = 'publish'
-                            AND terms1.term_id = $category_id
-                            AND t2.taxonomy = 'post_tag'
-                            AND p2.post_status = 'publish'
-                            AND p1.ID = p2.ID
+                        t1.taxonomy = 'category'
+                        AND p1.post_status = 'publish'
+                        AND terms1.term_id = $category_id
+                        AND t2.taxonomy = 'post_tag'
+                        AND p2.post_status = 'publish'
+                        AND p1.ID = p2.ID
                     GROUP BY name
                     ORDER BY name
                 ) AS temp
@@ -73,7 +77,7 @@ function get_tags_of_category( $category_id, $complete ) {
     }
 
     // Replace the place holder with the commas
-    if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags') == "1" ) {
+    if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags' ) == "1" ) {
         $tags = comma_tags_filter( $tags );
     }
 
@@ -102,22 +106,6 @@ function get_last_post_of_tag_in_category_data( $tag_id, $category_id ) {
     $post = array_shift( $posts );
 
     return $post;
-}
-
-function get_last_post_of_tag_in_category( $tag_id, $category_id ) {
-    // Get the last post data
-    $post = get_last_post_of_tag_in_category_data( $tag_id, $category_id );
-
-    // Explode the title
-    $titleExploded = explode( " " . get_option( 'mcl_settings_other_separator' ) . " ", $post->post_title );
-
-    // Get the last part, so we have the chapter/episode/...
-    $status = array_pop( $titleExploded );
-
-    // Get link
-    $link = get_permalink( $post->ID );
-
-    return "<a href='{$link}' title='{$post->post_title}'>{$status}</a>";
 }
 
 ?>
