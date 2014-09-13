@@ -7,11 +7,7 @@ function mcl_statistics() {
 
     $current_date = date( 'Y-m-d' );
 
-    $start_date = get_option( 'mcl_settings_statistics_start_date' );
-
-    if ( empty( $start_date ) ) {
-        $start_date = get_date_of_first_post();
-    }
+    $start_date = date( 'Y-m-d', strtotime( "-" . get_option( 'mcl_settings_statistics_number_of_days' ) . " day", strtotime( $current_date ) ) );
 
     $dates = array();
 
@@ -87,7 +83,7 @@ function mcl_statistics() {
     for ( $i = 0; $i < count( $dates ); $i++ ) {
         $date = DateTime::createFromFormat( 'Y-m-d', $dates[$i] );
 
-        $html .= "            ['{$date->format( 'j.m.Y' )}', ";
+        $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_date_format' ) )}', ";
 
         foreach ( $categories as $category ) {
             $html .= "{$data[$category->name][$i]}";
@@ -142,7 +138,7 @@ function mcl_statistics() {
     $date_current = new DateTime( date( 'Y-m-d' ) );
 
     $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
-    
+
     $average_all = 0;
 
     foreach ( $categories as $category ) {
@@ -151,7 +147,7 @@ function mcl_statistics() {
         } else {
             $average = round( get_posts_of_category( $category->term_id ) / $number_of_days, 2 );
         }
-        
+
         $average_all += $average;
 
         $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
@@ -163,6 +159,7 @@ function mcl_statistics() {
             <th nowrap>{$average_all}</th>
         </tr>
     </table>
+    <p>Durchschnittlich am Tag. Seit dem ersten Beitrag am {$date_first_post->format( get_option( 'mcl_settings_statistics_date_format' ) )}.</p>
 
     <h4 id=\"consumption-count\">Konsum Menge</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
@@ -278,23 +275,23 @@ function get_tags_count_of_category( $category_id ) {
         SELECT count(*) as number
         FROM (
             SELECT
-                    terms2.name AS name
+                terms2.name AS name
             FROM
-                    wp_posts AS p1
-                    LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
-                    LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
-                    LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
-                    wp_posts AS p2
-                    LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-                    LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-                    LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+                wp_posts AS p1
+                LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
+                LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
+                wp_posts AS p2
+                LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+                LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
             WHERE
-                    t1.taxonomy = 'category'
-                    AND p1.post_status = 'publish'
-                    AND terms1.term_id = $category_id
-                    AND t2.taxonomy = 'post_tag'
-                    AND p2.post_status = 'publish'
-                    AND p1.ID = p2.ID
+                t1.taxonomy = 'category'
+                AND p1.post_status = 'publish'
+                AND terms1.term_id = $category_id
+                AND t2.taxonomy = 'post_tag'
+                AND p2.post_status = 'publish'
+                AND p1.ID = p2.ID
             GROUP BY name
         ) AS temp
     " );

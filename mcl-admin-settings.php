@@ -4,7 +4,8 @@ function mcl_settings_register() {
     register_setting( 'mcl-settings-group', 'mcl_settings_status_exclude_category' );
     register_setting( 'mcl-settings-group', 'mcl_settings_statistics_exclude_category' );
     register_setting( 'mcl-settings-group', 'mcl_settings_statistics_mcl_number' );
-    register_setting( 'mcl-settings-group', 'mcl_settings_statistics_start_date' );
+    register_setting( 'mcl-settings-group', 'mcl_settings_statistics_number_of_days' );
+    register_setting( 'mcl-settings-group', 'mcl_settings_statistics_date_format' );
     register_setting( 'mcl-settings-group', 'mcl_settings_statistics_google_charts_options' );
     register_setting( 'mcl-settings-group', 'mcl_settings_other_comma_in_tags' );
     register_setting( 'mcl-settings-group', 'mcl_settings_other_separator' );
@@ -45,9 +46,15 @@ function mcl_settings() {
                 </tr>
 
                 <tr>
-                    <th scope="row">Start date</th>
-                    <td><input type="text" name="mcl_settings_statistics_start_date" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_start_date' ) ); ?>" style="width:100%;" />
-                        <p class="description">If empty first post date is used or insert an date in this format: Y-m-d. Example: 2014-12-05</p>
+                    <th scope="row">Statistics size</th>
+                    <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_number_of_days' ) ); ?>" style="width:100%;" />
+                        <p class="description">Please inser number of days the statistic should cover. Example: 30</p>
+                </tr>
+                
+                <tr>
+                    <th scope="row">Date format</th>
+                    <td><input type="text" name="mcl_settings_statistics_date_format" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_date_format' ) ); ?>" style="width:100%;" />
+                        <p class="description">Format for dates on the statistics page. Example: j.m.Y</p>
                 </tr>
 
                 <tr>
@@ -93,4 +100,5 @@ function mcl_settings() {
     </div>	
     <?php
 }
+
 ?>
