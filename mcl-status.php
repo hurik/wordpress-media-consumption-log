@@ -91,7 +91,7 @@ function mcl_status() {
             // Table
             $html .= "<table border=\"1\"><colgroup><col width=\"99%\">";
             $html .= "<col width=\"1%\"></colgroup>";
-            $html .= "<tr><th>Name</th><th nowrap>Kapitel/Folge</th></tr>";
+            $html .= "<tr><th>Name</th><th nowrap>Letzte(s)</th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
