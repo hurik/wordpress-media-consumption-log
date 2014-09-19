@@ -96,7 +96,7 @@ function mcl_quick_post() {
                     $number = floor( $number );
                 }
 
-                if ( preg_match( '/[SE]/', $number ) ) {
+                if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number )) {
                     $number++;
                 }
 
