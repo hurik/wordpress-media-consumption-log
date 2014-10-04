@@ -169,10 +169,18 @@ function get_last_consumed( $tag_id, $category_id ) {
 
     $statusExploded = explode( " ", $status );
 
-    $first_part = reset( $statusExploded );
-    $last_part = end( $statusExploded );
+    echo count( $statusExploded );
 
-    return "<a href='{$link}' title='{$post->post_title}'>{$first_part} {$last_part}</a>";
+    if ( count( $statusExploded ) == 1 ) {
+        $statusText = reset( $statusExploded );
+    } else {
+        $first_part = reset( $statusExploded );
+        $last_part = end( $statusExploded );
+
+        $statusText = "{$first_part} {$last_part}";
+    }
+
+    return "<a href='{$link}' title='{$post->post_title}'>{$statusText}</a>";
 }
 
 ?>
