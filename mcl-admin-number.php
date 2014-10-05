@@ -17,7 +17,7 @@ function mcl_check_mcl_number_after_saving( $post_id ) {
         $mcl_number = get_post_meta( $post_id, 'mcl_number', true );
 
         // Check if already set
-        if ( !empty( $mcl_number ) ) {
+        if ( is_numeric( $mcl_number ) && $mcl_number >= 0 ) {
             return;
         }
 
