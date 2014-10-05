@@ -169,8 +169,6 @@ function get_last_consumed( $tag_id, $category_id ) {
 
     $statusExploded = explode( " ", $status );
 
-    echo count( $statusExploded );
-
     if ( count( $statusExploded ) == 1 ) {
         $statusText = reset( $statusExploded );
     } else {
