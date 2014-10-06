@@ -16,7 +16,7 @@ function get_all_tags_sorted( $categories, $complete ) {
 
             // Tags which start with a number get their own group #
             if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
-                $data[$category->term_id][$tag->name[0]][] = $tag;
+                $data[$category->term_id][strtoupper($tag->name[0])][] = $tag;
             } else {
                 $data[$category->term_id]['#'][] = $tag;
             }
