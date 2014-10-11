@@ -18,18 +18,6 @@ function mcl_check_mcl_number_after_saving( $post_id ) {
 
         // Check if already set
         if ( is_numeric( $mcl_number ) && $mcl_number >= 0 ) {
-            if ( $mcl_number == 0 ) {
-                $post = get_post( $post_id );
-
-                $cat = get_the_category( $post_id );
-                $cat_id = $cat[0]->term_id;
-
-                $tag = wp_get_post_tags( $post_id );
-                $tag_id = $tag[0]->term_id;
-
-                change_complete_status( $tag_id, $cat_id, 1 );
-            }
-
             return;
         }
 

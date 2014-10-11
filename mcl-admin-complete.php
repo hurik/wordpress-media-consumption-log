@@ -1,5 +1,41 @@
 <?php
 
+add_filter( 'load-post-new.php', 'mcl_load_mcl_complete_in_new_post' );
+
+function mcl_load_mcl_complete_in_new_post() {
+    add_action( 'wp_insert_post', 'mcl_insert_mcl_complete_in_new_post' );
+}
+
+function mcl_insert_mcl_complete_in_new_post( $post_id ) {
+    add_post_meta( $post_id, 'mcl_complete', '', true );
+}
+
+add_action( 'save_post', 'mcl_check_complete_after_saving' );
+
+function mcl_check_complete_after_saving( $post_id ) {
+    if ( get_post_status( $post_id ) == 'publish' ) {
+        $mcl_complete = get_post_meta( $post_id, 'mcl_complete', true );
+
+        // Check if already set
+        if ( !empty( $mcl_complete ) ) {
+            $post = get_post( $post_id );
+
+            $cat = get_the_category( $post_id );
+            $cat_id = $cat[0]->term_id;
+
+            $tag = wp_get_post_tags( $post_id );
+            $tag_id = $tag[0]->term_id;
+
+            change_complete_status( $tag_id, $cat_id, 1 );
+
+            // Remove the meta data
+            delete_post_meta( $post_id, 'mcl_complete' );
+
+            return;
+        }
+    }
+}
+
 function change_complete_status( $tag_id, $cat_id, $complete ) {
     global $wpdb;
 
