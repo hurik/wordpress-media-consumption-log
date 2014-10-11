@@ -112,7 +112,11 @@ function mcl_complete() {
                 $cats_html .= "</div></th></tr>";
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
-                    $name = htmlspecialchars( $tag->name );
+                    $name = $tag->name;
+                    if ( get_option( 'mcl_settings_other_comma_in_tags' ) == "1" ) {
+                        $name = str_replace( '--', ', ', $name );
+                    }
+                    $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
                     $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
@@ -151,7 +155,11 @@ function mcl_complete() {
                 $cats_html .= "</div></th></tr>";
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
-                    $name = htmlspecialchars( $tag->name );
+                    $name = $tag->name;
+                    if ( get_option( 'mcl_settings_other_comma_in_tags' ) == "1" ) {
+                        $name = str_replace( '--', ', ', $name );
+                    }
+                    $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
                     $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
