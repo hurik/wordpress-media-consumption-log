@@ -39,7 +39,7 @@ function mcl_check_complete_after_saving( $post_id ) {
 function change_complete_status( $tag_id, $cat_id, $complete ) {
     global $wpdb;
 
-    $tags = $wpdb->get_results( "REPLACE INTO wp_mcl_complete SET tag_id = $tag_id, cat_id = $cat_id, complete = $complete" );
+    $tags = $wpdb->get_results( "REPLACE INTO {$wpdb->prefix}mcl_complete SET tag_id = $tag_id, cat_id = $cat_id, complete = $complete" );
 }
 
 function mcl_complete() {

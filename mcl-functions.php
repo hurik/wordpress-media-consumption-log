@@ -48,25 +48,25 @@ function get_tags_of_category( $category_id, $complete ) {
                         NULL AS tag_link,
                         t2.taxonomy AS taxonomy
                     FROM
-                        wp_posts AS p1
-                        LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
-                        LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
-                        LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
-                        wp_posts AS p2
-                        LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-                        LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-                        LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+                        {$wpdb->prefix}posts AS p1
+                        LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
+                        LEFT JOIN {$wpdb->prefix}term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                        LEFT JOIN {$wpdb->prefix}terms AS terms1 ON t1.term_id = terms1.term_id,
+                        {$wpdb->prefix}posts AS p2
+                        LEFT JOIN {$wpdb->prefix}term_relationships AS r2 ON p2.ID = r2.object_ID
+                        LEFT JOIN {$wpdb->prefix}term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                        LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id
                     WHERE
                         t1.taxonomy = 'category'
                         AND p1.post_status = 'publish'
-                        AND terms1.term_id = $category_id
+                        AND terms1.term_id = {$category_id}
                         AND t2.taxonomy = 'post_tag'
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID
                     GROUP BY name
                     ORDER BY name
                 ) AS temp
-            LEFT JOIN wp_mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+            LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
             WHERE
                 IFNULL(mcl.complete, 0) = $complete
 	" );

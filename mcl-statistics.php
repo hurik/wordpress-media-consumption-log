@@ -276,7 +276,7 @@ function get_date_of_first_post() {
 
     $min_date = $wpdb->get_results( "
         SELECT Min( DATE_FORMAT( post_date, '%Y-%m-%d' ) ) AS date
-        FROM wp_posts
+        FROM {$wpdb->prefix}posts
         WHERE post_status = 'publish'
         AND post_type = 'post'
 	" );
@@ -289,9 +289,9 @@ function get_post_with_mcl_number_of_category_sorted_by_date( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, SUM( meta_value ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
-        LEFT OUTER JOIN wp_postmeta m ON m.post_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+        LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND meta_key = 'mcl_number'
@@ -308,8 +308,8 @@ function get_post_of_category_sorted_by_date( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT DATE_FORMAT( post_date, '%Y-%m-%d' ) AS date, COUNT( post_date ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND term_taxonomy_id = $category_id
@@ -325,9 +325,9 @@ function get_post_with_mcl_number_of_category_sorted_by_month( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT DATE_FORMAT( post_date, '%Y-%m' ) AS date, SUM( meta_value ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
-        LEFT OUTER JOIN wp_postmeta m ON m.post_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+        LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND meta_key = 'mcl_number'
@@ -344,8 +344,8 @@ function get_post_of_category_sorted_by_month( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT DATE_FORMAT( post_date, '%Y-%m' ) AS date, COUNT( post_date ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND term_taxonomy_id = $category_id
@@ -361,9 +361,9 @@ function get_mcl_number_of_category( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT SUM( meta_value ) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
-        LEFT OUTER JOIN wp_postmeta m ON m.post_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+        LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND meta_key = 'mcl_number'
@@ -378,8 +378,8 @@ function get_posts_of_category( $category_id ) {
 
     $stats = $wpdb->get_results( "
         SELECT COUNT(*) AS number
-        FROM wp_posts p
-        LEFT OUTER JOIN wp_term_relationships r ON r.object_id = p.ID
+        FROM {$wpdb->prefix}posts p
+        LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
         WHERE post_status = 'publish'
         AND post_type = 'post'
         AND term_taxonomy_id = $category_id
@@ -397,14 +397,14 @@ function get_tags_count_of_category( $category_id ) {
             SELECT
                 terms2.name AS name
             FROM
-                wp_posts AS p1
-                LEFT JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_ID
-                LEFT JOIN wp_term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
-                LEFT JOIN wp_terms AS terms1 ON t1.term_id = terms1.term_id,
-                wp_posts AS p2
-                LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-                LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-                LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+                {$wpdb->prefix}posts AS p1
+                LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
+                LEFT JOIN {$wpdb->prefix}term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
+                LEFT JOIN {$wpdb->prefix}terms AS terms1 ON t1.term_id = terms1.term_id,
+                {$wpdb->prefix}posts AS p2
+                LEFT JOIN {$wpdb->prefix}term_relationships AS r2 ON p2.ID = r2.object_ID
+                LEFT JOIN {$wpdb->prefix}term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+                LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id
             WHERE
                 t1.taxonomy = 'category'
                 AND p1.post_status = 'publish'
