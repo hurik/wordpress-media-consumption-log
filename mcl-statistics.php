@@ -7,7 +7,7 @@ function mcl_statistics() {
 
     $current_date = date( 'Y-m-d' );
 
-    $start_date = date( 'Y-m-d', strtotime( "-" . get_option( 'mcl_settings_statistics_number_of_days' ) . " day", strtotime( $current_date ) ) );
+    $start_date = date( 'Y-m-d', strtotime( "-" . get_option( 'mcl_settings_statistics_number_of_days', 30 ) . " day", strtotime( $current_date ) ) );
 
     $daily_dates = array();
 
@@ -29,7 +29,7 @@ function mcl_statistics() {
     $data = array();
 
     foreach ( $categories as $category ) {
-        if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
+        if ( get_option( 'mcl_settings_statistics_mcl_number', 1 ) == "1" ) {
             $stats = get_post_with_mcl_number_of_category_sorted_by_date( $category->term_id );
         } else {
             $stats = get_post_of_category_sorted_by_date( $category->term_id );
@@ -51,7 +51,7 @@ function mcl_statistics() {
 
     $monthly_dates = array();
 
-    for ( $i = 0; $i < get_option( 'mcl_settings_statistics_number_of_months' ); $i++ ) {
+    for ( $i = 0; $i < get_option( 'mcl_settings_statistics_number_of_months', 6 ); $i++ ) {
         $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
         array_push( $monthly_dates, $month );
     }
@@ -59,7 +59,7 @@ function mcl_statistics() {
     $data_month = array();
 
     foreach ( $categories as $category ) {
-        if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
+        if ( get_option( 'mcl_settings_statistics_mcl_number', 1 ) == "1" ) {
             $stats = get_post_with_mcl_number_of_category_sorted_by_month( $category->term_id );
         } else {
             $stats = get_post_of_category_sorted_by_month( $category->term_id );
@@ -116,7 +116,7 @@ function mcl_statistics() {
     for ( $i = 0; $i < count( $daily_dates ); $i++ ) {
         $date = DateTime::createFromFormat( 'Y-m-d', $daily_dates[$i] );
 
-        $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_daily_date_format' ) )}', ";
+        $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )}', ";
 
         foreach ( $categories as $category ) {
             $html .= "{$data[$category->name][$i]}";
@@ -138,7 +138,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            " . get_option( 'mcl_settings_statistics_google_charts_daily_options' ) . "
+            " . get_option( 'mcl_settings_statistics_google_charts_daily_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));
@@ -164,7 +164,7 @@ function mcl_statistics() {
     for ( $i = 0; $i < count( $monthly_dates ); $i++ ) {
         $date = DateTime::createFromFormat( 'Y-m', $monthly_dates[$i] );
 
-        $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_monthly_date_format' ) )}', ";
+        $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_monthly_date_format', "m.Y" ) )}', ";
 
         foreach ( $categories as $category ) {
             $html .= "{$data_month[$category->name][$i]}";
@@ -186,7 +186,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            " . get_option( 'mcl_settings_statistics_google_charts_monthly_options' ) . "
+            " . get_option( 'mcl_settings_statistics_google_charts_monthly_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));
@@ -219,7 +219,7 @@ function mcl_statistics() {
     </tr>";
 
     $date_first_post = new DateTime( get_date_of_first_post() );
-    $since_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format' ) ), __( 'Average a day, since the first post on the %DATE.', 'media-consumption-log' ) );
+    $since_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) ), __( 'Average a day, since the first post on the %DATE.', 'media-consumption-log' ) );
     $date_current = new DateTime( date( 'Y-m-d' ) );
 
     $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
@@ -227,7 +227,7 @@ function mcl_statistics() {
     $average_all = 0;
 
     foreach ( $categories as $category ) {
-        if ( get_option( 'mcl_settings_statistics_mcl_number' ) == "1" ) {
+        if ( get_option( 'mcl_settings_statistics_mcl_number', 1 ) == "1" ) {
             $average = round( get_mcl_number_of_category( $category->term_id ) / $number_of_days, 2 );
         } else {
             $average = round( get_posts_of_category( $category->term_id ) / $number_of_days, 2 );

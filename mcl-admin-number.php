@@ -25,14 +25,14 @@ function mcl_check_mcl_number_after_saving( $post_id ) {
         $mcl_number = 1;
 
         $post = get_post( $post_id );
-        $title_ecplode = explode( " " . get_option( 'mcl_settings_other_separator' ) . " ", $post->post_title );
+        $title_ecplode = explode( " " . get_option( 'mcl_settings_other_separator', "-" ) . " ", $post->post_title );
         $current_number = end( $title_ecplode );
 
         if ( count( $title_ecplode ) < 2 ) {
             // Do nothing
-        } else if ( strpos( $current_number, " " . get_option( 'mcl_settings_other_mcl_number_and' ) . " " ) !== false ) {
+        } else if ( strpos( $current_number, " " . get_option( 'mcl_settings_other_mcl_number_and', __( 'and', 'media-consumption-log' ) ) . " " ) !== false ) {
             $mcl_number = 2;
-        } else if ( strpos( $current_number, " " . get_option( 'mcl_settings_other_mcl_number_to' ) . " " ) !== false ) {
+        } else if ( strpos( $current_number, " " . get_option( 'mcl_settings_other_mcl_number_to', __( 'to', 'media-consumption-log' ) ) . " " ) !== false ) {
             preg_match_all( '!\d+(?:\.\d+)?!', $current_number, $matches );
 
             if ( count( $matches[0] ) == 2 ) {

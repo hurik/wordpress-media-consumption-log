@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-10-12 03:35:14+0000\n"
+"PO-Revision-Date: 2014-10-12 04:05:28+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,14 +21,14 @@ msgstr ""
 "X-Textdomain-Support: yes"
 
 #: mcl-admin-complete.php:47
-#: mcl-admin-quick-post.php:17
+#: mcl-admin-quick-post.php:18
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #: mcl-admin-menu.php:8
 #: mcl-admin-menu.php:21
-#: mcl-admin-quick-post.php:125
+#: mcl-admin-quick-post.php:126
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
@@ -290,12 +290,12 @@ msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird 
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: to"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: und"
 
-#: mcl-admin-quick-post.php:73
+#: mcl-admin-quick-post.php:74
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: mcl-admin-quick-post.php:73
+#: mcl-admin-quick-post.php:74
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
@@ -315,4 +315,18 @@ msgstr "Anzahl der Tage für die monatliche Statistik: Voreinstellung: 6"
 #@ media-consumption-log
 msgid "This plugin helps you to keep track of the series, movies, mangas, comics you are reading."
 msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Mangas, Comics die die schaust."
+
+#: mcl-admin-number.php:33
+#: mcl-admin-quick-post.php:89
+#: mcl-admin-settings.php:108
+#@ media-consumption-log
+msgid "and"
+msgstr "und"
+
+#: mcl-admin-number.php:35
+#: mcl-admin-quick-post.php:88
+#: mcl-admin-settings.php:114
+#@ media-consumption-log
+msgid "to"
+msgstr "bis"
 

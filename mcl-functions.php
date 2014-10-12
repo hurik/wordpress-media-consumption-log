@@ -16,7 +16,7 @@ function get_all_tags_sorted( $categories, $complete ) {
 
             // Tags which start with a number get their own group #
             if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
-                $data[$category->term_id][strtoupper($tag->name[0])][] = $tag;
+                $data[$category->term_id][strtoupper( $tag->name[0] )][] = $tag;
             } else {
                 $data[$category->term_id]['#'][] = $tag;
             }
@@ -77,7 +77,7 @@ function get_tags_of_category( $category_id, $complete ) {
     }
 
     // Replace the place holder with the commas
-    if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags' ) == "1" ) {
+    if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags', 1 ) == "1" ) {
         $tags = comma_tags_filter( $tags );
     }
 

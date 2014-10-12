@@ -1,4 +1,5 @@
 <?php
+
 add_filter( 'load-post-new.php', 'mcl_new_post_with_cat_and_tag' );
 
 function mcl_new_post_with_cat_and_tag() {
@@ -70,7 +71,7 @@ function mcl_quick_post() {
 
         // Table
         $cats_html .= "<table class=\"widefat fixed\">";
-        $cats_html .= "<tr><th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Last Post', 'media-consumption-log' ). "</strong></th></tr>";
+        $cats_html .= "<tr><th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Last Post', 'media-consumption-log' ) . "</strong></th></tr>";
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {
             $cats_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
             $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
@@ -84,8 +85,8 @@ function mcl_quick_post() {
                 }
 
                 $title = trim( $last_post_data->post_title );
-                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_to' ) . " /", "", $title );
-                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_and' ) . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_to', __( 'to', 'media-consumption-log' ) ) . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_and', __( 'and', 'media-consumption-log' ) ) . " /", "", $title );
 
                 $title_explode = explode( ' ', $title );
                 $number = end( $title_explode );
@@ -96,7 +97,7 @@ function mcl_quick_post() {
                     $number = floor( $number );
                 }
 
-                if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number )) {
+                if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) ) {
                     $number++;
                 }
 

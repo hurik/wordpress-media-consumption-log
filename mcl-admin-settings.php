@@ -44,44 +44,44 @@ function mcl_settings() {
 
                 <tr>
                     <th scope="row"><?php _e( 'Use mcl_numbers', 'media-consumption-log' ); ?></th>
-                    <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( 1 == get_option( 'mcl_settings_statistics_mcl_number' ) ); ?> />
+                    <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( 1 == get_option( 'mcl_settings_statistics_mcl_number', 1 ) ); ?> />
                         <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: Checked', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Daily statistics size', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_number_of_days' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_number_of_days', 30 ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default: 30', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Daily date format', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_statistics_daily_date_format" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_daily_date_format' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_statistics_daily_date_format" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'Format for dates on the daily statistics page. Default: j.m.Y', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Daily Google Charts Options', 'media-consumption-log' ); ?></th>
-                    <td><textarea name="mcl_settings_statistics_google_charts_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( get_option( 'mcl_settings_statistics_google_charts_daily_options' ) ); ?></textarea>
+                    <td><textarea name="mcl_settings_statistics_google_charts_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( get_option( 'mcl_settings_statistics_google_charts_daily_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) ); ?></textarea>
                         <p class="description"><?php _e( 'When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
                             height: data.getNumberOfRows() * 15 + 100,<br />legend: { position: 'top', maxLines: 4, alignment: 'center' },<br />bar: { groupWidth: '70%' },<br />focusTarget: 'category',<br />chartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},<br />isStacked: true,</p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Monthly statistics size', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_statistics_number_of_months" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_number_of_months' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_statistics_number_of_months" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_number_of_months', 6 ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default: 6', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Monthly date format', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_statistics_monthly_date_format" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_monthly_date_format' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_statistics_monthly_date_format" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_monthly_date_format', "m.Y" ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default: n.Y', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Monthly Google Charts Options', 'media-consumption-log' ); ?></th>
-                    <td><textarea name="mcl_settings_statistics_google_charts_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( get_option( 'mcl_settings_statistics_google_charts_monthly_options' ) ); ?></textarea>
+                    <td><textarea name="mcl_settings_statistics_google_charts_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( get_option( 'mcl_settings_statistics_google_charts_monthly_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) ); ?></textarea>
                         <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
                             height: data.getNumberOfRows() * 15 + 100,<br />legend: { position: 'top', maxLines: 4, alignment: 'center' },<br />bar: { groupWidth: '70%' },<br />focusTarget: 'category',<br />chartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},<br />isStacked: true,</p>
                 </tr>
@@ -93,25 +93,25 @@ function mcl_settings() {
             <table class="form-table">
                 <tr>
                     <th scope="row"><?php _e( 'Activate comma in tags', 'media-consumption-log' ); ?></th>
-                    <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( 1 == get_option( 'mcl_settings_other_comma_in_tags' ) ); ?> />
+                    <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( 1 == get_option( 'mcl_settings_other_comma_in_tags', 1 ) ); ?> />
                         <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: Checked', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'Separator', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( get_option( 'mcl_settings_other_separator' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( get_option( 'mcl_settings_other_separator', "-" ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: -', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'mcl_number "and"', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_other_mcl_number_and" value="<?php echo esc_attr( get_option( 'mcl_settings_other_mcl_number_and' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_other_mcl_number_and" value="<?php echo esc_attr( get_option( 'mcl_settings_other_mcl_number_and', __( 'and', 'media-consumption-log' ) ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: and', 'media-consumption-log' ); ?></p>
                 </tr>
 
                 <tr>
                     <th scope="row"><?php _e( 'mcl_number "to"', 'media-consumption-log' ); ?></th>
-                    <td><input type="text" name="mcl_settings_other_mcl_number_to" value="<?php echo esc_attr( get_option( 'mcl_settings_other_mcl_number_to' ) ); ?>" style="width:100%;" />
+                    <td><input type="text" name="mcl_settings_other_mcl_number_to" value="<?php echo esc_attr( get_option( 'mcl_settings_other_mcl_number_to', __( 'to', 'media-consumption-log' ) ) ); ?>" style="width:100%;" />
                         <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: to', 'media-consumption-log' ); ?></p>
                 </tr>
             </table>

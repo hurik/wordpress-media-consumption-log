@@ -1,6 +1,6 @@
 <?php
 
-if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags') == "1" ) {
+if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags', 1 ) == "1" ) {
     add_filter( 'get_post_tag', 'comma_tag_filter' );
 
     function comma_tag_filter( $tag_arr ) {
@@ -21,6 +21,7 @@ if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags') == "1" ) {
         }
         return $tags_arr_new;
     }
+
 }
 
 ?>
