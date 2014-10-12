@@ -65,7 +65,7 @@ function mcl_statistics() {
             $stats = get_post_of_category_sorted_by_month( $category->term_id );
         }
 
-        
+
 
         foreach ( $monthly_dates as $date ) {
             $found = 0;
@@ -202,23 +202,24 @@ function mcl_statistics() {
 </script>
 
     <div>
-        <a href=\"#daily-consumption-chart\">Täglicher Konsum</a> | <a href=\"#monthly-consumption-chart\">Monatlicher Konsum</a> | <a href=\"#average-consumption\">Durchschnittlicher Konsum</a> | <a href=\"#consumption-count\">Konsum Menge</a>
+        <a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a> | <a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a> | <a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a> | <a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a>
     </div>
 
-    <h4 id=\"daily-consumption-chart\">Täglicher Konsum</h4><hr />
+    <h4 id=\"daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</h4><hr />
     <div id=\"daily_chart_div\"></div>
     
-    <h4 id=\"monthly-consumption-chart\">Monatlicher Konsum</h4><hr />
+    <h4 id=\"monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</h4><hr />
     <div id=\"monthly_chart_div\"></div>
 
-    <h4 id=\"average-consumption\">Durchschnittlicher Konsum</h4><hr />
+    <h4 id=\"average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
     <tr>
-        <th>Kategorie</th>
+        <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
         <th nowrap>&#216</th>
     </tr>";
 
     $date_first_post = new DateTime( get_date_of_first_post() );
+    $since_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format' ) ), __( 'Average a day, since the first post on the %DATE.', 'media-consumption-log' ) );
     $date_current = new DateTime( date( 'Y-m-d' ) );
 
     $number_of_days = $date_current->diff( $date_first_post )->format( "%a" ) + 1;
@@ -239,16 +240,16 @@ function mcl_statistics() {
 
     $html .= "
         <tr>
-            <th>Insgesamt</th>
+            <th>" . __( 'Total', 'media-consumption-log' ) . "</th>
             <th nowrap>{$average_all}</th>
         </tr>
     </table>
-    <p>Durchschnittlich am Tag. Seit dem ersten Beitrag am {$date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format' ) )}.</p>
+    <p>{$since_string}</p>
 
-    <h4 id=\"consumption-count\">Konsum Menge</h4><hr />
+    <h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
         <tr>
-            <th>Kategorie</th>
+            <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
             <th nowrap>#</th>
         </tr>";
 
@@ -263,7 +264,7 @@ function mcl_statistics() {
 
     $html .= "
         <tr>
-            <th>Insgesamt</th>
+            <th>" . __( 'Total', 'media-consumption-log' ) . "</th>
             <th nowrap>{$count_all}</th>
         </tr>
     </table>";

@@ -3,11 +3,13 @@
 /*
   Plugin Name: Media Consumption Log
   Plugin URI: https://github.com/hurik/wordpress-media-consumption-log
-  Description: Shows table with tags of each category and the latest post in it.
+  Description: This plugin helps you to keep track of the series, movies, mangas, comics you are reading.
   Version: 1.0.0
   Author: Andreas Giemza
   Author URI: http://www.andreasgiemza.de
   License: MIT
+  Text Domain: media-consumption-log
+  Domain Path: /languages
  */
 
 /*
@@ -41,6 +43,7 @@ require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
 require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
 require_once dirname( __FILE__ ) . '/mcl-functions.php';
+require_once dirname( __FILE__ ) . '/mcl-languages.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
 require_once dirname( __FILE__ ) . '/mcl-status.php';
 

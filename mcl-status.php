@@ -27,7 +27,7 @@ function mcl_status() {
         $html .= "</th></tr>";
 
         if ( $count_ongoing ) {
-            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">Laufend</a></td><td>";
+            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td><td>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -41,7 +41,7 @@ function mcl_status() {
         }
 
         if ( $count_complete ) {
-            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">Beendet</a></td><td>";
+            $html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td><td>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
                 $html .= "<a href=\"#mediastatus-{$category->slug}-complete-";
@@ -73,7 +73,7 @@ function mcl_status() {
         $html .= " ({$count})</h4><hr />";
 
         if ( $count_ongoing ) {
-            $html .= "<h6 id=\"mediastatus-{$category->slug}-ongoing\">Laufend";
+            $html .= "<h6 id=\"mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "";
             $html .= " ({$count_ongoing})</h6>";
 
             // Create the navigation
@@ -91,7 +91,7 @@ function mcl_status() {
             // Table
             $html .= "<table border=\"1\"><colgroup><col width=\"99%\">";
             $html .= "<col width=\"1%\"></colgroup>";
-            $html .= "<tr><th>Name</th><th nowrap>Letzte(s)</th></tr>";
+            $html .= "<tr><th>" . __( 'Name', 'media-consumption-log' ) . "</th><th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
@@ -115,7 +115,7 @@ function mcl_status() {
         }
 
         if ( $count_complete ) {
-            $html .= "<h6 id=\"mediastatus-{$category->slug}-complete\">Beendet";
+            $html .= "<h6 id=\"mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' );
             $html .= " ({$count_complete})</h6>";
 
             // Create the navigation
@@ -131,7 +131,7 @@ function mcl_status() {
             $html .= "</div><br />";
 
             // Table
-            $html .= "<table border=\"1\"><tr><th>Name</th>";
+            $html .= "<table border=\"1\"><tr><th>" . __( 'Name', 'media-consumption-log' ) . "</th>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
                 $html .= "<tr><th><div id=\"mediastatus-";

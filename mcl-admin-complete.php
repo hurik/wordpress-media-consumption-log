@@ -74,7 +74,7 @@ function mcl_complete() {
         $cat_nav_html .= "</th></tr>";
 
         if ( $count_ongoing ) {
-            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">Ongoing</a></td><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td><td>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-";
@@ -88,7 +88,7 @@ function mcl_complete() {
         }
 
         if ( $count_complete ) {
-            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">Complete</a></td><td>";
+            $cat_nav_html .= "<tr><td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td><td>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-complete-";
@@ -121,7 +121,7 @@ function mcl_complete() {
         $cats_html .= " ({$count})</h3><hr />";
 
         if ( $count_ongoing ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-ongoing\">Ongoing";
+            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' );
             $cats_html .= " ({$count_ongoing})</h4>";
 
             // Create the navigation
@@ -139,7 +139,7 @@ function mcl_complete() {
             // Table
             $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
             $cats_html .= "<col width=\"99%\"></colgroup>";
-            $cats_html .= "\n<tr><th><strong>Change</strong></th><th><strong>Name</strong></th></tr>";
+            $cats_html .= "\n<tr><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
                 $cats_html .= "\n<tr><th><div id=\"mediastatus-";
@@ -155,7 +155,7 @@ function mcl_complete() {
                     $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                     $cats_html .= "{$name}\">{$name}</a></td></tr>";
                 }
             }
@@ -164,7 +164,7 @@ function mcl_complete() {
         }
 
         if ( $count_complete ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-complete\">Complete";
+            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' );
             $cats_html .= " ({$count_complete})</h4>";
 
             // Create the navigation
@@ -182,7 +182,7 @@ function mcl_complete() {
             // Table
             $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
             $cats_html .= "<col width=\"99%\"></colgroup>";
-            $cats_html .= "\n<tr><th><strong>Change</strong></th><th><strong>Name</strong></th></tr>";
+            $cats_html .= "\n<tr><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
                 $cats_html .= "<tr><th><div id=\"mediastatus-";
@@ -198,7 +198,7 @@ function mcl_complete() {
                     $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">Change!</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                     $cats_html .= "{$name}\">{$name}</a></td></tr>";
                 }
             }
@@ -208,9 +208,8 @@ function mcl_complete() {
     }
     ?>
     <div class="wrap">
-        <h2>Media Consumption Log - Finished</h2>
+        <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
 
-        <h3>Navigation</h3>
         <table class="widefat">
             <colgroup>
                 <col width="1%">

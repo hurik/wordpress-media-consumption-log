@@ -70,7 +70,7 @@ function mcl_quick_post() {
 
         // Table
         $cats_html .= "<table class=\"widefat fixed\">";
-        $cats_html .= "<tr><th><strong>Next Post</strong></th><th><strong>Last Post</strong></th></tr>";
+        $cats_html .= "<tr><th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Last Post', 'media-consumption-log' ). "</strong></th></tr>";
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {
             $cats_html .= "<tr><th colspan=\"2\"><div id=\"mediastatus-";
             $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
@@ -122,9 +122,8 @@ function mcl_quick_post() {
     }
     ?>
     <div class="wrap">
-        <h2>Media Consumption Log - Quick Post</h2>
+        <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
 
-        <h3>Navigation</h3>
         <table class="widefat">
             <?php
             echo $cat_nav_html;
