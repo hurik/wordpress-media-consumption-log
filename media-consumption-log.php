@@ -44,4 +44,6 @@ require_once dirname( __FILE__ ) . '/mcl-functions.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
 require_once dirname( __FILE__ ) . '/mcl-status.php';
 
+register_activation_hook( __FILE__, 'mcl_install' );
+
 ?>
