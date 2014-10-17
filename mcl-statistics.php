@@ -250,22 +250,40 @@ function mcl_statistics() {
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
         <tr>
             <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
-            <th nowrap>#</th>
+            <th nowrap>" . __( 'Running', 'media-consumption-log' ) . "</th>
+            <th nowrap>" . __( 'Complete', 'media-consumption-log' ) . "</th>
+            <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>
         </tr>";
 
-    $count_all = 0;
+    $count_total = 0;
 
     foreach ( $categories as $category ) {
-        $count = get_tags_count_of_category( $category->term_id );
-        $count_all += $count;
+        $count_ongoing = get_tags_count_of_category( $category->term_id, 0 );
+        $count_complete = get_tags_count_of_category( $category->term_id, 1 );
 
-        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count}</td></tr>";
+        $count_category_total = $count_ongoing + $count_complete;
+
+        $count_total += $count_category_total;
+
+        if ( $count_ongoing == 0 ) {
+            $count_ongoing = "-";
+        }
+
+        if ( $count_complete == 0 ) {
+            $count_complete = "-";
+        }
+
+        if ( $count_category_total == 0 ) {
+            continue;
+        }
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td><td nowrap>{$count_category_total}</td></tr>";
     }
 
     $html .= "
         <tr>
-            <th>" . __( 'Total', 'media-consumption-log' ) . "</th>
-            <th nowrap>{$count_all}</th>
+            <th colspan=\"3\">" . __( 'Total', 'media-consumption-log' ) . "</th>
+            <th nowrap>{$count_total}</th>
         </tr>
     </table>";
 
@@ -389,14 +407,16 @@ function get_posts_of_category( $category_id ) {
     return $stats[0]->number;
 }
 
-function get_tags_count_of_category( $category_id ) {
+function get_tags_count_of_category( $category_id, $complete ) {
     global $wpdb;
 
     $stats = $wpdb->get_results( "
         SELECT count(*) as number
         FROM (
             SELECT
-                terms2.name AS name
+                terms2.name AS name,
+                terms2.term_id AS tag_id,
+                t1.term_id AS cat_id
             FROM
                 {$wpdb->prefix}posts AS p1
                 LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
@@ -415,6 +435,9 @@ function get_tags_count_of_category( $category_id ) {
                 AND p1.ID = p2.ID
             GROUP BY name
         ) AS temp
+        LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+        WHERE
+            IFNULL(mcl.complete, 0) = $complete
     " );
 
     return $stats[0]->number;
