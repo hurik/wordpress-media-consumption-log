@@ -89,15 +89,12 @@ function mcl_status() {
             $html .= "</div><br />";
 
             // Table
-            $html .= "<table border=\"1\"><colgroup><col width=\"99%\">";
+            $html .= "<table border=\"1\"><colgroup><col width=\"1%\"><col width=\"99%\">";
             $html .= "<col width=\"1%\"></colgroup>";
-            $html .= "<tr><th>" . __( 'Name', 'media-consumption-log' ) . "</th><th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th></tr>";
+            $html .= "<tr><th></th><th>" . __( 'Name', 'media-consumption-log' ) . "</th><th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
-                $html .= "<tr><th colspan=\"3\"><div id=\"mediastatus-";
-                $html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
-                $html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
-                $html .= "</div></th></tr>";
+                $first = true;
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
                     $name = htmlspecialchars( $tag->name );
@@ -105,9 +102,20 @@ function mcl_status() {
 
                     $last_consumed = get_last_consumed( $tag->tag_id, $category->term_id );
 
-                    $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $html .= "{$name}\">{$name}</a></td>";
-                    $html .= "<td nowrap>{$last_consumed}</td></tr>";
+                    if ( $first ) {
+                        $html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
+                        $html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
+                        $html .= "</div></th><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "{$name}\">{$name}</a></td>";
+                        $html .= "<td nowrap>{$last_consumed}</td></tr>";
+
+                        $first = false;
+                    } else {
+                        $html .= "<tr><td></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "{$name}\">{$name}</a></td>";
+                        $html .= "<td nowrap>{$last_consumed}</td></tr>";
+                    }
                 }
             }
 
@@ -131,20 +139,28 @@ function mcl_status() {
             $html .= "</div><br />";
 
             // Table
-            $html .= "<table border=\"1\"><tr><th>" . __( 'Name', 'media-consumption-log' ) . "</th>";
+            $html .= "<table border=\"1\"><colgroup><col width=\"1%\"><col width=\"99%\"></colgroup>";
+            $html .= "<tr><th></th><th>" . __( 'Name', 'media-consumption-log' ) . "</th></tr>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
-                $html .= "<tr><th><div id=\"mediastatus-";
-                $html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
-                $html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
-                $html .= "</div></th></tr>";
+                $first = true;
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
                     $name = htmlspecialchars( $tag->name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $html .= "{$name}\">{$name}</a></td></tr>";
+                    if ( $first ) {
+                        $html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
+                        $html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
+                        $html .= "</div></th><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "{$name}\">{$name}</a></td></tr>";
+
+                        $first = false;
+                    } else {
+                        $html .= "<tr><td></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "{$name}\">{$name}</a></td></tr>";
+                    }
                 }
             }
 
