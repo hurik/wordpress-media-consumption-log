@@ -138,14 +138,12 @@ function mcl_complete() {
 
             // Table
             $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
-            $cats_html .= "<col width=\"99%\"></colgroup>";
-            $cats_html .= "\n<tr><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
+            $cats_html .= "<col width=\"1%\"><col width=\"99%\"></colgroup>";
+            $cats_html .= "\n<tr><th></th><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>";
+            $cats_html .= "<th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
 
             foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
-                $cats_html .= "\n<tr><th><div id=\"mediastatus-";
-                $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
-                $cats_html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
-                $cats_html .= "</div></th></tr>";
+                $first = true;
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
@@ -155,8 +153,18 @@ function mcl_complete() {
                     $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $cats_html .= "{$name}\">{$name}</a></td></tr>";
+                    if ( $first ) {
+                        $cats_html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
+                        $cats_html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
+                        $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "{$name}\">{$name}</a></td></tr>";
+
+                        $first = false;
+                    } else {
+                        $cats_html .= "<tr><th nowrap></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "{$name}\">{$name}</a></td></tr>";
+                    }
                 }
             }
 
@@ -181,14 +189,11 @@ function mcl_complete() {
 
             // Table
             $cats_html .= "\n<table class=\"widefat\"><colgroup><col width=\"1%\">";
-            $cats_html .= "<col width=\"99%\"></colgroup>";
-            $cats_html .= "\n<tr><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
+            $cats_html .= "<colgroup><col width=\"1%\"><col width=\"99%\"></colgroup>";
+            $cats_html .= "\n<tr><th></th><th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th><th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th></tr>";
 
             foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
-                $cats_html .= "<tr><th><div id=\"mediastatus-";
-                $cats_html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
-                $cats_html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
-                $cats_html .= "</div></th></tr>";
+                $first = true;
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
@@ -198,8 +203,18 @@ function mcl_complete() {
                     $name = htmlspecialchars( $name );
                     $name = str_replace( "&amp;", "&", $name );
 
-                    $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
-                    $cats_html .= "{$name}\">{$name}</a></td></tr>";
+                    if ( $first ) {
+                        $cats_html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $cats_html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
+                        $cats_html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
+                        $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "{$name}\">{$name}</a></td></tr>";
+
+                        $first = false;
+                    } else {
+                        $cats_html .= "<tr><th nowrap></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "{$name}\">{$name}</a></td></tr>";
+                    }
                 }
             }
 
