@@ -265,19 +265,15 @@ function mcl_statistics() {
 
         $count_total += $count_category_total;
 
-        if ( $count_ongoing == 0 ) {
-            $count_ongoing = "-";
-        }
-
-        if ( $count_complete == 0 ) {
-            $count_complete = "-";
-        }
-
         if ( $count_category_total == 0 ) {
             continue;
         }
 
-        $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td><td nowrap>{$count_category_total}</td></tr>";
+        if ( $count_complete == 0 ) {
+            $html .= "<tr><td colspan=\"3\">{$category->name}</td><td nowrap>{$count_category_total}</td></tr>";
+        } else {
+            $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td><td nowrap>{$count_category_total}</td></tr>";
+        }
     }
 
     $html .= "
