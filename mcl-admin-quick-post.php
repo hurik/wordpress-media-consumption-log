@@ -108,7 +108,7 @@ function mcl_quick_post() {
                 $link = get_permalink( $last_post_data->ID );
 
                 if ( $first ) {
-                    $cats_html .= "<tr><th nowrap><div id=\"mediastatus-";
+                    $cats_html .= "<tr><th nowrap valign=\"top\"><div id=\"mediastatus-";
                     $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
                     $cats_html .= " (" . count( $data[$category->term_id][$key] ) . ")";
                     $cats_html .= "</div></th><td><a href=\"post-new.php?post_title=";
