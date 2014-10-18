@@ -154,7 +154,7 @@ function mcl_complete() {
                     $name = str_replace( "&amp;", "&", $name );
 
                     if ( $first ) {
-                        $cats_html .= "<tr><th nowrap valign=\"top\"><div id=\"mediastatus-";
+                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
                         $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
                         $cats_html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
                         $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
@@ -162,7 +162,7 @@ function mcl_complete() {
 
                         $first = false;
                     } else {
-                        $cats_html .= "<tr><th nowrap></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                         $cats_html .= "{$name}\">{$name}</a></td></tr>";
                     }
                 }
@@ -204,7 +204,7 @@ function mcl_complete() {
                     $name = str_replace( "&amp;", "&", $name );
 
                     if ( $first ) {
-                        $cats_html .= "<tr><th nowrap valign=\"top\"><div id=\"mediastatus-";
+                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
                         $cats_html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
                         $cats_html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
                         $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
@@ -212,7 +212,7 @@ function mcl_complete() {
 
                         $first = false;
                     } else {
-                        $cats_html .= "<tr><th nowrap></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $cats_html .= "<tr><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                         $cats_html .= "{$name}\">{$name}</a></td></tr>";
                     }
                 }
