@@ -269,7 +269,9 @@ function mcl_statistics() {
             continue;
         }
 
-        if ( $count_complete == 0 ) {
+        $cat_ids_status = explode( ",", get_option( 'mcl_settings_status_exclude_category' ) );
+
+        if ( in_array( $category->term_id, $cat_ids_status ) ) {
             $html .= "<tr><td colspan=\"3\">{$category->name}</td><td nowrap>{$count_category_total}</td></tr>";
         } else {
             $html .= "<tr><td>{$category->name}</td><td nowrap>{$count_ongoing}</td><td nowrap>{$count_complete}</td><td nowrap>{$count_category_total}</td></tr>";
