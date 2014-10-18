@@ -30,7 +30,7 @@ function mcl_quick_post() {
     foreach ( array_keys( $data ) as $cat_key ) {
         $category = get_category( $cat_key );
 
-        $cat_nav_html .= "<tr><th nowrap><div><a href=\"#mediastatus-";
+        $cat_nav_html .= "<tr><th nowrap valign=\"top\"><div><a href=\"#mediastatus-";
         $cat_nav_html .= "{$category->slug}\">{$category->name}</a>";
         $cat_nav_html .= "</th><td>";
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {

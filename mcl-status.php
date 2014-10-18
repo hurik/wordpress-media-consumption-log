@@ -103,7 +103,7 @@ function mcl_status() {
                     $last_consumed = get_last_consumed( $tag->tag_id, $category->term_id );
 
                     if ( $first ) {
-                        $html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $html .= "<tr><th nowrap rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
                         $html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
                         $html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
                         $html .= "</div></th><td><a href=\"{$tag->tag_link}\" title=\"";
@@ -112,7 +112,7 @@ function mcl_status() {
 
                         $first = false;
                     } else {
-                        $html .= "<tr><td></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
                         $html .= "{$name}\">{$name}</a></td>";
                         $html .= "<td nowrap>{$last_consumed}</td></tr>";
                     }
@@ -150,7 +150,7 @@ function mcl_status() {
                     $name = str_replace( "&amp;", "&", $name );
 
                     if ( $first ) {
-                        $html .= "<tr><th nowrap><div id=\"mediastatus-";
+                        $html .= "<tr><th nowrap rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
                         $html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
                         $html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
                         $html .= "</div></th><td><a href=\"{$tag->tag_link}\" title=\"";
@@ -158,7 +158,7 @@ function mcl_status() {
 
                         $first = false;
                     } else {
-                        $html .= "<tr><td></td><td><a href=\"{$tag->tag_link}\" title=\"";
+                        $html .= "<tr><td><a href=\"{$tag->tag_link}\" title=\"";
                         $html .= "{$name}\">{$name}</a></td></tr>";
                     }
                 }
