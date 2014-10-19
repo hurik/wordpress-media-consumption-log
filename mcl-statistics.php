@@ -202,7 +202,12 @@ function mcl_statistics() {
 </script>
 
     <div>
-        <a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a> | <a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a> | <a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a> | <a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a>
+        <ul>
+            <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>
+            <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>
+            <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>
+            <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>
+        <ul>
     </div>
 
     <h4 id=\"daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</h4><hr />
