@@ -206,6 +206,7 @@ function mcl_statistics() {
             <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>
             <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>
             <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>
+            <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>
             <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>
         <ul>
     </div>
@@ -250,6 +251,36 @@ function mcl_statistics() {
         </tr>
     </table>
     <p>{$since_string}</p>
+        
+    <h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />
+    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
+    <tr>
+        <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
+        <th nowrap>#</th>
+    </tr>";
+
+    $since_total_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) ), __( 'Total comsumption, since the first post on the %DATE.', 'media-consumption-log' ) );
+    $total_all = 0;
+
+    foreach ( $categories as $category ) {
+        if ( get_option( 'mcl_settings_statistics_mcl_number', 1 ) == "1" ) {
+            $total = get_mcl_number_of_category( $category->term_id );
+        } else {
+            $total = get_posts_of_category( $category->term_id );
+        }
+
+        $total_all += $total;
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$total}</td></tr>";
+    }
+
+    $html .= "
+        <tr>
+            <th>" . __( 'Total', 'media-consumption-log' ) . "</th>
+            <th nowrap>{$total_all}</th>
+        </tr>
+    </table>
+    <p>{$since_total_string}</p>
 
     <h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />
     <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
