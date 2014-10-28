@@ -107,6 +107,8 @@ function mcl_quick_post() {
 
                 $link = get_permalink( $last_post_data->ID );
 
+                $date = DateTime::createFromFormat( "Y-m-d H:i:s", $last_post_data->post_date );
+
                 if ( $first ) {
                     $cats_html .= "<tr><th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div id=\"mediastatus-";
                     $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
@@ -117,7 +119,7 @@ function mcl_quick_post() {
                     $cats_html .= "{$title}\">{$title}</a></td><td><a ";
                     $cats_html .= "href='{$link}' title='";
                     $cats_html .= "{$last_post_data->post_title}'>";
-                    $cats_html .= "{$last_post_data->post_title}</a></td></tr>";
+                    $cats_html .= "{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )})</td></tr>";
 
                     $first = false;
                 } else {
@@ -127,7 +129,7 @@ function mcl_quick_post() {
                     $cats_html .= "{$title}\">{$title}</a></td><td><a ";
                     $cats_html .= "href='{$link}' title='";
                     $cats_html .= "{$last_post_data->post_title}'>";
-                    $cats_html .= "{$last_post_data->post_title}</a></td></tr>";
+                    $cats_html .= "{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )})</td></tr>";
                 }
             }
         }
