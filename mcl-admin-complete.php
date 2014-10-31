@@ -228,6 +228,10 @@ function mcl_complete() {
         @media screen and (max-width:782px) {
             div.anchor { display: block; position: relative; top: -46px; visibility: hidden; }
         }
+        
+        @media screen and (max-width:600px) {
+            div.anchor { display: block; position: relative; top: 0px; visibility: hidden; }
+        }
     </style>
 
     <div class="wrap">
