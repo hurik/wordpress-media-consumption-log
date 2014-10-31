@@ -1,4 +1,5 @@
 <?php
+
 add_filter( 'load-post-new.php', 'mcl_new_post_with_cat_and_tag' );
 
 function mcl_new_post_with_cat_and_tag() {
@@ -138,6 +139,10 @@ function mcl_quick_post() {
     ?>
     <style type="text/css">
         div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
+
+        @media screen and (max-width:782px) {
+            div.anchor { display: block; position: relative; top: -46px; visibility: hidden; }
+        }
     </style>
 
     <div class="wrap">
@@ -159,4 +164,5 @@ function mcl_quick_post() {
     </div>	
     <?php
 }
+
 ?>

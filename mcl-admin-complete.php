@@ -1,4 +1,5 @@
 <?php
+
 add_filter( 'load-post-new.php', 'mcl_load_mcl_complete_in_new_post' );
 
 function mcl_load_mcl_complete_in_new_post() {
@@ -223,6 +224,10 @@ function mcl_complete() {
     ?>
     <style type="text/css">
         div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
+
+        @media screen and (max-width:782px) {
+            div.anchor { display: block; position: relative; top: -46px; visibility: hidden; }
+        }
     </style>
 
     <div class="wrap">
@@ -240,4 +245,5 @@ function mcl_complete() {
     </div>	
     <?php
 }
+
 ?>
