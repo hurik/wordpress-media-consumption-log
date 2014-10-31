@@ -1,5 +1,4 @@
 <?php
-
 add_filter( 'load-post-new.php', 'mcl_new_post_with_cat_and_tag' );
 
 function mcl_new_post_with_cat_and_tag() {
@@ -53,7 +52,7 @@ function mcl_quick_post() {
         $count = count_tags_of_category( $data, $category->term_id );
 
         // Category header
-        $cats_html .= "<h3 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}";
         $cats_html .= " ({$count})</h3><hr />";
 
         // Create the navigation
@@ -110,8 +109,8 @@ function mcl_quick_post() {
                 $date = DateTime::createFromFormat( "Y-m-d H:i:s", $last_post_data->post_date );
 
                 if ( $first ) {
-                    $cats_html .= "<tr><th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div id=\"mediastatus-";
-                    $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
+                    $cats_html .= "<tr><th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\">";
+                    $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}";
                     $cats_html .= " (" . count( $data[$category->term_id][$key] ) . ")";
                     $cats_html .= "</div></th><td><a href=\"post-new.php?post_title=";
                     $cats_html .= "{$title_urlencode}&tag={$tag->tag_id}";
@@ -137,6 +136,10 @@ function mcl_quick_post() {
         $cats_html .= "</table>";
     }
     ?>
+    <style type="text/css">
+        div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
+    </style>
+
     <div class="wrap">
         <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
 
@@ -156,5 +159,4 @@ function mcl_quick_post() {
     </div>	
     <?php
 }
-
 ?>

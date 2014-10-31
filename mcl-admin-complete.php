@@ -1,5 +1,4 @@
 <?php
-
 add_filter( 'load-post-new.php', 'mcl_load_mcl_complete_in_new_post' );
 
 function mcl_load_mcl_complete_in_new_post() {
@@ -117,11 +116,11 @@ function mcl_complete() {
         }
 
         // Category header
-        $cats_html .= "<h3 id=\"mediastatus-{$category->slug}\">{$category->name}";
+        $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}";
         $cats_html .= " ({$count})</h3><hr />";
 
         if ( $count_ongoing ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' );
+            $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-ongoing\"></div><h4>" . __( 'Running', 'media-consumption-log' );
             $cats_html .= " ({$count_ongoing})</h4>";
 
             // Create the navigation
@@ -154,8 +153,8 @@ function mcl_complete() {
                     $name = str_replace( "&amp;", "&", $name );
 
                     if ( $first ) {
-                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
-                        $cats_html .= "{$category->slug}-" . strtolower( $key ) . "\">{$key}";
+                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\">";
+                        $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}";
                         $cats_html .= " (" . count( $data_ongoing[$category->term_id][$key] ) . ")";
                         $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=1\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                         $cats_html .= "{$name}\">{$name}</a></td></tr>";
@@ -172,7 +171,7 @@ function mcl_complete() {
         }
 
         if ( $count_complete ) {
-            $cats_html .= "<h4 id=\"mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' );
+            $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete\"></div><h4>" . __( 'Complete', 'media-consumption-log' );
             $cats_html .= " ({$count_complete})</h4>";
 
             // Create the navigation
@@ -204,8 +203,8 @@ function mcl_complete() {
                     $name = str_replace( "&amp;", "&", $name );
 
                     if ( $first ) {
-                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div id=\"mediastatus-";
-                        $cats_html .= "{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}";
+                        $cats_html .= "<tr><th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\">";
+                        $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}";
                         $cats_html .= " (" . count( $data_complete[$category->term_id][$key] ) . ")";
                         $cats_html .= "</div></th><td nowrap><a href=\"admin.php?page=mcl-complete&tag_id={$tag->tag_id}&cat_id={$tag->cat_id}&complete=0\" title=\"Status ändern!\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td><td><a href=\"{$tag->tag_link}\" title=\"";
                         $cats_html .= "{$name}\">{$name}</a></td></tr>";
@@ -222,6 +221,10 @@ function mcl_complete() {
         }
     }
     ?>
+    <style type="text/css">
+        div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
+    </style>
+
     <div class="wrap">
         <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
 
@@ -237,5 +240,4 @@ function mcl_complete() {
     </div>	
     <?php
 }
-
 ?>
