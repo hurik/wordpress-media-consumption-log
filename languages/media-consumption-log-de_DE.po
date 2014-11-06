@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-11-06 00:02:52+0000\n"
+"PO-Revision-Date: 2014-11-06 00:12:07+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -350,9 +350,6 @@ msgstr "Gesamter Konsum"
 msgid "Total comsumption, since the first post on the %DATE."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE."
 
-#: mcl-admin-menu.php:10
-#: mcl-admin-unit.php:13
-#: mcl-admin-unit.php:19
 #: mcl-statistics.php:225
 #: mcl-statistics.php:266
 #@ media-consumption-log
@@ -369,4 +366,11 @@ msgstr "Bitte definiere die Einheiten der Kategorien."
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES, since the first post on the %DATE."
 msgstr "Anzahl der verschiedenen %CATEGORIES, seit dem ersten Beitrag am %DATE."
+
+#: mcl-admin-menu.php:10
+#: mcl-admin-unit.php:13
+#: mcl-admin-unit.php:19
+#@ media-consumption-log
+msgid "Units"
+msgstr "Einheiten"
 

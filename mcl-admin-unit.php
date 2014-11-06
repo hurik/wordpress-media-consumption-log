@@ -10,13 +10,13 @@ function mcl_unit_register() {
 function mcl_unit() {
     ?>
     <div class="wrap">
-        <h2>Media Consumption Log - <?php _e( 'Unit', 'media-consumption-log' ); ?></h2>
+        <h2>Media Consumption Log - <?php _e( 'Units', 'media-consumption-log' ); ?></h2>
 
         <form method="post" action="options.php">
             <?php settings_fields( 'mcl-unit-group' ); ?>
             <?php do_settings_sections( 'mcl-unit-group' ); ?>
 
-            <h3><?php _e( 'Unit', 'media-consumption-log' ); ?></h3>
+            <h3><?php _e( 'Units', 'media-consumption-log' ); ?></h3>
             <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
             <table class="form-table">
                 <?php

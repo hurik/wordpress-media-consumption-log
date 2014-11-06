@@ -7,7 +7,7 @@ function mcl_admin_menu() {
     add_menu_page( 'MCL', 'MCL', 'manage_options', 'mcl-quick-post' );
     add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', 'mcl_quick_post' );
     add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Complete', 'media-consumption-log' ), __( 'Complete', 'media-consumption-log' ), 'manage_options', 'mcl-complete', 'mcl_complete' );
-    add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Unit', 'media-consumption-log' ), __( 'Unit', 'media-consumption-log' ), 'manage_options', 'mcl-unit', 'mcl_unit' );
+    add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Units', 'media-consumption-log' ), __( 'Units', 'media-consumption-log' ), 'manage_options', 'mcl-unit', 'mcl_unit' );
     add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', 'mcl_settings' );
 
     // Register settings
