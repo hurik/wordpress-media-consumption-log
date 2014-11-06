@@ -218,10 +218,11 @@ function mcl_statistics() {
     <div id=\"monthly_chart_div\"></div>
 
     <h4 id=\"average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</h4><hr />
-    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
+    <table border=\"1\"><colgroup><col width=\"98%\"><col width=\"1%\"><col width=\"1%\"></colgroup>
     <tr>
         <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
         <th nowrap>&#216</th>
+        <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>
     </tr>";
 
     $date_first_post = new DateTime( get_date_of_first_post() );
@@ -241,7 +242,12 @@ function mcl_statistics() {
 
         $average_all += $average;
 
-        $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td></tr>";
+        $unit = get_option( "mcl_unit_{$category->slug}" );
+        if ( empty( $unit ) ) {
+            $unit = $category->name;
+        }
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$average}</td><td nowrap>{$unit}</td></tr>";
     }
 
     $html .= "
@@ -253,10 +259,11 @@ function mcl_statistics() {
     <p>{$since_string}</p>
         
     <h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />
-    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
+    <table border=\"1\"><colgroup><col width=\"98%\"><col width=\"1%\"><col width=\"1%\"></colgroup>
     <tr>
         <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
         <th nowrap>#</th>
+        <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>
     </tr>";
 
     $since_total_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) ), __( 'Total comsumption, since the first post on the %DATE.', 'media-consumption-log' ) );
@@ -271,7 +278,12 @@ function mcl_statistics() {
 
         $total_all += $total;
 
-        $html .= "<tr><td>{$category->name}</td><td nowrap>{$total}</td></tr>";
+        $unit = get_option( "mcl_unit_{$category->slug}" );
+        if ( empty( $unit ) ) {
+            $unit = $category->name;
+        }
+
+        $html .= "<tr><td>{$category->name}</td><td nowrap>{$total}</td><td nowrap>{$unit}</td></tr>";
     }
 
     $html .= "
@@ -283,7 +295,7 @@ function mcl_statistics() {
     <p>{$since_total_string}</p>
 
     <h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />
-    <table border=\"1\"><col width=\"98%\"><col width=\"1%\">
+    <table border=\"1\"><colgroup><col width=\"97%\"><col width=\"1%\"><col width=\"1%\"><col width=\"1%\"></colgroup>
         <tr>
             <th>" . __( 'Category', 'media-consumption-log' ) . "</th>
             <th nowrap>" . __( 'Running', 'media-consumption-log' ) . "</th>
@@ -314,12 +326,32 @@ function mcl_statistics() {
         }
     }
 
+    $categories_string = "";
+    $second_to_last_cat = $categories[count( $categories ) - 2];
+    $last_cat = end( $categories );
+
+    foreach ( $categories as $category ) {
+        if ( $category != $last_cat ) {
+            $categories_string .= "{$category->name}";
+
+            if ( $category != $second_to_last_cat ) {
+                $categories_string .= ", ";
+            }
+        } else {
+            $categories_string .= " " . __( 'and', 'media-consumption-log' ) . " {$category->name}";
+        }
+    }
+
+    $since_count_string = str_replace( '%DATE', $date_first_post->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) ), __( 'Total count of different %CATEGORIES, since the first post on the %DATE.', 'media-consumption-log' ) );
+    $since_count_string = str_replace( '%CATEGORIES', $categories_string, $since_count_string );
+
     $html .= "
         <tr>
             <th colspan=\"3\">" . __( 'Total', 'media-consumption-log' ) . "</th>
             <th nowrap>{$count_total}</th>
         </tr>
-    </table>";
+    </table>
+    <p>{$since_count_string}</p>";
 
     return $html;
 }
