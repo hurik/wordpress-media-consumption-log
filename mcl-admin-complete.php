@@ -39,7 +39,11 @@ function mcl_check_complete_after_saving( $post_id ) {
 function change_complete_status( $tag_id, $cat_id, $complete ) {
     global $wpdb;
 
-    $tags = $wpdb->get_results( "REPLACE INTO {$wpdb->prefix}mcl_complete SET tag_id = $tag_id, cat_id = $cat_id, complete = $complete" );
+    if ( !empty( $complete ) ) {
+        $wpdb->get_results( "INSERT INTO {$wpdb->prefix}mcl_complete SET tag_id = $tag_id, cat_id = $cat_id, complete = $complete" );
+    } else {
+        $wpdb->get_results( "DELETE FROM {$wpdb->prefix}mcl_complete WHERE tag_id = $tag_id AND cat_id = $cat_id" );
+    }
 }
 
 function mcl_complete() {
@@ -228,7 +232,7 @@ function mcl_complete() {
         @media screen and (max-width:782px) {
             div.anchor { display: block; position: relative; top: -46px; visibility: hidden; }
         }
-        
+
         @media screen and (max-width:600px) {
             div.anchor { display: block; position: relative; top: 0px; visibility: hidden; }
         }
