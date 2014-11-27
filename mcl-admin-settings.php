@@ -17,6 +17,16 @@ function mcl_settings_register() {
 }
 
 function mcl_settings() {
+    $cats = $categories = get_categories('hide_empty=0');
+    $cats_text = "";
+    $last_cat = end( $categories );
+
+    foreach ( $categories as $category ) {
+        $cats_text .= "{$category->name} ({$category->term_id})";
+        if ( $category != $last_cat ) {
+            $cats_text .= ", ";
+        }
+    }
     ?>
     <div class="wrap">
         <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2>
@@ -30,7 +40,8 @@ function mcl_settings() {
                 <tr>
                     <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
                     <td><input type="text" name="mcl_settings_status_exclude_category" value="<?php echo esc_attr( get_option( 'mcl_settings_status_exclude_category' ) ); ?>" style="width:100%;" />
-                        <p class="description"><?php _e( 'IDs of the category you want to exclude from the status page. Example: 1,45,75', 'media-consumption-log' ); ?></p></td>
+                        <p class="description"><?php _e( 'IDs of the category you want to exclude from the status page. Example: 1,45,75', 'media-consumption-log' ); ?><br />
+                            <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
                 </tr>
             </table>
 
@@ -39,7 +50,8 @@ function mcl_settings() {
                 <tr>
                     <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
                     <td><input type="text" name="mcl_settings_statistics_exclude_category" value="<?php echo esc_attr( get_option( 'mcl_settings_statistics_exclude_category' ) ); ?>" style="width:100%;" />
-                        <p class="description"><?php _e( 'IDs of the category you want to exclude from the statistics page. Example: 1', 'media-consumption-log' ); ?></p></td>
+                        <p class="description"><?php _e( 'IDs of the category you want to exclude from the statistics page. Example: 1', 'media-consumption-log' ); ?><br />
+                            <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
                 </tr>
 
                 <tr>
