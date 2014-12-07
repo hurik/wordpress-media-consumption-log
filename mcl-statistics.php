@@ -303,6 +303,8 @@ function mcl_statistics() {
             <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>
         </tr>";
 
+    $count_total_ongoing = 0;
+    $count_total_complete = 0;
     $count_total = 0;
 
     foreach ( $categories as $category ) {
@@ -311,6 +313,9 @@ function mcl_statistics() {
 
         $count_category_total = $count_ongoing + $count_complete;
 
+
+        $count_total_ongoing += $count_ongoing;
+        $count_total_complete += $count_complete;
         $count_total += $count_category_total;
 
         if ( $count_category_total == 0 ) {
@@ -347,7 +352,9 @@ function mcl_statistics() {
 
     $html .= "
         <tr>
-            <th colspan=\"3\">" . __( 'Total', 'media-consumption-log' ) . "</th>
+            <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>
+            <th nowrap>{$count_total_ongoing}</th>
+            <th nowrap>{$count_total_complete}</th>
             <th nowrap>{$count_total}</th>
         </tr>
     </table>
