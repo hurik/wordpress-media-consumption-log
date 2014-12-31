@@ -110,7 +110,7 @@ function mcl_statistics() {
         }
     }
 
-    $html .= "],
+    $html .= ", { role: 'annotation' }],
 ";
 
     for ( $i = 0; $i < count( $daily_dates ); $i++ ) {
@@ -118,7 +118,10 @@ function mcl_statistics() {
 
         $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )}', ";
 
+        $total = 0;
+        
         foreach ( $categories as $category ) {
+            $total += $data[$category->name][$i];
             $html .= "{$data[$category->name][$i]}";
 
             if ( end( $categories ) != $category ) {
@@ -126,7 +129,7 @@ function mcl_statistics() {
             }
         }
 
-        $html .= "]";
+        $html .= ", '{$total}']";
 
         if ( $i != count( $daily_dates ) - 1 ) {
             $html .= ",
@@ -138,7 +141,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            " . get_option( 'mcl_settings_statistics_google_charts_daily_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
+            " . get_option( 'mcl_settings_statistics_google_charts_daily_options', "annotations: { textStyle: { color: '#000000', fontSize: 9, bold:true }, highContrast: true, alwaysOutside: true},\nheight: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));
@@ -158,15 +161,18 @@ function mcl_statistics() {
         }
     }
 
-    $html .= "],
+    $html .= ", { role: 'annotation' }],
 ";
 
     for ( $i = 0; $i < count( $monthly_dates ); $i++ ) {
         $date = DateTime::createFromFormat( 'Y-m', $monthly_dates[$i] );
 
         $html .= "            ['{$date->format( get_option( 'mcl_settings_statistics_monthly_date_format', "m.Y" ) )}', ";
+        
+        $total = 0;
 
         foreach ( $categories as $category ) {
+            $total += $data_month[$category->name][$i];
             $html .= "{$data_month[$category->name][$i]}";
 
             if ( end( $categories ) != $category ) {
@@ -174,7 +180,7 @@ function mcl_statistics() {
             }
         }
 
-        $html .= "]";
+        $html .= ", '{$total}']";
 
         if ( $i != count( $daily_dates ) - 1 ) {
             $html .= ",
@@ -186,7 +192,7 @@ function mcl_statistics() {
         ]);
 
         var options = {
-            " . get_option( 'mcl_settings_statistics_google_charts_monthly_options', "height: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
+            " . get_option( 'mcl_settings_statistics_google_charts_monthly_options', "annotations: { textStyle: { color: '#000000', fontSize: 9, bold:true }, highContrast: true, alwaysOutside: true},\nheight: data.getNumberOfRows() * 15 + 100,\nlegend: { position: 'top', maxLines: 4, alignment: 'center' },\nbar: { groupWidth: '70%' },\nfocusTarget: 'category',\nchartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},\nisStacked: true," ) . "
         };
 
         var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));
