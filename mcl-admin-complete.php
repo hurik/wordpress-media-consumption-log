@@ -57,7 +57,7 @@ function mcl_complete() {
     }
 
     // Get the categories
-    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
+    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
     $data_ongoing = get_all_tags_sorted( $categories, 0 );
@@ -152,7 +152,7 @@ function mcl_complete() {
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
-                    if ( get_option( 'mcl_settings_other_comma_in_tags', 1 ) == "1" ) {
+                    if ( SettingsHelper::isOtherCommaInTags() ) {
                         $name = str_replace( '--', ', ', $name );
                     }
                     $name = htmlspecialchars( $name );
@@ -204,7 +204,7 @@ function mcl_complete() {
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
-                    if ( get_option( 'mcl_settings_other_comma_in_tags', 1 ) == "1" ) {
+                    if ( SettingsHelper::isOtherCommaInTags() ) {
                         $name = str_replace( '--', ', ', $name );
                     }
                     $name = htmlspecialchars( $name );

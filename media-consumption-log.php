@@ -36,6 +36,7 @@
   THE SOFTWARE.
  */
 
+require_once dirname( __FILE__ ) . '/helpers/SettingsHelper.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-menu.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-number.php';

@@ -4,7 +4,7 @@ add_shortcode( 'mcl', 'mcl_status' );
 
 function mcl_status() {
     // Get the categories
-    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
+    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
     $data_ongoing = get_all_tags_sorted( $categories, 0 );
@@ -178,7 +178,7 @@ function get_last_consumed( $tag_id, $category_id ) {
     $link = get_permalink( $post->ID );
 
     // Explode the title
-    $titleExploded = explode( " " . get_option( 'mcl_settings_other_separator', "-" ) . " ", $post->post_title );
+    $titleExploded = explode( " " . SettingsHelper::getOtherSeprator() . " ", $post->post_title );
 
     // Get the last part, so we have the chapter/episode/...
     $status = end( $titleExploded );

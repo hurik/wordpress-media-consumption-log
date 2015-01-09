@@ -77,7 +77,7 @@ function get_tags_of_category( $category_id, $complete ) {
     }
 
     // Replace the place holder with the commas
-    if ( !is_admin() && get_option( 'mcl_settings_other_comma_in_tags', 1 ) == "1" ) {
+    if ( !is_admin() && SettingsHelper::isOtherCommaInTags() ) {
         $tags = comma_tags_filter( $tags );
     }
 

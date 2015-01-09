@@ -35,7 +35,7 @@ function mcl_quick_post() {
     }
 
     // Get the categories
-    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
+    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
     $data = get_all_tags_sorted( $categories, 0 );
@@ -104,8 +104,8 @@ function mcl_quick_post() {
                 }
 
                 $title = trim( $last_post_data->post_title );
-                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_to', __( 'to', 'media-consumption-log' ) ) . " /", "", $title );
-                $title = preg_replace( "/[A-Z0-9]+ " . get_option( 'mcl_settings_other_mcl_number_and', __( 'and', 'media-consumption-log' ) ) . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . SettingsHelper::getOtherMclNumberTo() . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . SettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
 
                 $title_explode = explode( ' ', $title );
                 $number = end( $title_explode );
@@ -134,14 +134,14 @@ function mcl_quick_post() {
                     $cats_html .= "<tr>"
                             . "<th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data[$category->term_id][$key] ) . ")</div></th>"
                             . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )})</td>"
+                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( SettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
 
                     $first = false;
                 } else {
                     $cats_html .= "<tr>"
                             . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( get_option( 'mcl_settings_statistics_daily_date_format', "j.m.Y" ) )})</td>"
+                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( SettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
                 }
             }

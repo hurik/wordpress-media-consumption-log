@@ -1,7 +1,7 @@
 <?php
 
 function mcl_unit_register() {
-    $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
+    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
     foreach ( $categories as $category ) {
         register_setting( 'mcl-unit-group', "mcl_unit_{$category->slug}" );
     }
@@ -20,7 +20,7 @@ function mcl_unit() {
             <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
             <table class="form-table">
                 <?php
-                $categories = get_categories( "exclude=" . get_option( 'mcl_settings_status_exclude_category' ) );
+                $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
                 foreach ( $categories as $category ) {
                     ?>
                     <tr>

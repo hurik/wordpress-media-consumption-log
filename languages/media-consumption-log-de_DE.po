@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-08 09:22:17+0000\n"
+"PO-Revision-Date: 2015-01-09 07:35:30+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,72 +71,72 @@ msgstr "Statistiken"
 msgid "Use mcl_numbers"
 msgstr "Benutze mcl_numbers"
 
-#: mcl-admin-settings.php:64
+#: mcl-admin-settings.php:70
 #@ media-consumption-log
 msgid "Daily statistics size"
 msgstr "Größe der täglichen Statistik"
 
-#: mcl-admin-settings.php:70
+#: mcl-admin-settings.php:76
 #@ media-consumption-log
 msgid "Daily date format"
 msgstr "Zeitformat der täglichen Statistik"
 
-#: mcl-admin-settings.php:76
+#: mcl-admin-settings.php:82
 #@ media-consumption-log
 msgid "Daily Google Charts Options"
 msgstr "Tägliche Google Charts Options"
 
-#: mcl-admin-settings.php:78
+#: mcl-admin-settings.php:84
 #@ media-consumption-log
 msgid "When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die täglichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: mcl-admin-settings.php:83
+#: mcl-admin-settings.php:89
 #@ media-consumption-log
 msgid "Monthly statistics size"
 msgstr "Größe der monatlichen Statistik"
 
-#: mcl-admin-settings.php:89
+#: mcl-admin-settings.php:95
 #@ media-consumption-log
 msgid "Monthly date format"
 msgstr "Zeitformat der monatlichen Statistik"
 
-#: mcl-admin-settings.php:95
+#: mcl-admin-settings.php:101
 #@ media-consumption-log
 msgid "Monthly Google Charts Options"
 msgstr "Monatliche Google Charts Options"
 
-#: mcl-admin-settings.php:97
+#: mcl-admin-settings.php:103
 #@ media-consumption-log
 msgid "When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die monatlichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: mcl-admin-settings.php:102
+#: mcl-admin-settings.php:108
 #@ media-consumption-log
 msgid "Other settings"
 msgstr "Andere Einstellungen"
 
-#: mcl-admin-settings.php:103
+#: mcl-admin-settings.php:109
 #@ media-consumption-log
 msgid "<strong>Attention:</strong> This settings should be changed after using the plugin for some time! This should only been altered after the installation."
 msgstr "<strong>Achtung:</strong>Diese Einstellungen sollten nicht mehr geändert werden, wenn das Plugin eine längere Zeit genutzt wurde. Diese Einstellungen sollten nur nach der Installation eingestellt werden."
 
-#: mcl-admin-settings.php:107
+#: mcl-admin-settings.php:113
 #@ media-consumption-log
 msgid "Activate comma in tags"
 msgstr "Komma in Tags"
 
-#: mcl-admin-settings.php:113
+#: mcl-admin-settings.php:125
 #@ media-consumption-log
 msgid "Separator"
 msgstr "Seperator"
 
-#: mcl-admin-settings.php:119
+#: mcl-admin-settings.php:131
 #@ media-consumption-log
 msgid "mcl_number \"and\""
 msgstr "mcl_number \"und\""
 
-#: mcl-admin-settings.php:125
+#: mcl-admin-settings.php:137
 #@ media-consumption-log
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
@@ -262,41 +262,6 @@ msgstr "IDs der Kategorien die ihr von der Status Seite ausnehmen wollt. Beispie
 msgid "IDs of the category you want to exclude from the statistics page. Example: 1"
 msgstr "IDs der Kategorien die ihr von der Statistiken Seite ausnehmen wollt. Beispiel: 1"
 
-#: mcl-admin-settings.php:60
-#@ media-consumption-log
-msgid "Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: Checked"
-msgstr "Sollen die mcl_number beim zeichnen der Statistiken benutzt werden? Wenn nicht wird die Beitragsanzahl benutzt. Voreinstellung: Aktiviert"
-
-#: mcl-admin-settings.php:72
-#@ media-consumption-log
-msgid "Format for dates on the daily statistics page. Default: j.m.Y"
-msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung: j.m.Y"
-
-#: mcl-admin-settings.php:91
-#@ media-consumption-log
-msgid "Format for dates on the monthly statistics page. Default: n.Y"
-msgstr "Format der Zeitangabe der monatliche Statistik. Voreinstellung: m.Y"
-
-#: mcl-admin-settings.php:109
-#@ media-consumption-log
-msgid "When activated, \"--\" will be replaced with \", \" in the frontend. Default: Checked"
-msgstr "Wen aktiviert, wird  \"--\" mit \", \" ersetzt im Frontend. Voreinstellung: Aktiviert"
-
-#: mcl-admin-settings.php:115
-#@ media-consumption-log
-msgid "Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: -"
-msgstr "Separator der den Namen von der Episode/Kapitel/... trennt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: -"
-
-#: mcl-admin-settings.php:121
-#@ media-consumption-log
-msgid "When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: and"
-msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number auf 2 gesetzt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: und"
-
-#: mcl-admin-settings.php:127
-#@ media-consumption-log
-msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: to"
-msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: und"
-
 #: mcl-admin-quick-post.php:92
 #@ media-consumption-log
 msgid "Next Post"
@@ -307,33 +272,19 @@ msgstr "Nächster Beitrag"
 msgid "Last Post"
 msgstr "Letzter Beitrag"
 
-#: mcl-admin-settings.php:66
-#@ media-consumption-log
-msgid "Please insert number of days the daily statistic should cover. Default: 30"
-msgstr "Anzahl der Tage für die tägliche Statistik. Voreinstellung: 30"
-
-#: mcl-admin-settings.php:85
-#@ media-consumption-log
-msgid "Please insert number of months the statistic should cover. Default: 6"
-msgstr "Anzahl der Tage für die monatliche Statistik. Voreinstellung: 6"
-
 #. translators: plugin header field 'Description'
 #: media-consumption-log.php:0
 #@ media-consumption-log
 msgid "This plugin helps you to keep track of the series, movies, mangas, comics you are reading."
 msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Mangas, Comics die die schaust."
 
-#: mcl-admin-number.php:33
-#: mcl-admin-quick-post.php:108
-#: mcl-admin-settings.php:120
+#: helpers/SettingsHelper.php:34
 #: mcl-statistics.php:352
 #@ media-consumption-log
 msgid "and"
 msgstr "und"
 
-#: mcl-admin-number.php:35
-#: mcl-admin-quick-post.php:107
-#: mcl-admin-settings.php:126
+#: helpers/SettingsHelper.php:38
 #@ media-consumption-log
 msgid "to"
 msgstr "bis"
@@ -385,4 +336,71 @@ msgstr "IDs der Kategorien:"
 #@ media-consumption-log
 msgid "Modify"
 msgstr "Bearbeiten"
+
+#: helpers/SettingsHelper.php:26
+#@ media-consumption-log
+msgid "Y-m-j"
+msgstr "j.m.Y"
+
+#: helpers/SettingsHelper.php:30
+#@ media-consumption-log
+msgid "Y-m"
+msgstr "m.Y"
+
+#: mcl-admin-settings.php:60
+#@ media-consumption-log
+msgid "Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: "
+msgstr "Sollen die mcl_number beim zeichnen der Statistiken benutzt werden? Wenn nicht wird die Beitragsanzahl benutzt. Voreinstellung: "
+
+#: mcl-admin-settings.php:62
+#: mcl-admin-settings.php:117
+#@ media-consumption-log
+msgid "Checked"
+msgstr "Aktiviert"
+
+#: mcl-admin-settings.php:64
+#: mcl-admin-settings.php:119
+#@ media-consumption-log
+msgid "Unchecked"
+msgstr "Deaktiviert"
+
+#: mcl-admin-settings.php:72
+#@ media-consumption-log
+msgid "Please insert number of days the daily statistic should cover. Default: "
+msgstr "Anzahl der Tage für die tägliche Statistik. Voreinstellung: "
+
+#: mcl-admin-settings.php:78
+#@ media-consumption-log
+msgid "Format for dates on the daily statistics page. Default: "
+msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung: "
+
+#: mcl-admin-settings.php:91
+#@ media-consumption-log
+msgid "Please insert number of months the statistic should cover. Default: "
+msgstr "Anzahl der Tage für die monatliche Statistik. Voreinstellung: "
+
+#: mcl-admin-settings.php:97
+#@ media-consumption-log
+msgid "Format for dates on the monthly statistics page. Default: "
+msgstr "Format der Zeitangabe der monatliche Statistik. Voreinstellung: "
+
+#: mcl-admin-settings.php:115
+#@ media-consumption-log
+msgid "When activated, \"--\" will be replaced with \", \" in the frontend. Default: "
+msgstr "Wen aktiviert, wird \"--\" mit \", \" ersetzt im Frontend. Voreinstellung: "
+
+#: mcl-admin-settings.php:127
+#@ media-consumption-log
+msgid "Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: "
+msgstr "Separator der den Namen von der Episode/Kapitel/... trennt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: "
+
+#: mcl-admin-settings.php:133
+#@ media-consumption-log
+msgid "When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: "
+msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number auf 2 gesetzt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: "
+
+#: mcl-admin-settings.php:139
+#@ media-consumption-log
+msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: "
+msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: "
 
