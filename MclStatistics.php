@@ -1,10 +1,10 @@
 <?php
 
-add_shortcode( 'mcl-stats', array( 'MclStatistics', 'mcl_statistics' ) );
+add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
 
 class MclStatistics {
 
-    function mcl_statistics() {
+    function build_statistics() {
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
         $current_date = date( 'Y-m-d' );
@@ -32,9 +32,9 @@ class MclStatistics {
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $stats = self::get_post_with_mcl_number_of_category_sorted_by_date( $category->term_id );
+                $stats = self::getPostWithMclNumberOfCategorySortedByDate( $category->term_id );
             } else {
-                $stats = self::get_post_of_category_sorted_by_date( $category->term_id );
+                $stats = self::getPostOfCategorySortedByDate( $category->term_id );
             }
 
             foreach ( $daily_dates as $date ) {
@@ -62,9 +62,9 @@ class MclStatistics {
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $stats = self::get_post_with_mcl_number_of_category_sorted_by_month( $category->term_id );
+                $stats = self::getPostWithMclNumberOfCategorySortedByMonth( $category->term_id );
             } else {
-                $stats = self::get_post_of_category_sorted_by_month( $category->term_id );
+                $stats = self::getPostOfCategorySortedByMonth( $category->term_id );
             }
 
             foreach ( $monthly_dates as $date ) {
@@ -230,15 +230,15 @@ class MclStatistics {
                 . "\n    <th nowrap>#</th><th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
                 . "\n  </tr>";
 
-        $date_first_post = new DateTime( self::get_date_of_first_post() );
+        $date_first_post = new DateTime( self::getDateOfFirstPost() );
         $since_total_string = str_replace( '%DATE', $date_first_post->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total comsumption, since the first post on the %DATE.', 'media-consumption-log' ) );
         $total_all = 0;
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $total = self::get_mcl_number_of_category( $category->term_id );
+                $total = self::getMclNumberOfCategory( $category->term_id );
             } else {
-                $total = self::get_posts_of_category( $category->term_id );
+                $total = self::getPostsOfCategory( $category->term_id );
             }
 
             $total_all += $total;
@@ -285,9 +285,9 @@ class MclStatistics {
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $average = round( self::get_mcl_number_of_category( $category->term_id ) / $number_of_days, 2 );
+                $average = round( self::getMclNumberOfCategory( $category->term_id ) / $number_of_days, 2 );
             } else {
-                $average = round( self::get_posts_of_category( $category->term_id ) / $number_of_days, 2 );
+                $average = round( self::getPostsOfCategory( $category->term_id ) / $number_of_days, 2 );
             }
 
             $average_all += $average;
@@ -332,8 +332,8 @@ class MclStatistics {
         $count_total = 0;
 
         foreach ( $categories as $category ) {
-            $count_ongoing = self::get_tags_count_of_category( $category->term_id, 0 );
-            $count_complete = self::get_tags_count_of_category( $category->term_id, 1 );
+            $count_ongoing = self::getTagsCountOfCategory( $category->term_id, 0 );
+            $count_complete = self::getTagsCountOfCategory( $category->term_id, 1 );
 
             $count_category_total = $count_ongoing + $count_complete;
 
@@ -394,7 +394,7 @@ class MclStatistics {
         return $html;
     }
 
-    private function get_date_of_first_post() {
+    private function getDateOfFirstPost() {
         global $wpdb;
 
         $min_date = $wpdb->get_results( "
@@ -407,7 +407,7 @@ class MclStatistics {
         return $min_date[0]->date;
     }
 
-    private function get_post_with_mcl_number_of_category_sorted_by_date( $category_id ) {
+    private function getPostWithMclNumberOfCategorySortedByDate( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -426,7 +426,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function get_post_of_category_sorted_by_date( $category_id ) {
+    private function getPostOfCategorySortedByDate( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -443,7 +443,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function get_post_with_mcl_number_of_category_sorted_by_month( $category_id ) {
+    private function getPostWithMclNumberOfCategorySortedByMonth( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -462,7 +462,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function get_post_of_category_sorted_by_month( $category_id ) {
+    private function getPostOfCategorySortedByMonth( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -479,7 +479,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function get_mcl_number_of_category( $category_id ) {
+    private function getMclNumberOfCategory( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -496,7 +496,7 @@ class MclStatistics {
         return $stats[0]->number;
     }
 
-    private function get_posts_of_category( $category_id ) {
+    private function getPostsOfCategory( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -511,7 +511,7 @@ class MclStatistics {
         return $stats[0]->number;
     }
 
-    private function get_tags_count_of_category( $category_id, $complete ) {
+    private function getTagsCountOfCategory( $category_id, $complete ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "

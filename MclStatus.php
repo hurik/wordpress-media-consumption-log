@@ -1,10 +1,10 @@
 <?php
 
-add_shortcode( 'mcl', array( 'MclStatus', 'mcl_status' ) );
+add_shortcode( 'mcl', array( 'MclStatus', 'builf_status' ) );
 
 class MclStatus {
 
-    function mcl_status() {
+    function builf_status() {
         // Get the categories
         $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
 
