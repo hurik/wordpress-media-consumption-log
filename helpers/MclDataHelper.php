@@ -1,6 +1,6 @@
 <?php
 
-class DataHelper {
+class MclDataHelper {
 
     static function getTagsOfCategorySorted( $categories, $complete ) {
         // Group the data
@@ -79,7 +79,7 @@ class DataHelper {
         }
 
         // Replace the place holder with the commas
-        if ( !is_admin() && SettingsHelper::isOtherCommaInTags() ) {
+        if ( !is_admin() && MclSettingsHelper::isOtherCommaInTags() ) {
             $tags = comma_tags_filter( $tags );
         }
 

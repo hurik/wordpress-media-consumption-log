@@ -57,18 +57,18 @@ function mcl_complete() {
     }
 
     // Get the categories
-    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
+    $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data_ongoing = DataHelper::getTagsOfCategorySorted( $categories, 0 );
-    $data_complete = DataHelper::getTagsOfCategorySorted( $categories, 1 );
+    $data_ongoing = MclDataHelper::getTagsOfCategorySorted( $categories, 0 );
+    $data_complete = MclDataHelper::getTagsOfCategorySorted( $categories, 1 );
 
     // Create categories navigation
     $cat_nav_html = "";
 
     foreach ( $categories as $category ) {
-        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
+        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         if ( $count_ongoing + $count_complete == 0 ) {
             continue;
@@ -112,8 +112,8 @@ function mcl_complete() {
 
     // Create the tables
     foreach ( $categories as $category ) {
-        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
+        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         $count = $count_ongoing + $count_complete;
 
@@ -152,7 +152,7 @@ function mcl_complete() {
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
-                    if ( SettingsHelper::isOtherCommaInTags() ) {
+                    if ( MclSettingsHelper::isOtherCommaInTags() ) {
                         $name = str_replace( '--', ', ', $name );
                     }
                     $name = htmlspecialchars( $name );
@@ -204,7 +204,7 @@ function mcl_complete() {
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
                     $name = $tag->name;
-                    if ( SettingsHelper::isOtherCommaInTags() ) {
+                    if ( MclSettingsHelper::isOtherCommaInTags() ) {
                         $name = str_replace( '--', ', ', $name );
                     }
                     $name = htmlspecialchars( $name );

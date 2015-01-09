@@ -1,6 +1,6 @@
 <?php
 
-class SettingsHelper {
+class MclSettingsHelper {
 
     const defaultStatisticsMclNumber = true;
     const defaultStatisticsNumberOfDays = 30;

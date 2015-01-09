@@ -4,19 +4,19 @@ add_shortcode( 'mcl', 'mcl_status' );
 
 function mcl_status() {
     // Get the categories
-    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
+    $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data_ongoing = DataHelper::getTagsOfCategorySorted( $categories, 0 );
-    $data_complete = DataHelper::getTagsOfCategorySorted( $categories, 1 );
+    $data_ongoing = MclDataHelper::getTagsOfCategorySorted( $categories, 0 );
+    $data_complete = MclDataHelper::getTagsOfCategorySorted( $categories, 1 );
 
     // Create categories navigation
     $html = "<table border=\"1\"><colgroup><col width=\"1%\">";
     $html .= "<col width=\"99%\"></colgroup>";
 
     foreach ( $categories as $category ) {
-        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
+        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         if ( $count_ongoing + $count_complete == 0 ) {
             continue;
@@ -59,8 +59,8 @@ function mcl_status() {
 
     // Create the tables
     foreach ( $categories as $category ) {
-        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
+        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         $count = $count_ongoing + $count_complete;
 
@@ -172,13 +172,13 @@ function mcl_status() {
 }
 
 function get_last_consumed( $tag_id, $category_id ) {
-    $post = DataHelper::getLastPostOfTagInCategory( $tag_id, $category_id );
+    $post = MclDataHelper::getLastPostOfTagInCategory( $tag_id, $category_id );
 
     // Get link
     $link = get_permalink( $post->ID );
 
     // Explode the title
-    $titleExploded = explode( " " . SettingsHelper::getOtherSeprator() . " ", $post->post_title );
+    $titleExploded = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $post->post_title );
 
     // Get the last part, so we have the chapter/episode/...
     $status = end( $titleExploded );

@@ -35,10 +35,10 @@ function mcl_quick_post() {
     }
 
     // Get the categories
-    $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
+    $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data = DataHelper::getTagsOfCategorySorted( $categories, 0 );
+    $data = MclDataHelper::getTagsOfCategorySorted( $categories, 0 );
 
     // Create categories navigation
     $cat_nav_html = "";
@@ -66,7 +66,7 @@ function mcl_quick_post() {
     foreach ( array_keys( $data ) as $cat_key ) {
         $category = get_category( $cat_key );
 
-        $count = DataHelper::countTagsOfCategory( $data, $category->term_id );
+        $count = MclDataHelper::countTagsOfCategory( $data, $category->term_id );
 
         // Category header
         $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}";
@@ -97,15 +97,15 @@ function mcl_quick_post() {
             $first = true;
 
             foreach ( $data[$category->term_id][$key] as $tag ) {
-                $last_post_data = DataHelper::getLastPostOfTagInCategory( $tag->tag_id, $category->term_id );
+                $last_post_data = MclDataHelper::getLastPostOfTagInCategory( $tag->tag_id, $category->term_id );
 
                 if ( empty( $last_post_data ) ) {
                     continue;
                 }
 
                 $title = trim( $last_post_data->post_title );
-                $title = preg_replace( "/[A-Z0-9]+ " . SettingsHelper::getOtherMclNumberTo() . " /", "", $title );
-                $title = preg_replace( "/[A-Z0-9]+ " . SettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
+                $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
 
                 $title_explode = explode( ' ', $title );
                 $number = end( $title_explode );
@@ -134,14 +134,14 @@ function mcl_quick_post() {
                     $cats_html .= "<tr>"
                             . "<th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data[$category->term_id][$key] ) . ")</div></th>"
                             . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( SettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
 
                     $first = false;
                 } else {
                     $cats_html .= "<tr>"
                             . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( SettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
                 }
             }

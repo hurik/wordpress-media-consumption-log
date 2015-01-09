@@ -1,6 +1,6 @@
 <?php
 
-if ( !is_admin() && SettingsHelper::isOtherCommaInTags() ) {
+if ( !is_admin() && MclSettingsHelper::isOtherCommaInTags() ) {
     add_filter( 'get_post_tag', 'comma_tag_filter' );
 
     function comma_tag_filter( $tag_arr ) {

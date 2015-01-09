@@ -25,14 +25,14 @@ function mcl_check_mcl_number_after_saving( $post_id ) {
         $mcl_number = 1;
 
         $post = get_post( $post_id );
-        $title_ecplode = explode( " " . SettingsHelper::getOtherSeprator() . " ", $post->post_title );
+        $title_ecplode = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $post->post_title );
         $current_number = end( $title_ecplode );
 
         if ( count( $title_ecplode ) < 2 ) {
             // Do nothing
-        } else if ( strpos( $current_number, " " . SettingsHelper::getOtherMclNumberAnd() . " " ) !== false ) {
+        } else if ( strpos( $current_number, " " . MclSettingsHelper::getOtherMclNumberAnd() . " " ) !== false ) {
             $mcl_number = 2;
-        } else if ( strpos( $current_number, " " . SettingsHelper::getOtherMclNumberTo() . " " ) !== false ) {
+        } else if ( strpos( $current_number, " " . MclSettingsHelper::getOtherMclNumberTo() . " " ) !== false ) {
             preg_match_all( '!\d+(?:\.\d+)?!', $current_number, $matches );
 
             if ( count( $matches[0] ) == 2 ) {
