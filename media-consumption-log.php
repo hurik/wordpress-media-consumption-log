@@ -47,7 +47,7 @@ require_once dirname( __FILE__ ) . '/mcl-admin-unit.php';
 require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
 require_once dirname( __FILE__ ) . '/mcl-languages.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
-require_once dirname( __FILE__ ) . '/mcl-status.php';
+require_once dirname( __FILE__ ) . '/MclStatus.php';
 
 register_activation_hook( __FILE__, 'mcl_install' );
 
