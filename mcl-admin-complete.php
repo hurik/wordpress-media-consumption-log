@@ -18,8 +18,6 @@ function mcl_check_complete_after_saving( $post_id ) {
 
         // Check if already set
         if ( !empty( $mcl_complete ) ) {
-            $post = get_post( $post_id );
-
             $cat = get_the_category( $post_id );
             $cat_id = $cat[0]->term_id;
 

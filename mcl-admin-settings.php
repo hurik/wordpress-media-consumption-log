@@ -17,7 +17,7 @@ function mcl_settings_register() {
 }
 
 function mcl_settings() {
-    $cats = $categories = get_categories( 'hide_empty=0' );
+    $categories = get_categories( 'hide_empty=0' );
     $cats_text = "";
     $last_cat = end( $categories );
 

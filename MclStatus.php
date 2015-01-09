@@ -112,8 +112,7 @@ class MclStatus {
                     $first = true;
 
                     foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
-                        $name = htmlspecialchars( $tag->name );
-                        $name = str_replace( "&amp;", "&", $name );
+                        $name = str_replace( "&amp;", "&", htmlspecialchars( $tag->name ) );
 
                         $last_consumed = self::getLastConsumed( $tag->tag_id, $category->term_id );
 
@@ -167,8 +166,7 @@ class MclStatus {
                     $first = true;
 
                     foreach ( $data_complete[$category->term_id][$key] as $tag ) {
-                        $name = htmlspecialchars( $tag->name );
-                        $name = str_replace( "&amp;", "&", $name );
+                        $name = str_replace( "&amp;", "&", htmlspecialchars( $tag->name ) );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
