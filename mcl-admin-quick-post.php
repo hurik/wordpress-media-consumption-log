@@ -133,14 +133,14 @@ function mcl_quick_post() {
                 if ( $first ) {
                     $cats_html .= "<tr>"
                             . "<th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data[$category->term_id][$key] ) . ")</div></th>"
-                            . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
+                            . "<td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
                             . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
 
                     $first = false;
                 } else {
                     $cats_html .= "<tr>"
-                            . "<td><a class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
+                            . "<td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
                             . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
                             . "</tr>";
                 }

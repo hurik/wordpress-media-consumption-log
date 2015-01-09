@@ -161,14 +161,14 @@ function mcl_complete() {
                     if ( $first ) {
                         $cats_html .= "<tr>"
                                 . "<th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_ongoing[$category->term_id][$key] ) . ")</div></th>"
-                                . "<td nowrap><a class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                . "<td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                 . "<td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "</tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "<tr>"
-                                . "<td nowrap><a class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                . "<td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                 . "<td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "</tr>";
                     }
@@ -213,14 +213,14 @@ function mcl_complete() {
                     if ( $first ) {
                         $cats_html .= "<tr>"
                                 . "<th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_complete[$category->term_id][$key] ) . ")</div></th>"
-                                . "<td nowrap><a class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                . "<td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                 . "<td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "</tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "<tr>"
-                                . "<td nowrap><a class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                . "<td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                 . "<td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "</tr>";
                     }
