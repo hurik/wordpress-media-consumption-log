@@ -7,16 +7,16 @@ function mcl_status() {
     $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data_ongoing = get_all_tags_sorted( $categories, 0 );
-    $data_complete = get_all_tags_sorted( $categories, 1 );
+    $data_ongoing = DataHelper::getTagsOfCategorySorted( $categories, 0 );
+    $data_complete = DataHelper::getTagsOfCategorySorted( $categories, 1 );
 
     // Create categories navigation
     $html = "<table border=\"1\"><colgroup><col width=\"1%\">";
     $html .= "<col width=\"99%\"></colgroup>";
 
     foreach ( $categories as $category ) {
-        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
-        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         if ( $count_ongoing + $count_complete == 0 ) {
             continue;
@@ -59,8 +59,8 @@ function mcl_status() {
 
     // Create the tables
     foreach ( $categories as $category ) {
-        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
-        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         $count = $count_ongoing + $count_complete;
 
@@ -172,7 +172,7 @@ function mcl_status() {
 }
 
 function get_last_consumed( $tag_id, $category_id ) {
-    $post = get_last_post_of_tag_in_category_data( $tag_id, $category_id );
+    $post = DataHelper::getLastPostOfTagInCategory( $tag_id, $category_id );
 
     // Get link
     $link = get_permalink( $post->ID );

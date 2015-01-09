@@ -60,15 +60,15 @@ function mcl_complete() {
     $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data_ongoing = get_all_tags_sorted( $categories, 0 );
-    $data_complete = get_all_tags_sorted( $categories, 1 );
+    $data_ongoing = DataHelper::getTagsOfCategorySorted( $categories, 0 );
+    $data_complete = DataHelper::getTagsOfCategorySorted( $categories, 1 );
 
     // Create categories navigation
     $cat_nav_html = "";
 
     foreach ( $categories as $category ) {
-        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
-        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         if ( $count_ongoing + $count_complete == 0 ) {
             continue;
@@ -112,8 +112,8 @@ function mcl_complete() {
 
     // Create the tables
     foreach ( $categories as $category ) {
-        $count_ongoing = count_tags_of_category( $data_ongoing, $category->term_id );
-        $count_complete = count_tags_of_category( $data_complete, $category->term_id );
+        $count_ongoing = DataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
+        $count_complete = DataHelper::countTagsOfCategory( $data_complete, $category->term_id );
 
         $count = $count_ongoing + $count_complete;
 

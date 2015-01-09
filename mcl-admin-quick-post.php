@@ -38,7 +38,7 @@ function mcl_quick_post() {
     $categories = get_categories( "exclude=" . SettingsHelper::getStatusExcludeCategory() );
 
     // Get the sorted data
-    $data = get_all_tags_sorted( $categories, 0 );
+    $data = DataHelper::getTagsOfCategorySorted( $categories, 0 );
 
     // Create categories navigation
     $cat_nav_html = "";
@@ -66,7 +66,7 @@ function mcl_quick_post() {
     foreach ( array_keys( $data ) as $cat_key ) {
         $category = get_category( $cat_key );
 
-        $count = count_tags_of_category( $data, $category->term_id );
+        $count = DataHelper::countTagsOfCategory( $data, $category->term_id );
 
         // Category header
         $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}";
@@ -97,7 +97,7 @@ function mcl_quick_post() {
             $first = true;
 
             foreach ( $data[$category->term_id][$key] as $tag ) {
-                $last_post_data = get_last_post_of_tag_in_category_data( $tag->tag_id, $category->term_id );
+                $last_post_data = DataHelper::getLastPostOfTagInCategory( $tag->tag_id, $category->term_id );
 
                 if ( empty( $last_post_data ) ) {
                     continue;

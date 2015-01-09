@@ -37,6 +37,7 @@
  */
 
 require_once dirname( __FILE__ ) . '/helpers/SettingsHelper.php';
+require_once dirname( __FILE__ ) . '/helpers/DataHelper.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-menu.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-number.php';
@@ -44,7 +45,6 @@ require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-unit.php';
 require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
-require_once dirname( __FILE__ ) . '/mcl-functions.php';
 require_once dirname( __FILE__ ) . '/mcl-languages.php';
 require_once dirname( __FILE__ ) . '/mcl-statistics.php';
 require_once dirname( __FILE__ ) . '/mcl-status.php';
