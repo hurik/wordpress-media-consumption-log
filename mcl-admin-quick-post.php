@@ -46,18 +46,18 @@ function mcl_quick_post() {
     foreach ( array_keys( $data ) as $cat_key ) {
         $category = get_category( $cat_key );
 
-        $cat_nav_html .= "<tr><th nowrap valign=\"top\"><div><a href=\"#mediastatus-";
-        $cat_nav_html .= "{$category->slug}\">{$category->name}</a>";
-        $cat_nav_html .= "</th><td>";
+        $cat_nav_html .= "\n  <tr>"
+                . "\n    <th nowrap valign=\"top\"><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></th>"
+                . "\n    <td>";
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {
-            $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-";
-            $cat_nav_html .= strtolower( $key ) . "\">{$key}</a>";
+            $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
             if ( $key != end( (array_keys( $data[$category->term_id] ) ) ) ) {
                 $cat_nav_html .= " | ";
             }
         }
 
-        $cat_nav_html .= "</tr></td>";
+        $cat_nav_html .= "</td>"
+                . "\n  </tr>";
     }
 
     $cats_html = "";
@@ -69,11 +69,10 @@ function mcl_quick_post() {
         $count = MclDataHelper::countTagsOfCategory( $data, $category->term_id );
 
         // Category header
-        $cats_html .= "<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}";
-        $cats_html .= " ({$count})</h3><hr />";
+        $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$count})</h3><hr />";
 
         // Create the navigation
-        $cats_html .= "<div>";
+        $cats_html .= "\n<div>";
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {
             $cats_html .= "<a href=\"#mediastatus-{$category->slug}-";
             $cats_html .= strtolower( $key ) . "\">{$key}</a>";
@@ -85,13 +84,17 @@ function mcl_quick_post() {
         $cats_html .= "</div><br />";
 
         // Table
-        $cats_html .= "<table class=\"widefat\">"
-                . "<colgroup><col width=\"2%\"><col width=\"49%\"><col width=\"49%\"></colgroup>"
-                . "<tr>"
-                . "<th></th>"
-                . "<th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th>"
-                . "<th><strong>" . __( 'Last Post', 'media-consumption-log' ) . "</strong></th>"
-                . "</tr>";
+        $cats_html .= "\n<table class=\"widefat\">"
+                . "\n  <colgroup>"
+                . "\n    <col width=\"2%\">"
+                . "\n    <col width=\"49%\">"
+                . "\n    <col width=\"49%\">"
+                . "\n  </colgroup>"
+                . "\n  <tr>"
+                . "\n    <th></th>"
+                . "\n    <th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th>"
+                . "\n    <th><strong>" . __( 'Last Post', 'media-consumption-log' ) . "</strong></th>"
+                . "\n  </tr>";
 
         foreach ( array_keys( $data[$category->term_id] ) as $key ) {
             $first = true;
@@ -103,26 +106,7 @@ function mcl_quick_post() {
                     continue;
                 }
 
-                $title = trim( $last_post_data->post_title );
-                $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
-                $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
-
-                $title_explode = explode( ' ', $title );
-                $number = end( $title_explode );
-
-                if ( is_numeric( $number ) ) {
-                    $number = floatval( $number );
-                    $number++;
-                    $number = floor( $number );
-                }
-
-                if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) || preg_match( '/[CP]/', $number ) ) {
-                    $number++;
-                }
-
-                $title = substr( $title, 0, strrpos( $title, " " ) );
-
-                $title .= " {$number}";
+                $title = buildNextTitle( $last_post_data );
 
                 $title_urlencode = urlencode( $title );
 
@@ -131,23 +115,23 @@ function mcl_quick_post() {
                 $date = DateTime::createFromFormat( "Y-m-d H:i:s", $last_post_data->post_date );
 
                 if ( $first ) {
-                    $cats_html .= "<tr>"
-                            . "<th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data[$category->term_id][$key] ) . ")</div></th>"
-                            . "<td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
-                            . "</tr>";
+                    $cats_html .= "\n  <tr>"
+                            . "\n    <th nowrap rowspan=\"" . count( $data[$category->term_id][$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data[$category->term_id][$key] ) . ")</div></th>"
+                            . "\n    <td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
+                            . "\n    <td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                            . "\n  </tr>";
 
                     $first = false;
                 } else {
-                    $cats_html .= "<tr>"
-                            . "<td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
-                            . "<td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
-                            . "</tr>";
+                    $cats_html .= "\n  <tr>"
+                            . "\n    <td><a href class=\"quick-post\" title=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> <a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">(" . __( 'Modify', 'media-consumption-log' ) . ")</a></td>"
+                            . "\n    <td><a href='{$link}' title='{$last_post_data->post_title}'>{$last_post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                            . "\n  </tr>";
                 }
             }
         }
 
-        $cats_html .= "</table>";
+        $cats_html .= "\n</table>";
     }
     ?>
     <style type="text/css">
@@ -201,6 +185,31 @@ function mcl_quick_post() {
         ?>
     </div>	
     <?php
+}
+
+function buildNextTitle( $last_post_data ) {
+    $title = trim( $last_post_data->post_title );
+    $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
+    $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
+
+    $title_explode = explode( ' ', $title );
+    $number = end( $title_explode );
+
+    if ( is_numeric( $number ) ) {
+        $number = floatval( $number );
+        $number++;
+        $number = floor( $number );
+    }
+
+    if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) || preg_match( '/[CP]/', $number ) ) {
+        $number++;
+    }
+
+    $title = substr( $title, 0, strrpos( $title, " " ) );
+
+    $title .= " {$number}";
+
+    return $title;
 }
 
 ?>
