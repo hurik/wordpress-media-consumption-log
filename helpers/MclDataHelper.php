@@ -12,10 +12,6 @@ class MclDataHelper {
 
             // Group the tags by the first letter
             foreach ( $tags as $tag ) {
-                if ( $tag->count < 1 ) {
-                    continue;
-                }
-
                 // Tags which start with a number get their own group #
                 if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
                     $data[$category->term_id][strtoupper( $tag->name[0] )][] = $tag;
@@ -34,21 +30,22 @@ class MclDataHelper {
         $tags = $wpdb->get_results( "
             Select 
                 temp.tag_id,
-                temp.cat_id,
-                temp.name,
-                temp.count,
-                temp.tag_link,
                 temp.taxonomy,
-                IFNULL(mcl.complete, 0) AS complete
+                temp.name,
+                temp.cat_id,
+                temp.post_id,
+                temp.post_date,
+                temp.post_title
             FROM 
 		(
                     SELECT
                         terms2.term_id AS tag_id,
-                        t1.term_id AS cat_id,
+                        t2.taxonomy AS taxonomy,
                         terms2.name AS name,
-                        COUNT(*) AS count,
-                        NULL AS tag_link,
-                        t2.taxonomy AS taxonomy
+                        t1.term_id AS cat_id,
+                        p2.ID AS post_id,
+                        p2.post_date,
+                        p2.post_title
                     FROM
                         {$wpdb->prefix}posts AS p1
                         LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
@@ -65,7 +62,11 @@ class MclDataHelper {
                         AND t2.taxonomy = 'post_tag'
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID
-                    GROUP BY name
+                        AND p2.post_date = (
+                            SELECT MAX(p3.post_date)
+                            FROM {$wpdb->prefix}posts AS p3
+                            LEFT JOIN {$wpdb->prefix}term_relationships AS r3 ON p3.ID = r3.object_ID
+                            WHERE r3.term_taxonomy_id = terms2.term_id)
                     ORDER BY name
                 ) AS temp
             LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
@@ -73,13 +74,8 @@ class MclDataHelper {
                 IFNULL(mcl.complete, 0) = $complete
 	" );
 
-        // Get the link of every tag
-        foreach ( $tags as $tag ) {
-            $tag->tag_link = get_tag_link( $tag->tag_id );
-        }
-
         // Replace the place holder with the commas
-        if ( !is_admin() && MclSettingsHelper::isOtherCommaInTags() ) {
+        if ( MclSettingsHelper::isOtherCommaInTags() ) {
             $tags = comma_tags_filter( $tags );
         }
 
@@ -98,16 +94,6 @@ class MclDataHelper {
         }
 
         return 0;
-    }
-
-    static function getLastPostOfTagInCategory( $tag_id, $category_id ) {
-        // Get post with the tag
-        $posts = get_posts( "posts_per_page=1&tag_id={$tag_id}&category={$category_id}" );
-
-        // Get the last post
-        $post = array_shift( $posts );
-
-        return $post;
     }
 
 }

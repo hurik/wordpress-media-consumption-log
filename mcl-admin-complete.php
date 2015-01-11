@@ -44,18 +44,6 @@ function change_complete_status( $tag_id, $cat_id, $complete ) {
     }
 }
 
-function parseTagName( $tag ) {
-    $name = $tag->name;
-
-    if ( MclSettingsHelper::isOtherCommaInTags() ) {
-        $name = str_replace( '--', ', ', $name );
-    }
-    $name = htmlspecialchars( $name );
-    $name = str_replace( "&amp;", "&", $name );
-
-    return $name;
-}
-
 function mcl_complete() {
     if ( !current_user_can( 'manage_options' ) ) {
         wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -169,20 +157,21 @@ function mcl_complete() {
                 $first = true;
 
                 foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
-                    $name = parseTagName( $tag );
+                    $name = $tag->name;
+                    $tag_link = get_tag_link( $tag->tag_id );
 
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_ongoing[$category->term_id][$key] ) . ")</div></th>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "\n  </tr>";
                     }
                 }
@@ -222,20 +211,21 @@ function mcl_complete() {
                 $first = true;
 
                 foreach ( $data_complete[$category->term_id][$key] as $tag ) {
-                    $name = parseTagName( $tag );
+                    $name = $tag->name;
+                    $tag_link = get_tag_link( $tag->tag_id );
 
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_complete[$category->term_id][$key] ) . ")</div></th>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                 . "\n  </tr>";
                     }
                 }

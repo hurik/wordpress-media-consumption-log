@@ -4,7 +4,7 @@ add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
 
 class MclStatistics {
 
-    function build_statistics() {
+    static function build_statistics() {
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
         $current_date = date( 'Y-m-d' );
@@ -394,7 +394,7 @@ class MclStatistics {
         return $html;
     }
 
-    private function getDateOfFirstPost() {
+    private static function getDateOfFirstPost() {
         global $wpdb;
 
         $min_date = $wpdb->get_results( "
@@ -407,7 +407,7 @@ class MclStatistics {
         return $min_date[0]->date;
     }
 
-    private function getPostWithMclNumberOfCategorySortedByDate( $category_id ) {
+    private static function getPostWithMclNumberOfCategorySortedByDate( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -426,7 +426,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function getPostOfCategorySortedByDate( $category_id ) {
+    private static function getPostOfCategorySortedByDate( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -443,7 +443,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function getPostWithMclNumberOfCategorySortedByMonth( $category_id ) {
+    private static function getPostWithMclNumberOfCategorySortedByMonth( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -462,7 +462,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function getPostOfCategorySortedByMonth( $category_id ) {
+    private static function getPostOfCategorySortedByMonth( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -479,7 +479,7 @@ class MclStatistics {
         return $stats;
     }
 
-    private function getMclNumberOfCategory( $category_id ) {
+    private static function getMclNumberOfCategory( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -496,7 +496,7 @@ class MclStatistics {
         return $stats[0]->number;
     }
 
-    private function getPostsOfCategory( $category_id ) {
+    private static function getPostsOfCategory( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -511,7 +511,7 @@ class MclStatistics {
         return $stats[0]->number;
     }
 
-    private function getTagsCountOfCategory( $category_id, $complete ) {
+    private static function getTagsCountOfCategory( $category_id, $complete ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "

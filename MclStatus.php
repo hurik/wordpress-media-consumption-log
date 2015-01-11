@@ -1,10 +1,10 @@
 <?php
 
-add_shortcode( 'mcl', array( 'MclStatus', 'builf_status' ) );
+add_shortcode( 'mcl', array( 'MclStatus', 'build_status' ) );
 
 class MclStatus {
 
-    function builf_status() {
+    static function build_status() {
         // Get the categories
         $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
 
@@ -113,20 +113,20 @@ class MclStatus {
 
                     foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
                         $name = str_replace( "&amp;", "&", htmlspecialchars( $tag->name ) );
-
-                        $last_consumed = self::getLastConsumed( $tag->tag_id, $category->term_id );
+                        $tag_link = get_tag_link( $tag->tag_id );
+                        $last_consumed = self::getLastConsumed( $tag->post_id, $tag->post_title );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
                                     . "\n    <th nowrap rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key} (" . count( $data_ongoing[$category->term_id][$key] ) . ")</div></th>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                     . "\n    <td nowrap>{$last_consumed}</td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                     . "\n    <td nowrap>{$last_consumed}</td>"
                                     . "\n  </tr>";
                         }
@@ -167,17 +167,18 @@ class MclStatus {
 
                     foreach ( $data_complete[$category->term_id][$key] as $tag ) {
                         $name = str_replace( "&amp;", "&", htmlspecialchars( $tag->name ) );
+                        $tag_link = get_tag_link( $tag->tag_id );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
                                     . "\n    <th nowrap rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key} (" . count( $data_complete[$category->term_id][$key] ) . ")</div></th>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
                                     . "\n  </tr>";
                         }
                     }
@@ -190,14 +191,11 @@ class MclStatus {
         return $html;
     }
 
-    private function getLastConsumed( $tag_id, $category_id ) {
-        $post = MclDataHelper::getLastPostOfTagInCategory( $tag_id, $category_id );
-
-        // Get link
-        $link = get_permalink( $post->ID );
+    static function getLastConsumed( $post_id, $post_title ) {
+        $link = get_permalink( $post_id );
 
         // Explode the title
-        $titleExploded = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $post->post_title );
+        $titleExploded = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $post_title );
 
         // Get the last part, so we have the chapter/episode/...
         $status = end( $titleExploded );
@@ -213,7 +211,7 @@ class MclStatus {
             $statusText = "{$first_part} {$last_part}";
         }
 
-        return "<a href='{$link}' title='{$post->post_title}'>{$statusText}</a>";
+        return "<a href='{$link}' title='{$post_title}'>{$statusText}</a>";
     }
 
 }
