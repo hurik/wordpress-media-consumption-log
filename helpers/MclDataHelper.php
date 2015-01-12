@@ -1,20 +1,21 @@
 <?php
 
-function mcl_new_post( $post_id ) {
-    if ( get_post_status( $post_id ) == 'publish' ) {
+function mcl_post_unpublished( $new_status, $old_status, $post ) {
+    if ( ($old_status == 'publish' && $new_status != 'publish') ||
+            ($old_status != 'publish' && $new_status == 'publish') ) {
         MclDataHelper::updateData();
     }
 }
 
-add_action( 'save_post', 'mcl_new_post', 999999 );
+add_action( 'transition_post_status', 'mcl_post_unpublished', 999999 );
 
-
-function mcl_post_post_unpublished( $new_status, $old_status, $post ) {
-    if ( $old_status == 'publish'  &&  $new_status != 'publish' ) {
-        MclDataHelper::updateData();
-    }
+function mcl_post_trashed_or_untrashed( $pid ) {
+    MclDataHelper::updateData();
 }
-add_action( 'transition_post_status', 'mcl_post_post_unpublished', 10, 3 );
+
+add_action( 'trash_post', 'mcl_post_trashed_or_untrashed', 999999 );
+add_action( 'untrash_post', 'mcl_post_trashed_or_untrashed', 999999 );
+add_action( 'delete_post', 'mcl_post_trashed_or_untrashed', 999999 );
 
 class MclDataHelper {
 
