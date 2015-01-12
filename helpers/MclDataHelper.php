@@ -7,7 +7,7 @@ function mcl_post_unpublished( $new_status, $old_status, $post ) {
     }
 }
 
-add_action( 'transition_post_status', 'mcl_post_unpublished', 999999 );
+add_action( 'transition_post_status', 'mcl_post_unpublished', 999999, 3 );
 
 function mcl_post_trashed_or_untrashed( $pid ) {
     MclDataHelper::updateData();
