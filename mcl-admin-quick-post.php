@@ -98,7 +98,7 @@ function mcl_quick_post() {
             $first = true;
 
             foreach ( $categoryWithData->mcl_tags_ongoing[$key] as $tag ) {
-                $title = buildNextTitle( $tag->post_data->post_title );
+                $title = MclStringHelper::buildNextPostTitle( $tag->post_data->post_title );
                 $title_urlencode = urlencode( $title );
                 $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_data->post_date );
 
@@ -173,31 +173,6 @@ function mcl_quick_post() {
         ?>
     </div>	
     <?php
-}
-
-function buildNextTitle( $last_post_title ) {
-    $title = trim( $last_post_title );
-    $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
-    $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
-
-    $title_explode = explode( ' ', $title );
-    $number = end( $title_explode );
-
-    if ( is_numeric( $number ) ) {
-        $number = floatval( $number );
-        $number++;
-        $number = floor( $number );
-    }
-
-    if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) || preg_match( '/[CP]/', $number ) ) {
-        $number++;
-    }
-
-    $title = substr( $title, 0, strrpos( $title, " " ) );
-
-    $title .= " {$number}";
-
-    return $title;
 }
 
 ?>
