@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-09 07:35:30+0000\n"
+"PO-Revision-Date: 2015-01-12 05:21:36+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,29 +22,30 @@ msgstr ""
 
 #: mcl-admin-complete.php:51
 #: mcl-admin-quick-post.php:29
+#: mcl-admin-rebuild-data.php:5
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #: mcl-admin-menu.php:8
-#: mcl-admin-menu.php:25
-#: mcl-admin-quick-post.php:187
+#: mcl-admin-menu.php:26
+#: mcl-admin-quick-post.php:159
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
-#: mcl-admin-complete.php:96
-#: mcl-admin-complete.php:182
-#: mcl-admin-complete.php:262
+#: MclStatistics.php:326
+#: MclStatus.php:45
+#: MclStatus.php:128
+#: mcl-admin-complete.php:92
+#: mcl-admin-complete.php:171
+#: mcl-admin-complete.php:250
 #: mcl-admin-menu.php:9
-#: mcl-statistics.php:308
-#: mcl-status.php:44
-#: mcl-status.php:126
 #@ media-consumption-log
 msgid "Complete"
 msgstr "Komplett"
 
-#: mcl-admin-menu.php:11
+#: mcl-admin-menu.php:12
 #: mcl-admin-settings.php:32
 #@ media-consumption-log
 msgid "Settings"
@@ -141,61 +142,61 @@ msgstr "mcl_number \"und\""
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
 
-#: mcl-statistics.php:212
-#: mcl-statistics.php:220
+#: MclStatistics.php:204
+#: MclStatistics.php:213
 #@ media-consumption-log
 msgid "Daily consumption"
 msgstr "Täglicher Konsum"
 
-#: mcl-statistics.php:213
-#: mcl-statistics.php:223
+#: MclStatistics.php:205
+#: MclStatistics.php:217
 #@ media-consumption-log
 msgid "Monthly consumption"
 msgstr "Monatlicher Konsum"
 
-#: mcl-statistics.php:214
-#: mcl-statistics.php:226
+#: MclStatistics.php:207
+#: MclStatistics.php:266
 #@ media-consumption-log
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: mcl-statistics.php:216
-#: mcl-statistics.php:303
+#: MclStatistics.php:208
+#: MclStatistics.php:315
 #@ media-consumption-log
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: mcl-statistics.php:229
-#: mcl-statistics.php:270
-#: mcl-statistics.php:306
+#: MclStatistics.php:229
+#: MclStatistics.php:274
+#: MclStatistics.php:324
 #@ media-consumption-log
 msgid "Category"
 msgstr "Kategorie"
 
-#: mcl-statistics.php:235
+#: MclStatistics.php:279
 #, php-format
 #@ media-consumption-log
 msgid "Average a day, since the first post on the %DATE."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE."
 
-#: mcl-admin-complete.php:82
-#: mcl-admin-complete.php:129
-#: mcl-statistics.php:307
-#: mcl-status.php:30
-#: mcl-status.php:76
+#: MclStatistics.php:325
+#: MclStatus.php:29
+#: MclStatus.php:72
+#: mcl-admin-complete.php:76
+#: mcl-admin-complete.php:119
 #@ media-consumption-log
 msgid "Running"
 msgstr "Laufend"
 
-#: mcl-admin-complete.php:148
-#: mcl-admin-complete.php:200
-#: mcl-status.php:94
-#: mcl-status.php:143
+#: MclStatus.php:95
+#: MclStatus.php:150
+#: mcl-admin-complete.php:143
+#: mcl-admin-complete.php:194
 #@ media-consumption-log
 msgid "Name"
 msgstr "Name"
 
-#: mcl-status.php:94
+#: MclStatus.php:96
 #@ media-consumption-log
 msgid "Last"
 msgstr "Letzte(s)"
@@ -230,24 +231,24 @@ msgstr ""
 msgid "1.0.0"
 msgstr ""
 
-#: mcl-admin-complete.php:147
-#: mcl-admin-complete.php:200
+#: mcl-admin-complete.php:142
+#: mcl-admin-complete.php:193
 #@ media-consumption-log
 msgid "Change state"
 msgstr "Status ändern"
 
-#: mcl-admin-complete.php:164
-#: mcl-admin-complete.php:171
-#: mcl-admin-complete.php:216
-#: mcl-admin-complete.php:223
+#: mcl-admin-complete.php:153
+#: mcl-admin-complete.php:160
+#: mcl-admin-complete.php:204
+#: mcl-admin-complete.php:211
 #@ media-consumption-log
 msgid "Change!"
 msgstr "Ändern!"
 
-#: mcl-statistics.php:261
-#: mcl-statistics.php:297
-#: mcl-statistics.php:309
-#: mcl-statistics.php:361
+#: MclStatistics.php:259
+#: MclStatistics.php:308
+#: MclStatistics.php:327
+#: MclStatistics.php:386
 #@ media-consumption-log
 msgid "Total"
 msgstr "Insgesamt"
@@ -262,12 +263,12 @@ msgstr "IDs der Kategorien die ihr von der Status Seite ausnehmen wollt. Beispie
 msgid "IDs of the category you want to exclude from the statistics page. Example: 1"
 msgstr "IDs der Kategorien die ihr von der Statistiken Seite ausnehmen wollt. Beispiel: 1"
 
-#: mcl-admin-quick-post.php:92
+#: mcl-admin-quick-post.php:93
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: mcl-admin-quick-post.php:93
+#: mcl-admin-quick-post.php:94
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
@@ -278,31 +279,31 @@ msgstr "Letzter Beitrag"
 msgid "This plugin helps you to keep track of the series, movies, mangas, comics you are reading."
 msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Mangas, Comics die die schaust."
 
-#: helpers/SettingsHelper.php:34
-#: mcl-statistics.php:352
+#: MclStatistics.php:378
+#: helpers/MclSettingsHelper.php:34
 #@ media-consumption-log
 msgid "and"
 msgstr "und"
 
-#: helpers/SettingsHelper.php:38
+#: helpers/MclSettingsHelper.php:38
 #@ media-consumption-log
 msgid "to"
 msgstr "bis"
 
-#: mcl-statistics.php:215
-#: mcl-statistics.php:267
+#: MclStatistics.php:206
+#: MclStatistics.php:221
 #@ media-consumption-log
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: mcl-statistics.php:275
+#: MclStatistics.php:234
 #, php-format
 #@ media-consumption-log
 msgid "Total comsumption, since the first post on the %DATE."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE."
 
-#: mcl-statistics.php:231
-#: mcl-statistics.php:272
+#: MclStatistics.php:230
+#: MclStatistics.php:276
 #@ media-consumption-log
 msgid "Unit"
 msgstr "Einheit"
@@ -312,7 +313,7 @@ msgstr "Einheit"
 msgid "Please define the units of the categories."
 msgstr "Bitte definiere die Einheiten der Kategorien."
 
-#: mcl-statistics.php:356
+#: MclStatistics.php:382
 #, php-format
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES, since the first post on the %DATE."
@@ -331,18 +332,18 @@ msgstr "Einheiten"
 msgid "IDs of the categories:"
 msgstr "IDs der Kategorien:"
 
-#: mcl-admin-quick-post.php:136
-#: mcl-admin-quick-post.php:143
+#: mcl-admin-quick-post.php:108
+#: mcl-admin-quick-post.php:115
 #@ media-consumption-log
 msgid "Modify"
 msgstr "Bearbeiten"
 
-#: helpers/SettingsHelper.php:26
+#: helpers/MclSettingsHelper.php:26
 #@ media-consumption-log
 msgid "Y-m-j"
 msgstr "j.m.Y"
 
-#: helpers/SettingsHelper.php:30
+#: helpers/MclSettingsHelper.php:30
 #@ media-consumption-log
 msgid "Y-m"
 msgstr "m.Y"
@@ -403,4 +404,30 @@ msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird 
 #@ media-consumption-log
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: "
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: "
+
+#: mcl-admin-menu.php:11
+#: mcl-admin-rebuild-data.php:13
+#@ media-consumption-log
+msgid "Rebuild data"
+msgstr "Erneuere Daten"
+
+#: mcl-admin-rebuild-data.php:16
+#@ media-consumption-log
+msgid "Rebuild data now!"
+msgstr "Jetzt Daten erneuern!"
+
+#: mcl-admin-rebuild-data.php:19
+#@ media-consumption-log
+msgid "Information"
+msgstr "Informationen"
+
+#: mcl-admin-rebuild-data.php:22
+#@ media-consumption-log
+msgid "Number of queries"
+msgstr "Datenbank abfragen"
+
+#: mcl-admin-rebuild-data.php:26
+#@ media-consumption-log
+msgid "Execution time"
+msgstr "Ausführungszeit"
 

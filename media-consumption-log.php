@@ -43,6 +43,7 @@ require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-menu.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-number.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
+require_once dirname( __FILE__ ) . '/mcl-admin-rebuild-data.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-unit.php';
 require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
