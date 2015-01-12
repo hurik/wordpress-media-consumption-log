@@ -19,7 +19,7 @@ add_action( 'delete_post', 'mcl_post_trashed_or_untrashed', 999999 );
 
 class MclDataHelper {
 
-    const option_name = 'mcl_data';
+    const option_name = 'mcl_data_status';
 
     public static function getData() {
         if ( get_option( self::option_name ) === false ) {
