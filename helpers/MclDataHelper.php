@@ -1,51 +1,69 @@
 <?php
 
+function mcl_new_post( $post_id ) {
+    if ( get_post_status( $post_id ) == 'publish' ) {
+        MclDataHelper::updateData();
+    }
+}
+
+add_action( 'save_post', 'mcl_new_post', 999999 );
+
+
+function mcl_post_post_unpublished( $new_status, $old_status, $post ) {
+    if ( $old_status == 'publish'  &&  $new_status != 'publish' ) {
+        MclDataHelper::updateData();
+    }
+}
+add_action( 'transition_post_status', 'mcl_post_post_unpublished', 10, 3 );
+
 class MclDataHelper {
 
-    static function getTagsOfCategorySorted( $categories, $complete ) {
-        // Group the data
+    const option_name = 'mcl_data';
+
+    public static function getData() {
+        if ( get_option( self::option_name ) === false ) {
+            add_option( self::option_name, self::getAllTags(), null, 'no' );
+        }
+
+        return get_option( self::option_name );
+    }
+
+    public static function updateData() {
+        if ( get_option( self::option_name ) !== false ) {
+            update_option( self::option_name, self::getAllTags() );
+        } else {
+            add_option( self::option_name, self::getAllTags(), null, 'no' );
+        }
+    }
+
+    private static function getAllTags() {
+        $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
+
         $data = array();
 
         foreach ( $categories as $category ) {
-            // Get the tags of the category
-            $tags = self::getTagsOfCategory( $category->term_id, $complete );
-
-            // Group the tags by the first letter
-            foreach ( $tags as $tag ) {
-                // Tags which start with a number get their own group #
-                if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
-                    $data[$category->term_id][strtoupper( $tag->name[0] )][] = $tag;
-                } else {
-                    $data[$category->term_id]['#'][] = $tag;
-                }
-            }
+            $data[] = self::getTagsOfCategory( $category );
         }
 
         return $data;
     }
 
-    private static function getTagsOfCategory( $category_id, $complete ) {
+    private static function getTagsOfCategory( $category ) {
         global $wpdb;
 
         $tags = $wpdb->get_results( "
             Select 
                 temp.tag_id,
-                temp.taxonomy,
-                temp.name,
                 temp.cat_id,
-                temp.post_id,
-                temp.post_date,
-                temp.post_title
+                temp.count,
+                IFNULL(mcl.complete, 0) AS complete
             FROM 
 		(
                     SELECT
                         terms2.term_id AS tag_id,
-                        t2.taxonomy AS taxonomy,
-                        terms2.name AS name,
                         t1.term_id AS cat_id,
-                        p2.ID AS post_id,
-                        p2.post_date,
-                        p2.post_title
+                        COUNT(*) AS count,
+                        terms2.name AS name
                     FROM
                         {$wpdb->prefix}posts AS p1
                         LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
@@ -58,42 +76,69 @@ class MclDataHelper {
                     WHERE
                         t1.taxonomy = 'category'
                         AND p1.post_status = 'publish'
-                        AND terms1.term_id = {$category_id}
+                        AND terms1.term_id = {$category->term_id}
                         AND t2.taxonomy = 'post_tag'
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID
-                        AND p2.post_date = (
-                            SELECT MAX(p3.post_date)
-                            FROM {$wpdb->prefix}posts AS p3
-                            LEFT JOIN {$wpdb->prefix}term_relationships AS r3 ON p3.ID = r3.object_ID
-                            WHERE r3.term_taxonomy_id = terms2.term_id)
+                    GROUP BY name
                     ORDER BY name
                 ) AS temp
             LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
-            WHERE
-                IFNULL(mcl.complete, 0) = $complete
 	" );
 
-        // Replace the place holder with the commas
-        if ( MclSettingsHelper::isOtherCommaInTags() ) {
-            $tags = comma_tags_filter( $tags );
-        }
+        $tags_ongoing = array();
+        $ongoing = 0;
+        $tags_complete = array();
+        $complete = 0;
 
-        return $tags;
-    }
-
-    static function countTagsOfCategory( $data, $categorie_id ) {
-        if ( array_key_exists( $categorie_id, $data ) ) {
-            $count = 0;
-
-            foreach ( array_keys( $data[$categorie_id] ) as $key ) {
-                $count += count( $data[$categorie_id][$key] );
+        foreach ( $tags as $tag ) {
+            // Get tag data
+            $tag->tag_data = get_tag( $tag->tag_id );
+            //
+            if ( MclSettingsHelper::isOtherCommaInTags() ) {
+                $tag->tag_data = comma_tag_filter( $tag->tag_data );
             }
+            // Get tag link
+            $tag->tag_link = get_tag_link( $tag->tag_data );
 
-            return $count;
+            // Get last post data
+            $post_data = get_posts( "posts_per_page=1&tag_id={$tag->tag_id}&category={$tag->cat_id}" );
+            $tag->post_data = array_shift( $post_data );
+            // Get post link
+            $tag->post_link = get_permalink( $tag->post_data );
+
+            if ( $tag->complete == false ) {
+                $ongoing++;
+
+                // Tags which start with a number get their own group #
+                if ( preg_match( '/^[a-z]/i', trim( $tag->tag_data->name[0] ) ) ) {
+                    $tags_ongoing[strtoupper( $tag->tag_data->name[0] )][] = $tag;
+                } else {
+                    $tags_ongoing['#'][] = $tag;
+                }
+            } else {
+                $complete++;
+
+                // Tags which start with a number get their own group #
+                if ( preg_match( '/^[a-z]/i', trim( $tag->tag_data->name[0] ) ) ) {
+                    $tags_complete[strtoupper( $tag->tag_data->name[0] )][] = $tag;
+                } else {
+                    $tags_complete['#'][] = $tag;
+                }
+            }
         }
 
-        return 0;
+        // Sort tag arrays
+        ksort( $tags_ongoing );
+        ksort( $tags_complete );
+
+        $category->mcl_count = $ongoing + $complete;
+        $category->mcl_ongoing = $ongoing;
+        $category->mcl_complete = $complete;
+        $category->mcl_tags_ongoing = $tags_ongoing;
+        $category->mcl_tags_complete = $tags_complete;
+
+        return $category;
     }
 
 }

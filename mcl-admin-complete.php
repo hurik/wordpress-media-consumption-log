@@ -42,6 +42,8 @@ function change_complete_status( $tag_id, $cat_id, $complete ) {
     } else {
         $wpdb->get_results( "DELETE FROM {$wpdb->prefix}mcl_complete WHERE tag_id = $tag_id AND cat_id = $cat_id" );
     }
+
+    MclDataHelper::updateData();
 }
 
 function mcl_complete() {
@@ -54,36 +56,29 @@ function mcl_complete() {
         return;
     }
 
-    // Get the categories
-    $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
-
-    // Get the sorted data
-    $data_ongoing = MclDataHelper::getTagsOfCategorySorted( $categories, 0 );
-    $data_complete = MclDataHelper::getTagsOfCategorySorted( $categories, 1 );
+    // Get the data
+    $categoriesWithData = MclDataHelper::getData();
 
     // Create categories navigation
     $cat_nav_html = "";
 
-    foreach ( $categories as $category ) {
-        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
-
-        if ( $count_ongoing + $count_complete == 0 ) {
+    foreach ( $categoriesWithData as $categoryWithData ) {
+        if ( $categoryWithData->mcl_count == 0 ) {
             continue;
         }
 
         $cat_nav_html .= "\n  <tr>"
-                . "\n    <th colspan=\"2\"><strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong></th>"
+                . "\n    <th colspan=\"2\"><strong><a href=\"#mediastatus-{$categoryWithData->slug}\">{$categoryWithData->name}</a></strong></th>"
                 . "\n  </tr>";
 
-        if ( $count_ongoing ) {
+        if ( $categoryWithData->mcl_ongoing ) {
             $cat_nav_html .= "\n  <tr>"
-                    . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td>"
+                    . "\n    <td nowrap><a href=\"#mediastatus-{$categoryWithData->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td>"
                     . "\n    <td>";
 
-            foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
-                $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-                if ( $key != end( (array_keys( $data_ongoing[$category->term_id] ) ) ) ) {
+            foreach ( array_keys( $categoryWithData->mcl_tags_ongoing ) as $key ) {
+                $cat_nav_html .= "<a href=\"#mediastatus-{$categoryWithData->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+                if ( $key != end( (array_keys( $categoryWithData->mcl_tags_ongoing ) ) ) ) {
                     $cat_nav_html .= " | ";
                 }
             }
@@ -92,14 +87,14 @@ function mcl_complete() {
                     . "\n  </tr>";
         }
 
-        if ( $count_complete ) {
+        if ( $categoryWithData->mcl_complete ) {
             $cat_nav_html .= "\n  <tr>"
-                    . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
+                    . "\n    <td nowrap><a href=\"#mediastatus-{$categoryWithData->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
                     . "\n    <td>";
 
-            foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
-                $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-                if ( $key != end( (array_keys( $data_complete[$category->term_id] ) ) ) ) {
+            foreach ( array_keys( $categoryWithData->mcl_tags_complete ) as $key ) {
+                $cat_nav_html .= "<a href=\"#mediastatus-{$categoryWithData->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
+                if ( $key != end( (array_keys( $categoryWithData->mcl_tags_complete ) ) ) ) {
                     $cat_nav_html .= " | ";
                 }
             }
@@ -112,28 +107,23 @@ function mcl_complete() {
     $cats_html = "";
 
     // Create the tables
-    foreach ( $categories as $category ) {
-        $count_ongoing = MclDataHelper::countTagsOfCategory( $data_ongoing, $category->term_id );
-        $count_complete = MclDataHelper::countTagsOfCategory( $data_complete, $category->term_id );
-
-        $count = $count_ongoing + $count_complete;
-
-        if ( $count == 0 ) {
+    foreach ( $categoriesWithData as $categoryWithData ) {
+        if ( $categoryWithData->mcl_count == 0 ) {
             continue;
         }
 
         // Category header
-        $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$count})</h3><hr />";
+        $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}\"></div><h3>{$categoryWithData->name} ({$categoryWithData->mcl_count})</h3><hr />";
 
-        if ( $count_ongoing ) {
-            $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-ongoing\"></div><h4>" . __( 'Running', 'media-consumption-log' ) . " ({$count_ongoing})</h4>";
+        if ( $categoryWithData->mcl_ongoing ) {
+            $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}-ongoing\"></div><h4>" . __( 'Running', 'media-consumption-log' ) . " ({$categoryWithData->mcl_ongoing})</h4>";
 
             // Create the navigation
             $cats_html .= "\n<div>";
-            foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
-                $cats_html .= "<a href=\"#mediastatus-{$category->slug}-";
+            foreach ( array_keys( $categoryWithData->mcl_tags_ongoing ) as $key ) {
+                $cats_html .= "<a href=\"#mediastatus-{$categoryWithData->slug}-";
                 $cats_html .= strtolower( $key ) . "\">{$key}</a>";
-                if ( $key != end( (array_keys( $data_ongoing[$category->term_id] ) ) ) ) {
+                if ( $key != end( (array_keys( $categoryWithData->mcl_tags_ongoing ) ) ) ) {
                     $cats_html .= " | ";
                 }
             }
@@ -153,25 +143,22 @@ function mcl_complete() {
                     . "\n    <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
                     . "\n  </tr>";
 
-            foreach ( array_keys( $data_ongoing[$category->term_id] ) as $key ) {
+            foreach ( array_keys( $categoryWithData->mcl_tags_ongoing ) as $key ) {
                 $first = true;
 
-                foreach ( $data_ongoing[$category->term_id][$key] as $tag ) {
-                    $name = $tag->name;
-                    $tag_link = get_tag_link( $tag->tag_id );
-
+                foreach ( $categoryWithData->mcl_tags_ongoing[$key] as $tag ) {
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
-                                . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $data_ongoing[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_ongoing[$category->term_id][$key] ) . ")</div></th>"
+                                . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $categoryWithData->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $categoryWithData->mcl_tags_ongoing[$key] ) . ")</div></th>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag->tag_data->name}\">{$tag->tag_data->name}</a></td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag->tag_data->name}\">{$tag->tag_data->name}</a></td>"
                                 . "\n  </tr>";
                     }
                 }
@@ -180,14 +167,14 @@ function mcl_complete() {
             $cats_html .= "\n</table>";
         }
 
-        if ( $count_complete ) {
-            $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete\"></div><h4>" . __( 'Complete', 'media-consumption-log' ) . " ({$count_complete})</h4>";
+        if ( $categoryWithData->mcl_complete ) {
+            $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}-complete\"></div><h4>" . __( 'Complete', 'media-consumption-log' ) . " ({$categoryWithData->mcl_complete})</h4>";
 
             // Create the navigation
             $cats_html .= "\n<div>";
-            foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
-                $cats_html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-                if ( $key != end( (array_keys( $data_complete[$category->term_id] ) ) ) ) {
+            foreach ( array_keys( $categoryWithData->mcl_tags_complete ) as $key ) {
+                $cats_html .= "<a href=\"#mediastatus-{$categoryWithData->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
+                if ( $key != end( (array_keys( $categoryWithData->mcl_tags_complete ) ) ) ) {
                     $cats_html .= " | ";
                 }
             }
@@ -207,25 +194,22 @@ function mcl_complete() {
                     . "\n    <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
                     . "\n  </tr>";
 
-            foreach ( array_keys( $data_complete[$category->term_id] ) as $key ) {
+            foreach ( array_keys( $categoryWithData->mcl_tags_complete ) as $key ) {
                 $first = true;
 
-                foreach ( $data_complete[$category->term_id][$key] as $tag ) {
-                    $name = $tag->name;
-                    $tag_link = get_tag_link( $tag->tag_id );
-
+                foreach ( $categoryWithData->mcl_tags_complete[$key] as $tag ) {
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
-                                . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $data_complete[$category->term_id][$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $data_complete[$category->term_id][$key] ) . ")</div></th>"
+                                . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $categoryWithData->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $categoryWithData->mcl_tags_complete[$key] ) . ")</div></th>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag->tag_data->name}\">{$tag->tag_data->name}</a></td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                . "\n    <td><a href=\"{$tag_link}\" title=\"{$name}\">{$name}</a></td>"
+                                . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag->tag_data->name}\">{$tag->tag_data->name}</a></td>"
                                 . "\n  </tr>";
                     }
                 }
