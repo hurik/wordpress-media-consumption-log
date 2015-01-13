@@ -43,7 +43,7 @@ function change_complete_status( $tag_id, $cat_id, $complete ) {
         $wpdb->get_results( "DELETE FROM {$wpdb->prefix}mcl_complete WHERE tag_id = $tag_id AND cat_id = $cat_id" );
     }
 
-    MclDataHelper::updateData();
+    MclStatusHelper::updateData();
 }
 
 function mcl_complete() {
@@ -57,7 +57,7 @@ function mcl_complete() {
     }
 
     // Get the data
-    $categoriesWithData = MclDataHelper::getData();
+    $categoriesWithData = MclStatusHelper::getData();
 
     // Create categories navigation
     $cat_nav_html = "";

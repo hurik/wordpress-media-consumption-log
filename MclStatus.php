@@ -6,7 +6,7 @@ class MclStatus {
 
     static function build_status() {
         // Get the data
-        $categoriesWithData = MclDataHelper::getData();
+        $categoriesWithData = MclStatusHelper::getData();
 
         // Create categories navigation
         $html = "\n<table border=\"1\">"

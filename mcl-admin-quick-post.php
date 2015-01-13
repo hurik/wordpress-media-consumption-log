@@ -35,7 +35,7 @@ function mcl_quick_post() {
     }
 
     // Get the data
-    $categoriesWithData = MclDataHelper::getData();
+    $categoriesWithData = MclStatusHelper::getData();
 
     // Create categories navigation
     $cat_nav_html = "";

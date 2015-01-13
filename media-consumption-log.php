@@ -36,8 +36,8 @@
   THE SOFTWARE.
  */
 
-require_once dirname( __FILE__ ) . '/helpers/MclDataHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclSettingsHelper.php';
+require_once dirname( __FILE__ ) . '/helpers/MclStatusHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStringHelper.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-menu.php';

@@ -6,7 +6,7 @@ function mcl_rebuild_data() {
     }
 
     if ( isset( $_GET["now"] ) && $_GET["now"] == 1 ) {
-        MclDataHelper::updateData();
+        MclStatusHelper::updateData();
     }
     ?>
     <div class="wrap">
