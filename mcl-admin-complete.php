@@ -44,6 +44,7 @@ function change_complete_status( $tag_id, $cat_id, $complete ) {
     }
 
     MclStatusHelper::updateData();
+    MclStatisticsHelper::updateData();
 }
 
 function mcl_complete() {

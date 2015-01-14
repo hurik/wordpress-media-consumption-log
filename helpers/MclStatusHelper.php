@@ -4,6 +4,7 @@ function mcl_post_unpublished( $new_status, $old_status, $post ) {
     if ( ($old_status == 'publish' && $new_status != 'publish') ||
             ($old_status != 'publish' && $new_status == 'publish') ) {
         MclStatusHelper::updateData();
+        MclStatisticsHelper::updateData();
     }
 }
 
@@ -11,6 +12,7 @@ add_action( 'transition_post_status', 'mcl_post_unpublished', 999999, 3 );
 
 function mcl_post_trashed_or_untrashed( $pid ) {
     MclStatusHelper::updateData();
+    MclStatisticsHelper::updateData();
 }
 
 add_action( 'trash_post', 'mcl_post_trashed_or_untrashed', 999999 );

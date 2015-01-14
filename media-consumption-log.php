@@ -37,6 +37,7 @@
  */
 
 require_once dirname( __FILE__ ) . '/helpers/MclSettingsHelper.php';
+require_once dirname( __FILE__ ) . '/helpers/MclStatisticsHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStatusHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStringHelper.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
