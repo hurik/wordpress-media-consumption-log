@@ -47,7 +47,7 @@ require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-rebuild-data.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-unit.php';
-require_once dirname( __FILE__ ) . '/mcl-comma-in-tags.php';
+require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
 require_once dirname( __FILE__ ) . '/MclData.php';
 require_once dirname( __FILE__ ) . '/MclLanguages.php';
 require_once dirname( __FILE__ ) . '/MclStatistics.php';
