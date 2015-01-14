@@ -80,7 +80,7 @@ class MclStatusHelper {
             $tag->tag_data = get_tag( $tag->tag_id );
             //
             if ( MclSettingsHelper::isOtherCommaInTags() ) {
-                $tag->tag_data = comma_tag_filter( $tag->tag_data );
+                $tag->tag_data = MclCommaInTags::comma_tag_filter( $tag->tag_data );
             }
             // Get tag link
             $tag->tag_link = get_tag_link( $tag->tag_data );
