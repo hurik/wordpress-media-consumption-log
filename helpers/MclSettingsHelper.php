@@ -3,7 +3,7 @@
 class MclSettingsHelper {
 
     const defaultStatisticsMclNumber = true;
-    const defaultStatisticsNumberOfDays = 30;
+    const defaultStatisticsNumberOfDays = 31;
     const defaultStatisticsGoogleChartsDailyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold:true }, highContrast: true, alwaysOutside: true},
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
