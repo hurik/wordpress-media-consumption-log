@@ -25,12 +25,10 @@ function mcl_check_complete_after_saving( $post_id ) {
             $tag_id = $tag[0]->term_id;
 
             change_complete_status( $tag_id, $cat_id, 1 );
-
-            // Remove the meta data
-            delete_post_meta( $post_id, 'mcl_complete' );
-
-            return;
         }
+
+        // Remove the meta data
+        delete_post_meta( $post_id, 'mcl_complete' );
     }
 }
 
