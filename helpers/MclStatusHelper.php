@@ -60,7 +60,7 @@ class MclStatusHelper {
                     WHERE
                         t1.taxonomy = 'category'
                         AND p1.post_status = 'publish'
-                        AND terms1.term_id = {$category->term_id}
+                        AND terms1.term_id = '{$category->term_id}'
                         AND t2.taxonomy = 'post_tag'
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID

@@ -36,9 +36,19 @@ function change_complete_status( $tag_id, $cat_id, $complete ) {
     global $wpdb;
 
     if ( !empty( $complete ) ) {
-        $wpdb->get_results( "INSERT INTO {$wpdb->prefix}mcl_complete SET tag_id = $tag_id, cat_id = $cat_id, complete = $complete" );
+        $wpdb->get_results( "
+            INSERT INTO {$wpdb->prefix}mcl_complete
+            SET tag_id = '{$tag_id}',
+                cat_id = '{$cat_id}',
+                complete = '1'
+        " );
     } else {
-        $wpdb->get_results( "DELETE FROM {$wpdb->prefix}mcl_complete WHERE tag_id = $tag_id AND cat_id = $cat_id" );
+        $wpdb->get_results( "
+            DELETE
+            FROM {$wpdb->prefix}mcl_complete
+            WHERE tag_id = '{$tag_id}'
+              AND cat_id = '{$cat_id}'
+        " );
     }
 
     MclData::updateData();

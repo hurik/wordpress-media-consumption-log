@@ -116,8 +116,8 @@ class MclStatisticsHelper {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '$category_id'
-              AND post_date >= '$first_date'
+              AND term_taxonomy_id = '{$category_id}'
+              AND post_date >= '{$first_date}'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
             ORDER BY date DESC
 	" );
@@ -134,8 +134,8 @@ class MclStatisticsHelper {
             LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
             WHERE post_status = 'publish'
               AND post_type = 'post'
-              AND term_taxonomy_id = '$category_id'
-              AND post_date >= '$first_date'
+              AND term_taxonomy_id = '{$category_id}'
+              AND post_date >= '{$first_date}'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
             ORDER BY date DESC
 	" );
@@ -154,8 +154,8 @@ class MclStatisticsHelper {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '$category_id'
-              AND post_date >= '$first_month'
+              AND term_taxonomy_id = '{$category_id}'
+              AND post_date >= '{$first_month}'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m')
             ORDER BY date DESC
 	" );
@@ -172,8 +172,8 @@ class MclStatisticsHelper {
             LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
             WHERE post_status = 'publish'
               AND post_type = 'post'
-              AND term_taxonomy_id = '$category_id'
-              AND post_date >= '$first_month'
+              AND term_taxonomy_id = '{$category_id}'
+              AND post_date >= '{$first_month}'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m')
             ORDER BY date DESC
 	" );
@@ -192,7 +192,7 @@ class MclStatisticsHelper {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '{$category_id}'
 	" );
 
         return $stats[0]->number;
@@ -207,7 +207,7 @@ class MclStatisticsHelper {
             LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
             WHERE post_status = 'publish'
               AND post_type = 'post'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '{$category_id}'
 	" );
 
         return $stats[0]->number;
@@ -229,7 +229,7 @@ class MclStatisticsHelper {
                 LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id
                 WHERE t1.taxonomy = 'category'
                   AND p1.post_status = 'publish'
-                  AND terms1.term_id = $category_id
+                  AND terms1.term_id = '{$category_id}'
                   AND t2.taxonomy = 'post_tag'
                   AND p2.post_status = 'publish'
                   AND p1.ID = p2.ID
@@ -237,7 +237,7 @@ class MclStatisticsHelper {
             ) AS temp
             LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id
             AND temp.cat_id = mcl.cat_id
-            WHERE IFNULL(mcl.complete, 0) = $complete
+            WHERE IFNULL(mcl.complete, 0) = '{$complete}'
         " );
 
         return $stats[0]->number;
