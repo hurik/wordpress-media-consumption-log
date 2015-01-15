@@ -30,7 +30,7 @@ class MclStatisticsHelper {
         $categories = get_categories( "exclude=" . MclSettingsHelper::getStatisticsExcludeCategory() );
 
         // Daily graph
-        $first_date = date( 'Y-m-d', strtotime( "-" . MclSettingsHelper::getStatisticsNumberOfDays() - 1 . " day", strtotime( date( 'Y-m-d' ) ) ) );
+        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettingsHelper::getStatisticsNumberOfDays() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
@@ -41,7 +41,7 @@ class MclStatisticsHelper {
         }
 
         // Monthly graph
-        $first_month = date( 'Y-m', strtotime( "-" . MclSettingsHelper::getStatisticsNumberOfMonths() - 1 . " month", strtotime( date( 'Y-m' ) ) ) );
+        $first_month = date( 'Y-m', strtotime( "-" . (MclSettingsHelper::getStatisticsNumberOfMonths() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
