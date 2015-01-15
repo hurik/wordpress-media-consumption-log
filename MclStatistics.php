@@ -27,6 +27,15 @@ class MclStatistics {
                 . "\n    var data = google.visualization.arrayToDataTable(["
                 . "\n      ['Date', ";
 
+        // Get the last dates
+        $dates_daily = array();
+
+        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfDays(); $i++ ) {
+            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+            array_push( $dates_daily, $day );
+        }
+
+        // Data array header
         foreach ( $data->stats as $categoryWithData ) {
             $html .= "'{$categoryWithData->name}'";
 
@@ -37,16 +46,26 @@ class MclStatistics {
 
         $html .= ", { role: 'annotation' }],";
 
-        for ( $i = 0; $i < count( $data->dates_daily ); $i++ ) {
-            $date = DateTime::createFromFormat( 'Y-m-d', $data->dates_daily[$i] );
+        // Data array
+        for ( $i = 0; $i < count( $dates_daily ); $i++ ) {
+            $date = DateTime::createFromFormat( 'Y-m-d', $dates_daily[$i] );
 
             $html .= "\n      ['{$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )}', ";
 
             $total = 0;
 
             foreach ( $data->stats as $categoryWithData ) {
-                $total += $categoryWithData->mcl_daily_data[$i];
-                $html .= "{$categoryWithData->mcl_daily_data[$i]}";
+                $count = 0;
+
+                foreach ( $categoryWithData->mcl_daily_data as $cat_count ) {
+                    if ( $dates_daily[$i] == $cat_count->date ) {
+                        $count = $cat_count->number;
+                        break;
+                    }
+                }
+
+                $total += $count;
+                $html .= "{$count}";
 
                 if ( end( $data->stats ) != $categoryWithData ) {
                     $html .= ", ";
@@ -55,7 +74,7 @@ class MclStatistics {
 
             $html .= ", '{$total}']";
 
-            if ( $i != count( $data->dates_daily ) - 1 ) {
+            if ( $i != count( $dates_daily ) - 1 ) {
                 $html .= ", ";
             }
         }
@@ -74,6 +93,13 @@ class MclStatistics {
                 . "\n    var data = google.visualization.arrayToDataTable(["
                 . "\n      ['Date', ";
 
+        $dates_monthly = array();
+
+        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfMonths(); $i++ ) {
+            $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+            array_push( $dates_monthly, $month );
+        }
+
         foreach ( $data->stats as $categoryWithData ) {
             $html .= "'{$categoryWithData->name}'";
 
@@ -84,16 +110,25 @@ class MclStatistics {
 
         $html .= ", { role: 'annotation' }],";
 
-        for ( $i = 0; $i < count( $data->dates_monthly ); $i++ ) {
-            $date = DateTime::createFromFormat( 'Y-m', $data->dates_monthly[$i] );
+        for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
+            $date = DateTime::createFromFormat( 'Y-m', $dates_monthly[$i] );
 
             $html .= "\n      ['{$date->format( MclSettingsHelper::getStatisticsMonthlyDateFormat() )}', ";
 
             $total = 0;
 
             foreach ( $data->stats as $categoryWithData ) {
-                $total += $categoryWithData->mcl_monthly_data[$i];
-                $html .= "{$categoryWithData->mcl_monthly_data[$i]}";
+                $count = 0;
+
+                foreach ( $categoryWithData->mcl_monthly_data as $cat_count ) {
+                    if ( $dates_monthly[$i] == $cat_count->date ) {
+                        $count = $cat_count->number;
+                        break;
+                    }
+                }
+
+                $total += $count;
+                $html .= "{$count}";
 
                 if ( end( $data->stats ) != $categoryWithData ) {
                     $html .= ", ";
@@ -102,7 +137,7 @@ class MclStatistics {
 
             $html .= ", '{$total}']";
 
-            if ( $i != count( $data->dates_monthly ) - 1 ) {
+            if ( $i != count( $dates_monthly ) - 1 ) {
                 $html .= ", ";
             }
         }

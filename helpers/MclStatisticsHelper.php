@@ -30,66 +30,24 @@ class MclStatisticsHelper {
         $categories = get_categories( "exclude=" . MclSettingsHelper::getStatisticsExcludeCategory() );
 
         // Daily graph
-        $dates_daily = array();
-
-        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfDays(); $i++ ) {
-            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-            array_push( $dates_daily, $day );
-        }
-
-        $data->dates_daily = $dates_daily;
+        $first_date = date( 'Y-m-d', strtotime( "-" . MclSettingsHelper::getStatisticsNumberOfDays() - 1 . " day", strtotime( date( 'Y-m-d' ) ) ) );
 
         foreach ( $categories as $category ) {
-            $category->mcl_daily_data = array();
-
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $stats = self::getMclNumberCountOfCategorySortedByDay( $category->term_id );
+                $category->mcl_daily_data = self::getMclNumberCountOfCategorySortedByDay( $category->term_id, $first_date );
             } else {
-                $stats = self::getPostCountOfCategorySortedByDay( $category->term_id );
-            }
-
-            foreach ( $dates_daily as $date ) {
-                $found = 0;
-
-                foreach ( $stats as $stat ) {
-                    if ( $stat->date == $date ) {
-                        $found = $stat->number;
-                        break;
-                    }
-                }
-
-                $category->mcl_daily_data[] = $found;
+                $category->mcl_daily_data = self::getPostCountOfCategorySortedByDay( $category->term_id, $first_date );
             }
         }
 
         // Monthly graph
-        $dates_monthly = array();
-
-        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfMonths(); $i++ ) {
-            $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-            array_push( $dates_monthly, $month );
-        }
-
-        $data->dates_monthly = $dates_monthly;
+        $first_month = date( 'Y-m', strtotime( "-" . MclSettingsHelper::getStatisticsNumberOfMonths() - 1 . " month", strtotime( date( 'Y-m' ) ) ) );
 
         foreach ( $categories as $category ) {
             if ( MclSettingsHelper::isStatisticsMclNumber() ) {
-                $stats = self::getMclNumberCountOfCategorySortedByMonth( $category->term_id );
+                $category->mcl_monthly_data = self::getMclNumberCountOfCategorySortedByMonth( $category->term_id, $first_month );
             } else {
-                $stats = self::getPostCountOfCategorySortedByMonth( $category->term_id );
-            }
-
-            foreach ( $dates_monthly as $date ) {
-                $found = 0;
-
-                foreach ( $stats as $stat ) {
-                    if ( $stat->date == $date ) {
-                        $found = $stat->number;
-                        break;
-                    }
-                }
-
-                $category->mcl_monthly_data[] = $found;
+                $category->mcl_monthly_data = self::getPostCountOfCategorySortedByMonth( $category->term_id, $first_month );
             }
         }
 
@@ -147,7 +105,7 @@ class MclStatisticsHelper {
         return $data;
     }
 
-    private static function getMclNumberCountOfCategorySortedByDay( $category_id ) {
+    private static function getMclNumberCountOfCategorySortedByDay( $category_id, $first_date ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -158,15 +116,16 @@ class MclStatisticsHelper {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '$category_id'
+              AND post_date >= '$first_date'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date
+            ORDER BY date DESC
 	" );
 
         return $stats;
     }
 
-    private static function getPostCountOfCategorySortedByDay( $category_id ) {
+    private static function getPostCountOfCategorySortedByDay( $category_id, $first_date ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -175,15 +134,16 @@ class MclStatisticsHelper {
             LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
             WHERE post_status = 'publish'
               AND post_type = 'post'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '$category_id'
+              AND post_date >= '$first_date'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date
+            ORDER BY date DESC
 	" );
 
         return $stats;
     }
 
-    private static function getMclNumberCountOfCategorySortedByMonth( $category_id ) {
+    private static function getMclNumberCountOfCategorySortedByMonth( $category_id, $first_month ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -194,15 +154,16 @@ class MclStatisticsHelper {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '$category_id'
+              AND post_date >= '$first_month'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m')
-            ORDER BY date
+            ORDER BY date DESC
 	" );
 
         return $stats;
     }
 
-    private static function getPostCountOfCategorySortedByMonth( $category_id ) {
+    private static function getPostCountOfCategorySortedByMonth( $category_id, $first_month ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -211,9 +172,10 @@ class MclStatisticsHelper {
             LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
             WHERE post_status = 'publish'
               AND post_type = 'post'
-              AND term_taxonomy_id = $category_id
+              AND term_taxonomy_id = '$category_id'
+              AND post_date >= '$first_month'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m')
-            ORDER BY date
+            ORDER BY date DESC
 	" );
 
         return $stats;
