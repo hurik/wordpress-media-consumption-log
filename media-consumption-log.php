@@ -38,6 +38,7 @@
 
 require_once dirname( __FILE__ ) . '/admin/MclAdminMenu.php';
 require_once dirname( __FILE__ ) . '/admin/MclRebuildData.php';
+require_once dirname( __FILE__ ) . '/admin/MclSettings.php';
 require_once dirname( __FILE__ ) . '/admin/MclUnit.php';
 require_once dirname( __FILE__ ) . '/helpers/MclSettingsHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStatisticsHelper.php';
@@ -46,7 +47,6 @@ require_once dirname( __FILE__ ) . '/helpers/MclStringHelper.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-complete.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-number.php';
 require_once dirname( __FILE__ ) . '/mcl-admin-quick-post.php';
-require_once dirname( __FILE__ ) . '/mcl-admin-settings.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
 require_once dirname( __FILE__ ) . '/MclData.php';
 require_once dirname( __FILE__ ) . '/MclLanguages.php';
