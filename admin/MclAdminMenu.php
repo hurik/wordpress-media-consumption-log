@@ -54,9 +54,11 @@ class MclAdminMenu {
 
         // Add default custom fields
         MclComplete::add_default_custom_field_in_new_post( $post_id );
+        MclNumber::add_default_custom_field_in_new_post( $post_id );
     }
 
     public static function save_post( $post_id ) {
+        MclNumber::check_mcl_number_after_saving( $post_id );
         MclComplete::check_complete_after_saving( $post_id );
     }
 
