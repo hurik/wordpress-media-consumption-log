@@ -27,13 +27,13 @@ class MclStatisticsHelper {
         $data = new StdClass;
 
         // Get the categories
-        $categories = get_categories( "exclude=" . MclSettingsHelper::getStatisticsExcludeCategory() );
+        $categories = get_categories( "exclude=" . MclSettings::getStatisticsExcludeCategory() );
 
         // Daily graph
-        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettingsHelper::getStatisticsNumberOfDays() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
+        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::getStatisticsNumberOfDays() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
 
         foreach ( $categories as $category ) {
-            if ( MclSettingsHelper::isStatisticsMclNumber() ) {
+            if ( MclSettings::isStatisticsMclNumber() ) {
                 $category->mcl_daily_data = self::getMclNumberCountOfCategorySortedByDay( $category->term_id, $first_date );
             } else {
                 $category->mcl_daily_data = self::getPostCountOfCategorySortedByDay( $category->term_id, $first_date );
@@ -41,10 +41,10 @@ class MclStatisticsHelper {
         }
 
         // Monthly graph
-        $first_month = date( 'Y-m', strtotime( "-" . (MclSettingsHelper::getStatisticsNumberOfMonths() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::getStatisticsNumberOfMonths() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
 
         foreach ( $categories as $category ) {
-            if ( MclSettingsHelper::isStatisticsMclNumber() ) {
+            if ( MclSettings::isStatisticsMclNumber() ) {
                 $category->mcl_monthly_data = self::getMclNumberCountOfCategorySortedByMonth( $category->term_id, $first_month );
             } else {
                 $category->mcl_monthly_data = self::getPostCountOfCategorySortedByMonth( $category->term_id, $first_month );
@@ -69,7 +69,7 @@ class MclStatisticsHelper {
 
         foreach ( $categories as $category ) {
             // Stats
-            if ( MclSettingsHelper::isStatisticsMclNumber() ) {
+            if ( MclSettings::isStatisticsMclNumber() ) {
                 $cat_com_tot = self::getTotalMclNumberCountOfCategory( $category->term_id );
                 $car_com_avg = $cat_com_tot / $number_of_days;
             } else {

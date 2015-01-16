@@ -7,7 +7,7 @@ class MclHooks {
     public static function on_start() {
         add_action( 'init', array( get_called_class(), 'init' ) );
 
-        if ( !is_admin() && MclSettingsHelper::isOtherCommaInTags() ) {
+        if ( !is_admin() && MclSettings::isOtherCommaInTags() ) {
             add_filter( 'get_post_tag', array( 'MclCommaInTags', 'comma_tag_filter' ) );
             add_filter( 'get_terms', array( 'MclCommaInTags', 'comma_tags_filter' ) );
             add_filter( 'get_the_terms', array( 'MclCommaInTags', 'comma_tags_filter' ) );

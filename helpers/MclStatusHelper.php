@@ -21,7 +21,7 @@ class MclStatusHelper {
     }
 
     private static function getAllTags() {
-        $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
+        $categories = get_categories( "exclude=" . MclSettings::getStatusExcludeCategory() );
 
         $data = array();
 
@@ -79,7 +79,7 @@ class MclStatusHelper {
             // Get tag data
             $tag->tag_data = get_tag( $tag->tag_id );
             //
-            if ( MclSettingsHelper::isOtherCommaInTags() ) {
+            if ( MclSettings::isOtherCommaInTags() ) {
                 $tag->tag_data = MclCommaInTags::comma_tag_filter( $tag->tag_data );
             }
             // Get tag link

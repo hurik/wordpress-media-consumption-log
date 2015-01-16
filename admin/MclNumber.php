@@ -19,14 +19,14 @@ class MclNumber {
             $mcl_number = 1;
 
             $post = get_post( $post_id );
-            $title_ecplode = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $post->post_title );
+            $title_ecplode = explode( " " . MclSettings::getOtherSeprator() . " ", $post->post_title );
             $current_number = end( $title_ecplode );
 
             if ( count( $title_ecplode ) < 2 ) {
                 // Do nothing
-            } else if ( strpos( $current_number, " " . MclSettingsHelper::getOtherMclNumberAnd() . " " ) !== false ) {
+            } else if ( strpos( $current_number, " " . MclSettings::getOtherMclNumberAnd() . " " ) !== false ) {
                 $mcl_number = 2;
-            } else if ( strpos( $current_number, " " . MclSettingsHelper::getOtherMclNumberTo() . " " ) !== false ) {
+            } else if ( strpos( $current_number, " " . MclSettings::getOtherMclNumberTo() . " " ) !== false ) {
                 preg_match_all( '!\d+(?:\.\d+)?!', $current_number, $matches );
 
                 if ( count( $matches[0] ) == 2 ) {

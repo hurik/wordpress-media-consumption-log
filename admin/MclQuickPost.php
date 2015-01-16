@@ -95,14 +95,14 @@ class MclQuickPost {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap rowspan=\"" . count( $categoryWithData->mcl_tags_ongoing[$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$categoryWithData->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $categoryWithData->mcl_tags_ongoing[$key] ) . ")</div></th>"
                                 . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$categoryWithData->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::getStatisticsDailyDateFormat() )})</td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$categoryWithData->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )})</td>"
+                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::getStatisticsDailyDateFormat() )})</td>"
                                 . "\n  </tr>";
                     }
                 }

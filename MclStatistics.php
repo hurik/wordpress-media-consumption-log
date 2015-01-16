@@ -30,7 +30,7 @@ class MclStatistics {
         // Get the last dates
         $dates_daily = array();
 
-        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfDays(); $i++ ) {
+        for ( $i = 0; $i < MclSettings::getStatisticsNumberOfDays(); $i++ ) {
             $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
             array_push( $dates_daily, $day );
         }
@@ -50,7 +50,7 @@ class MclStatistics {
         for ( $i = 0; $i < count( $dates_daily ); $i++ ) {
             $date = DateTime::createFromFormat( 'Y-m-d', $dates_daily[$i] );
 
-            $html .= "\n      ['{$date->format( MclSettingsHelper::getStatisticsDailyDateFormat() )}', ";
+            $html .= "\n      ['{$date->format( MclSettings::getStatisticsDailyDateFormat() )}', ";
 
             $total = 0;
 
@@ -81,7 +81,7 @@ class MclStatistics {
 
         $html .= "\n    ]);"
                 . "\n\n    var options = {"
-                . "\n      " . MclSettingsHelper::getStatisticsGoogleChartsDailyOptions()
+                . "\n      " . MclSettings::getStatisticsGoogleChartsDailyOptions()
                 . "\n    };"
                 . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));"
                 . "\n    chart.draw(data, options);"
@@ -95,7 +95,7 @@ class MclStatistics {
 
         $dates_monthly = array();
 
-        for ( $i = 0; $i < MclSettingsHelper::getStatisticsNumberOfMonths(); $i++ ) {
+        for ( $i = 0; $i < MclSettings::getStatisticsNumberOfMonths(); $i++ ) {
             $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
             array_push( $dates_monthly, $month );
         }
@@ -113,7 +113,7 @@ class MclStatistics {
         for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
             $date = DateTime::createFromFormat( 'Y-m', $dates_monthly[$i] );
 
-            $html .= "\n      ['{$date->format( MclSettingsHelper::getStatisticsMonthlyDateFormat() )}', ";
+            $html .= "\n      ['{$date->format( MclSettings::getStatisticsMonthlyDateFormat() )}', ";
 
             $total = 0;
 
@@ -144,7 +144,7 @@ class MclStatistics {
 
         $html .= "\n    ]);"
                 . "\n\n    var options = {"
-                . "\n      " . MclSettingsHelper::getStatisticsGoogleChartsMonthlyOptions()
+                . "\n      " . MclSettings::getStatisticsGoogleChartsMonthlyOptions()
                 . "\n    };"
                 . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));"
                 . "\n    chart.draw(data, options);"
@@ -201,7 +201,7 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total comsumption, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::getStatisticsDailyDateFormat() ), __( 'Total comsumption, since the first post on the %DATE%.', 'media-consumption-log' ) );
 
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
@@ -234,7 +234,7 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Average a day, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::getStatisticsDailyDateFormat() ), __( 'Average a day, since the first post on the %DATE%.', 'media-consumption-log' ) );
 
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
@@ -264,7 +264,7 @@ class MclStatistics {
                 continue;
             }
 
-            $cat_ids_status = explode( ",", MclSettingsHelper::getStatusExcludeCategory() );
+            $cat_ids_status = explode( ",", MclSettings::getStatusExcludeCategory() );
 
             if ( in_array( $categoryWithData->term_id, $cat_ids_status ) ) {
                 $html .= "\n  <tr>"
@@ -283,7 +283,7 @@ class MclStatistics {
 
         $categories_string = MclStringHelper::build_all_categories_string( $data->stats, false );
 
-        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
         $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
 
         $html .= "\n  <tr>"
