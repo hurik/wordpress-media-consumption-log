@@ -4,7 +4,7 @@ class MclStringHelper {
 
     public static function get_last_consumed( $title ) {
         // Explode the title
-        $titleExploded = explode( " " . MclSettings::getOtherSeprator() . " ", $title );
+        $titleExploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
 
         // Get the last part, so we have the chapter/episode/...
         $status = end( $titleExploded );
@@ -25,8 +25,8 @@ class MclStringHelper {
 
     public static function build_next_post_title( $last_post_title ) {
         $title = trim( $last_post_title );
-        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::getOtherMclNumberTo() . " /", "", $title );
-        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::getOtherMclNumberAnd() . " /", "", $title );
+        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::get_other_mcl_number_to() . " /", "", $title );
+        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::get_other_mcl_number_and() . " /", "", $title );
 
         $title_explode = explode( ' ', $title );
         $number = end( $title_explode );

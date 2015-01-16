@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-16 12:38:00+0000\n"
+"PO-Revision-Date: 2015-01-16 16:03:30+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: admin/MclComplete.php:53
 #: admin/MclQuickPost.php:18
-#: admin/MclRebuildData.php:7
+#: admin/MclRebuildData.php:25
 #: admin/MclUnits.php:28
 #@ default
 msgid "You do not have sufficient permissions to access this page."
@@ -30,18 +30,18 @@ msgstr ""
 
 #: MclHooks.php:26
 #: admin/MclAdminHooks.php:28
-#: admin/MclQuickPost.php:148
+#: admin/MclQuickPost.php:156
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
 #: MclStatistics.php:258
-#: MclStatus.php:45
-#: MclStatus.php:128
+#: MclStatus.php:49
+#: MclStatus.php:136
 #: admin/MclAdminHooks.php:29
-#: admin/MclComplete.php:94
-#: admin/MclComplete.php:173
-#: admin/MclComplete.php:252
+#: admin/MclComplete.php:98
+#: admin/MclComplete.php:181
+#: admin/MclComplete.php:260
 #@ media-consumption-log
 msgid "Complete"
 msgstr "Komplett"
@@ -181,23 +181,23 @@ msgid "Average a day, since the first post on the %DATE%."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
 #: MclStatistics.php:257
-#: MclStatus.php:29
-#: MclStatus.php:72
-#: admin/MclComplete.php:78
-#: admin/MclComplete.php:121
+#: MclStatus.php:33
+#: MclStatus.php:80
+#: admin/MclComplete.php:82
+#: admin/MclComplete.php:129
 #@ media-consumption-log
 msgid "Running"
 msgstr "Laufend"
 
-#: MclStatus.php:95
-#: MclStatus.php:150
-#: admin/MclComplete.php:145
-#: admin/MclComplete.php:196
+#: MclStatus.php:103
+#: MclStatus.php:158
+#: admin/MclComplete.php:153
+#: admin/MclComplete.php:204
 #@ media-consumption-log
 msgid "Name"
 msgstr "Name"
 
-#: MclStatus.php:96
+#: MclStatus.php:104
 #@ media-consumption-log
 msgid "Last"
 msgstr "Letzte(s)"
@@ -232,16 +232,16 @@ msgstr ""
 msgid "1.0.0"
 msgstr ""
 
-#: admin/MclComplete.php:144
-#: admin/MclComplete.php:195
+#: admin/MclComplete.php:152
+#: admin/MclComplete.php:203
 #@ media-consumption-log
 msgid "Change state"
 msgstr "Status ändern"
 
-#: admin/MclComplete.php:155
-#: admin/MclComplete.php:162
-#: admin/MclComplete.php:206
-#: admin/MclComplete.php:213
+#: admin/MclComplete.php:163
+#: admin/MclComplete.php:170
+#: admin/MclComplete.php:214
+#: admin/MclComplete.php:221
 #@ media-consumption-log
 msgid "Change!"
 msgstr "Ändern!"
@@ -256,20 +256,20 @@ msgstr "Insgesamt"
 
 #: admin/MclSettings.php:196
 #@ media-consumption-log
-msgid "IDs of the category you want to exclude from the status page. Example: 1,45,75"
-msgstr "IDs der Kategorien die ihr von der Status Seite ausnehmen wollt. Beispiel: 1,45,75"
+msgid "IDs of the category you want to exclude from the status page. Example: 1,45,75,284"
+msgstr "IDs der Kategorien die ihr von der Status Seite ausnehmen wollt. Beispiel: 1,45,75,284"
 
 #: admin/MclSettings.php:206
 #@ media-consumption-log
 msgid "IDs of the category you want to exclude from the statistics page. Example: 1"
 msgstr "IDs der Kategorien die ihr von der Statistiken Seite ausnehmen wollt. Beispiel: 1"
 
-#: admin/MclQuickPost.php:82
+#: admin/MclQuickPost.php:90
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: admin/MclQuickPost.php:83
+#: admin/MclQuickPost.php:91
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
@@ -399,33 +399,33 @@ msgid "When the keyword is in the episode/chapter number the mcl_number will be 
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung: "
 
 #: admin/MclAdminHooks.php:31
-#: admin/MclRebuildData.php:15
+#: admin/MclRebuildData.php:33
 #@ media-consumption-log
 msgid "Rebuild data"
 msgstr "Erneuere Daten"
 
-#: admin/MclRebuildData.php:18
+#: admin/MclRebuildData.php:36
 #@ media-consumption-log
 msgid "Rebuild data now!"
 msgstr "Jetzt Daten erneuern!"
 
-#: admin/MclRebuildData.php:21
+#: admin/MclRebuildData.php:39
 #@ media-consumption-log
 msgid "Information"
 msgstr "Informationen"
 
-#: admin/MclRebuildData.php:24
+#: admin/MclRebuildData.php:42
 #@ media-consumption-log
 msgid "Number of queries"
 msgstr "Datenbank abfragen"
 
-#: admin/MclRebuildData.php:28
+#: admin/MclRebuildData.php:46
 #@ media-consumption-log
 msgid "Execution time"
 msgstr "Ausführungszeit"
 
-#: admin/MclQuickPost.php:97
-#: admin/MclQuickPost.php:104
+#: admin/MclQuickPost.php:105
+#: admin/MclQuickPost.php:112
 #@ media-consumption-log
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"

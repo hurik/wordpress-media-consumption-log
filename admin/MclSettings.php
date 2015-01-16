@@ -5,53 +5,53 @@ class MclSettings {
     // Option group name
     const option_group_name = "mcl-settings-group";
     // Default values
-    const defaultStatisticsMclNumber = true;
-    const defaultStatisticsNumberOfDays = 31;
-    const defaultStatisticsGoogleChartsDailyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
+    const default_statistics_mcl_number = true;
+    const default_statistics_number_of_days = 31;
+    const default_statistics_google_charts_daily_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
 chartArea: {left: 70, top: 80, width: '80%', height: data.getNumberOfRows() * 15},
 isStacked: true,";
-    const defaultStatisticsNumberOfMonths = 6;
-    const defaultStatisticsGoogleChartsMonthlyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
+    const default_statistics_number_of_months = 6;
+    const default_statistics_google_charts_monthly_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
 chartArea: { left: 50, top: 80, width: '80%', height: data.getNumberOfRows() * 15 },
 isStacked: true,";
-    const defaultOtherCommaInTags = true;
-    const defaultOtherSeparator = "-";
+    const default_other_comma_in_tags = true;
+    const default_other_separator = "-";
 
-    static function defaultStatisticsDailyDateFormat() {
+    static function default_statistics_daily_date_format() {
         return __( 'Y-m-j', 'media-consumption-log' );
     }
 
-    static function defaultStatisticsMonthlyDateFormat() {
+    static function default_statistics_monthly_date_format() {
         return __( 'Y-m', 'media-consumption-log' );
     }
 
-    static function defaultOtherMclNumberAnd() {
+    static function default_other_mcl_number_and() {
         return __( 'and', 'media-consumption-log' );
     }
 
-    static function defaultOtherMclNumberTo() {
+    static function default_other_mcl_number_to() {
         return __( 'to', 'media-consumption-log' );
     }
 
     // Getter
-    static function getStatusExcludeCategory() {
+    static function get_status_exclude_category() {
         return get_option( 'mcl_settings_status_exclude_category' );
     }
 
-    static function getStatisticsExcludeCategory() {
+    static function get_statistics_exclude_category() {
         return get_option( 'mcl_settings_statistics_exclude_category' );
     }
 
-    static function isStatisticsMclNumber() {
-        $value = get_option( 'mcl_settings_statistics_mcl_number', self::defaultStatisticsMclNumber );
+    static function is_statistics_mcl_number() {
+        $value = get_option( 'mcl_settings_statistics_mcl_number', self::default_statistics_mcl_number );
 
         if ( empty( $value ) ) {
             return false;
@@ -60,68 +60,68 @@ isStacked: true,";
         }
     }
 
-    static function getStatisticsNumberOfDays() {
+    static function get_statistics_number_of_days() {
         $value = get_option( 'mcl_settings_statistics_number_of_days' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsNumberOfDays;
+            return self::default_statistics_number_of_days;
         } else {
             return $value;
         }
     }
 
-    static function getStatisticsDailyDateFormat() {
+    static function get_statistics_daily_date_format() {
         $value = get_option( 'mcl_settings_statistics_daily_date_format' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsDailyDateFormat();
+            return self::default_statistics_daily_date_format();
         } else {
             return $value;
         }
     }
 
-    static function getStatisticsGoogleChartsDailyOptions() {
+    static function get_statistics_google_charts_daily_options() {
         $value = get_option( 'mcl_settings_statistics_google_charts_daily_options' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsGoogleChartsDailyOptions;
+            return self::default_statistics_google_charts_daily_options;
         } else {
             return $value;
         }
     }
 
-    static function getStatisticsNumberOfMonths() {
+    static function get_statistics_number_of_months() {
         $value = get_option( 'mcl_settings_statistics_number_of_months' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsNumberOfMonths;
+            return self::default_statistics_number_of_months;
         } else {
             return $value;
         }
     }
 
-    static function getStatisticsMonthlyDateFormat() {
+    static function get_statistics_monthly_date_format() {
         $value = get_option( 'mcl_settings_statistics_monthly_date_format' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsMonthlyDateFormat();
+            return self::default_statistics_monthly_date_format();
         } else {
             return $value;
         }
     }
 
-    static function getStatisticsGoogleChartsMonthlyOptions() {
+    static function get_statistics_google_charts_monthly_options() {
         $value = get_option( 'mcl_settings_statistics_google_charts_monthly_options' );
 
         if ( empty( $value ) ) {
-            return self::defaultStatisticsGoogleChartsMonthlyOptions;
+            return self::default_statistics_google_charts_monthly_options;
         } else {
             return $value;
         }
     }
 
-    static function isOtherCommaInTags() {
-        $value = get_option( 'mcl_settings_other_comma_in_tags', self::defaultOtherCommaInTags );
+    static function is_other_comma_in_tags() {
+        $value = get_option( 'mcl_settings_other_comma_in_tags', self::default_other_comma_in_tags );
 
         if ( empty( $value ) ) {
             return false;
@@ -130,31 +130,31 @@ isStacked: true,";
         }
     }
 
-    static function getOtherSeprator() {
+    static function get_other_separator() {
         $value = get_option( 'mcl_settings_other_separator' );
 
         if ( empty( $value ) ) {
-            return self::defaultOtherSeparator;
+            return self::default_other_separator;
         } else {
             return $value;
         }
     }
 
-    static function getOtherMclNumberAnd() {
+    static function get_other_mcl_number_and() {
         $value = get_option( 'mcl_settings_other_mcl_number_and' );
 
         if ( empty( $value ) ) {
-            return self::defaultOtherMclNumberAnd();
+            return self::default_other_mcl_number_and();
         } else {
             return $value;
         }
     }
 
-    static function getOtherMclNumberTo() {
+    static function get_other_mcl_number_to() {
         $value = get_option( 'mcl_settings_other_mcl_number_to' );
 
         if ( empty( $value ) ) {
-            return self::defaultOtherMclNumberTo();
+            return self::default_other_mcl_number_to();
         } else {
             return $value;
         }
@@ -192,8 +192,8 @@ isStacked: true,";
                 <table class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_status_exclude_category" value="<?php echo esc_attr( self::getStatusExcludeCategory() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the category you want to exclude from the status page. Example: 1,45,75', 'media-consumption-log' ); ?><br />
+                        <td><input type="text" name="mcl_settings_status_exclude_category" value="<?php echo esc_attr( self::get_status_exclude_category() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'IDs of the category you want to exclude from the status page. Example: 1,45,75,284', 'media-consumption-log' ); ?><br />
                                 <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
                     </tr>
                 </table>
@@ -202,53 +202,53 @@ isStacked: true,";
                 <table class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_statistics_exclude_category" value="<?php echo esc_attr( self::getStatisticsExcludeCategory() ); ?>" style="width:100%;" />
+                        <td><input type="text" name="mcl_settings_statistics_exclude_category" value="<?php echo esc_attr( self::get_statistics_exclude_category() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'IDs of the category you want to exclude from the statistics page. Example: 1', 'media-consumption-log' ); ?><br />
                                 <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Use mcl_numbers', 'media-consumption-log' ); ?></th>
-                        <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( self::isStatisticsMclNumber() ); ?> />
-                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::defaultStatisticsMclNumber ); ?></p></td>
+                        <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( self::is_statistics_mcl_number() ); ?> />
+                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::default_statistics_mcl_number ); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Daily statistics size', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( self::getStatisticsNumberOfDays() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultStatisticsNumberOfDays; ?></p></td>
+                        <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( self::get_statistics_number_of_days() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_number_of_days; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Daily date format', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_statistics_daily_date_format" value="<?php echo esc_attr( self::getStatisticsDailyDateFormat() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Format for dates on the daily statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultStatisticsDailyDateFormat(); ?></p></td>
+                        <td><input type="text" name="mcl_settings_statistics_daily_date_format" value="<?php echo esc_attr( self::get_statistics_daily_date_format() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Format for dates on the daily statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_daily_date_format(); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Daily Google Charts Options', 'media-consumption-log' ); ?></th>
-                        <td><textarea name="mcl_settings_statistics_google_charts_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( self::getStatisticsGoogleChartsDailyOptions() ); ?></textarea>
+                        <td><textarea name="mcl_settings_statistics_google_charts_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_google_charts_daily_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::defaultStatisticsGoogleChartsDailyOptions ); ?></p></td>
+                                <?php echo str_replace( "\n", "<br />", self::default_statistics_google_charts_daily_options ); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Monthly statistics size', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_statistics_number_of_months" value="<?php echo esc_attr( self::getStatisticsNumberOfMonths() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultStatisticsNumberOfMonths; ?></p></td>
+                        <td><input type="text" name="mcl_settings_statistics_number_of_months" value="<?php echo esc_attr( self::get_statistics_number_of_months() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_number_of_months; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Monthly date format', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_statistics_monthly_date_format" value="<?php echo esc_attr( self::getStatisticsMonthlyDateFormat() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultStatisticsMonthlyDateFormat(); ?></p></td>
+                        <td><input type="text" name="mcl_settings_statistics_monthly_date_format" value="<?php echo esc_attr( self::get_statistics_monthly_date_format() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_monthly_date_format(); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Monthly Google Charts Options', 'media-consumption-log' ); ?></th>
-                        <td><textarea name="mcl_settings_statistics_google_charts_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( self::getStatisticsGoogleChartsMonthlyOptions() ); ?></textarea>
+                        <td><textarea name="mcl_settings_statistics_google_charts_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_google_charts_monthly_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::defaultStatisticsGoogleChartsMonthlyOptions ); ?></p></td>
+                                <?php echo str_replace( "\n", "<br />", self::default_statistics_google_charts_monthly_options ); ?></p></td>
                     </tr>
                 </table>
 
@@ -258,26 +258,26 @@ isStacked: true,";
                 <table class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'Activate comma in tags', 'media-consumption-log' ); ?></th>
-                        <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( self::isOtherCommaInTags() ); ?> />
-                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::defaultOtherCommaInTags ); ?></p></td>
+                        <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( self::is_other_comma_in_tags() ); ?> />
+                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::default_other_comma_in_tags ); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Separator', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( self::getOtherSeprator() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultOtherSeparator; ?></p></td>
+                        <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( self::get_other_separator() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_separator; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "and"', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_other_mcl_number_and" value="<?php echo esc_attr( self::getOtherMclNumberAnd() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultOtherMclNumberAnd(); ?></p></td>
+                        <td><input type="text" name="mcl_settings_other_mcl_number_and" value="<?php echo esc_attr( self::get_other_mcl_number_and() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_mcl_number_and(); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "to"', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_settings_other_mcl_number_to" value="<?php echo esc_attr( self::getOtherMclNumberTo() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::defaultOtherMclNumberTo(); ?></p></td>
+                        <td><input type="text" name="mcl_settings_other_mcl_number_to" value="<?php echo esc_attr( self::get_other_mcl_number_to() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_mcl_number_to(); ?></p></td>
                     </tr>
                 </table>
 

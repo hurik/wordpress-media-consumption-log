@@ -45,7 +45,7 @@ class MclComplete {
         " );
         }
 
-        MclRebuildData::updateData();
+        MclRebuildData::update_data();
     }
 
     public static function create_page() {
@@ -59,13 +59,13 @@ class MclComplete {
         }
 
         // Get the data
-        $data = MclRebuildData::getData();
+        $data = MclRebuildData::get_data();
 
         // Create categories navigation
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 
@@ -114,7 +114,7 @@ class MclComplete {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 

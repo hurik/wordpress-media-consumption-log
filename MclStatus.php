@@ -6,7 +6,7 @@ class MclStatus {
 
     static function build_status() {
         // Get the data
-        $data = MclRebuildData::getData();
+        $data = MclRebuildData::get_data();
 
         // Create categories navigation
         $html = "\n<table border=\"1\">"
@@ -16,7 +16,7 @@ class MclStatus {
                 . "\n  </colgroup>";
 
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 
@@ -65,7 +65,7 @@ class MclStatus {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 

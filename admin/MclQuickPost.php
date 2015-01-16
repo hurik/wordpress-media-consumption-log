@@ -24,13 +24,13 @@ class MclQuickPost {
         }
 
         // Get the data
-        $data = MclRebuildData::getData();
+        $data = MclRebuildData::get_data();
 
         // Create categories navigation
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 
@@ -56,7 +56,7 @@ class MclQuickPost {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::getStatusExcludeCategory() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
                 continue;
             }
 
@@ -103,14 +103,14 @@ class MclQuickPost {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div></th>"
                                 . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::getStatisticsDailyDateFormat() )})</td>"
+                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$tag->cat_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::getStatisticsDailyDateFormat() )})</td>"
+                                . "\n    <td><a href='{$tag->post_link}' title='{$tag->post_data->post_title}'>{$tag->post_data->post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
                     }
                 }

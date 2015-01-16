@@ -4,7 +4,7 @@ class MclRebuildData {
 
     const option_name = 'mcl_data';
 
-    public static function getData() {
+    public static function get_data() {
         if ( get_option( self::option_name ) === false ) {
             add_option( self::option_name, self::build_data(), null, 'no' );
         }
@@ -12,7 +12,7 @@ class MclRebuildData {
         return get_option( self::option_name );
     }
 
-    public static function updateData() {
+    public static function update_data() {
         if ( get_option( self::option_name ) !== false ) {
             update_option( self::option_name, self::build_data() );
         } else {
@@ -58,11 +58,11 @@ class MclRebuildData {
         $data = new StdClass;
 
         // Get the categories
-        $categories = get_categories( "exclude=" . MclSettings::getStatisticsExcludeCategory() );
+        $categories = get_categories( "exclude=" . MclSettings::get_statistics_exclude_category() );
 
         // Get first date an month for the graphs
-        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::getStatisticsNumberOfDays() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
-        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::getStatisticsNumberOfMonths() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_number_of_days() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
+        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_number_of_months() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
@@ -88,15 +88,15 @@ class MclRebuildData {
             $tags_count_complete += $category->mcl_tags_count_complete;
 
             // Graph data
-            if ( MclSettings::isStatisticsMclNumber() ) {
-                $category->mcl_daily_data = self::getMclNumberCountOfCategorySortedByDay( $category->term_id, $first_date );
-                $category->mcl_monthly_data = self::getMclNumberCountOfCategorySortedByMonth( $category->term_id, $first_month );
-                $category_consumption_total = self::getTotalMclNumberCountOfCategory( $category->term_id );
+            if ( MclSettings::is_statistics_mcl_number() ) {
+                $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
+                $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
+                $category_consumption_total = self::get_total_mcl_mumber_count_of_category( $category->term_id );
                 $category_consumption_average = $category_consumption_total / $number_of_days;
             } else {
-                $category->mcl_daily_data = self::getPostCountOfCategorySortedByDay( $category->term_id, $first_date );
-                $category->mcl_monthly_data = self::getPostCountOfCategorySortedByMonth( $category->term_id, $first_month );
-                $category_consumption_total = self::getTotalPostCountOfCategory( $category->term_id );
+                $category->mcl_daily_data = self::get_post_count_of_category_sorted_by_day( $category->term_id, $first_date );
+                $category->mcl_monthly_data = self::get_post_count_of_category_sorted_by_month( $category->term_id, $first_month );
+                $category_consumption_total = self::get_total_post_count_of_category( $category->term_id );
                 $category_consumption_average = $category_consumption_total / $number_of_days;
             }
 
@@ -165,7 +165,7 @@ class MclRebuildData {
             // Get tag data
             $tag->tag_data = get_tag( $tag->tag_id );
             // Comma in tags
-            if ( MclSettings::isOtherCommaInTags() ) {
+            if ( MclSettings::is_other_comma_in_tags() ) {
                 $tag->tag_data = MclCommaInTags::comma_tag_filter( $tag->tag_data );
             }
             // Get tag link
@@ -208,7 +208,7 @@ class MclRebuildData {
         return $category;
     }
 
-    private static function getMclNumberCountOfCategorySortedByDay( $category_id, $first_date ) {
+    private static function get_mcl_number_count_of_category_sorted_by_day( $category_id, $first_date ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -228,7 +228,7 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function getPostCountOfCategorySortedByDay( $category_id, $first_date ) {
+    private static function get_post_count_of_category_sorted_by_day( $category_id, $first_date ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -246,7 +246,7 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function getMclNumberCountOfCategorySortedByMonth( $category_id, $first_month ) {
+    private static function get_mcl_number_count_of_category_sorted_by_month( $category_id, $first_month ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -266,7 +266,7 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function getPostCountOfCategorySortedByMonth( $category_id, $first_month ) {
+    private static function get_post_count_of_category_sorted_by_month( $category_id, $first_month ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -284,7 +284,7 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function getTotalMclNumberCountOfCategory( $category_id ) {
+    private static function get_total_mcl_mumber_count_of_category( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
@@ -301,7 +301,7 @@ class MclRebuildData {
         return $stats[0]->number;
     }
 
-    private static function getTotalPostCountOfCategory( $category_id ) {
+    private static function get_total_post_count_of_category( $category_id ) {
         global $wpdb;
 
         $stats = $wpdb->get_results( "
