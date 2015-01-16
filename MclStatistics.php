@@ -5,7 +5,7 @@ add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
 class MclStatistics {
 
     static function build_statistics() {
-        $data = MclStatisticsHelper::getData();
+        $data = MclRebuildData::getData();
 
         // Javascript start
         $html = "\n<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
@@ -36,10 +36,10 @@ class MclStatistics {
         }
 
         // Data array header
-        foreach ( $data->stats as $categoryWithData ) {
-            $html .= "'{$categoryWithData->name}'";
+        foreach ( $data->categories as $category ) {
+            $html .= "'{$category->name}'";
 
-            if ( end( $data->stats ) != $categoryWithData ) {
+            if ( end( $data->categories ) != $category ) {
                 $html .= ", ";
             }
         }
@@ -54,10 +54,10 @@ class MclStatistics {
 
             $total = 0;
 
-            foreach ( $data->stats as $categoryWithData ) {
+            foreach ( $data->categories as $category ) {
                 $count = 0;
 
-                foreach ( $categoryWithData->mcl_daily_data as $cat_count ) {
+                foreach ( $category->mcl_daily_data as $cat_count ) {
                     if ( $dates_daily[$i] == $cat_count->date ) {
                         $count = $cat_count->number;
                         break;
@@ -67,7 +67,7 @@ class MclStatistics {
                 $total += $count;
                 $html .= "{$count}";
 
-                if ( end( $data->stats ) != $categoryWithData ) {
+                if ( end( $data->categories ) != $category ) {
                     $html .= ", ";
                 }
             }
@@ -100,10 +100,10 @@ class MclStatistics {
             array_push( $dates_monthly, $month );
         }
 
-        foreach ( $data->stats as $categoryWithData ) {
-            $html .= "'{$categoryWithData->name}'";
+        foreach ( $data->categories as $category ) {
+            $html .= "'{$category->name}'";
 
-            if ( end( $data->stats ) != $categoryWithData ) {
+            if ( end( $data->categories ) != $category ) {
                 $html .= ", ";
             }
         }
@@ -117,10 +117,10 @@ class MclStatistics {
 
             $total = 0;
 
-            foreach ( $data->stats as $categoryWithData ) {
+            foreach ( $data->categories as $category ) {
                 $count = 0;
 
-                foreach ( $categoryWithData->mcl_monthly_data as $cat_count ) {
+                foreach ( $category->mcl_monthly_data as $cat_count ) {
                     if ( $dates_monthly[$i] == $cat_count->date ) {
                         $count = $cat_count->number;
                         break;
@@ -130,7 +130,7 @@ class MclStatistics {
                 $total += $count;
                 $html .= "{$count}";
 
-                if ( end( $data->stats ) != $categoryWithData ) {
+                if ( end( $data->categories ) != $category ) {
                     $html .= ", ";
                 }
             }
@@ -191,12 +191,12 @@ class MclStatistics {
                 . "\n    <th nowrap>#</th><th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
                 . "\n  </tr>";
 
-        foreach ( $data->stats as $categoryWithData ) {
-            $unit = MclUnits::get_unit_of_category( $categoryWithData );
+        foreach ( $data->categories as $category ) {
+            $unit = MclUnits::get_unit_of_category( $category );
 
             $html .= "\n  <tr>"
-                    . "\n    <td>{$categoryWithData->name}</td>"
-                    . "\n    <td nowrap>{$categoryWithData->mcl_consumption_total}</td>"
+                    . "\n    <td>{$category->name}</td>"
+                    . "\n    <td nowrap>{$category->mcl_consumption_total}</td>"
                     . "\n    <td nowrap>{$unit}</td>"
                     . "\n  </tr>";
         }
@@ -224,12 +224,12 @@ class MclStatistics {
                 . "\n    <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
                 . "\n  </tr>";
 
-        foreach ( $data->stats as $categoryWithData ) {
-            $unit = MclUnits::get_unit_of_category( $categoryWithData );
+        foreach ( $data->categories as $category ) {
+            $unit = MclUnits::get_unit_of_category( $category );
 
             $html .= "\n  <tr>"
-                    . "\n    <td>{$categoryWithData->name}</td>"
-                    . "\n    <td nowrap>" . number_format( $categoryWithData->mcl_consumption_average, 2 ) . "</td>"
+                    . "\n    <td>{$category->name}</td>"
+                    . "\n    <td nowrap>" . number_format( $category->mcl_consumption_average, 2 ) . "</td>"
                     . "\n    <td nowrap>{$unit}</td>"
                     . "\n  </tr>";
         }
@@ -259,29 +259,29 @@ class MclStatistics {
                 . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n  </tr>";
 
-        foreach ( $data->stats as $categoryWithData ) {
-            if ( $categoryWithData->mcl_tags_count_total == 0 ) {
+        foreach ( $data->categories as $category ) {
+            if ( $category->mcl_tags_count == 0 ) {
                 continue;
             }
 
             $cat_ids_status = explode( ",", MclSettings::getStatusExcludeCategory() );
 
-            if ( in_array( $categoryWithData->term_id, $cat_ids_status ) ) {
+            if ( in_array( $category->term_id, $cat_ids_status ) ) {
                 $html .= "\n  <tr>"
-                        . "\n    <td colspan=\"3\">{$categoryWithData->name}</td>"
-                        . "\n    <td nowrap>{$categoryWithData->mcl_tags_count_total}</td>"
+                        . "\n    <td colspan=\"3\">{$category->name}</td>"
+                        . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
                         . "\n  </tr>";
             } else {
                 $html .= "\n  <tr>"
-                        . "\n    <td>{$categoryWithData->name}</td>"
-                        . "\n    <td nowrap>{$categoryWithData->mcl_tags_count_ongoing}</td>"
-                        . "\n    <td nowrap>{$categoryWithData->mcl_tags_count_complete}</td>"
-                        . "\n    <td nowrap>{$categoryWithData->mcl_tags_count_total}</td>"
+                        . "\n    <td>{$category->name}</td>"
+                        . "\n    <td nowrap>{$category->mcl_tags_count_ongoing}</td>"
+                        . "\n    <td nowrap>{$category->mcl_tags_count_complete}</td>"
+                        . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
                         . "\n  </tr>";
             }
         }
 
-        $categories_string = MclStringHelper::build_all_categories_string( $data->stats, false );
+        $categories_string = MclStringHelper::build_all_categories_string( $data->categories, false );
 
         $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
         $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );

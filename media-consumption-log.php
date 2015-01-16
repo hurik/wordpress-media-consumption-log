@@ -43,8 +43,6 @@ require_once dirname( __FILE__ ) . '/admin/MclQuickPost.php';
 require_once dirname( __FILE__ ) . '/admin/MclRebuildData.php';
 require_once dirname( __FILE__ ) . '/admin/MclSettings.php';
 require_once dirname( __FILE__ ) . '/admin/MclUnits.php';
-require_once dirname( __FILE__ ) . '/helpers/MclStatisticsHelper.php';
-require_once dirname( __FILE__ ) . '/helpers/MclStatusHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStringHelper.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
 require_once dirname( __FILE__ ) . '/MclHooks.php';

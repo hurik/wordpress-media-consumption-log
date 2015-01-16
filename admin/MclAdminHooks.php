@@ -37,23 +37,18 @@ class MclAdminHooks {
         MclComplete::check_complete_after_saving( $post_id );
 
         if ( get_post_status( $post_id ) == 'publish' ) {
-            self::updateData();
+            MclRebuildData::updateData();
         }
     }
 
     public static function transition_post_status( $new_status, $old_status, $post ) {
         if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
-            self::updateData();
+            MclRebuildData::updateData();
         }
     }
 
     public static function delete_post( $post_id ) {
-        self::updateData();
-    }
-
-    public static function updateData() {
-        MclStatusHelper::updateData();
-        MclStatisticsHelper::updateData();
+        MclRebuildData::updateData();
     }
 
     public static function load_post_new_php( $post_id ) {
