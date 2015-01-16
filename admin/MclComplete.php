@@ -45,7 +45,7 @@ class MclComplete {
         " );
         }
 
-        MclData::updateData();
+        MclAdminHooks::updateData();
     }
 
     public static function create_page() {

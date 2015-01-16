@@ -8,7 +8,7 @@ class MclRebuildData {
         }
 
         if ( isset( $_GET["now"] ) && $_GET["now"] == 1 ) {
-            MclData::updateData();
+            MclAdminHooks::updateData();
         }
         ?>
         <div class="wrap">

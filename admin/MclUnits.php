@@ -1,11 +1,11 @@
 <?php
 
-class MclUnit {
+class MclUnits {
 
     public static function register_settings() {
         $categories = get_categories( "exclude=" . MclSettingsHelper::getStatusExcludeCategory() );
         foreach ( $categories as $category ) {
-            register_setting( 'mcl-unit-group', "mcl_unit_{$category->slug}" );
+            register_setting( 'mcl-units-group', "mcl_unit_{$category->slug}" );
         }
     }
 
@@ -18,8 +18,8 @@ class MclUnit {
             <h2>Media Consumption Log - <?php _e( 'Units', 'media-consumption-log' ); ?></h2>
 
             <form method="post" action="options.php">
-                <?php settings_fields( 'mcl-unit-group' ); ?>
-                <?php do_settings_sections( 'mcl-unit-group' ); ?>
+                <?php settings_fields( 'mcl-units-group' ); ?>
+                <?php do_settings_sections( 'mcl-units-group' ); ?>
 
                 <h3><?php _e( 'Units', 'media-consumption-log' ); ?></h3>
                 <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
