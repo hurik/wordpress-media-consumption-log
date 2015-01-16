@@ -2,40 +2,34 @@
 
 class MclSettings {
 
+    const option_group_name = "mcl-settings-group";
+
     public static function register_settings() {
-        register_setting( 'mcl-settings-group', 'mcl_settings_status_exclude_category' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_exclude_category' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_mcl_number' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_number_of_days' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_daily_date_format' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_google_charts_daily_options' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_number_of_months' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_monthly_date_format' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_statistics_google_charts_monthly_options' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_other_comma_in_tags' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_other_separator' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_other_mcl_number_and' );
-        register_setting( 'mcl-settings-group', 'mcl_settings_other_mcl_number_to' );
+        register_setting( self::option_group_name, 'mcl_settings_status_exclude_category' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_exclude_category' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_mcl_number' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_number_of_days' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_daily_date_format' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_google_charts_daily_options' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_number_of_months' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_monthly_date_format' );
+        register_setting( self::option_group_name, 'mcl_settings_statistics_google_charts_monthly_options' );
+        register_setting( self::option_group_name, 'mcl_settings_other_comma_in_tags' );
+        register_setting( self::option_group_name, 'mcl_settings_other_separator' );
+        register_setting( self::option_group_name, 'mcl_settings_other_mcl_number_and' );
+        register_setting( self::option_group_name, 'mcl_settings_other_mcl_number_to' );
     }
 
     public static function create_page() {
         $categories = get_categories( 'hide_empty=0' );
-        $cats_text = "";
-        $last_cat = end( $categories );
-
-        foreach ( $categories as $category ) {
-            $cats_text .= "{$category->name} ({$category->term_id})";
-            if ( $category != $last_cat ) {
-                $cats_text .= ", ";
-            }
-        }
+        $cats_text = MclStringHelper::build_all_categories_string( $categories, true );
         ?>
         <div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2>
 
             <form method="post" action="options.php">
-                <?php settings_fields( 'mcl-settings-group' ); ?>
-                <?php do_settings_sections( 'mcl-settings-group' ); ?>
+                <?php settings_fields( self::option_group_name ); ?>
+                <?php do_settings_sections( self::option_group_name ); ?>
 
                 <h3><?php _e( 'Status', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
@@ -59,13 +53,7 @@ class MclSettings {
                     <tr>
                         <th scope="row"><?php _e( 'Use mcl_numbers', 'media-consumption-log' ); ?></th>
                         <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( MclSettingsHelper::isStatisticsMclNumber() ); ?> />
-                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php
-                                if ( MclSettingsHelper::defaultStatisticsMclNumber ) {
-                                    _e( 'Checked', 'media-consumption-log' );
-                                } else {
-                                    _e( 'Unchecked', 'media-consumption-log' );
-                                }
-                                ?></p></td>
+                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( MclSettingsHelper::defaultStatisticsMclNumber ); ?></p></td>
                     </tr>
 
                     <tr>
@@ -114,13 +102,7 @@ class MclSettings {
                     <tr>
                         <th scope="row"><?php _e( 'Activate comma in tags', 'media-consumption-log' ); ?></th>
                         <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( MclSettingsHelper::isOtherCommaInTags() ); ?> />
-                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php
-                                if ( MclSettingsHelper::defaultOtherCommaInTags ) {
-                                    _e( 'Checked', 'media-consumption-log' );
-                                } else {
-                                    _e( 'Unchecked', 'media-consumption-log' );
-                                }
-                                ?></p></td>
+                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( MclSettingsHelper::defaultOtherCommaInTags ); ?></p></td>
                     </tr>
 
                     <tr>
