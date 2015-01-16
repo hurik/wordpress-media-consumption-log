@@ -201,7 +201,7 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_total_string = str_replace( '%DATE', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total comsumption, since the first post on the %DATE.', 'media-consumption-log' ) );
+        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total comsumption, since the first post on the %DATE%.', 'media-consumption-log' ) );
 
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
@@ -234,7 +234,7 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_string = str_replace( '%DATE', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Average a day, since the first post on the %DATE.', 'media-consumption-log' ) );
+        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Average a day, since the first post on the %DATE%.', 'media-consumption-log' ) );
 
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
@@ -283,8 +283,8 @@ class MclStatistics {
 
         $categories_string = MclStringHelper::build_all_categories_string( $data->stats, false );
 
-        $since_count_string = str_replace( '%DATE', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES, since the first post on the %DATE.', 'media-consumption-log' ) );
-        $since_count_string = str_replace( '%CATEGORIES', $categories_string, $since_count_string );
+        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
 
         $html .= "\n  <tr>"
                 . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"

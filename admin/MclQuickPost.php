@@ -87,7 +87,7 @@ class MclQuickPost {
                 $first = true;
 
                 foreach ( $categoryWithData->mcl_tags_ongoing[$key] as $tag ) {
-                    $title = MclStringHelper::buildNextPostTitle( $tag->post_data->post_title );
+                    $title = MclStringHelper::build_next_post_title( $tag->post_data->post_title );
                     $title_urlencode = urlencode( $title );
                     $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_data->post_date );
 

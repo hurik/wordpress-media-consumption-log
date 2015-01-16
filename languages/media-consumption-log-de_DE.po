@@ -176,8 +176,8 @@ msgstr "Kategorie"
 #: MclStatistics.php:208
 #, php-format
 #@ media-consumption-log
-msgid "Average a day, since the first post on the %DATE."
-msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE."
+msgid "Average a day, since the first post on the %DATE%."
+msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
 #: MclStatistics.php:228
 #: MclStatus.php:29
@@ -299,8 +299,8 @@ msgstr "Gesamter Konsum"
 #: MclStatistics.php:172
 #, php-format
 #@ media-consumption-log
-msgid "Total comsumption, since the first post on the %DATE."
-msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE."
+msgid "Total comsumption, since the first post on the %DATE%."
+msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE%."
 
 #: MclStatistics.php:156
 #: MclStatistics.php:192
@@ -316,8 +316,8 @@ msgstr "Bitte definiere die Einheiten der Kategorien."
 #: MclStatistics.php:271
 #, php-format
 #@ media-consumption-log
-msgid "Total count of different %CATEGORIES, since the first post on the %DATE."
-msgstr "Anzahl der verschiedenen %CATEGORIES, seit dem ersten Beitrag am %DATE."
+msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%."
+msgstr "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE%."
 
 #: mcl-admin-menu.php:10
 #: mcl-admin-unit.php:13

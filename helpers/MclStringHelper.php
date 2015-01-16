@@ -2,7 +2,7 @@
 
 class MclStringHelper {
 
-    public static function getLastConsumed( $title ) {
+    public static function get_last_consumed( $title ) {
         // Explode the title
         $titleExploded = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $title );
 
@@ -23,7 +23,7 @@ class MclStringHelper {
         return $statusText;
     }
 
-    public static function buildNextPostTitle( $last_post_title ) {
+    public static function build_next_post_title( $last_post_title ) {
         $title = trim( $last_post_title );
         $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
         $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );

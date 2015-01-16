@@ -102,7 +102,7 @@ class MclStatus {
                     foreach ( $categoryWithData->mcl_tags_ongoing[$key] as $tag ) {
                         $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->tag_data->name ) );
                         $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_data->post_title ) );
-                        $lastConsumed = MclStringHelper::getLastConsumed( $tag->post_data->post_title );
+                        $lastConsumed = MclStringHelper::get_last_consumed( $tag->post_data->post_title );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
