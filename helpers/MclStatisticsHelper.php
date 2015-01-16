@@ -223,7 +223,8 @@ class MclStatisticsHelper {
                 FROM {$wpdb->prefix}posts AS p1
                 LEFT JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_ID
                 LEFT JOIN {$wpdb->prefix}term_taxonomy AS t1 ON r1.term_taxonomy_id = t1.term_taxonomy_id
-                LEFT JOIN {$wpdb->prefix}terms AS terms1 ON t1.term_id = terms1.term_id, {$wpdb->prefix}posts AS p2
+                LEFT JOIN {$wpdb->prefix}terms AS terms1 ON t1.term_id = terms1.term_id,
+                     {$wpdb->prefix}posts AS p2
                 LEFT JOIN {$wpdb->prefix}term_relationships AS r2 ON p2.ID = r2.object_ID
                 LEFT JOIN {$wpdb->prefix}term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
                 LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id

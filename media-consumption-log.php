@@ -38,8 +38,8 @@
 
 require_once dirname( __FILE__ ) . '/admin/MclAdminHooks.php';
 require_once dirname( __FILE__ ) . '/admin/MclComplete.php';
-require_once dirname( __FILE__ ) . '/admin/MclQuickPost.php';
 require_once dirname( __FILE__ ) . '/admin/MclNumber.php';
+require_once dirname( __FILE__ ) . '/admin/MclQuickPost.php';
 require_once dirname( __FILE__ ) . '/admin/MclRebuildData.php';
 require_once dirname( __FILE__ ) . '/admin/MclSettings.php';
 require_once dirname( __FILE__ ) . '/admin/MclUnits.php';

@@ -36,7 +36,7 @@ class MclAdminHooks {
         MclNumber::check_mcl_number_after_saving( $post_id );
         MclComplete::check_complete_after_saving( $post_id );
 
-        if ( get_post_status( $pid ) == 'publish' ) {
+        if ( get_post_status( $post_id ) == 'publish' ) {
             self::updateData();
         }
     }
@@ -47,7 +47,7 @@ class MclAdminHooks {
         }
     }
 
-    public static function delete_post( $pid ) {
+    public static function delete_post( $post_id ) {
         self::updateData();
     }
 
