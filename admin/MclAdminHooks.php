@@ -1,12 +1,12 @@
 <?php
 
 if ( is_admin() ) {
-    MclAdminHooks::init();
+    MclAdminHooks::on_start();
 }
 
 class MclAdminHooks {
 
-    public static function init() {
+    public static function on_start() {
         add_action( 'admin_init', array( get_called_class(), 'admin_init' ) );
         add_action( 'admin_menu', array( get_called_class(), 'admin_menu' ) );
         add_action( 'admin_bar_menu', array( get_called_class(), 'admin_bar_menu' ), 75 );

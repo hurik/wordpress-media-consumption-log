@@ -1,16 +1,6 @@
 <?php
 
-MclCommaInTags::init();
-
 class MclCommaInTags {
-
-    public static function init() {
-        if ( !is_admin() && MclSettingsHelper::isOtherCommaInTags() ) {
-            add_filter( 'get_post_tag', array( get_called_class(), 'comma_tag_filter' ) );
-            add_filter( 'get_terms', array( get_called_class(), 'comma_tags_filter' ) );
-            add_filter( 'get_the_terms', array( get_called_class(), 'comma_tags_filter' ) );
-        }
-    }
 
     public static function comma_tag_filter( $tag_arr ) {
         $tag_arr_new = $tag_arr;

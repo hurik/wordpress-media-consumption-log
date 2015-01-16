@@ -48,7 +48,7 @@ require_once dirname( __FILE__ ) . '/helpers/MclStatisticsHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStatusHelper.php';
 require_once dirname( __FILE__ ) . '/helpers/MclStringHelper.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
-require_once dirname( __FILE__ ) . '/MclLanguages.php';
+require_once dirname( __FILE__ ) . '/MclHooks.php';
 require_once dirname( __FILE__ ) . '/MclStatistics.php';
 require_once dirname( __FILE__ ) . '/MclStatus.php';
 
