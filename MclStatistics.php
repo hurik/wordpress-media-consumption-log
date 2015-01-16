@@ -281,21 +281,7 @@ class MclStatistics {
             }
         }
 
-        $categories_string = "";
-        $second_to_last_cat = $data->stats[count( $data->stats ) - 2];
-        $last_cat = end( $data->stats );
-
-        foreach ( $data->stats as $categoryWithData ) {
-            if ( $categoryWithData != $last_cat ) {
-                $categories_string .= "{$categoryWithData->name}";
-
-                if ( $categoryWithData != $second_to_last_cat ) {
-                    $categories_string .= ", ";
-                }
-            } else {
-                $categories_string .= " " . __( 'and', 'media-consumption-log' ) . " {$categoryWithData->name}";
-            }
-        }
+        $categories_string = MclStringHelper::build_all_categories_string( $data->stats, false );
 
         $since_count_string = str_replace( '%DATE', $data->first_post_date->format( MclSettingsHelper::getStatisticsDailyDateFormat() ), __( 'Total count of different %CATEGORIES, since the first post on the %DATE.', 'media-consumption-log' ) );
         $since_count_string = str_replace( '%CATEGORIES', $categories_string, $since_count_string );

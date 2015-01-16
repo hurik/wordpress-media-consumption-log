@@ -2,7 +2,7 @@
 
 class MclStringHelper {
 
-    static function getLastConsumed( $title ) {
+    public static function getLastConsumed( $title ) {
         // Explode the title
         $titleExploded = explode( " " . MclSettingsHelper::getOtherSeprator() . " ", $title );
 
@@ -23,7 +23,7 @@ class MclStringHelper {
         return $statusText;
     }
 
-    static function buildNextPostTitle( $last_post_title ) {
+    public static function buildNextPostTitle( $last_post_title ) {
         $title = trim( $last_post_title );
         $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberTo() . " /", "", $title );
         $title = preg_replace( "/[A-Z0-9]+ " . MclSettingsHelper::getOtherMclNumberAnd() . " /", "", $title );
@@ -46,6 +46,43 @@ class MclStringHelper {
         $title .= " {$number}";
 
         return $title;
+    }
+
+    public static function build_all_categories_string( $categories, $with_id = false ) {
+        $categories_string = "";
+
+        $forelast_cat = $categories[count( $categories ) - 2];
+        $last_cat = end( $categories );
+
+        foreach ( $categories as $category ) {
+            if ( $category != $last_cat ) {
+                $categories_string .= "{$category->name}";
+
+                if ( $with_id ) {
+                    $categories_string .= " ({$category->term_id})";
+                }
+
+                if ( $category != $forelast_cat ) {
+                    $categories_string .= ", ";
+                }
+            } else {
+                $categories_string .= " " . __( 'and', 'media-consumption-log' ) . " {$category->name}";
+
+                if ( $with_id ) {
+                    $categories_string .= " ({$category->term_id})";
+                }
+            }
+        }
+
+        return $categories_string;
+    }
+
+    public static function echo_checked_or_unchecked( $status ) {
+        if ( $status ) {
+            _e( 'Checked', 'media-consumption-log' );
+        } else {
+            _e( 'Unchecked', 'media-consumption-log' );
+        }
     }
 
 }
