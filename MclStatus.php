@@ -1,5 +1,7 @@
 <?php
 
+add_shortcode( 'mcl', array( 'MclStatus', 'build_status' ) );
+
 class MclStatus {
 
     static function build_status() {

@@ -1,5 +1,7 @@
 <?php
 
+add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
+
 class MclStatistics {
 
     static function build_statistics() {

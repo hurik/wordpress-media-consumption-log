@@ -13,12 +13,24 @@ class MclHooks {
             add_filter( 'get_the_terms', array( 'MclCommaInTags', 'comma_tags_filter' ) );
         }
 
-        add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
-        add_shortcode( 'mcl', array( 'MclStatus', 'build_status' ) );
+        add_action( 'admin_bar_menu', array( get_called_class(), 'admin_bar_menu' ), 75 );
     }
 
     public static function init() {
         load_plugin_textdomain( 'media-consumption-log', false, basename( dirname( __FILE__ ) ) . '/languages' );
+    }
+
+    public static function admin_bar_menu( $wp_admin_bar ) {
+        $args = array(
+            'id' => 'mcl_admin_bar_button',
+            'title' => __( 'Quick Post', 'media-consumption-log' ),
+            'href' => admin_url( "admin.php?page=mcl-quick-post" ),
+            'meta' => array(
+                'class' => 'mcl_admin_bar_button_class'
+            )
+        );
+
+        $wp_admin_bar->add_node( $args );
     }
 
 }

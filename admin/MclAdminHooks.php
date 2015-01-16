@@ -9,7 +9,6 @@ class MclAdminHooks {
     public static function on_start() {
         add_action( 'admin_init', array( get_called_class(), 'admin_init' ) );
         add_action( 'admin_menu', array( get_called_class(), 'admin_menu' ) );
-        add_action( 'admin_bar_menu', array( get_called_class(), 'admin_bar_menu' ), 75 );
 
         add_action( 'save_post', array( get_called_class(), 'save_post' ) );
         add_action( 'transition_post_status', array( get_called_class(), 'transition_post_status' ), 10, 3 );
@@ -31,19 +30,6 @@ class MclAdminHooks {
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Units', 'media-consumption-log' ), __( 'Units', 'media-consumption-log' ), 'manage_options', 'mcl-unit', array( 'MclUnits', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Rebuild data', 'media-consumption-log' ), __( 'Rebuild data', 'media-consumption-log' ), 'manage_options', 'mcl-rebuild-data', array( 'MclRebuildData', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
-    }
-
-    public static function admin_bar_menu( $wp_admin_bar ) {
-        $args = array(
-            'id' => 'mcl_admin_bar_button',
-            'title' => __( 'Quick Post', 'media-consumption-log' ),
-            'href' => admin_url( "admin.php?page=mcl-quick-post" ),
-            'meta' => array(
-                'class' => 'mcl_admin_bar_button_class'
-            )
-        );
-
-        $wp_admin_bar->add_node( $args );
     }
 
     public static function save_post( $post_id ) {
