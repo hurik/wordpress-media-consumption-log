@@ -4,20 +4,20 @@ class MclSettingsHelper {
 
     const defaultStatisticsMclNumber = true;
     const defaultStatisticsNumberOfDays = 31;
-    const defaultStatisticsGoogleChartsDailyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold:true }, highContrast: true, alwaysOutside: true},
+    const defaultStatisticsGoogleChartsDailyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
-chartArea:{left: 100, top: 80, width: '75%', height: data.getNumberOfRows() * 15},
+chartArea: {left: 70, top: 80, width: '80%', height: data.getNumberOfRows() * 15},
 isStacked: true,";
     const defaultStatisticsNumberOfMonths = 6;
-    const defaultStatisticsGoogleChartsMonthlyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold:true }, highContrast: true, alwaysOutside: true},
+    const defaultStatisticsGoogleChartsMonthlyOptions = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
-chartArea:{left: 60, top: 80, width: '75%', height: data.getNumberOfRows() * 15},
+chartArea: { left: 50, top: 80, width: '80%', height: data.getNumberOfRows() * 15 },
 isStacked: true,";
     const defaultOtherCommaInTags = true;
     const defaultOtherSeparator = "-";

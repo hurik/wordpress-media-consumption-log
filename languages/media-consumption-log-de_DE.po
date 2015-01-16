@@ -340,7 +340,7 @@ msgstr "j.m.Y"
 #: helpers/MclSettingsHelper.php:30
 #@ media-consumption-log
 msgid "Y-m"
-msgstr "m.Y"
+msgstr "n.Y"
 
 #: mcl-admin-settings.php:60
 #@ media-consumption-log
