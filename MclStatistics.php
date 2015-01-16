@@ -192,10 +192,7 @@ class MclStatistics {
                 . "\n  </tr>";
 
         foreach ( $data->stats as $categoryWithData ) {
-            $unit = get_option( "mcl_unit_{$categoryWithData->slug}" );
-            if ( empty( $unit ) ) {
-                $unit = $categoryWithData->name;
-            }
+            $unit = MclUnits::get_unit_of_category( $categoryWithData );
 
             $html .= "\n  <tr>"
                     . "\n    <td>{$categoryWithData->name}</td>"
@@ -228,10 +225,7 @@ class MclStatistics {
                 . "\n  </tr>";
 
         foreach ( $data->stats as $categoryWithData ) {
-            $unit = get_option( "mcl_unit_{$categoryWithData->slug}" );
-            if ( empty( $unit ) ) {
-                $unit = $categoryWithData->name;
-            }
+            $unit = MclUnits::get_unit_of_category( $categoryWithData );
 
             $html .= "\n  <tr>"
                     . "\n    <td>{$categoryWithData->name}</td>"
