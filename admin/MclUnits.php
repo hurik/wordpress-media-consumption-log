@@ -44,7 +44,7 @@ class MclUnits {
                         ?>
                         <tr>
                             <th scope="row"><?php echo $category->name; ?></th>
-                            <td><input type="text" name="<?php echo self::option_prefix . "{$category->slug}"; ?>" value="<?php echo esc_attr( get_option( self::option_prefix . "{$category->slug}" ) ); ?>" style="width:100%;" />
+                            <td><input type="text" name="<?php echo self::option_prefix . "{$category->slug}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
                         </tr>
                         <?php
                     }
