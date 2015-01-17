@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-16 16:03:30+0000\n"
+"PO-Revision-Date: 2015-01-17 11:38:53+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,8 +36,8 @@ msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
 #: MclStatistics.php:258
-#: MclStatus.php:49
-#: MclStatus.php:136
+#: MclStatus.php:52
+#: MclStatus.php:174
 #: admin/MclAdminHooks.php:29
 #: admin/MclComplete.php:98
 #: admin/MclComplete.php:181
@@ -181,23 +181,24 @@ msgid "Average a day, since the first post on the %DATE%."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
 #: MclStatistics.php:257
-#: MclStatus.php:33
-#: MclStatus.php:80
+#: MclStatus.php:36
+#: MclStatus.php:118
 #: admin/MclComplete.php:82
 #: admin/MclComplete.php:129
 #@ media-consumption-log
 msgid "Running"
 msgstr "Laufend"
 
-#: MclStatus.php:103
-#: MclStatus.php:158
+#: MclStatus.php:141
+#: MclStatus.php:196
+#: MclStatus.php:260
 #: admin/MclComplete.php:153
 #: admin/MclComplete.php:204
 #@ media-consumption-log
 msgid "Name"
 msgstr "Name"
 
-#: MclStatus.php:104
+#: MclStatus.php:142
 #@ media-consumption-log
 msgid "Last"
 msgstr "Letzte(s)"
@@ -429,4 +430,16 @@ msgstr "Ausführungszeit"
 #@ media-consumption-log
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
+
+#: MclStatus.php:18
+#: MclStatus.php:102
+#@ media-consumption-log
+msgid "Series"
+msgstr "Serien"
+
+#: MclStatus.php:68
+#: MclStatus.php:224
+#@ media-consumption-log
+msgid "Other"
+msgstr "Andere"
 
