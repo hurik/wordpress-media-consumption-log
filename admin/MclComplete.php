@@ -239,11 +239,25 @@ class MclComplete {
             @media screen and (max-width:600px) {
                 div.anchor { display: block; position: relative; top: 0px; visibility: hidden; }
             }
+
+            .loading {
+                position:   fixed;
+                z-index:    999999;
+                top:        0;
+                left:       0;
+                height:     100%;
+                width:      100%;
+                background: rgba( 255, 255, 255, .8 ) 
+                    url('<?php echo plugins_url() . "/media-consumption-log/admin/images/loading.gif"; ?>') 
+                    50% 50% 
+                    no-repeat;
+            }
         </style>
 
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
                 $(".complete").click(function () {
+                    $("#mcl_loading").addClass('loading');
                     $.ajax({
                         async: false,
                         type: 'GET',
@@ -268,7 +282,8 @@ class MclComplete {
             </table>
 
             <?php echo $cats_html; ?>
-        </div>	
+        </div>
+        <div id="mcl_loading"></div>
         <?php
     }
 
