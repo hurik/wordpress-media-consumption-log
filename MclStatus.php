@@ -221,7 +221,7 @@ class MclStatus {
             }
         }
 
-        $html .= "\n\n<h4 id=\"other\">" . __( 'Other', 'media-consumption-log' ) . "</h4><hr />";
+        $html .= "\n\n<br /><h4 id=\"other\">" . __( 'Other', 'media-consumption-log' ) . "</h4><hr />";
 
         // Create the tables
         foreach ( $data->categories as $category ) {
@@ -264,18 +264,18 @@ class MclStatus {
                     $first = true;
 
                     foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
-                        $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->tag_data->name ) );
+                        $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_data->post_title ) );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
                                     . "\n    <th nowrap rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div></th>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->tag_data->name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$tag->tag_data->name}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->tag_data->name}</a></td>"
+                                    . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$tag->tag_data->name}</a></td>"
                                     . "\n  </tr>";
                         }
                     }
