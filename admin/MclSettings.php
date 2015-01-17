@@ -210,7 +210,7 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Use mcl_numbers', 'media-consumption-log' ); ?></th>
                         <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( self::is_statistics_mcl_number() ); ?> />
-                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::default_statistics_mcl_number ); ?></p></td>
+                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php self::echo_checked_or_unchecked( self::default_statistics_mcl_number ); ?></p></td>
                     </tr>
 
                     <tr>
@@ -259,7 +259,7 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Activate comma in tags', 'media-consumption-log' ); ?></th>
                         <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( self::is_other_comma_in_tags() ); ?> />
-                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php MclStringHelper::echo_checked_or_unchecked( self::default_other_comma_in_tags ); ?></p></td>
+                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php self::echo_checked_or_unchecked( self::default_other_comma_in_tags ); ?></p></td>
                     </tr>
 
                     <tr>
@@ -285,6 +285,14 @@ isStacked: true,";
             </form>
         </div>	
         <?php
+    }
+
+    private static function echo_checked_or_unchecked( $status ) {
+        if ( $status ) {
+            _e( 'Checked', 'media-consumption-log' );
+        } else {
+            _e( 'Unchecked', 'media-consumption-log' );
+        }
     }
 
 }

@@ -148,7 +148,7 @@ class MclStatus {
                     foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
                         $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->tag_data->name ) );
                         $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_data->post_title ) );
-                        $lastConsumed = MclStringHelper::get_last_consumed( $tag->post_data->post_title );
+                        $lastConsumed = self::get_last_consumed( $tag->post_data->post_title );
 
                         if ( $first ) {
                             $html .= "\n  <tr>"
@@ -286,6 +286,27 @@ class MclStatus {
         }
 
         return $html;
+    }
+
+    private static function get_last_consumed( $title ) {
+        // Explode the title
+        $titleExploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+
+        // Get the last part, so we have the chapter/episode/...
+        $status = end( $titleExploded );
+
+        $statusExploded = explode( " ", $status );
+
+        if ( count( $statusExploded ) == 1 ) {
+            $statusText = reset( $statusExploded );
+        } else {
+            $first_part = reset( $statusExploded );
+            $last_part = end( $statusExploded );
+
+            $statusText = "{$first_part} {$last_part}";
+        }
+
+        return $statusText;
     }
 
 }

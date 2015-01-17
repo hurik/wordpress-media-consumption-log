@@ -95,7 +95,7 @@ class MclQuickPost {
                 $first = true;
 
                 foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
-                    $title = MclStringHelper::build_next_post_title( $tag->post_data->post_title );
+                    $title = self::build_next_post_title( $tag->post_data->post_title );
                     $title_urlencode = urlencode( $title );
                     $post_title = htmlspecialchars( $tag->post_data->post_title );
                     $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_data->post_date );
@@ -186,6 +186,31 @@ class MclQuickPost {
         </div>
         <div id="mcl_loading"></div>
         <?php
+    }
+
+    private static function build_next_post_title( $last_post_title ) {
+        $title = trim( $last_post_title );
+        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::get_other_mcl_number_to() . " /", "", $title );
+        $title = preg_replace( "/[A-Z0-9]+ " . MclSettings::get_other_mcl_number_and() . " /", "", $title );
+
+        $title_explode = explode( ' ', $title );
+        $number = end( $title_explode );
+
+        if ( is_numeric( $number ) ) {
+            $number = floatval( $number );
+            $number++;
+            $number = floor( $number );
+        }
+
+        if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) || preg_match( '/[CP]/', $number ) ) {
+            $number++;
+        }
+
+        $title = substr( $title, 0, strrpos( $title, " " ) );
+
+        $title .= " {$number}";
+
+        return $title;
     }
 
 }
