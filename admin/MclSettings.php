@@ -40,12 +40,12 @@ isStacked: true,";
     }
 
     // Getter
-    public static function get_status_exclude_category() {
-        return get_option( 'mcl_setting_status_exclude_category' );
+    public static function get_monitored_categories_series() {
+        return get_option( 'mcl_setting_monitored_categories_series' );
     }
 
-    public static function get_statistics_exclude_category() {
-        return get_option( 'mcl_setting_statistics_exclude_category' );
+    public static function get_monitored_categories_non_series() {
+        return get_option( 'mcl_setting_monitored_categories_non_series' );
     }
 
     public static function get_statistics_daily_count() {
@@ -140,8 +140,8 @@ isStacked: true,";
 
     // Setting page
     public static function register_settings() {
-        register_setting( self::option_group_name, 'mcl_setting_status_exclude_category' );
-        register_setting( self::option_group_name, 'mcl_setting_statistics_exclude_category' );
+        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_series' );
+        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_non_series' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_count' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_date_format' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_options' );
@@ -164,25 +164,26 @@ isStacked: true,";
                 <?php settings_fields( self::option_group_name ); ?>
                 <?php do_settings_sections( self::option_group_name ); ?>
 
-                <h3><?php _e( 'Status', 'media-consumption-log' ); ?></h3>
+                <h3><?php _e( 'Monitored categories', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_status_exclude_category" value="<?php echo esc_attr( self::get_status_exclude_category() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the category you want to exclude from the status page. Example: 1,45,75,284', 'media-consumption-log' ); ?><br />
-                                <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
+                        <th scope="row"><?php _e( 'Series', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="mcl_setting_monitored_categories_series" value="<?php echo esc_attr( self::get_monitored_categories_series() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204', 'media-consumption-log' ); ?></p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e( 'Non series', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="mcl_setting_monitored_categories_non_series" value="<?php echo esc_attr( self::get_monitored_categories_non_series() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284', 'media-consumption-log' ); ?></p></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?></th>
+                        <td><?php echo $cats_text; ?></td>
                     </tr>
                 </table>
 
                 <h3><?php _e( 'Statistics', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
-                    <tr>
-                        <th scope="row"><?php _e( 'Excluded Categories', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_statistics_exclude_category" value="<?php echo esc_attr( self::get_statistics_exclude_category() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the category you want to exclude from the statistics page. Example: 1', 'media-consumption-log' ); ?><br />
-                                <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
-                    </tr>
-
                     <tr>
                         <th scope="row"><?php _e( 'Daily statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_setting_statistics_daily_count" value="<?php echo esc_attr( self::get_statistics_daily_count() ); ?>" style="width:100%;" />

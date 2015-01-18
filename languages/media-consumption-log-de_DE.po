@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-18 11:37:20+0000\n"
+"PO-Revision-Date: 2015-01-18 14:33:29+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,83 +52,72 @@ msgstr "Komplett"
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: admin/MclSettings.php:167
-#@ media-consumption-log
-msgid "Status"
-msgstr "Status"
-
-#: admin/MclSettings.php:170
-#: admin/MclSettings.php:180
-#@ media-consumption-log
-msgid "Excluded Categories"
-msgstr "Ausgenommene Kategorien"
-
-#: admin/MclSettings.php:177
+#: admin/MclSettings.php:185
 #@ media-consumption-log
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: admin/MclSettings.php:187
+#: admin/MclSettings.php:188
 #@ media-consumption-log
 msgid "Daily statistics size"
 msgstr "Größe der täglichen Statistik"
 
-#: admin/MclSettings.php:193
+#: admin/MclSettings.php:194
 #@ media-consumption-log
 msgid "Daily date format"
 msgstr "Zeitformat der täglichen Statistik"
 
-#: admin/MclSettings.php:199
+#: admin/MclSettings.php:200
 #@ media-consumption-log
 msgid "Daily Google Charts Options"
 msgstr "Tägliche Google Charts Options"
 
-#: admin/MclSettings.php:201
+#: admin/MclSettings.php:202
 #@ media-consumption-log
 msgid "When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die täglichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: admin/MclSettings.php:206
+#: admin/MclSettings.php:207
 #@ media-consumption-log
 msgid "Monthly statistics size"
 msgstr "Größe der monatlichen Statistik"
 
-#: admin/MclSettings.php:212
+#: admin/MclSettings.php:213
 #@ media-consumption-log
 msgid "Monthly date format"
 msgstr "Zeitformat der monatlichen Statistik"
 
-#: admin/MclSettings.php:218
+#: admin/MclSettings.php:219
 #@ media-consumption-log
 msgid "Monthly Google Charts Options"
 msgstr "Monatliche Google Charts Options"
 
-#: admin/MclSettings.php:220
+#: admin/MclSettings.php:221
 #@ media-consumption-log
 msgid "When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die monatlichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: admin/MclSettings.php:225
+#: admin/MclSettings.php:226
 #@ media-consumption-log
 msgid "Other settings"
 msgstr "Andere Einstellungen"
 
-#: admin/MclSettings.php:226
+#: admin/MclSettings.php:227
 #@ media-consumption-log
 msgid "<strong>Attention:</strong> This settings should be changed after using the plugin for some time! This should only been altered after the installation."
 msgstr "<strong>Achtung:</strong> Diese Einstellungen sollten nicht mehr geändert werden, wenn das Plugin eine längere Zeit genutzt wurde. Diese Einstellungen sollten nur nach der Installation eingestellt werden."
 
-#: admin/MclSettings.php:230
+#: admin/MclSettings.php:231
 #@ media-consumption-log
 msgid "Separator"
 msgstr "Seperator"
 
-#: admin/MclSettings.php:236
+#: admin/MclSettings.php:237
 #@ media-consumption-log
 msgid "mcl_number \"and\""
 msgstr "mcl_number \"und\""
 
-#: admin/MclSettings.php:242
+#: admin/MclSettings.php:243
 #@ media-consumption-log
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
@@ -240,20 +229,10 @@ msgstr "Ändern!"
 #: MclStatistics.php:207
 #: MclStatistics.php:240
 #: MclStatistics.php:259
-#: MclStatistics.php:290
+#: MclStatistics.php:288
 #@ media-consumption-log
 msgid "Total"
 msgstr "Insgesamt"
-
-#: admin/MclSettings.php:172
-#@ media-consumption-log
-msgid "IDs of the category you want to exclude from the status page. Example: 1,45,75,284"
-msgstr "IDs der Kategorien die ihr von der Status Seite ausnehmen wollt. Beispiel: 1,45,75,284"
-
-#: admin/MclSettings.php:182
-#@ media-consumption-log
-msgid "IDs of the category you want to exclude from the statistics page. Example: 1"
-msgstr "IDs der Kategorien die ihr von der Statistiken Seite ausnehmen wollt. Beispiel: 1"
 
 #: admin/MclQuickPost.php:90
 #@ media-consumption-log
@@ -305,7 +284,7 @@ msgstr "Einheit"
 msgid "Please define the units of the categories."
 msgstr "Bitte definiere die Einheiten der Kategorien."
 
-#: MclStatistics.php:286
+#: MclStatistics.php:284
 #, php-format
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%."
@@ -318,8 +297,7 @@ msgstr "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE%
 msgid "Units"
 msgstr "Einheiten"
 
-#: admin/MclSettings.php:173
-#: admin/MclSettings.php:183
+#: admin/MclSettings.php:180
 #@ media-consumption-log
 msgid "IDs of the categories:"
 msgstr "IDs der Kategorien:"
@@ -334,37 +312,37 @@ msgstr "j.m.Y"
 msgid "Y-m"
 msgstr "n.Y"
 
-#: admin/MclSettings.php:189
+#: admin/MclSettings.php:190
 #@ media-consumption-log
 msgid "Please insert number of days the daily statistic should cover. Default:"
 msgstr "Anzahl der Tage für die tägliche Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:195
+#: admin/MclSettings.php:196
 #@ media-consumption-log
 msgid "Format for dates on the daily statistics page. Default:"
 msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:208
+#: admin/MclSettings.php:209
 #@ media-consumption-log
 msgid "Please insert number of months the statistic should cover. Default:"
-msgstr "Anzahl der Tage für die monatliche Statistik. Voreinstellung:"
+msgstr "Anzahl der Monate für die monatliche Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:214
+#: admin/MclSettings.php:215
 #@ media-consumption-log
 msgid "Format for dates on the monthly statistics page. Default:"
 msgstr "Format der Zeitangabe der monatliche Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:232
+#: admin/MclSettings.php:233
 #@ media-consumption-log
 msgid "Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default:"
 msgstr "Separator der den Namen von der Episode/Kapitel/... trennt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: admin/MclSettings.php:238
+#: admin/MclSettings.php:239
 #@ media-consumption-log
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default:"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number auf 2 gesetzt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: admin/MclSettings.php:244
+#: admin/MclSettings.php:245
 #@ media-consumption-log
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default:"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
@@ -403,13 +381,30 @@ msgstr "Bearbeiten vorm posten"
 
 #: MclStatus.php:18
 #: MclStatus.php:102
+#: admin/MclSettings.php:170
 #@ media-consumption-log
 msgid "Series"
 msgstr "Serien"
 
 #: MclStatus.php:68
 #: MclStatus.php:224
+#: admin/MclSettings.php:175
 #@ media-consumption-log
-msgid "Other"
-msgstr "Andere"
+msgid "Non series"
+msgstr "Keine Serien"
+
+#: admin/MclSettings.php:167
+#@ media-consumption-log
+msgid "Monitored categories"
+msgstr "Überwachte Kategorien"
+
+#: admin/MclSettings.php:172
+#@ media-consumption-log
+msgid "IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204"
+msgstr "IDs der Kategorien die Folgen oder Kapitel haben. Diese Kategorien erscheinen in den Statistiken, Status, Schnelles Erstellen und Komplett. Beispiel: 2,4,43,50,187,204"
+
+#: admin/MclSettings.php:177
+#@ media-consumption-log
+msgid "IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284"
+msgstr "IDs der Kategorien erscheinen in den Statistiken und Status, aber nicht in Schnelles Erstellen und Komplett. Beispiel: 45,75,284"
 

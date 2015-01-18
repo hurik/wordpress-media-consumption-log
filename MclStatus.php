@@ -19,7 +19,7 @@ class MclStatus {
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
             }
 
@@ -65,11 +65,11 @@ class MclStatus {
         }
 
         $html .= "\n  <tr>"
-                . "\n    <th colspan=\"2\"><strong><a href=\"#other\" style=\"font-size: 130%;\">" . __( 'Other', 'media-consumption-log' ) . "</a></strong></th>"
+                . "\n    <th colspan=\"2\"><strong><a href=\"#non-series\" style=\"font-size: 130%;\">" . __( 'Non series', 'media-consumption-log' ) . "</a></strong></th>"
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
                 continue;
             }
 
@@ -103,7 +103,7 @@ class MclStatus {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
             }
 
@@ -221,11 +221,11 @@ class MclStatus {
             }
         }
 
-        $html .= "\n\n<br /><h4 id=\"other\">" . __( 'Other', 'media-consumption-log' ) . "</h4><hr />";
+        $html .= "\n\n<br /><h4 id=\"non-series\">" . __( 'Non series', 'media-consumption-log' ) . "</h4><hr />";
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
                 continue;
             }
 

@@ -264,9 +264,7 @@ class MclStatistics {
                 continue;
             }
 
-            $cat_ids_status = explode( ",", MclSettings::get_status_exclude_category() );
-
-            if ( in_array( $category->term_id, $cat_ids_status ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
                 $html .= "\n  <tr>"
                         . "\n    <td colspan=\"3\">{$category->name}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count}</td>"

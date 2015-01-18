@@ -30,7 +30,7 @@ class MclQuickPost {
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
             }
 
@@ -56,7 +56,7 @@ class MclQuickPost {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( in_array( $category->term_id, explode( ",", MclSettings::get_status_exclude_category() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
             }
 

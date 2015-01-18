@@ -58,7 +58,7 @@ class MclRebuildData {
         $data = new StdClass;
 
         // Get the categories
-        $categories = get_categories( "exclude=" . MclSettings::get_statistics_exclude_category() );
+        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() . "," . MclSettings::get_monitored_categories_non_series() );
 
         // Get first date an month for the graphs
         $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_daily_count() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
