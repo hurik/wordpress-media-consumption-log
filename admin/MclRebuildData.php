@@ -155,9 +155,7 @@ class MclRebuildData {
             // Get tag data
             $tag->tag_data = get_tag( $tag->tag_id );
             // Comma in tags
-            if ( MclSettings::is_other_comma_in_tags() ) {
-                $tag->tag_data = MclCommaInTags::comma_tag_filter( $tag->tag_data );
-            }
+            $tag->tag_data = MclCommaInTags::comma_tag_filter( $tag->tag_data );
             // Get tag link
             $tag->tag_link = get_tag_link( $tag->tag_data );
 

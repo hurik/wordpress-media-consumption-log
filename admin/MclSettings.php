@@ -21,7 +21,6 @@ bar: { groupWidth: '70%' },
 focusTarget: 'category',
 chartArea: { left: 50, top: 80, width: '80%', height: data.getNumberOfRows() * 15 },
 isStacked: true,";
-    const default_other_comma_in_tags = true;
     const default_other_separator = "-";
 
     static function default_statistics_daily_date_format() {
@@ -109,16 +108,6 @@ isStacked: true,";
         }
     }
 
-    static function is_other_comma_in_tags() {
-        $value = get_option( 'mcl_settings_other_comma_in_tags', self::default_other_comma_in_tags );
-
-        if ( empty( $value ) ) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     static function get_other_separator() {
         $value = get_option( 'mcl_settings_other_separator' );
 
@@ -159,7 +148,6 @@ isStacked: true,";
         register_setting( self::option_group_name, 'mcl_settings_statistics_number_of_months' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_monthly_date_format' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_google_charts_monthly_options' );
-        register_setting( self::option_group_name, 'mcl_settings_other_comma_in_tags' );
         register_setting( self::option_group_name, 'mcl_settings_other_separator' );
         register_setting( self::option_group_name, 'mcl_settings_other_mcl_number_and' );
         register_setting( self::option_group_name, 'mcl_settings_other_mcl_number_to' );
@@ -239,12 +227,6 @@ isStacked: true,";
 
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php _e( 'Activate comma in tags', 'media-consumption-log' ); ?></th>
-                        <td><input type="checkbox" name="mcl_settings_other_comma_in_tags" value="1" <?php checked( self::is_other_comma_in_tags() ); ?> />
-                            <p class="description"><?php _e( 'When activated, "--" will be replaced with ", " in the frontend. Default: ', 'media-consumption-log' ); ?><?php self::echo_checked_or_unchecked( self::default_other_comma_in_tags ); ?></p></td>
-                    </tr>
-
-                    <tr>
                         <th scope="row"><?php _e( 'Separator', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( self::get_other_separator() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_separator; ?></p></td>
@@ -267,14 +249,6 @@ isStacked: true,";
             </form>
         </div>	
         <?php
-    }
-
-    private static function echo_checked_or_unchecked( $status ) {
-        if ( $status ) {
-            _e( 'Checked', 'media-consumption-log' );
-        } else {
-            _e( 'Unchecked', 'media-consumption-log' );
-        }
     }
 
 }
