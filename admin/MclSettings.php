@@ -186,13 +186,13 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Daily statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_statistics_number_of_days" value="<?php echo esc_attr( self::get_statistics_number_of_days() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_number_of_days; ?></p></td>
+                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_number_of_days; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Daily date format', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_statistics_daily_date_format" value="<?php echo esc_attr( self::get_statistics_daily_date_format() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Format for dates on the daily statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_daily_date_format(); ?></p></td>
+                            <p class="description"><?php _e( 'Format for dates on the daily statistics page. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_daily_date_format(); ?></p></td>
                     </tr>
 
                     <tr>
@@ -205,13 +205,13 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Monthly statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_statistics_number_of_months" value="<?php echo esc_attr( self::get_statistics_number_of_months() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_number_of_months; ?></p></td>
+                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_number_of_months; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'Monthly date format', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_statistics_monthly_date_format" value="<?php echo esc_attr( self::get_statistics_monthly_date_format() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default: ', 'media-consumption-log' ); ?><?php echo self::default_statistics_monthly_date_format(); ?></p></td>
+                            <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_date_format(); ?></p></td>
                     </tr>
 
                     <tr>
@@ -229,19 +229,19 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Separator', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_other_separator" value="<?php echo esc_attr( self::get_other_separator() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_separator; ?></p></td>
+                            <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_separator; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "and"', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_other_mcl_number_and" value="<?php echo esc_attr( self::get_other_mcl_number_and() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_mcl_number_and(); ?></p></td>
+                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_mcl_number_and(); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "to"', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_settings_other_mcl_number_to" value="<?php echo esc_attr( self::get_other_mcl_number_to() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default: ', 'media-consumption-log' ); ?><?php echo self::default_other_mcl_number_to(); ?></p></td>
+                            <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_mcl_number_to(); ?></p></td>
                     </tr>
                 </table>
 
