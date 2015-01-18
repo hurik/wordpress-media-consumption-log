@@ -30,7 +30,7 @@ class MclStatistics {
         // Get the last dates
         $dates_daily = array();
 
-        for ( $i = 0; $i < MclSettings::get_statistics_number_of_days(); $i++ ) {
+        for ( $i = 0; $i < MclSettings::get_statistics_daily_count(); $i++ ) {
             $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
             array_push( $dates_daily, $day );
         }
@@ -81,7 +81,7 @@ class MclStatistics {
 
         $html .= "\n    ]);"
                 . "\n\n    var options = {"
-                . "\n      " . MclSettings::get_statistics_google_charts_daily_options()
+                . "\n      " . MclSettings::get_statistics_daily_options()
                 . "\n    };"
                 . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));"
                 . "\n    chart.draw(data, options);"
@@ -95,7 +95,7 @@ class MclStatistics {
 
         $dates_monthly = array();
 
-        for ( $i = 0; $i < MclSettings::get_statistics_number_of_months(); $i++ ) {
+        for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
             $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
             array_push( $dates_monthly, $month );
         }
@@ -144,7 +144,7 @@ class MclStatistics {
 
         $html .= "\n    ]);"
                 . "\n\n    var options = {"
-                . "\n      " . MclSettings::get_statistics_google_charts_monthly_options()
+                . "\n      " . MclSettings::get_statistics_monthly_options()
                 . "\n    };"
                 . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));"
                 . "\n    chart.draw(data, options);"

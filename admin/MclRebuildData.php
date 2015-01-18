@@ -61,8 +61,8 @@ class MclRebuildData {
         $categories = get_categories( "exclude=" . MclSettings::get_statistics_exclude_category() );
 
         // Get first date an month for the graphs
-        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_number_of_days() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
-        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_number_of_months() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_daily_count() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
+        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );

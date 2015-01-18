@@ -24,9 +24,9 @@ class MclNumber {
 
             if ( count( $title_ecplode ) < 2 ) {
                 // Do nothing
-            } else if ( strpos( $current_number, " " . MclSettings::get_other_mcl_number_and() . " " ) !== false ) {
+            } else if ( strpos( $current_number, " " . MclSettings::get_other_and() . " " ) !== false ) {
                 $mcl_number = 2;
-            } else if ( strpos( $current_number, " " . MclSettings::get_other_mcl_number_to() . " " ) !== false ) {
+            } else if ( strpos( $current_number, " " . MclSettings::get_other_to() . " " ) !== false ) {
                 preg_match_all( '!\d+(?:\.\d+)?!', $current_number, $matches );
 
                 if ( count( $matches[0] ) == 2 ) {
