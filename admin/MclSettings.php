@@ -5,7 +5,6 @@ class MclSettings {
     // Option group name
     const option_group_name = "mcl-settings-group";
     // Default values
-    const default_statistics_mcl_number = true;
     const default_statistics_number_of_days = 31;
     const default_statistics_google_charts_daily_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
@@ -48,16 +47,6 @@ isStacked: true,";
 
     static function get_statistics_exclude_category() {
         return get_option( 'mcl_settings_statistics_exclude_category' );
-    }
-
-    static function is_statistics_mcl_number() {
-        $value = get_option( 'mcl_settings_statistics_mcl_number', self::default_statistics_mcl_number );
-
-        if ( empty( $value ) ) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     static function get_statistics_number_of_days() {
@@ -164,7 +153,6 @@ isStacked: true,";
     public static function register_settings() {
         register_setting( self::option_group_name, 'mcl_settings_status_exclude_category' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_exclude_category' );
-        register_setting( self::option_group_name, 'mcl_settings_statistics_mcl_number' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_number_of_days' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_daily_date_format' );
         register_setting( self::option_group_name, 'mcl_settings_statistics_google_charts_daily_options' );
@@ -205,12 +193,6 @@ isStacked: true,";
                         <td><input type="text" name="mcl_settings_statistics_exclude_category" value="<?php echo esc_attr( self::get_statistics_exclude_category() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'IDs of the category you want to exclude from the statistics page. Example: 1', 'media-consumption-log' ); ?><br />
                                 <?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?> <?php echo $cats_text; ?></p></td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row"><?php _e( 'Use mcl_numbers', 'media-consumption-log' ); ?></th>
-                        <td><input type="checkbox" name="mcl_settings_statistics_mcl_number" value="1" <?php checked( self::is_statistics_mcl_number() ); ?> />
-                            <p class="description"><?php _e( 'Do you want to use mcl_number when drawing the chart? Otherwiese it will use the post count. Default: ', 'media-consumption-log' ); ?><?php self::echo_checked_or_unchecked( self::default_statistics_mcl_number ); ?></p></td>
                     </tr>
 
                     <tr>

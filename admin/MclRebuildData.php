@@ -88,23 +88,13 @@ class MclRebuildData {
             $tags_count_complete += $category->mcl_tags_count_complete;
 
             // Graph data
-            if ( MclSettings::is_statistics_mcl_number() ) {
-                $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
-                $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
-                $category_consumption_total = self::get_total_mcl_mumber_count_of_category( $category->term_id );
-                $category_consumption_average = $category_consumption_total / $number_of_days;
-            } else {
-                $category->mcl_daily_data = self::get_post_count_of_category_sorted_by_day( $category->term_id, $first_date );
-                $category->mcl_monthly_data = self::get_post_count_of_category_sorted_by_month( $category->term_id, $first_month );
-                $category_consumption_total = self::get_total_post_count_of_category( $category->term_id );
-                $category_consumption_average = $category_consumption_total / $number_of_days;
-            }
+            $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
+            $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
+            $category->mcl_consumption_total = self::get_total_mcl_mumber_count_of_category( $category->term_id );
+            $category->mcl_consumption_average = $category->mcl_consumption_total / $number_of_days;
 
-            $category->mcl_consumption_total = $category_consumption_total;
-            $category->mcl_consumption_average = $category_consumption_average;
-
-            $consumption_total += $category_consumption_total;
-            $consumption_average += $category_consumption_average;
+            $consumption_total += $category->mcl_consumption_total;
+            $consumption_average += $category->mcl_consumption_average;
         }
 
         $data->categories = $categories;
@@ -228,24 +218,6 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function get_post_count_of_category_sorted_by_day( $category_id, $first_date ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, COUNT(post_date) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND term_taxonomy_id = '{$category_id}'
-              AND post_date >= '{$first_date}'
-            GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date DESC
-	" );
-
-        return $stats;
-    }
-
     private static function get_mcl_number_count_of_category_sorted_by_month( $category_id, $first_month ) {
         global $wpdb;
 
@@ -266,24 +238,6 @@ class MclRebuildData {
         return $stats;
     }
 
-    private static function get_post_count_of_category_sorted_by_month( $category_id, $first_month ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT DATE_FORMAT(post_date, '%Y-%m') AS date, COUNT(post_date) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND term_taxonomy_id = '{$category_id}'
-              AND post_date >= '{$first_month}'
-            GROUP BY DATE_FORMAT(post_date, '%Y-%m')
-            ORDER BY date DESC
-	" );
-
-        return $stats;
-    }
-
     private static function get_total_mcl_mumber_count_of_category( $category_id ) {
         global $wpdb;
 
@@ -295,21 +249,6 @@ class MclRebuildData {
             WHERE post_status = 'publish'
               AND post_type = 'post'
               AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '{$category_id}'
-	" );
-
-        return $stats[0]->number;
-    }
-
-    private static function get_total_post_count_of_category( $category_id ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT COUNT(*) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
               AND term_taxonomy_id = '{$category_id}'
 	" );
 
