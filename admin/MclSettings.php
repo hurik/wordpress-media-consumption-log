@@ -11,7 +11,7 @@ height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
-chartArea: {left: 70, top: 80, width: '80%', height: data.getNumberOfRows() * 15},
+chartArea: {left: 80, top: 80, width: '100%', height: data.getNumberOfRows() * 15},
 isStacked: true,";
     const default_statistics_monthly_count = 6;
     const default_statistics_monthly_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
@@ -19,7 +19,7 @@ height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
 bar: { groupWidth: '70%' },
 focusTarget: 'category',
-chartArea: { left: 50, top: 80, width: '80%', height: data.getNumberOfRows() * 15 },
+chartArea: { left: 50, top: 80, width: '100%', height: data.getNumberOfRows() * 15 },
 isStacked: true,";
     const default_other_separator = "-";
 
