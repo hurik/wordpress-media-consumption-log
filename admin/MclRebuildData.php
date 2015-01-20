@@ -26,7 +26,7 @@ class MclRebuildData {
         }
 
         if ( isset( $_GET["now"] ) && $_GET["now"] == 1 ) {
-            self::build_data();
+            self::update_data();
         }
         ?>
         <div class="wrap">
