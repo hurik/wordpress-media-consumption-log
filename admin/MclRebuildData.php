@@ -60,15 +60,25 @@ class MclRebuildData {
         // Get the categories
         $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() . "," . MclSettings::get_monitored_categories_non_series() );
 
-        // Get first date an month for the graphs
-        $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_daily_count() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
-        $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
-
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
         $first_post = array_shift( $first_post_array );
         $first_post_date = new DateTime( $first_post->post_date );
         $data->first_post_date = $first_post_date;
+
+        // Get first date an month for the graphs
+        if ( MclSettings::get_statistics_daily_count() != 0 ) {
+            $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_daily_count() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
+        } else {
+            $first_date = $data->first_post_date->format( 'Y-m-d' );
+        }
+
+
+        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+            $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+        } else {
+            $first_month = $data->first_post_date->format( 'Y-m' );
+        }
 
         // Get the number of days since first post
         $date_current = new DateTime( date( 'Y-m-d' ) );

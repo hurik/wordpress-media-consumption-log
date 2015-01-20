@@ -30,9 +30,19 @@ class MclStatistics {
         // Get the last dates
         $dates_daily = array();
 
-        for ( $i = 0; $i < MclSettings::get_statistics_daily_count(); $i++ ) {
-            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-            array_push( $dates_daily, $day );
+        if ( MclSettings::get_statistics_daily_count() != 0 ) {
+            for ( $i = 0; $i < MclSettings::get_statistics_daily_count(); $i++ ) {
+                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+                array_push( $dates_daily, $day );
+            }
+        } else {
+            $date_current = new DateTime( date( 'Y-m-d' ) );
+            $number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
+
+            for ( $i = 0; $i < $number_of_days; $i++ ) {
+                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+                array_push( $dates_daily, $day );
+            }
         }
 
         // Data array header
@@ -95,9 +105,20 @@ class MclStatistics {
 
         $dates_monthly = array();
 
-        for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
-            $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-            array_push( $dates_monthly, $month );
+        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+            for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
+                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+                array_push( $dates_monthly, $month );
+            }
+        } else {
+            $date_current = new DateTime( );
+            $number_of_months_diff = $date_current->diff( $data->first_post_date );
+            $number_of_months = ($number_of_months_diff->y * 12) + $number_of_months_diff->m + 2;
+
+            for ( $i = 0; $i < $number_of_months; $i++ ) {
+                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+                array_push( $dates_monthly, $month );
+            }
         }
 
         foreach ( $data->categories as $category ) {

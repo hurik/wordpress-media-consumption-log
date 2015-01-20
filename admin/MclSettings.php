@@ -13,7 +13,7 @@ bar: { groupWidth: '70%' },
 focusTarget: 'category',
 chartArea: {left: 80, top: 80, width: '100%', height: data.getNumberOfRows() * 15},
 isStacked: true,";
-    const default_statistics_monthly_count = 6;
+    const default_statistics_monthly_count = 0;
     const default_statistics_monthly_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
 height: data.getNumberOfRows() * 15 + 100,
 legend: { position: 'top', maxLines: 4, alignment: 'center' },
@@ -51,10 +51,10 @@ isStacked: true,";
     public static function get_statistics_daily_count() {
         $value = get_option( 'mcl_setting_statistics_daily_count' );
 
-        if ( empty( $value ) ) {
-            return self::default_statistics_daily_count;
-        } else {
+        if ( ( string ) ( int ) $value === $value && ( int ) $value >= 0 ) {
             return $value;
+        } else {
+            return self::default_statistics_daily_count;
         }
     }
 
@@ -81,10 +81,10 @@ isStacked: true,";
     public static function get_statistics_monthly_count() {
         $value = get_option( 'mcl_setting_statistics_monthly_count' );
 
-        if ( empty( $value ) ) {
-            return self::default_statistics_monthly_count;
-        } else {
+        if ( ( string ) ( int ) $value === $value && ( int ) $value >= 0 ) {
             return $value;
+        } else {
+            return self::default_statistics_monthly_count;
         }
     }
 
@@ -187,7 +187,7 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Daily statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_setting_statistics_daily_count" value="<?php echo esc_attr( self::get_statistics_daily_count() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_daily_count; ?></p></td>
+                            <p class="description"><?php _e( 'Please insert number of days the daily statistic should cover. If you insert 0 the days since the first post will be covered. <strong>Attention:</strong> The graph can get really big! Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_daily_count; ?></p></td>
                     </tr>
 
                     <tr>
@@ -206,7 +206,7 @@ isStacked: true,";
                     <tr>
                         <th scope="row"><?php _e( 'Monthly statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="mcl_setting_statistics_monthly_count" value="<?php echo esc_attr( self::get_statistics_monthly_count() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_count; ?></p></td>
+                            <p class="description"><?php _e( 'Please insert number of months the statistic should cover. If you insert 0 the months since the first post will be covered. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_count; ?></p></td>
                     </tr>
 
                     <tr>

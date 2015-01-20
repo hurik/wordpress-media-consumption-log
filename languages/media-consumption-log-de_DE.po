@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-18 14:33:29+0000\n"
+"PO-Revision-Date: 2015-01-20 18:49:27+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
-#: MclStatistics.php:258
+#: MclStatistics.php:279
 #: MclStatus.php:52
 #: MclStatus.php:174
 #: admin/MclAdminHooks.php:29
@@ -122,44 +122,44 @@ msgstr "mcl_number \"und\""
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
 
-#: MclStatistics.php:165
-#: MclStatistics.php:174
+#: MclStatistics.php:186
+#: MclStatistics.php:195
 #@ media-consumption-log
 msgid "Daily consumption"
 msgstr "Täglicher Konsum"
 
-#: MclStatistics.php:166
-#: MclStatistics.php:178
+#: MclStatistics.php:187
+#: MclStatistics.php:199
 #@ media-consumption-log
 msgid "Monthly consumption"
 msgstr "Monatlicher Konsum"
 
-#: MclStatistics.php:168
-#: MclStatistics.php:214
+#: MclStatistics.php:189
+#: MclStatistics.php:235
 #@ media-consumption-log
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: MclStatistics.php:169
-#: MclStatistics.php:247
+#: MclStatistics.php:190
+#: MclStatistics.php:268
 #@ media-consumption-log
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: MclStatistics.php:190
-#: MclStatistics.php:222
-#: MclStatistics.php:256
+#: MclStatistics.php:211
+#: MclStatistics.php:243
+#: MclStatistics.php:277
 #@ media-consumption-log
 msgid "Category"
 msgstr "Kategorie"
 
-#: MclStatistics.php:237
+#: MclStatistics.php:258
 #, php-format
 #@ media-consumption-log
 msgid "Average a day, since the first post on the %DATE%."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:257
+#: MclStatistics.php:278
 #: MclStatus.php:36
 #: MclStatus.php:118
 #: admin/MclComplete.php:82
@@ -226,10 +226,10 @@ msgstr "Status ändern"
 msgid "Change!"
 msgstr "Ändern!"
 
-#: MclStatistics.php:207
-#: MclStatistics.php:240
-#: MclStatistics.php:259
-#: MclStatistics.php:288
+#: MclStatistics.php:228
+#: MclStatistics.php:261
+#: MclStatistics.php:280
+#: MclStatistics.php:309
 #@ media-consumption-log
 msgid "Total"
 msgstr "Insgesamt"
@@ -261,20 +261,20 @@ msgstr "und"
 msgid "to"
 msgstr "bis"
 
-#: MclStatistics.php:167
-#: MclStatistics.php:182
+#: MclStatistics.php:188
+#: MclStatistics.php:203
 #@ media-consumption-log
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: MclStatistics.php:204
+#: MclStatistics.php:225
 #, php-format
 #@ media-consumption-log
 msgid "Total comsumption, since the first post on the %DATE%."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:191
-#: MclStatistics.php:224
+#: MclStatistics.php:212
+#: MclStatistics.php:245
 #@ media-consumption-log
 msgid "Unit"
 msgstr "Einheit"
@@ -284,7 +284,7 @@ msgstr "Einheit"
 msgid "Please define the units of the categories."
 msgstr "Bitte definiere die Einheiten der Kategorien."
 
-#: MclStatistics.php:284
+#: MclStatistics.php:305
 #, php-format
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%."
@@ -312,20 +312,10 @@ msgstr "j.m.Y"
 msgid "Y-m"
 msgstr "n.Y"
 
-#: admin/MclSettings.php:190
-#@ media-consumption-log
-msgid "Please insert number of days the daily statistic should cover. Default:"
-msgstr "Anzahl der Tage für die tägliche Statistik. Voreinstellung:"
-
 #: admin/MclSettings.php:196
 #@ media-consumption-log
 msgid "Format for dates on the daily statistics page. Default:"
 msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung:"
-
-#: admin/MclSettings.php:209
-#@ media-consumption-log
-msgid "Please insert number of months the statistic should cover. Default:"
-msgstr "Anzahl der Monate für die monatliche Statistik. Voreinstellung:"
 
 #: admin/MclSettings.php:215
 #@ media-consumption-log
@@ -407,4 +397,14 @@ msgstr "IDs der Kategorien die Folgen oder Kapitel haben. Diese Kategorien ersch
 #@ media-consumption-log
 msgid "IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284"
 msgstr "IDs der Kategorien erscheinen in den Statistiken und Status, aber nicht in Schnelles Erstellen und Komplett. Beispiel: 45,75,284"
+
+#: admin/MclSettings.php:190
+#@ media-consumption-log
+msgid "Please insert number of days the daily statistic should cover. If you insert 0 the days since the first post will be covered. <strong>Attention:</strong> The graph can get really big! Default:"
+msgstr "Anzahl der Tage für die tägliche Statistik. Wenn eine 0 eingetragen wird, werden die Tage seit dem ersten Beitrag abgedeckt.<strong>Achtung:</strong> Die Statistik kann sehr groß werden! Voreinstellung:"
+
+#: admin/MclSettings.php:209
+#@ media-consumption-log
+msgid "Please insert number of months the statistic should cover. If you insert 0 the months since the first post will be covered. Default:"
+msgstr "Anzahl der Monate für die monatliche Statistik. Wenn eine 0 eingetragen wird, werden die Monate seit dem ersten Beitrag abgedeckt. Voreinstellung:"
 
