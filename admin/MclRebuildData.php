@@ -165,10 +165,15 @@ class MclRebuildData {
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID
                         AND p2.post_date = (
-                            SELECT MAX(p3.post_date)
-                            FROM {$wpdb->prefix}posts AS p3
-                            LEFT JOIN {$wpdb->prefix}term_relationships AS r3 ON p3.ID = r3.object_ID
-                            WHERE r3.term_taxonomy_id = terms2.term_id)
+                            SELECT
+                                MAX(p3.post_date)
+                            FROM
+                                {$wpdb->prefix}posts AS p3
+                                LEFT JOIN {$wpdb->prefix}term_relationships AS r3 ON p3.ID = r3.object_ID
+                                LEFT JOIN {$wpdb->prefix}term_relationships AS r4 ON p3.ID = r4.object_ID
+                            WHERE
+                              r3.term_taxonomy_id = t1.term_id
+                              AND r4.term_taxonomy_id = t2.term_id)
                     ORDER BY name
                 ) AS temp
             LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
