@@ -5,6 +5,9 @@ add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
 class MclStatistics {
 
     static function build_statistics() {
+        // Set the default timezone
+        date_default_timezone_set( get_option( 'timezone_string' ) );
+
         $data = MclRebuildData::get_data();
 
         // Javascript start
