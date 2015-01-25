@@ -13,14 +13,21 @@ class MclQuickPost {
         wp_insert_post( $my_post );
     }
 
-    private static function quick_post_non_series( $title, $text, $tag, $cat_id ) {
-        $tag_parsed = str_replace( ", ", "--", urldecode( $tag ) );
+    private static function quick_post_new_series( $title, $text, $cat_id ) {
+        $tag = $title;
+
+        if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+            $tag = str_replace( " " . MclSettings::get_other_separator() . " " . end( $title_exploded ), "", $title );
+        }
+
+        $tag = str_replace( ", ", "--", $tag );
 
         $my_post = array(
-            'post_title' => urldecode( $title ),
-            'post_content' => urldecode( $text ),
+            'post_title' => $title,
+            'post_content' => $text,
             'post_status' => 'publish',
-            'tags_input' => $tag_parsed,
+            'tags_input' => $tag,
             'post_category' => array( $cat_id )
         );
 
@@ -37,8 +44,8 @@ class MclQuickPost {
             return;
         }
 
-        if ( isset( $_GET["title"] ) && isset( $_GET["text"] ) && isset( $_GET["tag"] ) && isset( $_GET["cat_id"] ) ) {
-            self::quick_post_non_series( $_GET["title"], $_GET["text"], $_GET["tag"], $_GET["cat_id"] );
+        if ( isset( $_GET["title"] ) && isset( $_GET["text"] ) && isset( $_GET["cat_id"] ) ) {
+            self::quick_post_new_series( $_GET["title"], $_GET["text"], $_GET["cat_id"] );
             return;
         }
 
@@ -111,7 +118,18 @@ class MclQuickPost {
             }
 
             // Category header
-            $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count_ongoing})</h3><hr />";
+            $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count_ongoing})</h3><hr />"
+                    . "\n<table class=\"form-table\">"
+                    . "\n  <tr>"
+                    . "\n    <th scope=\"row\">" . __( 'Title', 'default' ) . "</th>"
+                    . "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
+                    . "\n  </tr>"
+                    . "\n  <tr>"
+                    . "\n    <th scope=\"row\">" . __( 'Text', 'default' ) . "</th>"
+                    . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
+                    . "\n  </tr>"
+                    . "\n</table>"
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
 
             // Create the navigation
             $cats_html .= "\n<div>";
@@ -244,9 +262,10 @@ class MclQuickPost {
                             url: "admin.php?page=mcl-quick-post"
                                     + "&title=" + encodeURIComponent($('#' + e.currentTarget.id + '-titel').val())
                                     + "&text=" + encodeURIComponent($('#' + e.currentTarget.id + '-text').val())
-                                    + "&tag=" + encodeURIComponent($('#' + e.currentTarget.id + '-titel').val())
                                     + "&cat_id=" + e.currentTarget.id,
                             success: function () {
+                                $('#' + e.currentTarget.id + '-titel').val('');
+                                $('#' + e.currentTarget.id + '-text').val('');
                                 location.reload();
                             }
                         });
@@ -302,4 +321,5 @@ class MclQuickPost {
     }
 
 }
+
 ?>
