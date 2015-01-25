@@ -174,15 +174,15 @@ class MclQuickPost {
             $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
                     . "\n<table class=\"form-table\">"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Titel', 'media-consumption-log' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Title', 'default' ) . "</th>"
                     . "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
                     . "\n  </tr>"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Text', 'media-consumption-log' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Text', 'default' ) . "</th>"
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
         }
         ?>
         <style type="text/css">
