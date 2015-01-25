@@ -114,13 +114,17 @@ class MclStatistics {
                 array_push( $dates_monthly, $month );
             }
         } else {
-            $date_current = new DateTime( );
-            $number_of_months_diff = $date_current->diff( $data->first_post_date );
-            $number_of_months = ($number_of_months_diff->y * 12) + $number_of_months_diff->m + 2;
+            $i = 0;
 
-            for ( $i = 0; $i < $number_of_months; $i++ ) {
+            while ( true ) {
                 $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
                 array_push( $dates_monthly, $month );
+
+                $i++;
+
+                if ( $month == $data->first_post_date->format( 'Y-m' ) ) {
+                    break;
+                }
             }
         }
 
