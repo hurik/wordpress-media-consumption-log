@@ -2,11 +2,25 @@
 
 class MclQuickPost {
 
-    public static function create_post( $title, $tag_id, $cat_id ) {
+    private static function quick_post_next( $title, $tag_id, $cat_id ) {
         $my_post = array(
             'post_title' => urldecode( $title ),
             'post_status' => 'publish',
             'tags_input' => get_tag( $tag_id )->name,
+            'post_category' => array( $cat_id )
+        );
+
+        wp_insert_post( $my_post );
+    }
+
+    private static function quick_post_non_series( $title, $text, $tag, $cat_id ) {
+        $tag_parsed = str_replace( ", ", "--", urldecode( $tag ) );
+
+        $my_post = array(
+            'post_title' => urldecode( $title ),
+            'post_content' => urldecode( $text ),
+            'post_status' => 'publish',
+            'tags_input' => $tag_parsed,
             'post_category' => array( $cat_id )
         );
 
@@ -19,14 +33,19 @@ class MclQuickPost {
         }
 
         if ( isset( $_GET["title"] ) && isset( $_GET["tag_id"] ) && isset( $_GET["cat_id"] ) ) {
-            self::create_post( $_GET["title"], $_GET["tag_id"], $_GET["cat_id"] );
+            self::quick_post_next( $_GET["title"], $_GET["tag_id"], $_GET["cat_id"] );
             return;
         }
 
-        // Get the data
+        if ( isset( $_GET["title"] ) && isset( $_GET["text"] ) && isset( $_GET["tag"] ) && isset( $_GET["cat_id"] ) ) {
+            self::quick_post_non_series( $_GET["title"], $_GET["text"], $_GET["tag"], $_GET["cat_id"] );
+            return;
+        }
+
+// Get the data
         $data = MclRebuildData::get_data();
 
-        // Create categories navigation
+// Create categories navigation
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
@@ -52,9 +71,36 @@ class MclQuickPost {
                     . "\n  </tr>";
         }
 
+        $cat_nav_html .= "\n  <tr>"
+                . "\n    <th nowrap valign=\"top\">" . __( 'Non series', 'media-consumption-log' ) . "</th>"
+                . "\n    <td>";
+
+        foreach ( $data->categories as $category ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+                continue;
+            }
+
+            $last_non_series = $category->term_id;
+        }
+
+
+        foreach ( $data->categories as $category ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+                continue;
+            }
+
+            $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
+            if ( $category->term_id != $last_non_series ) {
+                $cat_nav_html .= " | ";
+            }
+        }
+
+        $cat_nav_html .= "</td>"
+                . "\n  </tr>";
+
         $cats_html = "";
 
-        // Create the tables
+// Create the tables
         foreach ( $data->categories as $category ) {
             if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
@@ -64,10 +110,10 @@ class MclQuickPost {
                 continue;
             }
 
-            // Category header
-            $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count_ongoing})</h3><hr />";
+// Category header
+            $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count_ongoing})</h3><hr />";
 
-            // Create the navigation
+// Create the navigation
             $cats_html .= "\n<div>";
             foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
                 $cats_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
@@ -78,7 +124,7 @@ class MclQuickPost {
 
             $cats_html .= "</div><br />";
 
-            // Table
+// Table
             $cats_html .= "\n<table class=\"widefat\">"
                     . "\n  <colgroup>"
                     . "\n    <col width=\"2%\">"
@@ -119,6 +165,25 @@ class MclQuickPost {
 
             $cats_html .= "\n</table>";
         }
+
+        foreach ( $data->categories as $category ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+                continue;
+            }
+
+            $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
+                    . "\n<table class=\"form-table\">"
+                    . "\n  <tr>"
+                    . "\n    <th scope=\"row\">" . __( 'Titel', 'media-consumption-log' ) . "</th>"
+                    . "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
+                    . "\n  </tr>"
+                    . "\n  <tr>"
+                    . "\n    <th scope=\"row\">" . __( 'Text', 'media-consumption-log' ) . "</th>"
+                    . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
+                    . "\n  </tr>"
+                    . "\n</table>"
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";
+        }
         ?>
         <style type="text/css">
             div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
@@ -157,8 +222,31 @@ class MclQuickPost {
                         $.ajax({
                             async: false,
                             type: 'GET',
-                            url: "admin.php?page=mcl-quick-post&title=" + $(this).attr('headline') + "&tag_id=" + $(this).attr('tag-id') + "&cat_id=" + $(this).attr('cat-id'),
-                            success: function (data) {
+                            url: "admin.php?page=mcl-quick-post"
+                                    + "&title=" + $(this).attr('headline')
+                                    + "&tag_id=" + $(this).attr('tag-id')
+                                    + "&cat_id=" + $(this).attr('cat-id'),
+                            success: function () {
+                                location.reload();
+                            }
+                        });
+                    }
+                });
+
+                $(".button").click(function (e) {
+                    if (!running) {
+                        running = true;
+
+                        $("#mcl_loading").addClass('loading');
+                        $.ajax({
+                            async: false,
+                            type: 'GET',
+                            url: "admin.php?page=mcl-quick-post"
+                                    + "&title=" + encodeURIComponent($('#' + e.currentTarget.id + '-titel').val())
+                                    + "&text=" + encodeURIComponent($('#' + e.currentTarget.id + '-text').val())
+                                    + "&tag=" + encodeURIComponent($('#' + e.currentTarget.id + '-titel').val())
+                                    + "&cat_id=" + e.currentTarget.id,
+                            success: function () {
                                 location.reload();
                             }
                         });
@@ -214,5 +302,4 @@ class MclQuickPost {
     }
 
 }
-
 ?>
