@@ -42,10 +42,10 @@ class MclQuickPost {
             return;
         }
 
-// Get the data
+        // Get the data
         $data = MclRebuildData::get_data();
 
-// Create categories navigation
+        // Create categories navigation
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
@@ -100,7 +100,7 @@ class MclQuickPost {
 
         $cats_html = "";
 
-// Create the tables
+        // Create the tables
         foreach ( $data->categories as $category ) {
             if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
                 continue;
@@ -110,10 +110,10 @@ class MclQuickPost {
                 continue;
             }
 
-// Category header
+            // Category header
             $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count_ongoing})</h3><hr />";
 
-// Create the navigation
+            // Create the navigation
             $cats_html .= "\n<div>";
             foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
                 $cats_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
@@ -124,7 +124,7 @@ class MclQuickPost {
 
             $cats_html .= "</div><br />";
 
-// Table
+            // Table
             $cats_html .= "\n<table class=\"widefat\">"
                     . "\n  <colgroup>"
                     . "\n    <col width=\"2%\">"
