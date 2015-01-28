@@ -232,10 +232,28 @@ class MclQuickPost {
             .cursor_pointer {
                 cursor:     pointer;
             }
+
+            .back-to-top {
+                position: fixed;
+                bottom: 1em;
+                right: 1em;
+                text-decoration: none;
+                color: #FFFFFF;
+                background-color: rgba(51, 51, 51, 0.50);
+                font-size: 10px;
+                padding: 1em;
+                display: none;
+            }
+
+            .back-to-top:hover {    
+                background-color: rgba(51, 51, 51, 0.80);
+            }
         </style>
 
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
+                $(this).scrollTop(0);
+
                 $(".quick-post").click(function () {
                     $("#mcl_loading").addClass('loading');
 
@@ -263,6 +281,24 @@ class MclQuickPost {
                         location.reload();
                     });
                 });
+
+                var offset = 200;
+
+                $(window).scroll(function () {
+                    var position = $(window).scrollTop();
+
+                    if (position > offset) {
+                        $('.back-to-top').fadeIn();
+                    } else {
+                        $('.back-to-top').fadeOut();
+                    }
+                });
+
+
+                jQuery('.back-to-top').click(function () {
+                    $(window).scrollTop(0);
+                    $(this).fadeOut();
+                })
             });
         </script>
 
@@ -284,6 +320,7 @@ class MclQuickPost {
             ?>
         </div>
         <div id="mcl_loading"></div>
+        <a href="#" class="back-to-top">^</a>
         <?php
     }
 
