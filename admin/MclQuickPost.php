@@ -14,6 +14,8 @@ class MclQuickPost {
     }
 
     private static function quick_post_new_series( $title, $text, $cat_id ) {
+        $title = urldecode( $title );
+
         $tag = $title;
 
         if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
@@ -25,7 +27,7 @@ class MclQuickPost {
 
         $my_post = array(
             'post_title' => $title,
-            'post_content' => $text,
+            'post_content' => urldecode( $text ),
             'post_status' => 'publish',
             'tags_input' => $tag,
             'post_category' => array( $cat_id )
@@ -167,14 +169,14 @@ class MclQuickPost {
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div></th>"
-                                . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+                                . "\n    <td><a class=\"quick-post cursor_pointer\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
                                 . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
-                                . "\n    <td><a href class=\"quick-post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+                                . "\n    <td><a class=\"quick-post cursor_pointer\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
                                 . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
                     }
@@ -226,50 +228,40 @@ class MclQuickPost {
                     50% 50% 
                     no-repeat;
             }
+
+            .cursor_pointer {
+                cursor:     pointer;
+            }
         </style>
 
         <script type="text/javascript">
-            var running = false;
-
             jQuery(document).ready(function ($) {
                 $(".quick-post").click(function () {
-                    if (!running) {
-                        running = true;
+                    $("#mcl_loading").addClass('loading');
 
-                        $("#mcl_loading").addClass('loading');
-                        $.ajax({
-                            async: false,
-                            type: 'GET',
-                            url: "admin.php?page=mcl-quick-post"
-                                    + "&title=" + $(this).attr('headline')
-                                    + "&tag_id=" + $(this).attr('tag-id')
-                                    + "&cat_id=" + $(this).attr('cat-id'),
-                            success: function () {
-                                location.reload();
-                            }
-                        });
-                    }
+                    $.get("admin.php", {
+                        page: "mcl-quick-post",
+                        title: $(this).attr('headline'),
+                        tag_id: $(this).attr('tag-id'),
+                        cat_id: $(this).attr('cat-id')}
+                    ).done(function () {
+                        location.reload();
+                    });
                 });
 
                 $(".button").click(function (e) {
-                    if (!running) {
-                        running = true;
+                    $("#mcl_loading").addClass('loading');
 
-                        $("#mcl_loading").addClass('loading');
-                        $.ajax({
-                            async: false,
-                            type: 'GET',
-                            url: "admin.php?page=mcl-quick-post"
-                                    + "&title=" + encodeURIComponent($('#' + e.currentTarget.id + '-titel').val())
-                                    + "&text=" + encodeURIComponent($('#' + e.currentTarget.id + '-text').val())
-                                    + "&cat_id=" + e.currentTarget.id,
-                            success: function () {
-                                $('#' + e.currentTarget.id + '-titel').val('');
-                                $('#' + e.currentTarget.id + '-text').val('');
-                                location.reload();
-                            }
-                        });
-                    }
+                    $.get("admin.php", {
+                        page: "mcl-quick-post",
+                        title: encodeURIComponent($('#' + e.currentTarget.id + '-titel').val()),
+                        text: encodeURIComponent($('#' + e.currentTarget.id + '-text').val()),
+                        cat_id: e.currentTarget.id}
+                    ).done(function () {
+                        $('#' + e.currentTarget.id + '-titel').val('');
+                        $('#' + e.currentTarget.id + '-text').val('');
+                        location.reload();
+                    });
                 });
             });
         </script>

@@ -162,14 +162,14 @@ class MclComplete {
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
                                     . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div></th>"
-                                    . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                    . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                    . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
                         }
@@ -215,14 +215,14 @@ class MclComplete {
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
                                     . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_complete[$key] ) . ")</div></th>"
-                                    . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                    . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <td nowrap><a href class=\"complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
+                                    . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
                         }
@@ -256,19 +256,24 @@ class MclComplete {
                     50% 50% 
                     no-repeat;
             }
+
+            .cursor_pointer {
+                cursor:     pointer;
+            }
         </style>
 
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
                 $(".complete").click(function () {
                     $("#mcl_loading").addClass('loading');
-                    $.ajax({
-                        async: false,
-                        type: 'GET',
-                        url: "admin.php?page=mcl-complete&tag_id=" + $(this).attr('tag-id') + "&cat_id=" + $(this).attr('cat-id') + "&complete=" + $(this).attr('set-to'),
-                        success: function (data) {
-                            location.reload();
-                        }
+
+                    $.get("admin.php", {
+                        page: "mcl-complete",
+                        tag_id: $(this).attr('tag-id'),
+                        cat_id: $(this).attr('cat-id'),
+                        complete: $(this).attr('set-to')}
+                    ).done(function () {
+                        location.reload();
                     });
                 });
             });
