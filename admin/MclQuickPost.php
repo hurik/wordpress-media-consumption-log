@@ -234,19 +234,19 @@ class MclQuickPost {
             }
 
             .back-to-top {
-                position: fixed;
-                bottom: 1em;
-                right: 1em;
-                text-decoration: none;
-                color: #FFFFFF;
-                background-color: rgba(51, 51, 51, 0.50);
-                font-size: 10px;
-                padding: 1em;
-                display: none;
+                cursor:           pointer;
+                position:         fixed;
+                z-index:          99999;
+                bottom:           1em;
+                right:            1em;
+                color:            #FFFFFF;
+                background-color: rgba( 51, 51, 51, 0.50 );
+                padding:          1em;
+                display:          none;
             }
 
             .back-to-top:hover {    
-                background-color: rgba(51, 51, 51, 0.80);
+                background-color: rgba( 51, 51, 51, 0.80 );
             }
         </style>
 
@@ -255,29 +255,29 @@ class MclQuickPost {
                 $(this).scrollTop(0);
 
                 $(".quick-post").click(function () {
-                    $("#mcl_loading").addClass('loading');
+                    $("#mcl_loading").addClass("loading");
 
                     $.get("admin.php", {
                         page: "mcl-quick-post",
-                        title: $(this).attr('headline'),
-                        tag_id: $(this).attr('tag-id'),
-                        cat_id: $(this).attr('cat-id')}
+                        title: $(this).attr("headline"),
+                        tag_id: $(this).attr("tag-id"),
+                        cat_id: $(this).attr("cat-id")}
                     ).done(function () {
                         location.reload();
                     });
                 });
 
                 $(".button").click(function (e) {
-                    $("#mcl_loading").addClass('loading');
+                    $("#mcl_loading").addClass("loading");
 
                     $.get("admin.php", {
                         page: "mcl-quick-post",
-                        title: encodeURIComponent($('#' + e.currentTarget.id + '-titel').val()),
-                        text: encodeURIComponent($('#' + e.currentTarget.id + '-text').val()),
+                        title: encodeURIComponent($("#" + e.currentTarget.id + "-titel").val()),
+                        text: encodeURIComponent($("#" + e.currentTarget.id + "-text").val()),
                         cat_id: e.currentTarget.id}
                     ).done(function () {
-                        $('#' + e.currentTarget.id + '-titel').val('');
-                        $('#' + e.currentTarget.id + '-text').val('');
+                        $("#" + e.currentTarget.id + "-titel").val("");
+                        $("#" + e.currentTarget.id + "-text").val("");
                         location.reload();
                     });
                 });
@@ -288,14 +288,14 @@ class MclQuickPost {
                     var position = $(window).scrollTop();
 
                     if (position > offset) {
-                        $('.back-to-top').fadeIn();
+                        $(".back-to-top").fadeIn();
                     } else {
-                        $('.back-to-top').fadeOut();
+                        $(".back-to-top").fadeOut();
                     }
                 });
 
 
-                jQuery('.back-to-top').click(function () {
+                $(".back-to-top").click(function () {
                     $(window).scrollTop(0);
                     $(this).fadeOut();
                 })
@@ -315,12 +315,10 @@ class MclQuickPost {
                 ?>
             </table>
 
-            <?php
-            echo $cats_html;
-            ?>
+            <?php echo $cats_html; ?>
+
+            <div id="mcl_loading"></div><div class="back-to-top">^</div>
         </div>
-        <div id="mcl_loading"></div>
-        <a href="#" class="back-to-top">^</a>
         <?php
     }
 

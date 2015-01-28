@@ -262,19 +262,19 @@ class MclComplete {
             }
 
             .back-to-top {
-                position: fixed;
-                bottom: 1em;
-                right: 1em;
-                text-decoration: none;
-                color: #FFFFFF;
-                background-color: rgba(51, 51, 51, 0.50);
-                font-size: 10px;
-                padding: 1em;
-                display: none;
+                cursor:           pointer;
+                position:         fixed;
+                z-index:          99999;
+                bottom:           1em;
+                right:            1em;
+                color:            #FFFFFF;
+                background-color: rgba( 51, 51, 51, 0.50 );
+                padding:          1em;
+                display:          none;
             }
 
             .back-to-top:hover {    
-                background-color: rgba(51, 51, 51, 0.80);
+                background-color: rgba( 51, 51, 51, 0.80 );
             }
         </style>
 
@@ -283,13 +283,13 @@ class MclComplete {
                 $(this).scrollTop(0);
 
                 $(".complete").click(function () {
-                    $("#mcl_loading").addClass('loading');
+                    $("#mcl_loading").addClass("loading");
 
                     $.get("admin.php", {
                         page: "mcl-complete",
-                        tag_id: $(this).attr('tag-id'),
-                        cat_id: $(this).attr('cat-id'),
-                        complete: $(this).attr('set-to')}
+                        tag_id: $(this).attr("tag-id"),
+                        cat_id: $(this).attr("cat-id"),
+                        complete: $(this).attr("set-to")}
                     ).done(function () {
                         location.reload();
                     });
@@ -301,14 +301,14 @@ class MclComplete {
                     var position = $(window).scrollTop();
 
                     if (position > offset) {
-                        $('.back-to-top').fadeIn();
+                        $(".back-to-top").fadeIn();
                     } else {
-                        $('.back-to-top').fadeOut();
+                        $(".back-to-top").fadeOut();
                     }
                 });
 
 
-                jQuery('.back-to-top').click(function () {
+                $(".back-to-top").click(function () {
                     $(window).scrollTop(0);
                     $(this).fadeOut();
                 })
@@ -327,9 +327,9 @@ class MclComplete {
             </table>
 
             <?php echo $cats_html; ?>
+
+            <div id="mcl_loading"></div><div class="back-to-top">^</div>
         </div>
-        <div id="mcl_loading"></div>
-        <a href="#" class="back-to-top">^</a>
         <?php
     }
 
