@@ -28,7 +28,7 @@ class MclAdminHooks {
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', array( 'MclQuickPost', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Complete', 'media-consumption-log' ), __( 'Complete', 'media-consumption-log' ), 'manage_options', 'mcl-complete', array( 'MclComplete', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Units', 'media-consumption-log' ), __( 'Units', 'media-consumption-log' ), 'manage_options', 'mcl-unit', array( 'MclUnits', 'create_page' ) );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Rebuild data', 'media-consumption-log' ), __( 'Rebuild data', 'media-consumption-log' ), 'manage_options', 'mcl-rebuild-data', array( 'MclRebuildData', 'create_page' ) );
+        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Data', 'media-consumption-log' ), __( 'Data', 'media-consumption-log' ), 'manage_options', 'mcl-rebuild-data', array( 'MclData', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
     }
 
@@ -37,18 +37,18 @@ class MclAdminHooks {
         MclComplete::check_complete_after_saving( $post_id );
 
         if ( get_post_status( $post_id ) == 'publish' ) {
-            MclRebuildData::update_data();
+            MclData::update_data();
         }
     }
 
     public static function transition_post_status( $new_status, $old_status, $post ) {
         if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
-            MclRebuildData::update_data();
+            MclData::update_data();
         }
     }
 
     public static function delete_post( $post_id ) {
-        MclRebuildData::update_data();
+        MclData::update_data();
     }
 
     public static function load_post_new_php( $post_id ) {

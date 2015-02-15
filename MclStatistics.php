@@ -8,7 +8,7 @@ class MclStatistics {
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
-        $data = MclRebuildData::get_data();
+        $data = MclData::get_data();
 
         // Javascript start
         $html = "\n<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"

@@ -52,7 +52,7 @@ class MclQuickPost {
         }
 
         // Get the data
-        $data = MclRebuildData::get_data();
+        $data = MclData::get_data();
 
         // Create categories navigation
         $cat_nav_html = "";

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-01-20 18:49:27+0000\n"
+"PO-Revision-Date: 2015-02-15 01:42:09+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,8 +21,8 @@ msgstr ""
 "X-Textdomain-Support: yes"
 
 #: admin/MclComplete.php:53
-#: admin/MclQuickPost.php:18
-#: admin/MclRebuildData.php:25
+#: admin/MclData.php:25
+#: admin/MclQuickPost.php:41
 #: admin/MclUnits.php:28
 #@ default
 msgid "You do not have sufficient permissions to access this page."
@@ -30,18 +30,18 @@ msgstr ""
 
 #: MclHooks.php:26
 #: admin/MclAdminHooks.php:28
-#: admin/MclQuickPost.php:171
+#: admin/MclQuickPost.php:306
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
-#: MclStatistics.php:279
+#: MclStatistics.php:286
 #: MclStatus.php:52
 #: MclStatus.php:174
 #: admin/MclAdminHooks.php:29
 #: admin/MclComplete.php:98
 #: admin/MclComplete.php:183
-#: admin/MclComplete.php:278
+#: admin/MclComplete.php:319
 #@ media-consumption-log
 msgid "Complete"
 msgstr "Komplett"
@@ -122,44 +122,44 @@ msgstr "mcl_number \"und\""
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
 
-#: MclStatistics.php:186
-#: MclStatistics.php:195
+#: MclStatistics.php:193
+#: MclStatistics.php:202
 #@ media-consumption-log
 msgid "Daily consumption"
 msgstr "Täglicher Konsum"
 
-#: MclStatistics.php:187
-#: MclStatistics.php:199
+#: MclStatistics.php:194
+#: MclStatistics.php:206
 #@ media-consumption-log
 msgid "Monthly consumption"
 msgstr "Monatlicher Konsum"
 
-#: MclStatistics.php:189
-#: MclStatistics.php:235
+#: MclStatistics.php:196
+#: MclStatistics.php:242
 #@ media-consumption-log
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: MclStatistics.php:190
-#: MclStatistics.php:268
+#: MclStatistics.php:197
+#: MclStatistics.php:275
 #@ media-consumption-log
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: MclStatistics.php:211
-#: MclStatistics.php:243
-#: MclStatistics.php:277
+#: MclStatistics.php:218
+#: MclStatistics.php:250
+#: MclStatistics.php:284
 #@ media-consumption-log
 msgid "Category"
 msgstr "Kategorie"
 
-#: MclStatistics.php:258
+#: MclStatistics.php:265
 #, php-format
 #@ media-consumption-log
 msgid "Average a day, since the first post on the %DATE%."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:278
+#: MclStatistics.php:285
 #: MclStatus.php:36
 #: MclStatus.php:118
 #: admin/MclComplete.php:82
@@ -226,20 +226,20 @@ msgstr "Status ändern"
 msgid "Change!"
 msgstr "Ändern!"
 
-#: MclStatistics.php:228
-#: MclStatistics.php:261
-#: MclStatistics.php:280
-#: MclStatistics.php:309
+#: MclStatistics.php:235
+#: MclStatistics.php:268
+#: MclStatistics.php:287
+#: MclStatistics.php:316
 #@ media-consumption-log
 msgid "Total"
 msgstr "Insgesamt"
 
-#: admin/MclQuickPost.php:90
+#: admin/MclQuickPost.php:156
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: admin/MclQuickPost.php:91
+#: admin/MclQuickPost.php:157
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
@@ -261,20 +261,20 @@ msgstr "und"
 msgid "to"
 msgstr "bis"
 
-#: MclStatistics.php:188
-#: MclStatistics.php:203
+#: MclStatistics.php:195
+#: MclStatistics.php:210
 #@ media-consumption-log
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: MclStatistics.php:225
+#: MclStatistics.php:232
 #, php-format
 #@ media-consumption-log
 msgid "Total comsumption, since the first post on the %DATE%."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:212
-#: MclStatistics.php:245
+#: MclStatistics.php:219
+#: MclStatistics.php:252
 #@ media-consumption-log
 msgid "Unit"
 msgstr "Einheit"
@@ -284,7 +284,7 @@ msgstr "Einheit"
 msgid "Please define the units of the categories."
 msgstr "Bitte definiere die Einheiten der Kategorien."
 
-#: MclStatistics.php:305
+#: MclStatistics.php:312
 #, php-format
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%."
@@ -337,34 +337,24 @@ msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird 
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default:"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: admin/MclAdminHooks.php:31
-#: admin/MclRebuildData.php:33
+#: admin/MclData.php:43
+#: admin/MclData.php:46
 #@ media-consumption-log
 msgid "Rebuild data"
 msgstr "Erneuere Daten"
 
-#: admin/MclRebuildData.php:36
-#@ media-consumption-log
-msgid "Rebuild data now!"
-msgstr "Jetzt Daten erneuern!"
-
-#: admin/MclRebuildData.php:39
-#@ media-consumption-log
-msgid "Information"
-msgstr "Informationen"
-
-#: admin/MclRebuildData.php:42
+#: admin/MclData.php:50
 #@ media-consumption-log
 msgid "Number of queries"
 msgstr "Datenbank abfragen"
 
-#: admin/MclRebuildData.php:46
+#: admin/MclData.php:54
 #@ media-consumption-log
 msgid "Execution time"
 msgstr "Ausführungszeit"
 
-#: admin/MclQuickPost.php:106
-#: admin/MclQuickPost.php:113
+#: admin/MclQuickPost.php:172
+#: admin/MclQuickPost.php:179
 #@ media-consumption-log
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
@@ -378,6 +368,7 @@ msgstr "Serien"
 
 #: MclStatus.php:68
 #: MclStatus.php:224
+#: admin/MclQuickPost.php:84
 #: admin/MclSettings.php:175
 #@ media-consumption-log
 msgid "Non series"
@@ -407,4 +398,64 @@ msgstr "Anzahl der Tage für die tägliche Statistik. Wenn eine 0 eingetragen wi
 #@ media-consumption-log
 msgid "Please insert number of months the statistic should cover. If you insert 0 the months since the first post will be covered. Default:"
 msgstr "Anzahl der Monate für die monatliche Statistik. Wenn eine 0 eingetragen wird, werden die Monate seit dem ersten Beitrag abgedeckt. Voreinstellung:"
+
+#: admin/MclAdminHooks.php:31
+#: admin/MclData.php:41
+#@ media-consumption-log
+msgid "Data"
+msgstr "Daten"
+
+#: admin/MclData.php:47
+#: admin/MclData.php:67
+#@ media-consumption-log
+msgid "Now!"
+msgstr "Jetzt!"
+
+#: admin/MclData.php:59
+#@ media-consumption-log
+msgid "Postmeta orphans"
+msgstr "Verwaiste Postmetas"
+
+#: admin/MclData.php:62
+#@ media-consumption-log
+msgid "Number of postmeta orphans"
+msgstr "Anzahl der verwaisten Postmetas"
+
+#: admin/MclData.php:66
+#@ media-consumption-log
+msgid "Remove"
+msgstr "Entfernen"
+
+#: admin/MclData.php:79
+#@ media-consumption-log
+msgid "Posts"
+msgstr "Beiträge"
+
+#: admin/MclQuickPost.php:126
+#: admin/MclQuickPost.php:197
+#@ default
+msgid "Title"
+msgstr ""
+
+#: admin/MclQuickPost.php:130
+#: admin/MclQuickPost.php:201
+#@ default
+msgid "Text"
+msgstr ""
+
+#: admin/MclQuickPost.php:134
+#: admin/MclQuickPost.php:205
+#@ default
+msgid "Publish"
+msgstr ""
+
+#: admin/MclData.php:71
+#@ media-consumption-log
+msgid "Posts without mcl_number"
+msgstr "Beiträge ohne mcl_number"
+
+#: admin/MclData.php:74
+#@ media-consumption-log
+msgid "Number of posts without mcl_number"
+msgstr "Anzahl der Beiträge ohne mcl_number"
 

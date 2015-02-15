@@ -45,7 +45,7 @@ class MclComplete {
         " );
         }
 
-        MclRebuildData::update_data();
+        MclData::update_data();
     }
 
     public static function create_page() {
@@ -59,7 +59,7 @@ class MclComplete {
         }
 
         // Get the data
-        $data = MclRebuildData::get_data();
+        $data = MclData::get_data();
 
         // Create categories navigation
         $cat_nav_html = "";

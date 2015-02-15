@@ -6,7 +6,7 @@ class MclStatus {
 
     static function build_status() {
         // Get the data
-        $data = MclRebuildData::get_data();
+        $data = MclData::get_data();
 
         // Create categories navigation
         $html = "\n<table border=\"1\">"

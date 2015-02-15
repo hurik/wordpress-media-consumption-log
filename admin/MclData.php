@@ -1,6 +1,6 @@
 <?php
 
-class MclRebuildData {
+class MclData {
 
     const option_name = 'mcl_data';
 
@@ -25,19 +25,27 @@ class MclRebuildData {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
 
-        if ( isset( $_GET["now"] ) && $_GET["now"] == 1 ) {
+        if ( isset( $_GET["rebuild-data"] ) && $_GET["rebuild-data"] == 1 ) {
             self::update_data();
         }
+
+        if ( isset( $_GET["remove-postmeta-orphans"] ) && $_GET["remove-postmeta-orphans"] == 1 ) {
+            self::remove_postmeta_orphans();
+        }
+
+        $postmeta_orphans_count = self::count_postmeta_orphans();
+        $posts_without_mcl_number = self::get_posts_without_mcl_number();
+        $posts_without_mcl_number_count = count( $posts_without_mcl_number );
         ?>
         <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Data', 'media-consumption-log' ); ?></h2>
 
-            <p>
-                <input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&now=1'" value="<?php _e( 'Rebuild data now!', 'media-consumption-log' ); ?>" />
-            </p>
-
-            <h3><?php _e( 'Information', 'media-consumption-log' ); ?></h3>
+            <h3><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3>
             <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></th>
+                    <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&rebuild-data=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
+                </tr>
                 <tr>
                     <th scope="row"><?php _e( 'Number of queries', 'media-consumption-log' ); ?></th>
                     <td><?php echo get_num_queries(); ?></td>
@@ -47,6 +55,42 @@ class MclRebuildData {
                     <td><?php timer_stop( 1 ); ?></td>
                 </tr>
             </table>
+
+            <h3><?php _e( 'Postmeta orphans', 'media-consumption-log' ); ?></h3>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e( 'Number of postmeta orphans', 'media-consumption-log' ); ?></th>
+                    <td><?php echo $postmeta_orphans_count; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row"><?php _e( 'Remove', 'media-consumption-log' ); ?></th>
+                    <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&remove-postmeta-orphans=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
+                </tr>
+            </table>
+
+            <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e( 'Number of posts without mcl_number', 'media-consumption-log' ); ?></th>
+                    <td><?php echo $posts_without_mcl_number_count; ?></td>
+                </tr>
+                <?php if ( $posts_without_mcl_number_count > 0 ) { ?>
+                    <tr>
+                        <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
+                        <td><?php
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                            ?></td>
+                    </tr>   
+                <?php }
+                ?>
+            </table>
+
         </div>
         <?php
     }
@@ -287,6 +331,49 @@ class MclRebuildData {
 	" );
 
         return $stats[0]->number;
+    }
+
+    private static function count_postmeta_orphans() {
+        global $wpdb;
+
+        $postmeta_orphans = $wpdb->get_results( "
+            SELECT *
+            FROM {$wpdb->prefix}postmeta pm
+            LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
+            WHERE wp.ID IS NULL
+	" );
+
+        return count( $postmeta_orphans );
+    }
+
+    private static function remove_postmeta_orphans() {
+        global $wpdb;
+
+        $wpdb->get_results( "
+            DELETE pm
+            FROM {$wpdb->prefix}postmeta pm
+            LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
+            WHERE wp.ID IS NULL
+	" );
+    }
+
+    private static function get_posts_without_mcl_number() {
+        global $wpdb;
+
+        $posts_without_mcl_number = $wpdb->get_results( "
+            SELECT *
+            FROM {$wpdb->prefix}posts as posts
+            WHERE posts.post_type = 'post'
+            AND posts.post_status = 'publish'
+            AND NOT EXISTS (
+                SELECT *
+                FROM {$wpdb->prefix}postmeta
+                WHERE meta_key = 'mcl_number'
+                AND post_id = posts.ID
+            )
+	" );
+
+        return $posts_without_mcl_number;
     }
 
 }
