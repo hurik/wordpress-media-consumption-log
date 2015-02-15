@@ -360,17 +360,24 @@ class MclData {
     private static function get_posts_without_mcl_number() {
         global $wpdb;
 
+        $monitored_categories = MclSettings::get_monitored_categories_series() . "," . MclSettings::get_monitored_categories_non_series();
+
         $posts_without_mcl_number = $wpdb->get_results( "
             SELECT *
-            FROM {$wpdb->prefix}posts as posts
-            WHERE posts.post_type = 'post'
-            AND posts.post_status = 'publish'
-            AND NOT EXISTS (
-                SELECT *
-                FROM {$wpdb->prefix}postmeta
-                WHERE meta_key = 'mcl_number'
-                AND post_id = posts.ID
-            )
+            FROM {$wpdb->prefix}posts as p
+            LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
+            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
+            WHERE
+                p.post_type = 'post'
+                AND p.post_status = 'publish'
+                AND t.taxonomy = 'category'
+                AND t.term_id IN ({$monitored_categories})
+                AND NOT EXISTS (
+                    SELECT *
+                    FROM {$wpdb->prefix}postmeta
+                    WHERE meta_key = 'mcl_number'
+                    AND post_id = p.ID
+                )
 	" );
 
         return $posts_without_mcl_number;

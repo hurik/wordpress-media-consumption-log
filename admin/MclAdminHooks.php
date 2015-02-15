@@ -12,7 +12,7 @@ class MclAdminHooks {
 
         add_action( 'save_post', array( get_called_class(), 'save_post' ) );
         add_action( 'transition_post_status', array( get_called_class(), 'transition_post_status' ), 10, 3 );
-        add_action( 'delete_post', array( get_called_class(), 'delete_post' ) );
+        add_action( 'before_delete_post', array( get_called_class(), 'before_delete_post' ) );
 
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
     }
@@ -33,17 +33,36 @@ class MclAdminHooks {
     }
 
     public static function save_post( $post_id ) {
-        MclNumber::check_mcl_number_after_saving( $post_id );
-        MclComplete::check_complete_after_saving( $post_id );
+        $cats = get_the_category( $post_id );
 
-        if ( get_post_status( $post_id ) == 'publish' ) {
-            MclData::update_data();
+        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            MclNumber::check_mcl_number_after_saving( $post_id );
+            MclComplete::check_complete_after_saving( $post_id );
+
+            if ( get_post_status( $post_id ) == 'publish' ) {
+                MclData::update_data();
+            }
+        } else {
+            delete_post_meta( $post_id, "mcl_number" );
+            delete_post_meta( $post_id, "mcl_complete" );
         }
     }
 
     public static function transition_post_status( $new_status, $old_status, $post ) {
-        if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
-            MclData::update_data();
+        $cats = get_the_category( $post->ID );
+
+        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
+                MclData::update_data();
+            }
+        }
+    }
+
+    public static function before_delete_post( $post_id ) {
+        $cats = get_the_category( $post_id );
+
+        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            add_action( 'delete_post', array( get_called_class(), 'delete_post' ) );
         }
     }
 

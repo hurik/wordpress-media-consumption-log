@@ -1,6 +1,6 @@
 <?php
 
-class MclStringHelper {
+class MclHelper {
 
     public static function build_all_categories_string( $categories, $with_id = false ) {
         $categories_string = "";
@@ -29,6 +29,17 @@ class MclStringHelper {
         }
 
         return $categories_string;
+    }
+
+    public static function is_monitored_category( $cat_id ) {
+        $monitored_categories_series = explode( ",", MclSettings::get_monitored_categories_series() );
+        $monitored_categories_non_series = explode( ",", MclSettings::get_monitored_categories_non_series() );
+
+        if ( in_array( $cat_id, array_merge( $monitored_categories_series, $monitored_categories_non_series ) ) ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -155,7 +155,7 @@ isStacked: true,";
 
     public static function create_page() {
         $categories = get_categories( 'hide_empty=0' );
-        $cats_text = MclStringHelper::build_all_categories_string( $categories, true );
+        $cats_text = MclHelper::build_all_categories_string( $categories, true );
         ?>
         <div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2>

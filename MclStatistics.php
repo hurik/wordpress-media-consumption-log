@@ -307,7 +307,7 @@ class MclStatistics {
             }
         }
 
-        $categories_string = MclStringHelper::build_all_categories_string( $data->categories, false );
+        $categories_string = MclHelper::build_all_categories_string( $data->categories, false );
 
         $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
         $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
