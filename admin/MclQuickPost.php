@@ -323,22 +323,13 @@ class MclQuickPost {
     }
 
     private static function build_next_post_title( $last_post_title ) {
-        $title = trim( $last_post_title );
-        $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+        $last_post_data = MclHelper::parse_last_post_title( $last_post_title );
 
-        $status = end( $title_exploded );
-        $status_exploded = explode( " ", $status );
-
-        $first_part = str_replace( $status, "", $title );
-
-        if ( count( $status_exploded ) < 2 ) {
-            return $title;
+        if ( count( $last_post_data ) == 2 ) {
+            return $last_post_data[0] . $last_post_data[1];
         }
 
-        $status_first_part = $status_exploded[0];
-        $status_last_part = end( $status_exploded );
-
-        $next = $status_last_part;
+        $next = $last_post_data[2];
 
         if ( is_numeric( $next ) ) {
             $next = floatval( $next );
@@ -350,7 +341,7 @@ class MclQuickPost {
             $next++;
         }
 
-        return $first_part . $status_first_part . " " . $next;
+        return $last_post_data[0] . $last_post_data[1] . " " . $next;
     }
 
 }

@@ -289,24 +289,13 @@ class MclStatus {
     }
 
     private static function get_last_consumed( $title ) {
-        // Explode the title
-        $titleExploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+        $last_post_data = MclHelper::parse_last_post_title( $title );
 
-        // Get the last part, so we have the chapter/episode/...
-        $status = end( $titleExploded );
-
-        $statusExploded = explode( " ", $status );
-
-        if ( count( $statusExploded ) == 1 ) {
-            $statusText = reset( $statusExploded );
-        } else {
-            $first_part = reset( $statusExploded );
-            $last_part = end( $statusExploded );
-
-            $statusText = "{$first_part} {$last_part}";
+        if ( count( $last_post_data ) == 2 ) {
+            return $last_post_data[1];
         }
 
-        return $statusText;
+        return $last_post_data[1] . " " . $last_post_data[2];
     }
 
 }

@@ -31,6 +31,25 @@ class MclHelper {
         return $categories_string;
     }
 
+    public static function parse_last_post_title( $last_post_title ) {
+        $title = trim( $last_post_title );
+        $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+
+        $status = end( $title_exploded );
+        $status_exploded = explode( " ", $status );
+
+        $first_part = str_replace( $status, "", $title );
+
+        if ( count( $status_exploded ) < 2 ) {
+            return [ $first_part, $status ];
+        }
+
+        $status_first_part = $status_exploded[0];
+        $status_last_part = end( $status_exploded );
+
+        return [ $first_part, $status_first_part, $status_last_part ];
+    }
+
     public static function is_monitored_category( $cat_id ) {
         $monitored_categories_series = explode( ",", MclSettings::get_monitored_categories_series() );
         $monitored_categories_non_series = explode( ",", MclSettings::get_monitored_categories_non_series() );
