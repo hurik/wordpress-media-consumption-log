@@ -324,27 +324,33 @@ class MclQuickPost {
 
     private static function build_next_post_title( $last_post_title ) {
         $title = trim( $last_post_title );
-        $title = preg_replace( "/[A-Z0-9.]+ " . MclSettings::get_other_to() . " /", "", $title );
-        $title = preg_replace( "/[A-Z0-9.]+ " . MclSettings::get_other_and() . " /", "", $title );
+        $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
 
-        $title_explode = explode( ' ', $title );
-        $number = end( $title_explode );
+        $status = end( $title_exploded );
+        $status_exploded = explode( " ", $status );
 
-        if ( is_numeric( $number ) ) {
-            $number = floatval( $number );
-            $number++;
-            $number = floor( $number );
+        $first_part = str_replace( $status, "", $title );
+
+        if ( count( $status_exploded ) < 2 ) {
+            return $title;
         }
 
-        if ( preg_match( '/[SE]/', $number ) || preg_match( '/[VC]/', $number ) || preg_match( '/[CP]/', $number ) ) {
-            $number++;
+        $status_first_part = $status_exploded[0];
+        $status_last_part = end( $status_exploded );
+
+        $next = $status_last_part;
+
+        if ( is_numeric( $next ) ) {
+            $next = floatval( $next );
+            $next++;
+            $next = floor( $next );
         }
 
-        $title = substr( $title, 0, strrpos( $title, " " ) );
+        if ( preg_match( '/[SE]/', $next ) || preg_match( '/[VC]/', $next ) || preg_match( '/[CP]/', $next ) ) {
+            $next++;
+        }
 
-        $title .= " {$number}";
-
-        return $title;
+        return $first_part . $status_first_part . " " . $next;
     }
 
 }
