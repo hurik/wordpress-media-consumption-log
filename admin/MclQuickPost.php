@@ -19,8 +19,8 @@ class MclQuickPost {
         $tag = $title;
 
         if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
-            $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
-            $tag = str_replace( " " . MclSettings::get_other_separator() . " " . end( $title_exploded ), "", $title );
+            $title_exploded = explode( MclSettings::get_other_separator(), $title );
+            $tag = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
         }
 
         $tag = str_replace( ", ", "--", $tag );

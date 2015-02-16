@@ -112,9 +112,9 @@ isStacked: true,";
         $value = get_option( 'mcl_setting_other_separator' );
 
         if ( empty( $value ) ) {
-            return self::default_other_separator;
+            return " " . trim( self::default_other_separator ) . " ";
         } else {
-            return $value;
+            return " " . trim( $value ) . " ";
         }
     }
 
@@ -122,9 +122,9 @@ isStacked: true,";
         $value = get_option( 'mcl_setting_other_and' );
 
         if ( empty( $value ) ) {
-            return self::default_other_and();
+            return " " . trim( self::default_other_and() ) . " ";
         } else {
-            return $value;
+            return " " . trim( $value ) . " ";
         }
     }
 
@@ -132,9 +132,9 @@ isStacked: true,";
         $value = get_option( 'mcl_setting_other_to' );
 
         if ( empty( $value ) ) {
-            return self::default_other_to();
+            return " " . trim( self::default_other_to() ) . " ";
         } else {
-            return $value;
+            return " " . trim( $value ) . " ";
         }
     }
 
@@ -229,19 +229,19 @@ isStacked: true,";
                 <table class="form-table">
                     <tr>
                         <th scope="row"><?php _e( 'Separator', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_other_separator" value="<?php echo esc_attr( self::get_other_separator() ); ?>" style="width:100%;" />
+                        <td><input type="text" name="mcl_setting_other_separator" value="<?php echo esc_attr( trim( self::get_other_separator() ) ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_separator; ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "and"', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_other_and" value="<?php echo esc_attr( self::get_other_and() ); ?>" style="width:100%;" />
+                        <td><input type="text" name="mcl_setting_other_and" value="<?php echo esc_attr( trim( self::get_other_and() ) ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_and(); ?></p></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><?php _e( 'mcl_number "to"', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_other_to" value="<?php echo esc_attr( self::get_other_to() ); ?>" style="width:100%;" />
+                        <td><input type="text" name="mcl_setting_other_to" value="<?php echo esc_attr( trim( self::get_other_to() ) ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default:', 'media-consumption-log' ); ?> <?php echo self::default_other_to(); ?></p></td>
                     </tr>
                 </table>

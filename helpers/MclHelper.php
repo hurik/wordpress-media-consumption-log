@@ -33,7 +33,7 @@ class MclHelper {
 
     public static function parse_last_post_title( $last_post_title ) {
         $title = trim( $last_post_title );
-        $title_exploded = explode( " " . MclSettings::get_other_separator() . " ", $title );
+        $title_exploded = explode( MclSettings::get_other_separator(), $title );
 
         $status = end( $title_exploded );
         $status_exploded = explode( " ", $status );
