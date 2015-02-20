@@ -133,7 +133,7 @@ class MclComplete {
                     $first = true;
 
                     foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
-                        $tag_title = htmlspecialchars( $tag->name );
+                        $tag_title = str_replace( "\"", "&quot;", $tag->name );
 
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
@@ -186,7 +186,7 @@ class MclComplete {
                     $first = true;
 
                     foreach ( $category->mcl_tags_complete[$key] as $tag ) {
-                        $tag_title = htmlspecialchars( $tag->name );
+                        $tag_title = str_replace( "\"", "&quot;", $tag->name );
 
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
