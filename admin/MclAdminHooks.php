@@ -37,14 +37,12 @@ class MclAdminHooks {
 
         if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
             MclNumber::check_mcl_number_after_saving( $post_id );
-            MclComplete::check_complete_after_saving( $post_id );
 
             if ( get_post_status( $post_id ) == 'publish' ) {
                 MclData::update_data();
             }
         } else {
             delete_post_meta( $post_id, "mcl_number" );
-            delete_post_meta( $post_id, "mcl_complete" );
         }
     }
 
@@ -86,7 +84,6 @@ class MclAdminHooks {
 
         // Add default custom fields
         MclNumber::add_default_custom_field_in_new_post( $post_id );
-        MclComplete::add_default_custom_field_in_new_post( $post_id );
     }
 
     public static function register_activation_hook() {

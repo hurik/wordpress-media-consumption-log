@@ -2,30 +2,6 @@
 
 class MclComplete {
 
-    public static function add_default_custom_field_in_new_post( $post_id ) {
-        add_post_meta( $post_id, 'mcl_complete', '', true );
-    }
-
-    public static function check_complete_after_saving( $post_id ) {
-        if ( get_post_status( $post_id ) == 'publish' ) {
-            $mcl_complete = get_post_meta( $post_id, 'mcl_complete', true );
-
-            // Check if already set
-            if ( !empty( $mcl_complete ) ) {
-                $cat = get_the_category( $post_id );
-                $cat_id = $cat[0]->term_id;
-
-                $tag = wp_get_post_tags( $post_id );
-                $tag_id = $tag[0]->term_id;
-
-                self::change_complete_status( $tag_id, $cat_id, 1 );
-            }
-
-            // Remove the meta data
-            delete_post_meta( $post_id, 'mcl_complete' );
-        }
-    }
-
     private static function change_complete_status( $tag_id, $cat_id, $complete ) {
         global $wpdb;
 
