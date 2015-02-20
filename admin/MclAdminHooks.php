@@ -35,14 +35,16 @@ class MclAdminHooks {
     public static function save_post( $post_id ) {
         $cats = get_the_category( $post_id );
 
-        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
-            MclNumber::check_mcl_number_after_saving( $post_id );
+        if ( count( $cats ) != 0 ) {
+            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+                MclNumber::check_mcl_number_after_saving( $post_id );
 
-            if ( get_post_status( $post_id ) == 'publish' ) {
-                MclData::update_data();
+                if ( get_post_status( $post_id ) == 'publish' ) {
+                    MclData::update_data();
+                }
+            } else {
+                delete_post_meta( $post_id, "mcl_number" );
             }
-        } else {
-            delete_post_meta( $post_id, "mcl_number" );
         }
     }
 
