@@ -1,5 +1,23 @@
 <?php
 
+/*
+  Copyright (C) 2014 Andreas Giemza <andreas@giemza.net>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
 class MclSettings {
 
     // Option group name
@@ -162,7 +180,7 @@ isStacked: true,";
 
             <form method="post" action="options.php">
                 <?php settings_fields( self::option_group_name ); ?>
-                <?php do_settings_sections( self::option_group_name ); ?>
+        <?php do_settings_sections( self::option_group_name ); ?>
 
                 <h3><?php _e( 'Monitored categories', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
@@ -200,7 +218,7 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'Daily Google Charts Options', 'media-consumption-log' ); ?></th>
                         <td><textarea name="mcl_setting_statistics_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_daily_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::default_statistics_daily_options ); ?></p></td>
+        <?php echo str_replace( "\n", "<br />", self::default_statistics_daily_options ); ?></p></td>
                     </tr>
 
                     <tr>
@@ -219,7 +237,7 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'Monthly Google Charts Options', 'media-consumption-log' ); ?></th>
                         <td><textarea name="mcl_setting_statistics_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_monthly_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
+        <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
                     </tr>
                 </table>
 
@@ -246,7 +264,7 @@ isStacked: true,";
                     </tr>
                 </table>
 
-                <?php submit_button(); ?>
+        <?php submit_button(); ?>
             </form>
         </div>	
         <?php
