@@ -54,7 +54,6 @@ The keyword and an to can be changed in the MCL Settings.
 You can also set it to 0. So the post will not be visible in the statistics. This is useful when you want to add something what you looked before you started logging your consumption.
 
 
-
 == Installation ==
 
 You can install this plugin directly from your WordPress dashboard:
@@ -74,7 +73,15 @@ No questions at the moment.
 
 == Screenshots ==
 
-No screenshots at the moment.
+1. Status
+2. Statistics - Daily consumption
+3. Statistics - Monthly consumption
+4. Statistics - Total consumption
+5. Statistics - Average consumption
+6. Statistics - Consumption amount
+7. Quick Post
+8. Complete
+9. Unit
 
 
 == Changelog ==
