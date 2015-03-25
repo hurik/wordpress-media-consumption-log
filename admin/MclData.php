@@ -121,7 +121,7 @@ class MclData {
         $data = new stdClass;
 
         // Get the categories
-        if ( !empty( MclSettings::get_monitored_categories_serials() ) && !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+        if ( !empty( MclSettings::get_monitored_categories_serials() ) || !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
             $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
         } else {
             $categories = array();
