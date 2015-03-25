@@ -121,7 +121,7 @@ class MclData {
         $data = new stdClass;
 
         // Get the categories
-        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() . "," . MclSettings::get_monitored_categories_non_series() );
+        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
@@ -379,7 +379,7 @@ class MclData {
     private static function get_posts_without_mcl_number() {
         global $wpdb;
 
-        $monitored_categories = MclSettings::get_monitored_categories_series() . "," . MclSettings::get_monitored_categories_non_series();
+        $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
 
         $posts_without_mcl_number = $wpdb->get_results( "
             SELECT *

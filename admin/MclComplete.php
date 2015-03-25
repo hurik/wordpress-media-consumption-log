@@ -59,7 +59,7 @@ class MclComplete {
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 
@@ -108,7 +108,7 @@ class MclComplete {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 

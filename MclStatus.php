@@ -33,11 +33,11 @@ class MclStatus {
                 . "\n    <col width=\"99%\">"
                 . "\n  </colgroup>"
                 . "\n  <tr>"
-                . "\n    <th colspan=\"2\"><strong><a href=\"#series\" style=\"font-size: 130%;\">" . __( 'Series', 'media-consumption-log' ) . "</a></strong></th>"
+                . "\n    <th colspan=\"2\"><strong><a href=\"#serials\" style=\"font-size: 130%;\">" . __( 'Serials', 'media-consumption-log' ) . "</a></strong></th>"
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 
@@ -83,11 +83,11 @@ class MclStatus {
         }
 
         $html .= "\n  <tr>"
-                . "\n    <th colspan=\"2\"><strong><a href=\"#non-series\" style=\"font-size: 130%;\">" . __( 'Non series', 'media-consumption-log' ) . "</a></strong></th>"
+                . "\n    <th colspan=\"2\"><strong><a href=\"#non-serials\" style=\"font-size: 130%;\">" . __( 'Non serials', 'media-consumption-log' ) . "</a></strong></th>"
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 continue;
             }
 
@@ -117,11 +117,11 @@ class MclStatus {
 
         $html .= "\n</table>";
 
-        $html .= "\n\n<h4 id=\"series\">" . __( 'Series', 'media-consumption-log' ) . "</h4><hr />";
+        $html .= "\n\n<h4 id=\"serials\">" . __( 'Serials', 'media-consumption-log' ) . "</h4><hr />";
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 
@@ -239,11 +239,11 @@ class MclStatus {
             }
         }
 
-        $html .= "\n\n<br /><h4 id=\"non-series\">" . __( 'Non series', 'media-consumption-log' ) . "</h4><hr />";
+        $html .= "\n\n<br /><h4 id=\"non-serials\">" . __( 'Non serials', 'media-consumption-log' ) . "</h4><hr />";
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 continue;
             }
 

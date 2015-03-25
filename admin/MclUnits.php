@@ -34,7 +34,7 @@ class MclUnits {
     }
 
     public static function register_settings() {
-        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() );
+        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() );
 
         foreach ( $categories as $category ) {
             register_setting( self::option_group_name, self::option_prefix . "{$category->term_id}" );
@@ -57,7 +57,7 @@ class MclUnits {
                 <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
                 <table class="form-table">
                     <?php
-                    $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() );
+                    $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() );
 
                     foreach ( $categories as $category ) {
                         ?>

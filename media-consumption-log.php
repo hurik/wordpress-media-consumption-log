@@ -3,7 +3,7 @@
 /*
   Plugin Name: Media Consumption Log
   Plugin URI: https://github.com/hurik/wordpress-media-consumption-log
-  Description: This plugin helps you to keep track of the series, movies, mangas, comics you are reading.
+  Description: This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
   Version: 1.0.0
   Author: Andreas Giemza
   Author URI: http://www.andreasgiemza.de

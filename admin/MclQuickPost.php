@@ -31,12 +31,12 @@ class MclQuickPost {
         wp_insert_post( $my_post );
     }
 
-    private static function quick_post_new_series( $title, $text, $cat_id ) {
+    private static function quick_post_new_serials( $title, $text, $cat_id ) {
         $title = urldecode( $title );
 
         $tag = $title;
 
-        if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+        if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
             $title_exploded = explode( MclSettings::get_other_separator(), $title );
             $tag = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
         }
@@ -65,7 +65,7 @@ class MclQuickPost {
         }
 
         if ( isset( $_GET["title"] ) && isset( $_GET["text"] ) && isset( $_GET["cat_id"] ) ) {
-            self::quick_post_new_series( $_GET["title"], $_GET["text"], $_GET["cat_id"] );
+            self::quick_post_new_serials( $_GET["title"], $_GET["text"], $_GET["cat_id"] );
             return;
         }
 
@@ -76,7 +76,7 @@ class MclQuickPost {
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 
@@ -99,25 +99,25 @@ class MclQuickPost {
         }
 
         $cat_nav_html .= "\n  <tr>"
-                . "\n    <th nowrap valign=\"top\">" . __( 'Non series', 'media-consumption-log' ) . "</th>"
+                . "\n    <th nowrap valign=\"top\">" . __( 'Non serials', 'media-consumption-log' ) . "</th>"
                 . "\n    <td>";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 continue;
             }
 
-            $last_non_series = $category->term_id;
+            $last_non_serials = $category->term_id;
         }
 
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 continue;
             }
 
             $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
-            if ( $category->term_id != $last_non_series ) {
+            if ( $category->term_id != $last_non_serials ) {
                 $cat_nav_html .= " | ";
             }
         }
@@ -129,7 +129,7 @@ class MclQuickPost {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
                 continue;
             }
 
@@ -205,7 +205,7 @@ class MclQuickPost {
         }
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 continue;
             }
 

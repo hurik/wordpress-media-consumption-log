@@ -310,7 +310,7 @@ class MclStatistics {
                 continue;
             }
 
-            if ( in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_series() ) ) ) {
+            if ( in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
                 $html .= "\n  <tr>"
                         . "\n    <td colspan=\"3\">{$category->name}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count}</td>"

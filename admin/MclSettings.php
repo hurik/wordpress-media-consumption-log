@@ -58,12 +58,12 @@ isStacked: true,";
     }
 
     // Getter
-    public static function get_monitored_categories_series() {
-        return get_option( 'mcl_setting_monitored_categories_series' );
+    public static function get_monitored_categories_serials() {
+        return get_option( 'mcl_setting_monitored_categories_serials' );
     }
 
-    public static function get_monitored_categories_non_series() {
-        return get_option( 'mcl_setting_monitored_categories_non_series' );
+    public static function get_monitored_categories_non_serials() {
+        return get_option( 'mcl_setting_monitored_categories_non_serials' );
     }
 
     public static function get_statistics_daily_count() {
@@ -158,8 +158,8 @@ isStacked: true,";
 
     // Setting page
     public static function register_settings() {
-        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_series' );
-        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_non_series' );
+        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_serials' );
+        register_setting( self::option_group_name, 'mcl_setting_monitored_categories_non_serials' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_count' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_date_format' );
         register_setting( self::option_group_name, 'mcl_setting_statistics_daily_options' );
@@ -189,13 +189,13 @@ isStacked: true,";
                 <h3><?php _e( 'Monitored categories', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php _e( 'Series', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_monitored_categories_series" value="<?php echo esc_attr( self::get_monitored_categories_series() ); ?>" style="width:100%;" />
+                        <th scope="row"><?php _e( 'Serials', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="mcl_setting_monitored_categories_serials" value="<?php echo esc_attr( self::get_monitored_categories_serials() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204', 'media-consumption-log' ); ?></p></td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e( 'Non series', 'media-consumption-log' ); ?></th>
-                        <td><input type="text" name="mcl_setting_monitored_categories_non_series" value="<?php echo esc_attr( self::get_monitored_categories_non_series() ); ?>" style="width:100%;" />
+                        <th scope="row"><?php _e( 'Non serials', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="mcl_setting_monitored_categories_non_serials" value="<?php echo esc_attr( self::get_monitored_categories_non_serials() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284', 'media-consumption-log' ); ?></p></td>
                     </tr>
                     <tr>

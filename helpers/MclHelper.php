@@ -69,10 +69,10 @@ class MclHelper {
     }
 
     public static function is_monitored_category( $cat_id ) {
-        $monitored_categories_series = explode( ",", MclSettings::get_monitored_categories_series() );
-        $monitored_categories_non_series = explode( ",", MclSettings::get_monitored_categories_non_series() );
+        $monitored_categories_serials = explode( ",", MclSettings::get_monitored_categories_serials() );
+        $monitored_categories_non_serials = explode( ",", MclSettings::get_monitored_categories_non_serials() );
 
-        if ( in_array( $cat_id, array_merge( $monitored_categories_series, $monitored_categories_non_series ) ) ) {
+        if ( in_array( $cat_id, array_merge( $monitored_categories_serials, $monitored_categories_non_serials ) ) ) {
             return true;
         } else {
             return false;
