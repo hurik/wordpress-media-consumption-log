@@ -82,6 +82,8 @@ No questions at the moment.
 7. Quick Post
 8. Complete
 9. Unit
+10. Data
+11. Settings
 
 
 == Changelog ==
