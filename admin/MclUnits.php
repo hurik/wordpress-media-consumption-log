@@ -34,10 +34,12 @@ class MclUnits {
     }
 
     public static function register_settings() {
-        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() );
+        if ( !empty( MclSettings::get_monitored_categories_serials() ) ) {
+            $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
 
-        foreach ( $categories as $category ) {
-            register_setting( self::option_group_name, self::option_prefix . "{$category->term_id}" );
+            foreach ( $categories as $category ) {
+                register_setting( self::option_group_name, self::option_prefix . "{$category->term_id}" );
+            }
         }
     }
 
@@ -57,13 +59,21 @@ class MclUnits {
                 <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
                 <table class="form-table">
                     <?php
-                    $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() );
+                    if ( !empty( MclSettings::get_monitored_categories_serials() ) ) {
+                        $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
 
-                    foreach ( $categories as $category ) {
+                        foreach ( $categories as $category ) {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $category->name; ?></th>
+                                <td><input type="text" name="<?php echo self::option_prefix . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
+                            </tr>
+                            <?php
+                        }
+                    } else {
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $category->name; ?></th>
-                            <td><input type="text" name="<?php echo self::option_prefix . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
+                            <th scope="row"><?php _e( 'No monitored serial category!', 'media-consumption-log' ); ?></th>
                         </tr>
                         <?php
                     }
