@@ -24,7 +24,7 @@ class MclUnits {
     const option_prefix = "mcl_unit_";
 
     public static function get_unit_of_category( $category ) {
-        $unit = get_option( self::option_prefix . "{$category->slug}" );
+        $unit = get_option( self::option_prefix . "{$category->term_id}" );
 
         if ( empty( $unit ) ) {
             $unit = $category->name;
@@ -37,7 +37,7 @@ class MclUnits {
         $categories = get_categories( "include=" . MclSettings::get_monitored_categories_series() );
 
         foreach ( $categories as $category ) {
-            register_setting( self::option_group_name, self::option_prefix . "{$category->slug}" );
+            register_setting( self::option_group_name, self::option_prefix . "{$category->term_id}" );
         }
     }
 
@@ -63,7 +63,7 @@ class MclUnits {
                         ?>
                         <tr>
                             <th scope="row"><?php echo $category->name; ?></th>
-                            <td><input type="text" name="<?php echo self::option_prefix . "{$category->slug}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
+                            <td><input type="text" name="<?php echo self::option_prefix . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
                         </tr>
                         <?php
                     }
