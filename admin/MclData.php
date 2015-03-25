@@ -121,7 +121,11 @@ class MclData {
         $data = new stdClass;
 
         // Get the categories
-        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
+        if ( !empty( MclSettings::get_monitored_categories_serials() ) && !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+            $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
+        } else {
+            $categories = array();
+        }
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
@@ -379,9 +383,10 @@ class MclData {
     private static function get_posts_without_mcl_number() {
         global $wpdb;
 
-        $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
+        if ( !empty( MclSettings::get_monitored_categories_serials() ) && !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+            $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
 
-        $posts_without_mcl_number = $wpdb->get_results( "
+            $posts_without_mcl_number = $wpdb->get_results( "
             SELECT *
             FROM {$wpdb->prefix}posts as p
             LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
@@ -399,7 +404,10 @@ class MclData {
                 )
 	" );
 
-        return $posts_without_mcl_number;
+            return $posts_without_mcl_number;
+        } else {
+            return array();
+        }
     }
 
 }
