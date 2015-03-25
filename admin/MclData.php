@@ -80,10 +80,12 @@ class MclData {
                     <th scope="row"><?php _e( 'Number of postmeta orphans', 'media-consumption-log' ); ?></th>
                     <td><?php echo $postmeta_orphans_count; ?></td>
                 </tr>
-                <tr>
-                    <th scope="row"><?php _e( 'Remove', 'media-consumption-log' ); ?></th>
-                    <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&remove-postmeta-orphans=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
-                </tr>
+                <?php if ( $postmeta_orphans_count > 0 ) { ?>
+                    <tr>
+                        <th scope="row"><?php _e( 'Remove', 'media-consumption-log' ); ?></th>
+                        <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&remove-postmeta-orphans=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
+                    </tr>
+                <?php } ?>
             </table>
 
             <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
@@ -105,8 +107,7 @@ class MclData {
                             }
                             ?></td>
                     </tr>   
-                <?php }
-                ?>
+                <?php } ?>
             </table>
 
         </div>
