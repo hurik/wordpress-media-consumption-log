@@ -172,6 +172,10 @@ isStacked: true,";
     }
 
     public static function create_page() {
+        if ( isset( $_GET["settings-updated"] ) && $_GET["settings-updated"] == "true" ) {
+            MclData::update_data();
+        }
+
         $categories = get_categories( 'hide_empty=0' );
         $cats_text = MclHelper::build_all_categories_string( $categories, true );
         ?>
@@ -180,7 +184,7 @@ isStacked: true,";
 
             <form method="post" action="options.php">
                 <?php settings_fields( self::option_group_name ); ?>
-        <?php do_settings_sections( self::option_group_name ); ?>
+                <?php do_settings_sections( self::option_group_name ); ?>
 
                 <h3><?php _e( 'Monitored categories', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
@@ -218,7 +222,7 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'Daily Google Charts Options', 'media-consumption-log' ); ?></th>
                         <td><textarea name="mcl_setting_statistics_daily_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_daily_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-        <?php echo str_replace( "\n", "<br />", self::default_statistics_daily_options ); ?></p></td>
+                                <?php echo str_replace( "\n", "<br />", self::default_statistics_daily_options ); ?></p></td>
                     </tr>
 
                     <tr>
@@ -237,7 +241,7 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'Monthly Google Charts Options', 'media-consumption-log' ); ?></th>
                         <td><textarea name="mcl_setting_statistics_monthly_options" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_monthly_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-        <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
+                                <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
                     </tr>
                 </table>
 
@@ -264,7 +268,7 @@ isStacked: true,";
                     </tr>
                 </table>
 
-        <?php submit_button(); ?>
+                <?php submit_button(); ?>
             </form>
         </div>	
         <?php
