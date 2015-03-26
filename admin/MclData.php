@@ -121,7 +121,10 @@ class MclData {
         $data = new stdClass;
 
         // Get the categories
-        if ( !empty( MclSettings::get_monitored_categories_serials() ) || !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
             $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
         } else {
             $categories = array();
@@ -403,7 +406,10 @@ class MclData {
     private static function get_posts_without_mcl_number() {
         global $wpdb;
 
-        if ( !empty( MclSettings::get_monitored_categories_serials() ) && !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
             $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
 
             $posts_without_mcl_number = $wpdb->get_results( "

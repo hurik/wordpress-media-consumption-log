@@ -110,7 +110,9 @@ class MclQuickPost {
                     . "\n  </tr>";
         }
 
-        if ( !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_non_serials ) ) {
             $cat_nav_html .= "\n  <tr>"
                     . "\n    <th nowrap valign=\"top\">" . __( 'Non serials', 'media-consumption-log' ) . "</th>"
                     . "\n    <td>";

@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014 Andreas Giemza <andreas@giemza.net>
 
@@ -34,7 +33,9 @@ class MclUnits {
     }
 
     public static function register_settings() {
-        if ( !empty( MclSettings::get_monitored_categories_serials() ) ) {
+        $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+
+        if ( !empty( $get_monitored_categories_serials ) ) {
             $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
 
             foreach ( $categories as $category ) {
@@ -59,7 +60,9 @@ class MclUnits {
                 <p class="description"><?php _e( 'Please define the units of the serial categories.', 'media-consumption-log' ); ?></p>
                 <table class="form-table">
                     <?php
-                    if ( !empty( MclSettings::get_monitored_categories_serials() ) ) {
+                    $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+
+                    if ( !empty( $get_monitored_categories_serials ) ) {
                         $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
 
                         foreach ( $categories as $category ) {
@@ -87,5 +90,4 @@ class MclUnits {
     }
 
 }
-
 ?>
