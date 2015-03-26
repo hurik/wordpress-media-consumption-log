@@ -55,6 +55,17 @@ class MclComplete {
         // Get the data
         $data = MclData::get_data();
 
+        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete ) {
+            ?>
+            <div class="wrap">
+                <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
+
+                <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
+            </div>
+            <?php
+            return;
+        }
+
         // Create categories navigation
         $cat_nav_html = "";
 

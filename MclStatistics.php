@@ -28,6 +28,12 @@ class MclStatistics {
 
         $data = MclData::get_data();
 
+        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_non_serial ) {
+            $html = "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
+
+            return $html;
+        }
+
         // Javascript start
         $html = "\n<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
                 . "\n<script type=\"text/javascript\">"

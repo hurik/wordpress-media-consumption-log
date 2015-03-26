@@ -79,6 +79,26 @@ class MclHelper {
         }
     }
 
+    public static function is_monitored_serial_category( $cat_id ) {
+        $monitored_categories_serials = explode( ",", MclSettings::get_monitored_categories_serials() );
+
+        if ( in_array( $cat_id, $monitored_categories_serials ) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function is_monitored_non_serial_category( $cat_id ) {
+        $monitored_categories_non_serials = explode( ",", MclSettings::get_monitored_categories_non_serials() );
+
+        if ( in_array( $cat_id, $monitored_categories_non_serials ) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 ?>

@@ -56,7 +56,7 @@ class MclUnits {
                 <?php do_settings_sections( self::option_group_name ); ?>
 
                 <h3><?php _e( 'Units', 'media-consumption-log' ); ?></h3>
-                <p class="description"><?php _e( 'Please define the units of the categories.', 'media-consumption-log' ); ?></p>
+                <p class="description"><?php _e( 'Please define the units of the serial categories.', 'media-consumption-log' ); ?></p>
                 <table class="form-table">
                     <?php
                     if ( !empty( MclSettings::get_monitored_categories_serials() ) ) {

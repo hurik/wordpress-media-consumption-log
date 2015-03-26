@@ -72,6 +72,17 @@ class MclQuickPost {
         // Get the data
         $data = MclData::get_data();
 
+        if ( empty( $data->categories ) ) {
+            ?>
+            <div class="wrap">
+                <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
+
+                <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
+            </div>
+            <?php
+            return;
+        }
+
         // Create categories navigation
         $cat_nav_html = "";
 
@@ -80,17 +91,18 @@ class MclQuickPost {
                 continue;
             }
 
-            if ( $category->mcl_tags_count_ongoing == 0 ) {
-                continue;
-            }
-
             $cat_nav_html .= "\n  <tr>"
                     . "\n    <th nowrap valign=\"top\"><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></th>"
                     . "\n    <td>";
-            foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-                $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-                if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
-                    $cat_nav_html .= " | ";
+
+            if ( $category->mcl_tags_count_ongoing == 0 ) {
+                $cat_nav_html .= "-";
+            } else {
+                foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
+                    $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+                    if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+                        $cat_nav_html .= " | ";
+                    }
                 }
             }
 
@@ -98,27 +110,29 @@ class MclQuickPost {
                     . "\n  </tr>";
         }
 
-        $cat_nav_html .= "\n  <tr>"
-                . "\n    <th nowrap valign=\"top\">" . __( 'Non serials', 'media-consumption-log' ) . "</th>"
-                . "\n    <td>";
+        if ( !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
+            $cat_nav_html .= "\n  <tr>"
+                    . "\n    <th nowrap valign=\"top\">" . __( 'Non serials', 'media-consumption-log' ) . "</th>"
+                    . "\n    <td>";
 
-        foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
-                continue;
+            foreach ( $data->categories as $category ) {
+                if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
+                    continue;
+                }
+
+                $last_non_serials = $category->term_id;
             }
 
-            $last_non_serials = $category->term_id;
-        }
 
+            foreach ( $data->categories as $category ) {
+                if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
+                    continue;
+                }
 
-        foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
-                continue;
-            }
-
-            $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
-            if ( $category->term_id != $last_non_serials ) {
-                $cat_nav_html .= " | ";
+                $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
+                if ( $category->term_id != $last_non_serials ) {
+                    $cat_nav_html .= " | ";
+                }
             }
         }
 
@@ -130,10 +144,6 @@ class MclQuickPost {
         // Create the tables
         foreach ( $data->categories as $category ) {
             if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
-                continue;
-            }
-
-            if ( $category->mcl_tags_count_ongoing == 0 ) {
                 continue;
             }
 
@@ -150,6 +160,10 @@ class MclQuickPost {
                     . "\n  </tr>"
                     . "\n</table>"
                     . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
+
+            if ( $category->mcl_tags_count_ongoing == 0 ) {
+                continue;
+            }
 
             // Create the navigation
             $cats_html .= "\n<div>";
@@ -333,7 +347,7 @@ class MclQuickPost {
                 ?>
             </table>
 
-        <?php echo $cats_html; ?>
+            <?php echo $cats_html; ?>
 
             <div id="mcl_loading"></div><div class="back-to-top">^</div>
         </div>

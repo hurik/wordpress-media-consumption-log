@@ -122,7 +122,7 @@ class MclData {
 
         // Get the categories
         if ( !empty( MclSettings::get_monitored_categories_serials() ) || !empty( MclSettings::get_monitored_categories_non_serials() ) ) {
-            $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
+            $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
         } else {
             $categories = array();
         }
@@ -158,6 +158,10 @@ class MclData {
         $tags_count_ongoing = 0;
         $tags_count_complete = 0;
 
+        $cat_serial_ongoing = false;
+        $cat_serial_complete = false;
+        $cat_non_serial = false;
+
         $data->categories = array();
 
         foreach ( $categories as $wp_category ) {
@@ -181,6 +185,18 @@ class MclData {
             $consumption_average += $category->mcl_consumption_average;
 
             $data->categories[] = $category;
+
+            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+                $cat_serial_ongoing = true;
+            }
+
+            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
+                $cat_serial_ongoing = true;
+            }
+
+            if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+                $cat_non_serial = true;
+            }
         }
 
         $data->consumption_total = $consumption_total;
@@ -189,6 +205,10 @@ class MclData {
         $data->tags_count_ongoing = $tags_count_ongoing;
         $data->tags_count_complete = $tags_count_complete;
         $data->tags_count_total = $tags_count_ongoing + $tags_count_complete;
+
+        $data->cat_serial_ongoing = $cat_serial_ongoing;
+        $data->cat_serial_complete = $cat_serial_complete;
+        $data->cat_non_serial = $cat_non_serial;
 
         return $data;
     }
