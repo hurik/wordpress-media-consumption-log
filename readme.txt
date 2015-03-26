@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
 Tested up to: 4.1.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -13,13 +13,14 @@ This plugin helps you to keep track of the tv shows, movies, books, comics, game
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
 
-*This plugin uses categories and tags to track the serials. So please read the full description to learn how to use it.*
+**This plugin uses categories and tags to track the serials. So please read the full description to learn how to use it.**
 
 There are two kind of tracked categories:
-* *Serials* are for tv shows and other things which have more than one part.
-* *Non serials* are for games or books which have only one part.
 
-Serials are seperated by the tag.
+* **Serials** are for tv shows and other things which have more than one part.
+* **Non serials** are for games or books which have only one part.
+
+Serials are separated by the tag.
 
 = Status =
 The status page shows a list of all the the serials and non serials. Serials are separated in running and complete serials. Running serials also show the last consumed part.
@@ -28,6 +29,7 @@ To create a status page make a new site and add the shortcode "[mcl]" to it.
 
 = Statistics =
 Contains the following statistics:
+
 * Daily consumption
 * Monthly consumption
 * Total consumption
@@ -53,6 +55,7 @@ Here you can change the options of the plugin.
 
 = How to use? =
 Here is an example how to use this plugin:
+
 1. Create the category "TV Shows".
 2. Add the created category in the Site Admin -> MCL -> Settings -> Monitored categories -> Series (You must enter the ID of the category).
 3. Create a new post in this category, with the title "Boston Legal - Episode S01E01" and the tag "Boston Legal".
@@ -63,10 +66,10 @@ The post title must contains the following parts:
 
 Boston Legal - Episode S01E01
 
-* *Name*: "Boston Legal", should be the same as the tag.
-* *Separator*: "-", can be changed in the MCL Settings.
-* *Status unit*: Episode
-* *Status*: S01E01
+* **Name**: "Boston Legal", should be the same as the tag.
+* **Separator**: "-", can be changed in the MCL Settings.
+* **Status unit**: "Episode"
+* **Status**: "S01E01"
 
 In Quick Post you also can create a new serial. For each category at the beginning there are two text fields. Title and Text. When you set the title "Dexter - S01E01" and publish it a new post is created with the set title, "Dexter" will be set as tag and the category will also be set.
  
@@ -74,6 +77,7 @@ In Quick Post you also can create a new serial. For each category at the beginni
 When a post is created in a monitored category, the custom field "mcl_number" is added. You can set the mcl_number manually or it is set automatically for you.
 
 Here some examples how the automatically setting works:
+
 * Boston Legal - Episode S01E01 -> mcl_number set to 1
 * Boston Legal - Episode S01E01 and S01E02 -> mcl_number set to 2, because of the "and" keyword
 * Boston Legal - Episode S01E01 to S01E05 -> mcl_number set to 5, calculated because of the "to" keyword
@@ -92,9 +96,9 @@ The plugin also support comma in tags. When you create a new tag with a comma, r
 
 You can install this plugin directly from your WordPress dashboard:
 
-1. Go to the *Plugins* menu and click *Add New*.
-2. Search for *Media Consumption Log*.
-3. Click *Install Now* next to the Media Consumption Log plugin.
+1. Go to the **Plugins** menu and click **Add New**.
+2. Search for **Media Consumption Log**.
+3. Click **Install Now** next to the Media Consumption Log plugin.
 4. Activate the plugin.
 
 Alternatively, see the guide to [Manually Installing Plugins](https://codex.wordpress.org/Managing_Plugins#Manual_Plugin_Installation).
@@ -121,6 +125,9 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed readme.txt
 
 = 1.0.0 =
 * First release
