@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-03-24 11:25:52+0000\n"
+"PO-Revision-Date: 2015-03-26 02:31:05+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,161 +23,163 @@ msgstr ""
 #: admin/MclComplete.php:47
 #: admin/MclData.php:43
 #: admin/MclQuickPost.php:59
-#: admin/MclUnits.php:46
+#: admin/MclUnits.php:48
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #: MclHooks.php:44
 #: admin/MclAdminHooks.php:46
-#: admin/MclQuickPost.php:324
+#: admin/MclQuickPost.php:78
+#: admin/MclQuickPost.php:338
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
 
-#: MclStatistics.php:304
-#: MclStatus.php:70
-#: MclStatus.php:192
+#: MclStatistics.php:310
+#: MclStatus.php:78
+#: MclStatus.php:204
 #: admin/MclAdminHooks.php:47
-#: admin/MclComplete.php:92
-#: admin/MclComplete.php:177
-#: admin/MclComplete.php:313
+#: admin/MclComplete.php:61
+#: admin/MclComplete.php:103
+#: admin/MclComplete.php:188
+#: admin/MclComplete.php:324
 #@ media-consumption-log
 msgid "Complete"
 msgstr "Komplett"
 
 #: admin/MclAdminHooks.php:50
-#: admin/MclSettings.php:179
+#: admin/MclSettings.php:183
 #@ media-consumption-log
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: admin/MclSettings.php:203
+#: admin/MclSettings.php:207
 #@ media-consumption-log
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: admin/MclSettings.php:206
+#: admin/MclSettings.php:210
 #@ media-consumption-log
 msgid "Daily statistics size"
 msgstr "Größe der täglichen Statistik"
 
-#: admin/MclSettings.php:212
+#: admin/MclSettings.php:216
 #@ media-consumption-log
 msgid "Daily date format"
 msgstr "Zeitformat der täglichen Statistik"
 
-#: admin/MclSettings.php:218
+#: admin/MclSettings.php:222
 #@ media-consumption-log
 msgid "Daily Google Charts Options"
 msgstr "Tägliche Google Charts Options"
 
-#: admin/MclSettings.php:220
+#: admin/MclSettings.php:224
 #@ media-consumption-log
 msgid "When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die täglichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: admin/MclSettings.php:225
+#: admin/MclSettings.php:229
 #@ media-consumption-log
 msgid "Monthly statistics size"
 msgstr "Größe der monatlichen Statistik"
 
-#: admin/MclSettings.php:231
+#: admin/MclSettings.php:235
 #@ media-consumption-log
 msgid "Monthly date format"
 msgstr "Zeitformat der monatlichen Statistik"
 
-#: admin/MclSettings.php:237
+#: admin/MclSettings.php:241
 #@ media-consumption-log
 msgid "Monthly Google Charts Options"
 msgstr "Monatliche Google Charts Options"
 
-#: admin/MclSettings.php:239
+#: admin/MclSettings.php:243
 #@ media-consumption-log
 msgid "When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Default:<br />"
 msgstr "Wenn die monatlichen Statistiken sehr groß werden, kann es nötig werden die Google Charts Options zu ändern. Schaut euch die Dokumentation für mehr Informationen an: <a href=\"https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars\">Google Charts - Stacked Bar Charts</a><br />Voreinstellung:<br />"
 
-#: admin/MclSettings.php:244
+#: admin/MclSettings.php:248
 #@ media-consumption-log
 msgid "Other settings"
 msgstr "Andere Einstellungen"
 
-#: admin/MclSettings.php:245
+#: admin/MclSettings.php:249
 #@ media-consumption-log
 msgid "<strong>Attention:</strong> This settings should be changed after using the plugin for some time! This should only been altered after the installation."
 msgstr "<strong>Achtung:</strong> Diese Einstellungen sollten nicht mehr geändert werden, wenn das Plugin eine längere Zeit genutzt wurde. Diese Einstellungen sollten nur nach der Installation eingestellt werden."
 
-#: admin/MclSettings.php:249
+#: admin/MclSettings.php:253
 #@ media-consumption-log
 msgid "Separator"
 msgstr "Seperator"
 
-#: admin/MclSettings.php:255
+#: admin/MclSettings.php:259
 #@ media-consumption-log
 msgid "mcl_number \"and\""
 msgstr "mcl_number \"und\""
 
-#: admin/MclSettings.php:261
+#: admin/MclSettings.php:265
 #@ media-consumption-log
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
 
-#: MclStatistics.php:211
-#: MclStatistics.php:220
+#: MclStatistics.php:217
+#: MclStatistics.php:226
 #@ media-consumption-log
 msgid "Daily consumption"
 msgstr "Täglicher Konsum"
 
-#: MclStatistics.php:212
-#: MclStatistics.php:224
+#: MclStatistics.php:218
+#: MclStatistics.php:230
 #@ media-consumption-log
 msgid "Monthly consumption"
 msgstr "Monatlicher Konsum"
 
-#: MclStatistics.php:214
-#: MclStatistics.php:260
+#: MclStatistics.php:220
+#: MclStatistics.php:266
 #@ media-consumption-log
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: MclStatistics.php:215
-#: MclStatistics.php:293
+#: MclStatistics.php:221
+#: MclStatistics.php:299
 #@ media-consumption-log
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: MclStatistics.php:236
-#: MclStatistics.php:268
-#: MclStatistics.php:302
+#: MclStatistics.php:242
+#: MclStatistics.php:274
+#: MclStatistics.php:308
 #@ media-consumption-log
 msgid "Category"
 msgstr "Kategorie"
 
-#: MclStatistics.php:283
+#: MclStatistics.php:289
 #, php-format
 #@ media-consumption-log
 msgid "Average a day, since the first post on the %DATE%."
 msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:303
-#: MclStatus.php:54
-#: MclStatus.php:136
-#: admin/MclComplete.php:76
-#: admin/MclComplete.php:123
+#: MclStatistics.php:309
+#: MclStatus.php:62
+#: MclStatus.php:148
+#: admin/MclComplete.php:87
+#: admin/MclComplete.php:134
 #@ media-consumption-log
 msgid "Running"
 msgstr "Laufend"
 
-#: MclStatus.php:159
-#: MclStatus.php:214
-#: MclStatus.php:278
-#: admin/MclComplete.php:147
-#: admin/MclComplete.php:200
+#: MclStatus.php:171
+#: MclStatus.php:226
+#: MclStatus.php:292
+#: admin/MclComplete.php:158
+#: admin/MclComplete.php:211
 #@ media-consumption-log
 msgid "Name"
 msgstr "Name"
 
-#: MclStatus.php:160
+#: MclStatus.php:172
 #@ media-consumption-log
 msgid "Last"
 msgstr "Letzte(s)"
@@ -212,43 +214,37 @@ msgstr ""
 msgid "1.0.0"
 msgstr ""
 
-#: admin/MclComplete.php:146
-#: admin/MclComplete.php:199
+#: admin/MclComplete.php:157
+#: admin/MclComplete.php:210
 #@ media-consumption-log
 msgid "Change state"
 msgstr "Status ändern"
 
-#: admin/MclComplete.php:159
-#: admin/MclComplete.php:166
-#: admin/MclComplete.php:212
-#: admin/MclComplete.php:219
+#: admin/MclComplete.php:170
+#: admin/MclComplete.php:177
+#: admin/MclComplete.php:223
+#: admin/MclComplete.php:230
 #@ media-consumption-log
 msgid "Change!"
 msgstr "Ändern!"
 
-#: MclStatistics.php:253
-#: MclStatistics.php:286
-#: MclStatistics.php:305
-#: MclStatistics.php:334
+#: MclStatistics.php:259
+#: MclStatistics.php:292
+#: MclStatistics.php:311
+#: MclStatistics.php:340
 #@ media-consumption-log
 msgid "Total"
 msgstr "Insgesamt"
 
-#: admin/MclQuickPost.php:174
+#: admin/MclQuickPost.php:188
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: admin/MclQuickPost.php:175
+#: admin/MclQuickPost.php:189
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
-
-#. translators: plugin header field 'Description'
-#: media-consumption-log.php:0
-#@ media-consumption-log
-msgid "This plugin helps you to keep track of the series, movies, mangas, comics you are reading."
-msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Mangas, Comics die die schaust."
 
 #: admin/MclSettings.php:53
 #: helpers/MclHelper.php:41
@@ -261,43 +257,38 @@ msgstr "und"
 msgid "to"
 msgstr "bis"
 
-#: MclStatistics.php:213
-#: MclStatistics.php:228
+#: MclStatistics.php:219
+#: MclStatistics.php:234
 #@ media-consumption-log
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: MclStatistics.php:250
+#: MclStatistics.php:256
 #, php-format
 #@ media-consumption-log
 msgid "Total comsumption, since the first post on the %DATE%."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE%."
 
-#: MclStatistics.php:237
-#: MclStatistics.php:270
+#: MclStatistics.php:243
+#: MclStatistics.php:276
 #@ media-consumption-log
 msgid "Unit"
 msgstr "Einheit"
 
-#: admin/MclUnits.php:57
-#@ media-consumption-log
-msgid "Please define the units of the categories."
-msgstr "Bitte definiere die Einheiten der Kategorien."
-
-#: MclStatistics.php:330
+#: MclStatistics.php:336
 #, php-format
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%."
 msgstr "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE%."
 
 #: admin/MclAdminHooks.php:48
-#: admin/MclUnits.php:50
-#: admin/MclUnits.php:56
+#: admin/MclUnits.php:52
+#: admin/MclUnits.php:58
 #@ media-consumption-log
 msgid "Units"
 msgstr "Einheiten"
 
-#: admin/MclSettings.php:198
+#: admin/MclSettings.php:202
 #@ media-consumption-log
 msgid "IDs of the categories:"
 msgstr "IDs der Kategorien:"
@@ -312,27 +303,27 @@ msgstr "j.m.Y"
 msgid "Y-m"
 msgstr "n.Y"
 
-#: admin/MclSettings.php:214
+#: admin/MclSettings.php:218
 #@ media-consumption-log
 msgid "Format for dates on the daily statistics page. Default:"
 msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:233
+#: admin/MclSettings.php:237
 #@ media-consumption-log
 msgid "Format for dates on the monthly statistics page. Default:"
 msgstr "Format der Zeitangabe der monatliche Statistik. Voreinstellung:"
 
-#: admin/MclSettings.php:251
+#: admin/MclSettings.php:255
 #@ media-consumption-log
 msgid "Define a seperator which separates the title from the episode/chapter number. Spaces are added on both side. Default:"
 msgstr "Separator der den Namen von der Episode/Kapitel/... trennt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: admin/MclSettings.php:257
+#: admin/MclSettings.php:261
 #@ media-consumption-log
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to 2. Spaces are added on both side. Default:"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number auf 2 gesetzt. Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: admin/MclSettings.php:263
+#: admin/MclSettings.php:267
 #@ media-consumption-log
 msgid "When the keyword is in the episode/chapter number the mcl_number will be set to last number - first number + 1. Spaces are added on both side. Default:"
 msgstr "Wenn das Schlüsselwort in der Episode/Kapitel/... Nummer vorkommt wird automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
@@ -353,48 +344,33 @@ msgstr "Datenbank abfragen"
 msgid "Execution time"
 msgstr "Ausführungszeit"
 
-#: admin/MclQuickPost.php:190
-#: admin/MclQuickPost.php:197
+#: admin/MclQuickPost.php:204
+#: admin/MclQuickPost.php:211
 #@ media-consumption-log
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
 
-#: MclStatus.php:36
-#: MclStatus.php:120
-#: admin/MclSettings.php:188
-#@ media-consumption-log
-msgid "Series"
-msgstr "Serien"
-
-#: MclStatus.php:86
-#: MclStatus.php:242
-#: admin/MclQuickPost.php:102
-#: admin/MclSettings.php:193
-#@ media-consumption-log
-msgid "Non series"
-msgstr "Keine Serien"
-
-#: admin/MclSettings.php:185
+#: admin/MclSettings.php:189
 #@ media-consumption-log
 msgid "Monitored categories"
 msgstr "Überwachte Kategorien"
 
-#: admin/MclSettings.php:190
+#: admin/MclSettings.php:194
 #@ media-consumption-log
 msgid "IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204"
 msgstr "IDs der Kategorien die Folgen oder Kapitel haben. Diese Kategorien erscheinen in den Statistiken, Status, Schnelles Erstellen und Komplett. Beispiel: 2,4,43,50,187,204"
 
-#: admin/MclSettings.php:195
+#: admin/MclSettings.php:199
 #@ media-consumption-log
 msgid "IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284"
 msgstr "IDs der Kategorien erscheinen in den Statistiken und Status, aber nicht in Schnelles Erstellen und Komplett. Beispiel: 45,75,284"
 
-#: admin/MclSettings.php:208
+#: admin/MclSettings.php:212
 #@ media-consumption-log
 msgid "Please insert number of days the daily statistic should cover. If you insert 0 the days since the first post will be covered. <strong>Attention:</strong> The graph can get really big! Default:"
 msgstr "Anzahl der Tage für die tägliche Statistik. Wenn eine 0 eingetragen wird, werden die Tage seit dem ersten Beitrag abgedeckt.<strong>Achtung:</strong> Die Statistik kann sehr groß werden! Voreinstellung:"
 
-#: admin/MclSettings.php:227
+#: admin/MclSettings.php:231
 #@ media-consumption-log
 msgid "Please insert number of months the statistic should cover. If you insert 0 the months since the first post will be covered. Default:"
 msgstr "Anzahl der Monate für die monatliche Statistik. Wenn eine 0 eingetragen wird, werden die Monate seit dem ersten Beitrag abgedeckt. Voreinstellung:"
@@ -406,7 +382,7 @@ msgid "Data"
 msgstr "Daten"
 
 #: admin/MclData.php:65
-#: admin/MclData.php:85
+#: admin/MclData.php:86
 #@ media-consumption-log
 msgid "Now!"
 msgstr "Jetzt!"
@@ -421,41 +397,80 @@ msgstr "Verwaiste Postmetas"
 msgid "Number of postmeta orphans"
 msgstr "Anzahl der verwaisten Postmetas"
 
-#: admin/MclData.php:84
+#: admin/MclData.php:85
 #@ media-consumption-log
 msgid "Remove"
 msgstr "Entfernen"
 
-#: admin/MclData.php:97
+#: admin/MclData.php:99
 #@ media-consumption-log
 msgid "Posts"
 msgstr "Beiträge"
 
-#: admin/MclQuickPost.php:144
-#: admin/MclQuickPost.php:215
+#: admin/MclQuickPost.php:154
+#: admin/MclQuickPost.php:229
 #@ default
 msgid "Title"
 msgstr ""
 
-#: admin/MclQuickPost.php:148
-#: admin/MclQuickPost.php:219
+#: admin/MclQuickPost.php:158
+#: admin/MclQuickPost.php:233
 #@ default
 msgid "Text"
 msgstr ""
 
-#: admin/MclQuickPost.php:152
-#: admin/MclQuickPost.php:223
+#: admin/MclQuickPost.php:162
+#: admin/MclQuickPost.php:237
 #@ default
 msgid "Publish"
 msgstr ""
 
-#: admin/MclData.php:89
+#: admin/MclData.php:91
 #@ media-consumption-log
 msgid "Posts without mcl_number"
 msgstr "Beiträge ohne mcl_number"
 
-#: admin/MclData.php:92
+#: admin/MclData.php:94
 #@ media-consumption-log
 msgid "Number of posts without mcl_number"
 msgstr "Anzahl der Beiträge ohne mcl_number"
+
+#: MclStatistics.php:32
+#: MclStatus.php:30
+#: admin/MclComplete.php:63
+#: admin/MclQuickPost.php:80
+#@ media-consumption-log
+msgid "Nothing here yet!"
+msgstr "Nichts vorhanden im Moment!"
+
+#: MclStatus.php:44
+#: MclStatus.php:132
+#: admin/MclSettings.php:192
+#@ media-consumption-log
+msgid "Serials"
+msgstr "Serien"
+
+#: MclStatus.php:96
+#: MclStatus.php:256
+#: admin/MclQuickPost.php:115
+#: admin/MclSettings.php:197
+#@ media-consumption-log
+msgid "Non serials"
+msgstr "Keine Serien"
+
+#: admin/MclUnits.php:59
+#@ media-consumption-log
+msgid "Please define the units of the serial categories."
+msgstr "Bitte definiere die Einheiten der Serien Kategorien."
+
+#: admin/MclUnits.php:76
+#@ media-consumption-log
+msgid "No monitored serial category!"
+msgstr "Keine überwachte Serien Kategorie!"
+
+#. translators: plugin header field 'Description'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming."
+msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Bücher, Comics, Spiele und andere Dinge die du konsumierst."
 
