@@ -72,22 +72,22 @@ class MclStatus {
                     $html .= "</td>"
                             . "\n  </tr>";
                 }
-            }
 
-            if ( $category->mcl_tags_count_complete ) {
-                $html .= "\n  <tr>"
-                        . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
-                        . "\n    <td>";
+                if ( $category->mcl_tags_count_complete ) {
+                    $html .= "\n  <tr>"
+                            . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
+                            . "\n    <td>";
 
-                foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-                    $html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-                    if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
-                        $html .= " | ";
+                    foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
+                        $html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
+                        if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
+                            $html .= " | ";
+                        }
                     }
-                }
 
-                $html .= "</td>"
-                        . "\n  </tr>";
+                    $html .= "</td>"
+                            . "\n  </tr>";
+                }
             }
         }
 
