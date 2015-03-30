@@ -128,10 +128,10 @@ class MclComplete {
             }
 
             // Category header
-            $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} ({$category->mcl_tags_count})</h3><hr />";
+            $cats_html .= "\n\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />";
 
             if ( $category->mcl_tags_count_ongoing ) {
-                $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-ongoing\"></div><h4>" . __( 'Running', 'media-consumption-log' ) . " ({$category->mcl_tags_count_ongoing})</h4>";
+                $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-ongoing\"></div><h4>" . __( 'Running', 'media-consumption-log' ) . "</h4>";
 
                 // Create the navigation
                 $cats_html .= "\n<div>";
@@ -166,7 +166,7 @@ class MclComplete {
 
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div></th>"
+                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
                                     . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
@@ -185,7 +185,7 @@ class MclComplete {
             }
 
             if ( $category->mcl_tags_count_complete ) {
-                $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete\"></div><h4>" . __( 'Complete', 'media-consumption-log' ) . " ({$category->mcl_tags_count_complete})</h4>";
+                $cats_html .= "\n<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete\"></div><h4>" . __( 'Complete', 'media-consumption-log' ) . "</h4>";
 
                 // Create the navigation
                 $cats_html .= "\n<div>";
@@ -219,7 +219,7 @@ class MclComplete {
 
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key} (" . count( $category->mcl_tags_complete[$key] ) . ")</div></th>"
+                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
                                     . "\n    <td nowrap><a class=\"complete cursor_pointer\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
                                     . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
