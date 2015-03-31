@@ -161,7 +161,7 @@ class MclQuickPost {
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
 
             if ( $category->mcl_tags_count_ongoing == 0 ) {
                 continue;
@@ -203,14 +203,14 @@ class MclQuickPost {
                     if ( $first ) {
                         $cats_html .= "\n  <tr>"
                                 . "\n    <th nowrap rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                . "\n    <td><a class=\"quick-post cursor_pointer\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+                                . "\n    <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
                                 . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
 
                         $first = false;
                     } else {
                         $cats_html .= "\n  <tr>"
-                                . "\n    <td><a class=\"quick-post cursor_pointer\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+                                . "\n    <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
                                 . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                                 . "\n  </tr>";
                     }
@@ -236,7 +236,7 @@ class MclQuickPost {
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"button button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
         }
         ?>
         <style type="text/css">
@@ -250,7 +250,7 @@ class MclQuickPost {
                 div.anchor { display: block; position: relative; top: 0px; visibility: hidden; }
             }
 
-            .loading {
+            .mcl_css_loading {
                 position:   fixed;
                 z-index:    999999;
                 top:        0;
@@ -263,11 +263,11 @@ class MclQuickPost {
                     no-repeat;
             }
 
-            .cursor_pointer {
+            .mcl_css_quick_post {
                 cursor:     pointer;
             }
 
-            .back-to-top {
+            .mcl_css_back_to_top {
                 cursor:           pointer;
                 position:         fixed;
                 z-index:          99999;
@@ -279,7 +279,7 @@ class MclQuickPost {
                 display:          none;
             }
 
-            .back-to-top:hover {    
+            .mcl_css_back_to_top:hover {    
                 background-color: rgba( 51, 51, 51, 0.80 );
             }
         </style>
@@ -288,8 +288,8 @@ class MclQuickPost {
             jQuery(document).ready(function ($) {
                 $(this).scrollTop(0);
 
-                $(".quick-post").click(function () {
-                    $("#mcl_loading").addClass("loading");
+                $(".mcl_css_quick_post").click(function () {
+                    $("#mcl_loading").addClass("mcl_css_loading");
 
                     $.get("admin.php", {
                         page: "mcl-quick-post",
@@ -301,8 +301,8 @@ class MclQuickPost {
                     });
                 });
 
-                $(".button").click(function (e) {
-                    $("#mcl_loading").addClass("loading");
+                $(".mcl_quick_post_new_entry").click(function (e) {
+                    $("#mcl_loading").addClass("mcl_css_loading");
 
                     $.get("admin.php", {
                         page: "mcl-quick-post",
@@ -322,14 +322,14 @@ class MclQuickPost {
                     var position = $(window).scrollTop();
 
                     if (position > offset) {
-                        $(".back-to-top").fadeIn();
+                        $(".mcl_css_back_to_top").fadeIn();
                     } else {
-                        $(".back-to-top").fadeOut();
+                        $(".mcl_css_back_to_top").fadeOut();
                     }
                 });
 
 
-                $(".back-to-top").click(function () {
+                $(".mcl_css_back_to_top").click(function () {
                     $(window).scrollTop(0);
                     $(this).fadeOut();
                 })
@@ -351,7 +351,7 @@ class MclQuickPost {
 
             <?php echo $cats_html; ?>
 
-            <div id="mcl_loading"></div><div class="back-to-top">^</div>
+            <div id="mcl_loading"></div><div class="mcl_css_back_to_top">^</div>
         </div>
         <?php
     }
