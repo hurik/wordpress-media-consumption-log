@@ -33,6 +33,13 @@ class MclAdminHooks {
         add_action( 'before_delete_post', array( get_called_class(), 'before_delete_post' ) );
 
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
+
+        add_action( 'admin_head', array( get_called_class(), 'admin_css' ) );
+    }
+
+    public static function admin_css() {
+        $style_url = plugins_url() . '/media-consumption-log/css/mcl_admin.css';
+        echo "<link rel='stylesheet' type='text/css' href='" . $style_url . "' />\n";
     }
 
     public static function admin_init() {

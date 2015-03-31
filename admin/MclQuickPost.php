@@ -239,50 +239,6 @@ class MclQuickPost {
                     . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
         }
         ?>
-        <style type="text/css">
-            div.anchor { display: block; position: relative; top: -32px; visibility: hidden; }
-
-            @media screen and (max-width:782px) {
-                div.anchor { display: block; position: relative; top: -46px; visibility: hidden; }
-            }
-
-            @media screen and (max-width:600px) {
-                div.anchor { display: block; position: relative; top: 0px; visibility: hidden; }
-            }
-
-            .mcl_css_loading {
-                position:   fixed;
-                z-index:    999999;
-                top:        0;
-                left:       0;
-                height:     100%;
-                width:      100%;
-                background: rgba( 255, 255, 255, .8 ) 
-                    url('<?php echo plugins_url() . "/media-consumption-log/admin/images/loading.gif"; ?>') 
-                    50% 50% 
-                    no-repeat;
-            }
-
-            .mcl_css_quick_post {
-                cursor:     pointer;
-            }
-
-            .mcl_css_back_to_top {
-                cursor:           pointer;
-                position:         fixed;
-                z-index:          99999;
-                bottom:           1em;
-                right:            1em;
-                color:            #FFFFFF;
-                background-color: rgba( 51, 51, 51, 0.50 );
-                padding:          1em;
-                display:          none;
-            }
-
-            .mcl_css_back_to_top:hover {    
-                background-color: rgba( 51, 51, 51, 0.80 );
-            }
-        </style>
 
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
