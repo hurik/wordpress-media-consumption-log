@@ -149,13 +149,11 @@ class MclComplete {
                 $cats_html .= "\n<table class=\"widefat\">"
                         . "\n  <colgroup>"
                         . "\n    <col width=\"1%\">"
-                        . "\n    <col width=\"1%\">"
-                        . "\n    <col width=\"98%\">"
+                        . "\n    <col width=\"99%\">"
                         . "\n  </colgroup>"
                         . "\n  <tr>"
                         . "\n    <th></th>"
                         . "\n    <th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n    <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
                         . "\n  </tr>";
 
                 foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
@@ -167,15 +165,13 @@ class MclComplete {
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
                                     . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
                         }
                     }
@@ -202,13 +198,11 @@ class MclComplete {
                 $cats_html .= "\n<table class=\"widefat\">"
                         . "\n  <colgroup>"
                         . "\n    <col width=\"1%\">"
-                        . "\n    <col width=\"1%\">"
-                        . "\n    <col width=\"98%\">"
+                        . "\n    <col width=\"99%\">"
                         . "\n  </colgroup>"
                         . "\n  <tr>"
                         . "\n    <th></th>"
                         . "\n    <th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n    <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
                         . "\n  </tr>";
 
                 foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
@@ -220,15 +214,13 @@ class MclComplete {
                         if ( $first ) {
                             $cats_html .= "\n  <tr>"
                                     . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
 
                             $first = false;
                         } else {
                             $cats_html .= "\n  <tr>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Change!', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$tag_title}</a></td>"
                                     . "\n  </tr>";
                         }
                     }

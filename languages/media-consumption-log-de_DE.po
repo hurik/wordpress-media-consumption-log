@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-03-31 11:59:18+0000\n"
+"PO-Revision-Date: 2015-03-31 12:46:30+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,8 +42,8 @@ msgstr "Schnelles Erstellen"
 #: admin/MclAdminHooks.php:47
 #: admin/MclComplete.php:61
 #: admin/MclComplete.php:103
-#: admin/MclComplete.php:188
-#: admin/MclComplete.php:324
+#: admin/MclComplete.php:184
+#: admin/MclComplete.php:316
 #@ media-consumption-log
 msgid "Complete"
 msgstr "Komplett"
@@ -173,8 +173,6 @@ msgstr "Laufend"
 #: MclStatus.php:171
 #: MclStatus.php:226
 #: MclStatus.php:292
-#: admin/MclComplete.php:158
-#: admin/MclComplete.php:211
 #@ media-consumption-log
 msgid "Name"
 msgstr "Name"
@@ -208,19 +206,11 @@ msgstr ""
 msgid "http://www.andreasgiemza.de"
 msgstr ""
 
-#: admin/MclComplete.php:157
-#: admin/MclComplete.php:210
+#: admin/MclComplete.php:156
+#: admin/MclComplete.php:205
 #@ media-consumption-log
 msgid "Change state"
 msgstr "Status ändern"
-
-#: admin/MclComplete.php:170
-#: admin/MclComplete.php:177
-#: admin/MclComplete.php:223
-#: admin/MclComplete.php:230
-#@ media-consumption-log
-msgid "Change!"
-msgstr "Ändern!"
 
 #: MclStatistics.php:259
 #: MclStatistics.php:292
