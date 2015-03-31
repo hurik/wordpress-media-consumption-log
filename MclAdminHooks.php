@@ -35,13 +35,6 @@ class MclAdminHooks {
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
 
         add_action( 'admin_enqueue_scripts', array( get_called_class(), 'admin_enqueue_scripts' ) );
-        add_action( 'admin_head', array( get_called_class(), 'admin_css_and_js' ) );
-    }
-
-    public static function admin_css_and_js() {
-        $css = plugins_url() . '/media-consumption-log/css/mcl_admin.css';
-
-        echo "<link rel='stylesheet' type='text/css' href='" . $css . "' />\n";
     }
 
     public static function admin_enqueue_scripts( $hook ) {
@@ -51,6 +44,8 @@ class MclAdminHooks {
 
         wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js' );
         wp_localize_script( 'mcl_admin_js', 'mcl_js_strings', array( 'title_empty_error' => __( 'Title can\'t be empty!', 'media-consumption-log' ) ) );
+
+        wp_enqueue_style( 'mcl_admin_css', plugin_dir_url( __FILE__ ) . 'css/mcl_admin.css' );
     }
 
     public static function admin_init() {
