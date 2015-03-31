@@ -98,14 +98,14 @@ class MclData {
                     <tr>
                         <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                         <td><?php
-                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                                    echo "<br />";
-                                }
-                            }
-                            ?></td>
+                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                            echo "<br />";
+                        }
+                    }
+                    ?></td>
                     </tr>   
                 <?php } ?>
             </table>
@@ -437,5 +437,3 @@ class MclData {
     }
 
 }
-
-?>

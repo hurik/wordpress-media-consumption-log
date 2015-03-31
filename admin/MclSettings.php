@@ -275,5 +275,3 @@ isStacked: true,";
     }
 
 }
-
-?>
