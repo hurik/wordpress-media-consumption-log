@@ -20,53 +20,51 @@
 
 class MclQuickPost {
 
-    private static function quick_post_next( $title, $tag_id, $cat_id ) {
-        $my_post = array(
-            'post_title' => urldecode( $title ),
-            'post_status' => 'publish',
-            'tags_input' => get_tag( $tag_id )->name,
-            'post_category' => array( $cat_id )
-        );
+    public static function post_next() {
+        if ( isset( $_POST["title"] ) && isset( $_POST["tag_id"] ) && isset( $_POST["cat_id"] ) ) {
+            $my_post = array(
+                'post_title' => urldecode( $_POST["title"] ),
+                'post_status' => 'publish',
+                'tags_input' => get_tag( $_POST["tag_id"] )->name,
+                'post_category' => array( $_POST["cat_id"] )
+            );
 
-        wp_insert_post( $my_post );
-    }
-
-    private static function quick_post_new_serials( $title, $text, $cat_id ) {
-        $title = urldecode( $title );
-
-        $tag = $title;
-
-        if ( in_array( $cat_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
-            $title_exploded = explode( MclSettings::get_other_separator(), $title );
-            $tag = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
+            wp_insert_post( $my_post );
         }
 
-        $tag = str_replace( ", ", "--", $tag );
+        wp_die();
+    }
 
-        $my_post = array(
-            'post_title' => $title,
-            'post_content' => urldecode( $text ),
-            'post_status' => 'publish',
-            'tags_input' => $tag,
-            'post_category' => array( $cat_id )
-        );
+    public static function post_new() {
+        if ( isset( $_POST["title"] ) && isset( $_POST["text"] ) && isset( $_POST["cat_id"] ) ) {
+            $title = urldecode( $_POST["title"] );
 
-        wp_insert_post( $my_post );
+            $tag = $title;
+
+            if ( MclHelper::is_monitored_serial_category( $_POST["cat_id"] ) ) {
+                $title_exploded = explode( MclSettings::get_other_separator(), $title );
+                $tag = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
+            }
+
+            $tag = str_replace( ", ", "--", $tag );
+
+            $my_post = array(
+                'post_title' => $title,
+                'post_content' => urldecode( $_POST["text"] ),
+                'post_status' => 'publish',
+                'tags_input' => $tag,
+                'post_category' => array( $_POST["cat_id"] )
+            );
+
+            wp_insert_post( $my_post );
+        }
+
+        wp_die();
     }
 
     public static function create_page() {
         if ( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-        }
-
-        if ( isset( $_GET["title"] ) && isset( $_GET["tag_id"] ) && isset( $_GET["cat_id"] ) ) {
-            self::quick_post_next( $_GET["title"], $_GET["tag_id"], $_GET["cat_id"] );
-            return;
-        }
-
-        if ( isset( $_GET["title"] ) && isset( $_GET["text"] ) && isset( $_GET["cat_id"] ) ) {
-            self::quick_post_new_serials( $_GET["title"], $_GET["text"], $_GET["cat_id"] );
-            return;
         }
 
         // Get the data

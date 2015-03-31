@@ -35,6 +35,10 @@ class MclAdminHooks {
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
 
         add_action( 'admin_enqueue_scripts', array( get_called_class(), 'admin_enqueue_scripts' ) );
+
+        add_action( 'wp_ajax_mcl_complete', array( 'MclComplete', 'change_complete_status' ) );
+        add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
+        add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
     }
 
     public static function admin_enqueue_scripts( $hook ) {

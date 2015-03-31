@@ -20,36 +20,35 @@
 
 class MclComplete {
 
-    private static function change_complete_status( $tag_id, $cat_id, $complete ) {
+    public static function change_complete_status() {
         global $wpdb;
 
-        if ( !empty( $complete ) ) {
-            $wpdb->get_results( "
-            INSERT INTO {$wpdb->prefix}mcl_complete
-            SET tag_id = '{$tag_id}',
-                cat_id = '{$cat_id}',
-                complete = '1'
-        " );
-        } else {
-            $wpdb->get_results( "
-            DELETE
-            FROM {$wpdb->prefix}mcl_complete
-            WHERE tag_id = '{$tag_id}'
-              AND cat_id = '{$cat_id}'
-        " );
+        if ( isset( $_POST["tag_id"] ) && isset( $_POST["cat_id"] ) && isset( $_POST["complete"] ) ) {
+            if ( !empty( $_POST["complete"] ) ) {
+                $wpdb->get_results( "
+                    INSERT INTO {$wpdb->prefix}mcl_complete
+                    SET tag_id = '{$_POST["tag_id"]}',
+                        cat_id = '{$_POST["cat_id"]}',
+                        complete = '1'
+                " );
+            } else {
+                $wpdb->get_results( "
+                    DELETE
+                    FROM {$wpdb->prefix}mcl_complete
+                    WHERE tag_id = '{$_POST["tag_id"]}'
+                      AND cat_id = '{$_POST["cat_id"]}'
+                " );
+            }
+
+            MclData::update_data();
         }
 
-        MclData::update_data();
+        wp_die();
     }
 
     public static function create_page() {
         if ( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-        }
-
-        if ( isset( $_GET["tag_id"] ) && isset( $_GET["cat_id"] ) && isset( $_GET["complete"] ) ) {
-            self::change_complete_status( $_GET["tag_id"], $_GET["cat_id"], $_GET["complete"] );
-            return;
         }
 
         // Get the data

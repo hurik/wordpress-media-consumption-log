@@ -22,12 +22,14 @@ jQuery(document).ready(function ($) {
     $(".mcl_css_quick_post").click(function () {
         $("#mcl_loading").addClass("mcl_css_loading");
 
-        $.get("admin.php", {
-            page: "mcl-quick-post",
-            title: $(this).attr("headline"),
-            tag_id: $(this).attr("tag-id"),
-            cat_id: $(this).attr("cat-id")}
-        ).done(function () {
+        var data = {
+            'action': 'mcl_quick_post_next',
+            'title': $(this).attr("headline"),
+            'tag_id': $(this).attr("tag-id"),
+            'cat_id': $(this).attr("cat-id")
+        };
+
+        $.post(ajaxurl, data, function () {
             location.reload();
         });
     });
@@ -40,12 +42,14 @@ jQuery(document).ready(function ($) {
 
         $("#mcl_loading").addClass("mcl_css_loading");
 
-        $.get("admin.php", {
-            page: "mcl-quick-post",
-            title: encodeURIComponent($("#" + e.currentTarget.id + "-titel").val()),
-            text: encodeURIComponent($("#" + e.currentTarget.id + "-text").val()),
-            cat_id: e.currentTarget.id}
-        ).done(function () {
+        var data = {
+            'action': 'mcl_quick_post_new',
+            'title': encodeURIComponent($("#" + e.currentTarget.id + "-titel").val()),
+            'cat_id': e.currentTarget.id,
+            'text': encodeURIComponent($("#" + e.currentTarget.id + "-text").val())
+        };
+
+        $.post(ajaxurl, data, function () {
             $("#" + e.currentTarget.id + "-titel").val("");
             $("#" + e.currentTarget.id + "-text").val("");
             location.reload();
@@ -55,12 +59,14 @@ jQuery(document).ready(function ($) {
     $(".mcl_css_complete").click(function () {
         $("#mcl_loading").addClass("mcl_css_loading");
 
-        $.get("admin.php", {
-            page: "mcl-complete",
-            tag_id: $(this).attr("tag-id"),
-            cat_id: $(this).attr("cat-id"),
-            complete: $(this).attr("set-to")}
-        ).done(function () {
+        var data = {
+            'action': 'mcl_complete',
+            'tag_id': $(this).attr("tag-id"),
+            'cat_id': $(this).attr("cat-id"),
+            'complete': $(this).attr("set-to")
+        };
+
+        $.post(ajaxurl, data, function () {
             location.reload();
         });
     });
