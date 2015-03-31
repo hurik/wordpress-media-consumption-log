@@ -85,7 +85,7 @@ class MclQuickPost {
         $cat_nav_html = "";
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
+            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -116,7 +116,7 @@ class MclQuickPost {
                     . "\n    <td>";
 
             foreach ( $data->categories as $category ) {
-                if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
+                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -125,7 +125,7 @@ class MclQuickPost {
 
 
             foreach ( $data->categories as $category ) {
-                if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
+                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -143,7 +143,7 @@ class MclQuickPost {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_serials() ) ) ) {
+            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -219,7 +219,7 @@ class MclQuickPost {
         }
 
         foreach ( $data->categories as $category ) {
-            if ( !in_array( $category->term_id, explode( ",", MclSettings::get_monitored_categories_non_serials() ) ) ) {
+            if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
                 continue;
             }
 
