@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Media Consumption Log v1.0.0\n"
+"Project-Id-Version: Media Consumption Log v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-03-26 02:31:05+0000\n"
+"PO-Revision-Date: 2015-03-31 11:59:18+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,16 +22,16 @@ msgstr ""
 
 #: admin/MclComplete.php:47
 #: admin/MclData.php:43
-#: admin/MclQuickPost.php:59
-#: admin/MclUnits.php:48
+#: admin/MclQuickPost.php:58
+#: admin/MclUnits.php:49
 #@ default
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #: MclHooks.php:44
 #: admin/MclAdminHooks.php:46
-#: admin/MclQuickPost.php:78
-#: admin/MclQuickPost.php:338
+#: admin/MclQuickPost.php:77
+#: admin/MclQuickPost.php:344
 #@ media-consumption-log
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
@@ -208,12 +208,6 @@ msgstr ""
 msgid "http://www.andreasgiemza.de"
 msgstr ""
 
-#. translators: plugin header field 'Version'
-#: media-consumption-log.php:0
-#@ media-consumption-log
-msgid "1.0.0"
-msgstr ""
-
 #: admin/MclComplete.php:157
 #: admin/MclComplete.php:210
 #@ media-consumption-log
@@ -236,12 +230,12 @@ msgstr "Ändern!"
 msgid "Total"
 msgstr "Insgesamt"
 
-#: admin/MclQuickPost.php:188
+#: admin/MclQuickPost.php:189
 #@ media-consumption-log
 msgid "Next Post"
 msgstr "Nächster Beitrag"
 
-#: admin/MclQuickPost.php:189
+#: admin/MclQuickPost.php:190
 #@ media-consumption-log
 msgid "Last Post"
 msgstr "Letzter Beitrag"
@@ -282,8 +276,8 @@ msgid "Total count of different %CATEGORIES%, since the first post on the %DATE%
 msgstr "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE%."
 
 #: admin/MclAdminHooks.php:48
-#: admin/MclUnits.php:52
-#: admin/MclUnits.php:58
+#: admin/MclUnits.php:53
+#: admin/MclUnits.php:59
 #@ media-consumption-log
 msgid "Units"
 msgstr "Einheiten"
@@ -344,8 +338,8 @@ msgstr "Datenbank abfragen"
 msgid "Execution time"
 msgstr "Ausführungszeit"
 
-#: admin/MclQuickPost.php:204
-#: admin/MclQuickPost.php:211
+#: admin/MclQuickPost.php:205
+#: admin/MclQuickPost.php:212
 #@ media-consumption-log
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
@@ -407,20 +401,20 @@ msgstr "Entfernen"
 msgid "Posts"
 msgstr "Beiträge"
 
-#: admin/MclQuickPost.php:154
-#: admin/MclQuickPost.php:229
+#: admin/MclQuickPost.php:155
+#: admin/MclQuickPost.php:230
 #@ default
 msgid "Title"
 msgstr ""
 
-#: admin/MclQuickPost.php:158
-#: admin/MclQuickPost.php:233
+#: admin/MclQuickPost.php:159
+#: admin/MclQuickPost.php:234
 #@ default
 msgid "Text"
 msgstr ""
 
-#: admin/MclQuickPost.php:162
-#: admin/MclQuickPost.php:237
+#: admin/MclQuickPost.php:163
+#: admin/MclQuickPost.php:238
 #@ default
 msgid "Publish"
 msgstr ""
@@ -438,7 +432,7 @@ msgstr "Anzahl der Beiträge ohne mcl_number"
 #: MclStatistics.php:32
 #: MclStatus.php:30
 #: admin/MclComplete.php:63
-#: admin/MclQuickPost.php:80
+#: admin/MclQuickPost.php:79
 #@ media-consumption-log
 msgid "Nothing here yet!"
 msgstr "Nichts vorhanden im Moment!"
@@ -452,18 +446,18 @@ msgstr "Serien"
 
 #: MclStatus.php:96
 #: MclStatus.php:256
-#: admin/MclQuickPost.php:115
+#: admin/MclQuickPost.php:116
 #: admin/MclSettings.php:197
 #@ media-consumption-log
 msgid "Non serials"
 msgstr "Keine Serien"
 
-#: admin/MclUnits.php:59
+#: admin/MclUnits.php:60
 #@ media-consumption-log
 msgid "Please define the units of the serial categories."
 msgstr "Bitte definiere die Einheiten der Serien Kategorien."
 
-#: admin/MclUnits.php:76
+#: admin/MclUnits.php:79
 #@ media-consumption-log
 msgid "No monitored serial category!"
 msgstr "Keine überwachte Serien Kategorie!"
@@ -473,4 +467,15 @@ msgstr "Keine überwachte Serien Kategorie!"
 #@ media-consumption-log
 msgid "This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming."
 msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien, Filme, Bücher, Comics, Spiele und andere Dinge die du konsumierst."
+
+#: admin/MclQuickPost.php:305
+#@ media-consumption-log
+msgid "Title can't be empty!"
+msgstr "Titel muss ausgefüllt werden!"
+
+#. translators: plugin header field 'Version'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "1.0.1"
+msgstr ""
 

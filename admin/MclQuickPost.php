@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014 Andreas Giemza <andreas@giemza.net>
 
@@ -302,6 +301,11 @@ class MclQuickPost {
                 });
 
                 $(".mcl_quick_post_new_entry").click(function (e) {
+                    if (!$("#" + e.currentTarget.id + "-titel").val()) {
+                        alert("<?php _e( 'Title can\'t be empty!', 'media-consumption-log' ); ?>");
+                        return;
+                    }
+
                     $("#mcl_loading").addClass("mcl_css_loading");
 
                     $.get("admin.php", {
@@ -379,5 +383,4 @@ class MclQuickPost {
     }
 
 }
-
 ?>
