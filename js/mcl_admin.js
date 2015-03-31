@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 
     $(".mcl_quick_post_new_entry").click(function (e) {
         if (!$("#" + e.currentTarget.id + "-titel").val()) {
-            alert("<?php _e( 'Title can\'t be empty!', 'media-consumption-log' ); ?>");
+            alert(mcl_js_strings.title_empty_error);
             return;
         }
 
