@@ -231,43 +231,6 @@ class MclComplete {
         }
         ?>
 
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $(this).scrollTop(0);
-
-                $(".mcl_css_complete").click(function () {
-                    $("#mcl_loading").addClass("mcl_css_loading");
-
-                    $.get("admin.php", {
-                        page: "mcl-complete",
-                        tag_id: $(this).attr("tag-id"),
-                        cat_id: $(this).attr("cat-id"),
-                        complete: $(this).attr("set-to")}
-                    ).done(function () {
-                        location.reload();
-                    });
-                });
-
-                var offset = 200;
-
-                $(window).scroll(function () {
-                    var position = $(window).scrollTop();
-
-                    if (position > offset) {
-                        $(".mcl_css_back_to_top").fadeIn();
-                    } else {
-                        $(".mcl_css_back_to_top").fadeOut();
-                    }
-                });
-
-
-                $(".mcl_css_back_to_top").click(function () {
-                    $(window).scrollTop(0);
-                    $(this).fadeOut();
-                })
-            });
-        </script>
-
         <div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
 

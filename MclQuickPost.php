@@ -240,63 +240,6 @@ class MclQuickPost {
         }
         ?>
 
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $(this).scrollTop(0);
-
-                $(".mcl_css_quick_post").click(function () {
-                    $("#mcl_loading").addClass("mcl_css_loading");
-
-                    $.get("admin.php", {
-                        page: "mcl-quick-post",
-                        title: $(this).attr("headline"),
-                        tag_id: $(this).attr("tag-id"),
-                        cat_id: $(this).attr("cat-id")}
-                    ).done(function () {
-                        location.reload();
-                    });
-                });
-
-                $(".mcl_quick_post_new_entry").click(function (e) {
-                    if (!$("#" + e.currentTarget.id + "-titel").val()) {
-                        alert("<?php _e( 'Title can\'t be empty!', 'media-consumption-log' ); ?>");
-                        return;
-                    }
-
-                    $("#mcl_loading").addClass("mcl_css_loading");
-
-                    $.get("admin.php", {
-                        page: "mcl-quick-post",
-                        title: encodeURIComponent($("#" + e.currentTarget.id + "-titel").val()),
-                        text: encodeURIComponent($("#" + e.currentTarget.id + "-text").val()),
-                        cat_id: e.currentTarget.id}
-                    ).done(function () {
-                        $("#" + e.currentTarget.id + "-titel").val("");
-                        $("#" + e.currentTarget.id + "-text").val("");
-                        location.reload();
-                    });
-                });
-
-                var offset = 200;
-
-                $(window).scroll(function () {
-                    var position = $(window).scrollTop();
-
-                    if (position > offset) {
-                        $(".mcl_css_back_to_top").fadeIn();
-                    } else {
-                        $(".mcl_css_back_to_top").fadeOut();
-                    }
-                });
-
-
-                $(".mcl_css_back_to_top").click(function () {
-                    $(window).scrollTop(0);
-                    $(this).fadeOut();
-                })
-            });
-        </script>
-
         <div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
 
@@ -305,9 +248,7 @@ class MclQuickPost {
                     <col width="1%">
                     <col width="99%">
                 </colgroup>
-                <?php
-                echo $cat_nav_html;
-                ?>
+                <?php echo $cat_nav_html; ?>
             </table>
 
             <?php echo $cats_html; ?>
