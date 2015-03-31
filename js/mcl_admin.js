@@ -80,5 +80,5 @@ jQuery(document).ready(function ($) {
     $(".mcl_css_back_to_top").click(function () {
         $(window).scrollTop(0);
         $(this).fadeOut();
-    })
+    });
 });
