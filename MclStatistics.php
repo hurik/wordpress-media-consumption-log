@@ -253,8 +253,9 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total comsumption, since the first post on the %DATE%.', 'media-consumption-log' ) );
-
+        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total comsumption, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
+        $since_total_string = str_replace( '%DAYS%', $data->number_of_days, $since_count_string );
+        
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>{$data->consumption_total}</th>"
@@ -286,7 +287,8 @@ class MclStatistics {
                     . "\n  </tr>";
         }
 
-        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Average a day, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Average a day, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
+        $since_string = str_replace( '%DAYS%', $data->number_of_days, $since_string );
 
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
@@ -333,7 +335,8 @@ class MclStatistics {
 
         $categories_string = MclHelper::build_all_categories_string( $data->categories, false );
 
-        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE%.', 'media-consumption-log' ) );
+        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
+        $since_count_string = str_replace( '%DAYS%', $data->number_of_days, $since_count_string );
         $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
 
         $html .= "\n  <tr>"

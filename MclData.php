@@ -153,6 +153,7 @@ class MclData {
         // Get the number of days since first post
         $date_current = new DateTime( date( 'Y-m-d' ) );
         $number_of_days = $date_current->diff( $first_post_date )->format( "%a" ) + 1;
+        $data->number_of_days = $number_of_days;
 
         // Total consumption of category
         $consumption_total = 0;
