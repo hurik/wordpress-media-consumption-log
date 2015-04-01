@@ -27,7 +27,18 @@ class MclData {
             add_option( self::option_name, self::build_data(), null, 'no' );
         }
 
-        return get_option( self::option_name );
+        $data = get_option( self::option_name );
+
+        if ( $data->plugin_version != PLUGIN_VERSION ) {
+            // Build new data
+            $new_data = self::build_data();
+            // Save the new data
+            update_option( self::option_name, $new_data );
+            // Return the new data
+            return $new_data;
+        }
+
+        return $data;
     }
 
     public static function update_data() {
@@ -98,14 +109,14 @@ class MclData {
                     <tr>
                         <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                         <td><?php
-                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                            echo "<br />";
-                        }
-                    }
-                    ?></td>
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                            ?></td>
                     </tr>   
                 <?php } ?>
             </table>
@@ -119,6 +130,8 @@ class MclData {
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
         $data = new stdClass;
+
+        $data->plugin_version = PLUGIN_VERSION;
 
         // Get the categories
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();

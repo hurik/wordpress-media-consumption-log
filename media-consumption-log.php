@@ -30,6 +30,8 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+define('PLUGIN_VERSION', '1.0.2');
+
 require_once dirname( __FILE__ ) . '/MclAdminHooks.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
 require_once dirname( __FILE__ ) . '/MclComplete.php';
