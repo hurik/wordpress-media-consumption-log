@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
 Tested up to: 4.1.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -13,14 +13,14 @@ This plugin helps you to keep track of the tv shows, movies, books, comics, game
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
 
-**This plugin uses categories and tags to track the serials. So please read the full description to learn how to use it.**
+**This plugin uses categories and tags to track the serials and non serials. So please read the full description to learn how to use it.**
 
 There are two kind of tracked categories:
 
 * **Serials** are for tv shows and other things which have more than one part.
 * **Non serials** are for games or books which have only one part.
 
-Serials are separated by the tag.
+Serials and non serials are separated by the tag.
 
 = Status =
 The status page shows a list of all the the serials and non serials. Serials are separated in running and complete serials. Running serials also show the last consumed part.
@@ -57,8 +57,8 @@ Here you can change the options of the plugin.
 Here is an example how to use this plugin:
 
 1. Create the category "TV Shows".
-2. Add the created category in the Site Admin -> MCL -> Settings -> Monitored categories -> Series (You must enter the ID of the category).
-3. Create a new post in this category, with the title "Boston Legal - Episode S01E01" and the tag "Boston Legal".
+1. Add the created category in the Site Admin -> MCL -> Settings -> Monitored categories -> Series (You must enter the ID of the category).
+1. Create a new post in this category, with the title "Boston Legal - Episode S01E01" and the tag "Boston Legal".
 
 When you watched the second episode, you can go to the Site Admin -> MCL -> Quick Post and there you can see that their is an entry for Boston Legal. Also an link to post "Boston Legal - Episode S01E02". When you click it, it automatically creates an new empty post in the "TV Shows" category with the title "Boston Legal - Episode S01E02" and the tag "Boston Legal". When you want to add some text to the post you can click on "Edit before posting" and you are forwarded to the new post page where the title, tag and the category are already set.
 
@@ -125,6 +125,10 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 1.0.2 =
+* Simplified Quick Post and Complete
+* A lot of improvements in the background
 
 = 1.0.1 =
 * Fixed readme.txt
