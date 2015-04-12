@@ -9,6 +9,7 @@ License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
 
+
 == Description ==
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -44,6 +45,9 @@ In Quick post you can easily create a new post for a running serial. Check the s
 = Complete =
 Here you can set a serial as complete. Complete serials will not show up in Quick post and also will be separated on the status page.
 
+= Forgotten =
+Shows serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
+
 = Unit =
 Here you can set units for serial which will be used in the statistics.
 
@@ -71,7 +75,7 @@ Boston Legal - Episode S01E01
 * **Status unit**: "Episode"
 * **Status**: "S01E01"
 
-In Quick Post you also can create a new serial. For each category at the beginning there are two text fields. Title and Text. When you set the title "Dexter - S01E01" and publish it a new post is created with the set title, "Dexter" will be set as tag and the category will also be set.
+In Quick Post you also can create a new serial. For each category at the beginning there are two text fields. Title and Text. When you set the title "Dexter - Episode S01E01" and publish it a new post is created with the set title, "Dexter" will be set as tag and the category will also be set.
  
 = mcl_number =
 When a post is created in a monitored category, the custom field "mcl_number" is added. You can set the mcl_number manually or it is set automatically for you.
@@ -90,6 +94,9 @@ You can also set it to 0. So the post will not be visible in the statistics. Thi
 
 = Other features =
 The plugin also support comma in tags. When you create a new tag with a comma, replace ", " with "--". It will automatically will be replaced in the frontend.
+
+= Support =
+If you have a problem, question or suggestion please post it on the [plugins github page](https://github.com/hurik/wordpress-media-consumption-log) or write me an [email](mailto:andreas@giemza.net).
 
 
 == Installation ==
@@ -119,9 +126,10 @@ No questions at the moment.
 6. Statistics - Consumption amount
 7. Quick Post
 8. Complete
-9. Unit
-10. Data
-11. Settings
+9. Forgotten
+10. Unit
+11. Data
+12. Settings
 
 
 == Changelog ==
