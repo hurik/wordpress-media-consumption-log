@@ -273,7 +273,7 @@ isStacked: true,";
                 <h3><?php _e( 'Forgotten', 'media-consumption-log' ); ?></h3>
                 <table class="form-table">
                     <tr>
-                        <th scope="row"><?php _e( 'Min days', 'media-consumption-log' ); ?></th>
+                        <th scope="row"><?php _e( 'Minimal count of days', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_FORGOTTEN_MIN_DAYS; ?>" value="<?php echo esc_attr( trim( self::get_forgotten_min_days() ) ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Minimal number of days the last post of a serial must be old to be shown in forgotten. Default:', 'media-consumption-log' ); ?> <?php echo self::default_forgotten_min_days; ?></p></td>
                     </tr>
