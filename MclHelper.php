@@ -49,6 +49,16 @@ class MclHelper {
         return $categories_string;
     }
 
+    public static function get_last_consumed( $title ) {
+        $last_post_data = self::parse_last_post_title( $title );
+
+        if ( count( $last_post_data ) == 2 ) {
+            return $last_post_data[1];
+        }
+
+        return $last_post_data[1] . " " . $last_post_data[2];
+    }
+
     public static function parse_last_post_title( $last_post_title ) {
         $title = trim( $last_post_title );
         $title_exploded = explode( MclSettings::get_other_separator(), $title );

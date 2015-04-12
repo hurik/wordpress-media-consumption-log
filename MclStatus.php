@@ -178,7 +178,7 @@ class MclStatus {
                         foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
                             $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
                             $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
-                            $lastConsumed = self::get_last_consumed( $tag->post_title );
+                            $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
 
                             if ( $first ) {
                                 $html .= "\n  <tr>"
@@ -319,16 +319,6 @@ class MclStatus {
         }
 
         return $html;
-    }
-
-    private static function get_last_consumed( $title ) {
-        $last_post_data = MclHelper::parse_last_post_title( $title );
-
-        if ( count( $last_post_data ) == 2 ) {
-            return $last_post_data[1];
-        }
-
-        return $last_post_data[1] . " " . $last_post_data[2];
     }
 
 }

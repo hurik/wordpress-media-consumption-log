@@ -36,6 +36,7 @@ require_once dirname( __FILE__ ) . '/MclAdminHooks.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
 require_once dirname( __FILE__ ) . '/MclComplete.php';
 require_once dirname( __FILE__ ) . '/MclData.php';
+require_once dirname( __FILE__ ) . '/MclForgotten.php';
 require_once dirname( __FILE__ ) . '/MclHelper.php';
 require_once dirname( __FILE__ ) . '/MclHooks.php';
 require_once dirname( __FILE__ ) . '/MclNumber.php';
