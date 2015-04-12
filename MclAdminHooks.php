@@ -87,9 +87,11 @@ class MclAdminHooks {
     public static function transition_post_status( $new_status, $old_status, $post ) {
         $cats = get_the_category( $post->ID );
 
-        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
-            if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
-                MclData::update_data();
+        if ( count( $cats ) != 0 ) {
+            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+                if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
+                    MclData::update_data();
+                }
             }
         }
     }
@@ -97,8 +99,10 @@ class MclAdminHooks {
     public static function before_delete_post( $post_id ) {
         $cats = get_the_category( $post_id );
 
-        if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
-            add_action( 'delete_post', array( get_called_class(), 'delete_post' ) );
+        if ( count( $cats ) != 0 ) {
+            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+                add_action( 'delete_post', array( get_called_class(), 'delete_post' ) );
+            }
         }
     }
 
