@@ -24,24 +24,36 @@ class MclForgotten {
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
-        $categories = get_categories( "include=" . MclSettings::get_monitored_categories_serials() );
+        $max_date = date( 'Y-m-d H:i:s', strtotime( "-100 day", strtotime( date( 'Y-m-d H:i:s' ) ) ) );
 
-        $nav = "";
+        $serials = MclSettings::get_monitored_categories_serials();
 
-        $last_category = end( $categories );
-
-        foreach ( $categories as $category ) {
-            $nav .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
-
-            if ( $category != $last_category ) {
-                $nav .= " | ";
-            }
+        if ( empty( $serials ) ) {
+            self::nothing_here_yet();
+            return;
         }
 
-        $html = "\n";
+        $categories = get_categories( "include=" . $serials );
+
+        $nav = "";
+        $nav_first = true;
+
+        $html = "";
 
         foreach ( $categories as $category ) {
-            $tags = self::get_serials( $category );
+            $tags = self::get_serials( $category, $max_date );
+
+            if ( count( $tags ) < 1 ) {
+                continue;
+            }
+
+            if ( !$nav_first ) {
+                $nav .= " | ";
+            } else {
+                $nav_first = false;
+            }
+
+            $nav .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
 
             $html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
                     . "\n<table class=\"widefat\">"
@@ -75,6 +87,11 @@ class MclForgotten {
 
             $html .= "\n</table>";
         }
+
+        if ( empty( $nav ) ) {
+            self::nothing_here_yet();
+            return;
+        }
         ?><div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2>
 
@@ -92,7 +109,14 @@ class MclForgotten {
         </div><?php
     }
 
-    private static function get_serials( $category ) {
+    private static function nothing_here_yet() {
+        ?><div class="wrap">
+            <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2>
+            <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
+        </div><?php
+    }
+
+    private static function get_serials( $category, $max_date ) {
         global $wpdb;
 
         $tags = $wpdb->get_results( "
@@ -129,6 +153,7 @@ class MclForgotten {
                         AND t2.taxonomy = 'post_tag'
                         AND p2.post_status = 'publish'
                         AND p1.ID = p2.ID
+                        AND p2.post_date < '{$max_date}'
                         AND p2.post_date = (
                             SELECT
                                 MAX(dp1.post_date)

@@ -31,6 +31,7 @@ class MclSettings {
     const SETTING_STATISTICS_MONTHLY_COUNT = "mcl_setting_statistics_monthly_count";
     const SETTING_STATISTICS_MONTHLY_DATE_FORMAT = "mcl_setting_statistics_monthly_date_format";
     const SETTING_STATISTICS_MONTHLY_OPTIONS = "mcl_setting_statistics_monthly_options";
+    const SETTING_FORGOTTEN_MIN_DAYS = "mcl_setting_forgotten_min_days";
     const SETTING_OTHER_SEPARATOR = "mcl_setting_other_separator";
     const SETTING_OTHER_AND = "mcl_setting_other_and";
     const SETTING_OTHER_TO = "mcl_setting_other_to";
@@ -51,6 +52,7 @@ bar: { groupWidth: '70%' },
 focusTarget: 'category',
 chartArea: { left: 50, top: 80, width: '100%', height: data.getNumberOfRows() * 15 },
 isStacked: true,";
+    const default_forgotten_min_days = 91;
     const default_other_separator = "-";
 
     private static function default_statistics_daily_date_format() {
@@ -138,6 +140,16 @@ isStacked: true,";
         }
     }
 
+    public static function get_forgotten_min_days() {
+        $value = get_option( self::SETTING_FORGOTTEN_MIN_DAYS );
+
+        if ( ( string ) ( int ) $value === $value && ( int ) $value >= 0 ) {
+            return $value;
+        } else {
+            return self::default_forgotten_min_days;
+        }
+    }
+
     public static function get_other_separator() {
         $value = get_option( self::SETTING_OTHER_SEPARATOR );
 
@@ -178,6 +190,7 @@ isStacked: true,";
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_OPTIONS );
+        register_setting( self::SETTINGS_GROUP, self::SETTING_FORGOTTEN_MIN_DAYS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_SEPARATOR );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_AND );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_TO );
@@ -254,6 +267,15 @@ isStacked: true,";
                         <td><textarea name="<?php echo self::SETTING_STATISTICS_MONTHLY_OPTIONS; ?>" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_monthly_options() ); ?></textarea>
                             <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
                                 <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
+                    </tr>
+                </table>
+
+                <h3><?php _e( 'Forgotten', 'media-consumption-log' ); ?></h3>
+                <table class="form-table">
+                    <tr>
+                        <th scope="row"><?php _e( 'Min days', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="<?php echo self::SETTING_FORGOTTEN_MIN_DAYS; ?>" value="<?php echo esc_attr( trim( self::get_forgotten_min_days() ) ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Minimal number of days the last post of a serial must be old to be shown in forgotten. Default:', 'media-consumption-log' ); ?> <?php echo self::default_forgotten_min_days; ?></p></td>
                     </tr>
                 </table>
 
