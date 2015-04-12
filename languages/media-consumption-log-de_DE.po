@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-04-01 08:27:12+0000\n"
+"PO-Revision-Date: 2015-04-12 15:49:43+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -445,12 +445,6 @@ msgstr "Dieses Plugin hilft dir Übersicht zu behalten, über die ganzen Serien,
 msgid "Title can't be empty!"
 msgstr "Titel muss ausgefüllt werden!"
 
-#. translators: plugin header field 'Version'
-#: media-consumption-log.php:0
-#@ media-consumption-log
-msgid "1.0.1"
-msgstr ""
-
 #: MclStatistics.php:256
 #, php-format
 #@ media-consumption-log
@@ -468,4 +462,27 @@ msgstr "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE% (%DAYS
 #@ media-consumption-log
 msgid "Total count of different %CATEGORIES%, since the first post on the %DATE% (%DAYS% days)."
 msgstr "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE% (%DAYS% Tage)."
+
+#: MclAdminHooks.php:65
+#: MclForgotten.php:79
+#@ media-consumption-log
+msgid "Forgotten"
+msgstr "Vergessene"
+
+#: MclForgotten.php:56
+#@ media-consumption-log
+msgid "Days ago"
+msgstr "Tage zuvor"
+
+#. translators: plugin header field 'Version'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "1.0.2"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "1.0.1"
+msgstr ""
 
