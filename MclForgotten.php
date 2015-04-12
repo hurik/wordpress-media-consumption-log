@@ -68,6 +68,8 @@ class MclForgotten {
                     . "\n    <th nowrap><strong>" . __( 'Days ago', 'media-consumption-log' ) . "</strong></th>"
                     . "\n  </tr>";
 
+            MclCommaInTags::comma_tags_filter( $tags );
+
             foreach ( $tags as $tag ) {
                 $tag_link = get_tag_link( $tag->tag_id );
                 $tag_title = htmlspecialchars( $tag->name );
