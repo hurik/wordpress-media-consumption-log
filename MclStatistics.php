@@ -255,7 +255,7 @@ class MclStatistics {
 
         $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total comsumption, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
         $since_total_string = str_replace( '%DAYS%', $data->number_of_days, $since_total_string );
-        
+
         $html .= "\n  <tr>"
                 . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>{$data->consumption_total}</th>"

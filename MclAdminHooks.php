@@ -141,13 +141,13 @@ class MclAdminHooks {
             }
 
             $sql = "
-            CREATE TABLE {$table_name} (
-                `tag_id` bigint(20) unsigned NOT NULL,
-                `cat_id` bigint(20) unsigned NOT NULL,
-                `complete` tinyint(1) NOT NULL,
-                PRIMARY KEY (`tag_id`,`cat_id`)
-            ) $charset_collate;
-        ";
+                CREATE TABLE {$table_name} (
+                    `tag_id` bigint(20) unsigned NOT NULL,
+                    `cat_id` bigint(20) unsigned NOT NULL,
+                    `complete` tinyint(1) NOT NULL,
+                    PRIMARY KEY (`tag_id`,`cat_id`)
+                ) $charset_collate;
+            ";
 
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
