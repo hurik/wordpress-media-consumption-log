@@ -301,7 +301,8 @@ class MclStatistics {
         $html .= "\n\n<h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<table border=\"1\">"
                 . "\n  <colgroup>"
-                . "\n    <col width=\"97%\">"
+                . "\n    <col width=\"96%\">"
+                . "\n    <col width=\"1%\">"
                 . "\n    <col width=\"1%\">"
                 . "\n    <col width=\"1%\">"
                 . "\n    <col width=\"1%\">"
@@ -310,6 +311,7 @@ class MclStatistics {
                 . "\n    <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>" . __( 'Running', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>" . __( 'Complete', 'media-consumption-log' ) . "</th>"
+                . "\n    <th nowrap>" . __( 'Abandoned', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n  </tr>";
 
@@ -320,7 +322,7 @@ class MclStatistics {
 
             if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
                 $html .= "\n  <tr>"
-                        . "\n    <td colspan=\"3\">{$category->name}</td>"
+                        . "\n    <td colspan=\"4\">{$category->name}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
                         . "\n  </tr>";
             } else {
@@ -328,6 +330,7 @@ class MclStatistics {
                         . "\n    <td>{$category->name}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count_ongoing}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count_complete}</td>"
+                        . "\n    <td nowrap>{$category->mcl_tags_count_abandoned}</td>"
                         . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
                         . "\n  </tr>";
             }
@@ -343,6 +346,7 @@ class MclStatistics {
                 . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n    <th nowrap>{$data->tags_count_ongoing}</th>"
                 . "\n    <th nowrap>{$data->tags_count_complete}</th>"
+                . "\n    <th nowrap>{$data->tags_count_abandoned}</th>"
                 . "\n    <th nowrap>{$data->tags_count_total}</th>"
                 . "\n  </tr>"
                 . "\n</table>"
