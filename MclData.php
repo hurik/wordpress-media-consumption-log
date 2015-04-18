@@ -241,7 +241,7 @@ class MclData {
                 temp.post_id,
                 temp.post_date,
                 temp.post_title,
-                IFNULL(mcl.status, 0) AS complete
+                IFNULL(mcl.status, 0) AS status
             FROM
 		(
                     SELECT
@@ -293,8 +293,10 @@ class MclData {
 
         $tags_count_ongoing = 0;
         $tags_count_complete = 0;
+        $tags_count_abandoned = 0;
         $tags_ongoing = array();
         $tags_complete = array();
+        $tags_abandoned = array();
 
         foreach ( $tags as $tag ) {
             // Comma in tags
@@ -305,7 +307,7 @@ class MclData {
             // Get last post data
             $tag->post_link = get_permalink( $tag->post_id );
 
-            if ( $tag->complete == false ) {
+            if ( $tag->status == MclComplete::RUNNING ) {
                 $tags_count_ongoing++;
 
                 // Tags which start with a number get their own group #
@@ -314,7 +316,7 @@ class MclData {
                 } else {
                     $tags_ongoing['#'][] = $tag;
                 }
-            } else {
+            } else if ( $tag->status == MclComplete::COMPLETE ) {
                 $tags_count_complete++;
 
                 // Tags which start with a number get their own group #
@@ -323,6 +325,15 @@ class MclData {
                 } else {
                     $tags_complete['#'][] = $tag;
                 }
+            } else {
+                $tags_count_abandoned++;
+
+                // Tags which start with a number get their own group #
+                if ( preg_match( '/^[a-z]/i', trim( $tag->name[0] ) ) ) {
+                    $tags_abandoned[strtoupper( $tag->name[0] )][] = $tag;
+                } else {
+                    $tags_abandoned['#'][] = $tag;
+                }
             }
         }
 
@@ -330,8 +341,10 @@ class MclData {
         $category->mcl_tags_count = $tags_count_ongoing + $tags_count_complete;
         $category->mcl_tags_count_ongoing = $tags_count_ongoing;
         $category->mcl_tags_count_complete = $tags_count_complete;
+        $category->mcl_tags_count_abandoned = $tags_count_abandoned;
         $category->mcl_tags_ongoing = $tags_ongoing;
         $category->mcl_tags_complete = $tags_complete;
+        $category->mcl_tags_abandoned = $tags_abandoned;
 
         return $category;
     }

@@ -20,6 +20,10 @@
 
 class MclComplete {
 
+    const RUNNING = 0;
+    const COMPLETE = 1;
+    const ABANDONED = 2;
+
     public static function change_complete_status() {
         global $wpdb;
 
