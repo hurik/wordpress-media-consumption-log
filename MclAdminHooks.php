@@ -131,7 +131,14 @@ class MclAdminHooks {
     public static function register_activation_hook() {
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'mcl_complete';
+        // Update DB from version 1 to 2
+        if ( get_option( 'mcl_db_version' ) == 1 ) {
+            $wpdb->query( "RENAME TABLE `{$wpdb->prefix}mcl_complete` TO `wp_mcl_status`" );
+            $wpdb->query( "ALTER TABLE `{$wpdb->prefix}mcl_status` CHANGE `complete` `status` TINYINT(1) NOT NULL" );
+            update_option( 'mcl_db_version', 2 );
+        }
+
+        $table_name = $wpdb->prefix . 'mcl_status';
 
         if ( $wpdb->get_var( "SHOW TABLES LIKE {$table_name}" ) != $table_name ) {
             $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
@@ -144,7 +151,7 @@ class MclAdminHooks {
                 CREATE TABLE {$table_name} (
                     `tag_id` bigint(20) unsigned NOT NULL,
                     `cat_id` bigint(20) unsigned NOT NULL,
-                    `complete` tinyint(1) NOT NULL,
+                    `status` tinyint(1) NOT NULL,
                     PRIMARY KEY (`tag_id`,`cat_id`)
                 ) $charset_collate;
             ";
@@ -152,7 +159,7 @@ class MclAdminHooks {
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             dbDelta( $sql );
 
-            add_option( 'mcl_db_version', 1 );
+            add_option( 'mcl_db_version', 2 );
         }
     }
 
