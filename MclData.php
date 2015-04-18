@@ -174,9 +174,11 @@ class MclData {
 
         $tags_count_ongoing = 0;
         $tags_count_complete = 0;
+        $tags_count_abandoned = 0;
 
         $cat_serial_ongoing = false;
         $cat_serial_complete = false;
+        $cat_serial_abandoned = false;
         $cat_non_serial = false;
 
         $data->categories = array();
@@ -191,6 +193,7 @@ class MclData {
 
             $tags_count_ongoing += $category->mcl_tags_count_ongoing;
             $tags_count_complete += $category->mcl_tags_count_complete;
+            $tags_count_abandoned += $category->mcl_tags_count_abandoned;
 
             // Graph data
             $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
@@ -208,7 +211,11 @@ class MclData {
             }
 
             if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
-                $cat_serial_ongoing = true;
+                $cat_serial_complete = true;
+            }
+
+            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_abandoned > 0 ) {
+                $cat_serial_abandoned = true;
             }
 
             if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
@@ -221,10 +228,12 @@ class MclData {
 
         $data->tags_count_ongoing = $tags_count_ongoing;
         $data->tags_count_complete = $tags_count_complete;
-        $data->tags_count_total = $tags_count_ongoing + $tags_count_complete;
+        $data->tags_count_abandoned = $tags_count_abandoned;
+        $data->tags_count_total = $tags_count_ongoing + $tags_count_complete + $tags_count_abandoned;
 
         $data->cat_serial_ongoing = $cat_serial_ongoing;
         $data->cat_serial_complete = $cat_serial_complete;
+        $data->cat_serial_abandoned = $cat_serial_abandoned;
         $data->cat_non_serial = $cat_non_serial;
 
         return $data;
@@ -338,10 +347,11 @@ class MclData {
         }
 
         // Sort tag arrays
-        $category->mcl_tags_count = $tags_count_ongoing + $tags_count_complete;
         $category->mcl_tags_count_ongoing = $tags_count_ongoing;
         $category->mcl_tags_count_complete = $tags_count_complete;
         $category->mcl_tags_count_abandoned = $tags_count_abandoned;
+        $category->mcl_tags_count = $tags_count_ongoing + $tags_count_complete + $tags_count_abandoned;
+
         $category->mcl_tags_ongoing = $tags_ongoing;
         $category->mcl_tags_complete = $tags_complete;
         $category->mcl_tags_abandoned = $tags_abandoned;
