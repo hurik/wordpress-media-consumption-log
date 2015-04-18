@@ -109,14 +109,14 @@ class MclData {
                     <tr>
                         <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                         <td><?php
-                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                                    echo "<br />";
-                                }
-                            }
-                            ?></td>
+                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                            echo "<br />";
+                        }
+                    }
+                    ?></td>
                     </tr>   
                 <?php } ?>
             </table>
@@ -241,7 +241,7 @@ class MclData {
                 temp.post_id,
                 temp.post_date,
                 temp.post_title,
-                IFNULL(mcl.complete, 0) AS complete
+                IFNULL(mcl.status, 0) AS complete
             FROM
 		(
                     SELECT
@@ -288,7 +288,7 @@ class MclData {
                                 AND dt2.term_id = t2.term_id)
                     ORDER BY name
                 ) AS temp
-            LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+            LEFT JOIN {$wpdb->prefix}mcl_status AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
 	" );
 
         $tags_count_ongoing = 0;

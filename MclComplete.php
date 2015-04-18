@@ -26,15 +26,15 @@ class MclComplete {
         if ( isset( $_POST["tag_id"] ) && isset( $_POST["cat_id"] ) && isset( $_POST["complete"] ) ) {
             if ( !empty( $_POST["complete"] ) ) {
                 $wpdb->get_results( "
-                    INSERT INTO {$wpdb->prefix}mcl_complete
+                    INSERT INTO {$wpdb->prefix}mcl_status
                     SET tag_id = '{$_POST["tag_id"]}',
                         cat_id = '{$_POST["cat_id"]}',
-                        complete = '1'
+                        status = '1'
                 " );
             } else {
                 $wpdb->get_results( "
                     DELETE
-                    FROM {$wpdb->prefix}mcl_complete
+                    FROM {$wpdb->prefix}mcl_status
                     WHERE tag_id = '{$_POST["tag_id"]}'
                       AND cat_id = '{$_POST["cat_id"]}'
                 " );

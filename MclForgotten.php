@@ -176,8 +176,8 @@ class MclForgotten {
                                 AND dt2.term_id = t2.term_id)
                     ORDER BY post_date
                 ) AS temp
-            LEFT JOIN {$wpdb->prefix}mcl_complete AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
-            WHERE IFNULL(complete, 0) = 0
+            LEFT JOIN {$wpdb->prefix}mcl_status AS mcl ON temp.tag_id = mcl.tag_id AND temp.cat_id = mcl.cat_id
+            WHERE IFNULL(status, 0) = 0
 	" );
 
         return $tags;
