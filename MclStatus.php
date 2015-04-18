@@ -26,7 +26,7 @@ class MclStatus {
         // Get the data
         $data = MclData::get_data();
 
-        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_non_serial ) {
+        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned && !$data->cat_non_serial ) {
             $html = "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
 
             return $html;
@@ -39,7 +39,7 @@ class MclStatus {
                 . "\n    <col width=\"99%\">"
                 . "\n  </colgroup>";
 
-        if ( $data->cat_serial_ongoing || $data->cat_serial_complete ) {
+        if ( $data->cat_serial_ongoing || $data->cat_serial_complete || $data->cat_serial_abandoned ) {
             $html .= "\n  <tr>"
                     . "\n    <th colspan=\"2\"><strong><a href=\"#serials\" style=\"font-size: 130%;\">" . __( 'Serials', 'media-consumption-log' ) . "</a></strong></th>"
                     . "\n  </tr>";
