@@ -316,7 +316,7 @@ class MclData {
             // Get last post data
             $tag->post_link = get_permalink( $tag->post_id );
 
-            if ( $tag->status == MclComplete::RUNNING ) {
+            if ( $tag->status == MclSerialStatus::RUNNING ) {
                 $tags_count_ongoing++;
 
                 // Tags which start with a number get their own group #
@@ -325,7 +325,7 @@ class MclData {
                 } else {
                     $tags_ongoing['#'][] = $tag;
                 }
-            } else if ( $tag->status == MclComplete::COMPLETE ) {
+            } else if ( $tag->status == MclSerialStatus::COMPLETE ) {
                 $tags_count_complete++;
 
                 // Tags which start with a number get their own group #

@@ -18,7 +18,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class MclComplete {
+class MclSerialStatus {
 
     const RUNNING = 0;
     const COMPLETE = 1;
@@ -61,7 +61,7 @@ class MclComplete {
         if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) {
             ?>
             <div class="wrap">
-                <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
+                <h2>Media Consumption Log - <?php _e( 'Serial Status', 'media-consumption-log' ); ?></h2>
 
                 <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
             </div>
@@ -315,7 +315,7 @@ class MclComplete {
         ?>
 
         <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Complete', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Serial Status', 'media-consumption-log' ); ?></h2>
 
             <table class="widefat">
                 <colgroup>

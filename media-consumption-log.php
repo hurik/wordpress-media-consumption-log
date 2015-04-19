@@ -34,13 +34,13 @@ define( 'PLUGIN_VERSION', '1.1.0' );
 
 require_once dirname( __FILE__ ) . '/MclAdminHooks.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
-require_once dirname( __FILE__ ) . '/MclComplete.php';
 require_once dirname( __FILE__ ) . '/MclData.php';
 require_once dirname( __FILE__ ) . '/MclForgotten.php';
 require_once dirname( __FILE__ ) . '/MclHelper.php';
 require_once dirname( __FILE__ ) . '/MclHooks.php';
 require_once dirname( __FILE__ ) . '/MclNumber.php';
 require_once dirname( __FILE__ ) . '/MclQuickPost.php';
+require_once dirname( __FILE__ ) . '/MclSerialStatus.php';
 require_once dirname( __FILE__ ) . '/MclSettings.php';
 require_once dirname( __FILE__ ) . '/MclStatistics.php';
 require_once dirname( __FILE__ ) . '/MclStatus.php';
