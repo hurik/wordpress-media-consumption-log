@@ -25,6 +25,8 @@ if ( is_admin() ) {
 class MclAdminHooks {
 
     public static function on_start() {
+        add_action( 'plugins_loaded', array( get_called_class(), 'update_db_check' ) );
+
         add_action( 'admin_init', array( get_called_class(), 'admin_init' ) );
         add_action( 'admin_menu', array( get_called_class(), 'admin_menu' ) );
 
@@ -39,6 +41,17 @@ class MclAdminHooks {
         add_action( 'wp_ajax_mcl_complete', array( 'MclSerialStatus', 'change_complete_status' ) );
         add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
         add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
+    }
+
+    public static function update_db_check() {
+        global $wpdb;
+
+        // Update DB from version 1 to 2
+        if ( get_option( 'mcl_db_version' ) == 1 ) {
+            $wpdb->query( "RENAME TABLE `{$wpdb->prefix}mcl_complete` TO `{$wpdb->prefix}mcl_status`" );
+            $wpdb->query( "ALTER TABLE `{$wpdb->prefix}mcl_status` CHANGE `complete` `status` TINYINT(1) NOT NULL" );
+            update_option( 'mcl_db_version', 2 );
+        }
     }
 
     public static function admin_enqueue_scripts( $hook ) {
@@ -130,13 +143,6 @@ class MclAdminHooks {
 
     public static function register_activation_hook() {
         global $wpdb;
-
-        // Update DB from version 1 to 2
-        if ( get_option( 'mcl_db_version' ) == 1 ) {
-            $wpdb->query( "RENAME TABLE `{$wpdb->prefix}mcl_complete` TO `wp_mcl_status`" );
-            $wpdb->query( "ALTER TABLE `{$wpdb->prefix}mcl_status` CHANGE `complete` `status` TINYINT(1) NOT NULL" );
-            update_option( 'mcl_db_version', 2 );
-        }
 
         $table_name = $wpdb->prefix . 'mcl_status';
 
