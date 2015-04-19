@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
 Tested up to: 4.1.1
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -42,8 +42,8 @@ To create a statistics page make a new site and add the shortcode "[mcl-stats]" 
 = Quick Post =
 In Quick post you can easily create a new post for a running serial. Check the screenshots for example.
 
-= Complete =
-Here you can set a serial as complete. Complete serials will not show up in Quick post and also will be separated on the status page.
+= Serial Status =
+Here you can set a serial as complete or abandoned. Complete and abandoned serials will not show up in Quick post and also will be separated on the status page.
 
 = Forgotten =
 Shows serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
@@ -125,7 +125,7 @@ No questions at the moment.
 5. Statistics - Average consumption
 6. Statistics - Consumption amount
 7. Quick Post
-8. Complete
+8. Serial Status
 9. Forgotten
 10. Unit
 11. Data
@@ -133,6 +133,12 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 1.2.0 =
+* Renamed Complete to Serial Status and added abandoned
+* Added count to Forgotten
+* Fixed navigation in Status
+* Fixed possible PHP errors when category wasn't set in a new post
 
 = 1.1.0 =
 * Added Forgotten
