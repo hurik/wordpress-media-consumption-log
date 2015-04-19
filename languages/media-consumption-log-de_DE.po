@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log v1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2015-04-12 19:14:40+0000\n"
+"PO-Revision-Date: 2015-04-19 00:19:05+0000\n"
 "Last-Translator: andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -474,12 +474,6 @@ msgstr "Vergessene"
 msgid "Days ago"
 msgstr "Tage zuvor"
 
-#. translators: plugin header field 'Version'
-#: media-consumption-log.php:0
-#@ media-consumption-log
-msgid "1.0.2"
-msgstr ""
-
 #: MclSettings.php:278
 #@ media-consumption-log
 msgid "Minimal number of days the last post of a serial must be old to be shown in forgotten. Default:"
@@ -490,10 +484,42 @@ msgstr "Minimale Anzahl an Tagen seit dem letzten Post der Serie um in den Verge
 msgid "Minimal count of days"
 msgstr "Minimale Anzahl an Tagen"
 
+#: MclAdminHooks.php:64
+#: MclSerialStatus.php:64
+#: MclSerialStatus.php:318
+#@ media-consumption-log
+msgid "Serial Status"
+msgstr "Serien Status"
+
+#: MclSerialStatus.php:122
+#: MclSerialStatus.php:191
+#: MclSerialStatus.php:198
+#: MclSerialStatus.php:245
+#: MclSerialStatus.php:252
+#: MclSerialStatus.php:262
+#: MclStatistics.php:314
+#: MclStatus.php:94
+#: MclStatus.php:270
+#@ media-consumption-log
+msgid "Abandoned"
+msgstr "Aufgegeben"
+
+#. translators: plugin header field 'Version'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "1.1.0"
+msgstr ""
+
 #. translators: plugin header field 'Version'
 #: media-consumption-log.php:0
 #@ media-consumption-log
 msgid "1.0.1"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: media-consumption-log.php:0
+#@ media-consumption-log
+msgid "1.0.2"
 msgstr ""
 
 #: MclSettings.php:276
