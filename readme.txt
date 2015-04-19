@@ -134,7 +134,7 @@ No questions at the moment.
 
 == Changelog ==
 
-= 1.2.0 =
+= 1.2.1 =
 * Database wasn't updated to version 2
 
 = 1.2.0 =
