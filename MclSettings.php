@@ -56,7 +56,7 @@ isStacked: true,";
     const default_other_separator = "-";
 
     private static function default_statistics_daily_date_format() {
-        return __( 'Y-m-j', 'media-consumption-log' );
+        return __( 'Y-m-d', 'media-consumption-log' );
     }
 
     private static function default_statistics_monthly_date_format() {
