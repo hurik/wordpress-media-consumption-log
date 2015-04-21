@@ -119,17 +119,13 @@ No questions at the moment.
 == Screenshots ==
 
 1. Status
-2. Statistics - Daily consumption
-3. Statistics - Monthly consumption
-4. Statistics - Total consumption
-5. Statistics - Average consumption
-6. Statistics - Consumption amount
-7. Quick Post
-8. Serial Status
-9. Forgotten
-10. Unit
-11. Data
-12. Settings
+2. Statistics
+3. Quick Post
+4. Serial Status
+5. Forgotten
+6. Units
+7. Data
+8. Settings
 
 
 == Changelog ==
