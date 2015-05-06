@@ -244,7 +244,7 @@ class MclStatistics {
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            $unit = MclUnits::get_unit_of_category( $category );
+            $unit = MclSettings::get_unit_of_category( $category );
 
             $html .= "\n  <tr>"
                     . "\n    <td>{$category->name}</td>"
@@ -278,7 +278,7 @@ class MclStatistics {
                 . "\n  </tr>";
 
         foreach ( $data->categories as $category ) {
-            $unit = MclUnits::get_unit_of_category( $category );
+            $unit = MclSettings::get_unit_of_category( $category );
 
             $html .= "\n  <tr>"
                     . "\n    <td>{$category->name}</td>"

@@ -35,6 +35,8 @@ class MclSettings {
     const SETTING_OTHER_SEPARATOR = "mcl_setting_other_separator";
     const SETTING_OTHER_AND = "mcl_setting_other_and";
     const SETTING_OTHER_TO = "mcl_setting_other_to";
+    // Setting unit prefix
+    const SETTING_UNIT_PREFIX = "mcl_unit_";
     // Default values
     const default_statistics_daily_count = 31;
     const default_statistics_daily_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
@@ -180,6 +182,17 @@ isStacked: true,";
         }
     }
 
+    // Unit getter
+    public static function get_unit_of_category( $category ) {
+        $unit = get_option( self::SETTING_UNIT_PREFIX . "{$category->term_id}" );
+
+        if ( empty( $unit ) ) {
+            $unit = $category->name;
+        }
+
+        return $unit;
+    }
+
     // Setting page
     public static function register_settings() {
         register_setting( self::SETTINGS_GROUP, self::SETTING_MONITORED_CATEGORIES_SERIAL );
@@ -194,6 +207,17 @@ isStacked: true,";
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_SEPARATOR );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_AND );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_TO );
+
+        // Register units
+        $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+
+        if ( !empty( $get_monitored_categories_serials ) ) {
+            $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
+
+            foreach ( $categories as $category ) {
+                register_setting( self::SETTINGS_GROUP, self::SETTING_UNIT_PREFIX . "{$category->term_id}" );
+            }
+        }
     }
 
     public static function create_page() {
@@ -227,6 +251,33 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?></th>
                         <td><?php echo $cats_text; ?></td>
                     </tr>
+                </table>
+
+                <h3><?php _e( 'Units', 'media-consumption-log' ); ?></h3>
+                <p class="description"><?php _e( 'Please define the units of the serial categories.', 'media-consumption-log' ); ?></p>
+                <table class="form-table">
+                    <?php
+                    $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+
+                    if ( !empty( $get_monitored_categories_serials ) ) {
+                        $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
+
+                        foreach ( $categories as $category ) {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $category->name; ?></th>
+                                <td><input type="text" name="<?php echo self::SETTING_UNIT_PREFIX . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <th scope="row"><?php _e( 'No monitored serial category!', 'media-consumption-log' ); ?></th>
+                        </tr>
+                        <?php
+                    }
+                    ?>
                 </table>
 
                 <h3><?php _e( 'Statistics', 'media-consumption-log' ); ?></h3>

@@ -44,6 +44,5 @@ require_once dirname( __FILE__ ) . '/MclSerialStatus.php';
 require_once dirname( __FILE__ ) . '/MclSettings.php';
 require_once dirname( __FILE__ ) . '/MclStatistics.php';
 require_once dirname( __FILE__ ) . '/MclStatus.php';
-require_once dirname( __FILE__ ) . '/MclUnits.php';
 
 register_activation_hook( __FILE__, array( 'MclAdminHooks', 'register_activation_hook' ) );
