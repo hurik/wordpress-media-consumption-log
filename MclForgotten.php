@@ -21,6 +21,10 @@
 class MclForgotten {
 
     public static function create_page() {
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+        }
+
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
@@ -109,10 +113,10 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-        }
+    }
 
-        private static function nothing_here_yet() {
-            ?><div class="wrap">
+    private static function nothing_here_yet() {
+        ?><div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2>
             <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
         </div><?php
