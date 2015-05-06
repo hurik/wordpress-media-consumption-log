@@ -48,9 +48,6 @@ Here you can set a serial to complete or abandoned. Complete and abandoned seria
 = Forgotten =
 Shows serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
 
-= Unit =
-Here you can set units for serial which will be used in the statistics.
-
 = Data =
 Sometimes it is necessary to rebuild the saved data, because you renamed a category. This is normally not necessary because every time you create a new post or edit a post the data is rebuild. The data is used for the Status, Statistics, Quick Post and Complete pages.
 
@@ -123,9 +120,8 @@ No questions at the moment.
 3. Quick Post
 4. Serial Status
 5. Forgotten
-6. Units
-7. Data
-8. Settings
+6. Data
+7. Settings
 
 
 == Changelog ==
