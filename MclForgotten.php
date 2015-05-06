@@ -28,7 +28,7 @@ class MclForgotten {
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
-        $max_date = date( 'Y-m-d H:i:s', strtotime( "-100 day", strtotime( date( 'Y-m-d H:i:s' ) ) ) );
+        $max_date = date( 'Y-m-d H:i:s', strtotime( "-" . MclSettings::get_forgotten_min_days() . " day", strtotime( date( 'Y-m-d H:i:s' ) ) ) );
 
         $serials = MclSettings::get_monitored_categories_serials();
 
@@ -113,10 +113,10 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-    }
+        }
 
-    private static function nothing_here_yet() {
-        ?><div class="wrap">
+        private static function nothing_here_yet() {
+            ?><div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2>
             <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
         </div><?php
