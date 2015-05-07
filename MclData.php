@@ -51,7 +51,7 @@ class MclData {
 
     public static function create_page() {
         if ( !current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
         }
 
         if ( isset( $_GET["rebuild-data"] ) && $_GET["rebuild-data"] == 1 ) {

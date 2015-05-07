@@ -221,6 +221,10 @@ isStacked: true,";
     }
 
     public static function create_page() {
+        if ( !current_user_can( 'manage_options' ) ) {
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
+        }
+
         if ( isset( $_GET["settings-updated"] ) && $_GET["settings-updated"] == "true" ) {
             MclData::update_data();
         }

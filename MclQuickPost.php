@@ -64,7 +64,7 @@ class MclQuickPost {
 
     public static function create_page() {
         if ( !current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+            wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
         }
 
         // Get the data
@@ -151,15 +151,15 @@ class MclQuickPost {
             $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
                     . "\n<table class=\"form-table\">"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Title', 'default' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . "</th>"
                     . "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
                     . "\n  </tr>"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Text', 'default' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Text', 'media-consumption-log' ) . "</th>"
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";
 
             if ( $category->mcl_tags_count_ongoing == 0 ) {
                 continue;
@@ -226,15 +226,15 @@ class MclQuickPost {
             $cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
                     . "\n<table class=\"form-table\">"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Title', 'default' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . "</th>"
                     . "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
                     . "\n  </tr>"
                     . "\n  <tr>"
-                    . "\n    <th scope=\"row\">" . __( 'Text', 'default' ) . "</th>"
+                    . "\n    <th scope=\"row\">" . __( 'Text', 'media-consumption-log' ) . "</th>"
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'default' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";
         }
         ?>
 
