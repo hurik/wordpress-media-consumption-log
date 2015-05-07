@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
 Tested up to: 4.2
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -125,6 +125,11 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 1.3.0 =
+* Fixed and improved Forgotten (The "Minimal count of days" setting wasn't working and it now uses MclData)
+* Moved Units to Settings
+* Some improvements and fixes in the background
 
 = 1.2.2 =
 * Readme and screenshots improved
