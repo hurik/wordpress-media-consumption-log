@@ -23,13 +23,20 @@ class MclData {
     const option_name = 'mcl_data';
 
     public static function get_data() {
-        if ( get_option( self::option_name ) === false ) {
-            add_option( self::option_name, self::build_data(), null, 'no' );
-        }
-
         $data = get_option( self::option_name );
 
-        if ( $data->plugin_version != PLUGIN_VERSION ) {
+        if ( $data === false ) {
+            $data = self::build_data();
+            add_option( self::option_name, $data, null, 'no' );
+        }
+
+        // Set the default timezone
+        date_default_timezone_set( get_option( 'timezone_string' ) );
+        // Get the number of days since first post
+        $date_current = new DateTime( date( 'Y-m-d' ) );
+        $number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
+
+        if ( $data->plugin_version != PLUGIN_VERSION || $data->number_of_days != $number_of_days ) {
             // Build new data
             $new_data = self::build_data();
             // Save the new data
@@ -109,14 +116,14 @@ class MclData {
                     <tr>
                         <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                         <td><?php
-                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                            echo "<br />";
-                        }
-                    }
-                    ?></td>
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                            ?></td>
                     </tr>   
                 <?php } ?>
             </table>
