@@ -26,7 +26,7 @@ class MclStatistics {
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
 
-        $data = MclData::get_data();
+        $data = MclData::get_data_up_to_date();
 
         if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned && !$data->cat_non_serial ) {
             $html = "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";

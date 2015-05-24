@@ -25,35 +25,39 @@ class MclData {
     public static function get_data() {
         $data = get_option( self::option_name );
 
-        if ( $data === false ) {
-            $data = self::build_data();
-            add_option( self::option_name, $data, null, 'no' );
+        if ( $data === false || $data->plugin_version != PLUGIN_VERSION ) {
+            return self::update_data();
         }
+
+        return $data;
+    }
+
+    public static function get_data_up_to_date() {
+        $data = self::get_data();
 
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );
-        // Get the number of days since first post
+        // Check if mcl_data is up to date
         $date_current = new DateTime( date( 'Y-m-d' ) );
         $number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
 
-        if ( $data->plugin_version != PLUGIN_VERSION || $data->number_of_days != $number_of_days ) {
-            // Build new data
-            $new_data = self::build_data();
-            // Save the new data
-            update_option( self::option_name, $new_data );
-            // Return the new data
-            return $new_data;
+        if ( $data->number_of_days != $number_of_days ) {
+            return self::update_data();
         }
 
         return $data;
     }
 
     public static function update_data() {
+        $data = self::build_data();
+
         if ( get_option( self::option_name ) !== false ) {
-            update_option( self::option_name, self::build_data() );
+            update_option( self::option_name, $data );
         } else {
-            add_option( self::option_name, self::build_data(), null, 'no' );
+            add_option( self::option_name, $data, null, 'no' );
         }
+
+        return $data;
     }
 
     public static function create_page() {
