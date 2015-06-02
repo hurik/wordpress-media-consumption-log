@@ -60,37 +60,6 @@ class MclData {
         return $data;
     }
 
-    public static function create_page() {
-        if ( !current_user_can( 'manage_options' ) ) {
-            wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
-        }
-
-        if ( isset( $_GET["rebuild-data"] ) && $_GET["rebuild-data"] == 1 ) {
-            self::update_data();
-        }
-        ?>
-        <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Data', 'media-consumption-log' ); ?></h2>
-
-            <h3><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3>
-            <table class="form-table">
-                <tr>
-                    <th scope="row"><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></th>
-                    <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&rebuild-data=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?php _e( 'Number of queries', 'media-consumption-log' ); ?></th>
-                    <td><?php echo get_num_queries(); ?></td>
-                </tr>
-                <tr>
-                    <th scope="row"><?php _e( 'Execution time', 'media-consumption-log' ); ?></th>
-                    <td><?php timer_stop( 1 ); ?></td>
-                </tr>
-            </table>
-        </div>
-        <?php
-    }
-
     public static function build_data() {
         // Set the default timezone
         date_default_timezone_set( get_option( 'timezone_string' ) );

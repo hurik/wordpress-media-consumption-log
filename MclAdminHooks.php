@@ -77,7 +77,6 @@ class MclAdminHooks {
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', array( 'MclQuickPost', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Serial Status', 'media-consumption-log' ), __( 'Serial Status', 'media-consumption-log' ), 'manage_options', 'mcl-serial-status', array( 'MclSerialStatus', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Forgotten', 'media-consumption-log' ), __( 'Forgotten', 'media-consumption-log' ), 'manage_options', 'mcl-forgotten', array( 'MclForgotten', 'create_page' ) );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Data', 'media-consumption-log' ), __( 'Data', 'media-consumption-log' ), 'manage_options', 'mcl-rebuild-data', array( 'MclData', 'create_page' ) );
         add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
     }
 
