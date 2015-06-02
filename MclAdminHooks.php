@@ -34,6 +34,8 @@ class MclAdminHooks {
         add_action( 'transition_post_status', array( get_called_class(), 'transition_post_status' ), 10, 3 );
         add_action( 'before_delete_post', array( get_called_class(), 'before_delete_post' ) );
 
+        add_action( 'edit_term', array( get_called_class(), 'edit_term' ), 10, 3 );
+
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
 
         add_action( 'admin_enqueue_scripts', array( get_called_class(), 'admin_enqueue_scripts' ) );
@@ -119,6 +121,14 @@ class MclAdminHooks {
 
     public static function delete_post( $post_id ) {
         MclData::update_data();
+    }
+
+    public static function edit_term( $term_id, $tt_id, $taxonomy ) {
+        // Check if term is a category and if it is a monitored category
+        if ( $taxonomy == "category" && MclHelper::is_monitored_category( $term_id ) ) {
+            // Rebuild data to updated changed category in mcl_data
+            MclData::update_data();
+        }
     }
 
     public static function load_post_new_php( $post_id ) {
