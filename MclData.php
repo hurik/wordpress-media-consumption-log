@@ -69,11 +69,6 @@ class MclData {
             self::update_data();
         }
 
-        if ( isset( $_GET["remove-postmeta-orphans"] ) && $_GET["remove-postmeta-orphans"] == 1 ) {
-            self::remove_postmeta_orphans();
-        }
-
-        $postmeta_orphans_count = self::count_postmeta_orphans();
         $posts_without_mcl_number = self::get_posts_without_mcl_number();
         $posts_without_mcl_number_count = count( $posts_without_mcl_number );
         ?>
@@ -94,20 +89,6 @@ class MclData {
                     <th scope="row"><?php _e( 'Execution time', 'media-consumption-log' ); ?></th>
                     <td><?php timer_stop( 1 ); ?></td>
                 </tr>
-            </table>
-
-            <h3><?php _e( 'Postmeta orphans', 'media-consumption-log' ); ?></h3>
-            <table class="form-table">
-                <tr>
-                    <th scope="row"><?php _e( 'Number of postmeta orphans', 'media-consumption-log' ); ?></th>
-                    <td><?php echo $postmeta_orphans_count; ?></td>
-                </tr>
-                <?php if ( $postmeta_orphans_count > 0 ) { ?>
-                    <tr>
-                        <th scope="row"><?php _e( 'Remove', 'media-consumption-log' ); ?></th>
-                        <td><input class="button-primary" type=button onClick="location.href = 'admin.php?page=mcl-rebuild-data&remove-postmeta-orphans=1'" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" /></td>
-                    </tr>
-                <?php } ?>
             </table>
 
             <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
@@ -425,30 +406,6 @@ class MclData {
 	" );
 
         return $stats[0]->number;
-    }
-
-    private static function count_postmeta_orphans() {
-        global $wpdb;
-
-        $postmeta_orphans = $wpdb->get_results( "
-            SELECT *
-            FROM {$wpdb->prefix}postmeta pm
-            LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
-            WHERE wp.ID IS NULL
-	" );
-
-        return count( $postmeta_orphans );
-    }
-
-    private static function remove_postmeta_orphans() {
-        global $wpdb;
-
-        $wpdb->get_results( "
-            DELETE pm
-            FROM {$wpdb->prefix}postmeta pm
-            LEFT JOIN {$wpdb->prefix}posts wp ON wp.ID = pm.post_id
-            WHERE wp.ID IS NULL
-	" );
     }
 
     private static function get_posts_without_mcl_number() {
