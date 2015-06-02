@@ -220,6 +220,39 @@ isStacked: true,";
         }
     }
 
+    private static function get_posts_without_mcl_number() {
+        global $wpdb;
+
+        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
+            $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
+
+            $posts_without_mcl_number = $wpdb->get_results( "
+            SELECT *
+            FROM {$wpdb->prefix}posts as p
+            LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
+            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
+            WHERE
+                p.post_type = 'post'
+                AND p.post_status = 'publish'
+                AND t.taxonomy = 'category'
+                AND t.term_id IN ({$monitored_categories})
+                AND NOT EXISTS (
+                    SELECT *
+                    FROM {$wpdb->prefix}postmeta
+                    WHERE meta_key = 'mcl_number'
+                    AND post_id = p.ID
+                )
+	" );
+
+            return $posts_without_mcl_number;
+        } else {
+            return array();
+        }
+    }
+
     public static function create_page() {
         if ( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
@@ -231,6 +264,10 @@ isStacked: true,";
 
         $categories = get_categories( 'hide_empty=0' );
         $cats_text = MclHelper::build_all_categories_string( $categories, true );
+
+        // Get posts in monitored categories without mcl_number
+        $posts_without_mcl_number = self::get_posts_without_mcl_number();
+        $posts_without_mcl_number_count = count( $posts_without_mcl_number );
         ?>
         <div class="wrap">
             <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2>
@@ -359,6 +396,28 @@ isStacked: true,";
 
                 <?php submit_button(); ?>
             </form>
+
+            <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e( 'Number of posts without mcl_number', 'media-consumption-log' ); ?></th>
+                    <td><?php echo $posts_without_mcl_number_count; ?></td>
+                </tr>
+                <?php if ( $posts_without_mcl_number_count > 0 ) { ?>
+                    <tr>
+                        <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
+                        <td><?php
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                            ?></td>
+                    </tr>   
+                <?php } ?>
+            </table>
         </div>	
         <?php
     }
