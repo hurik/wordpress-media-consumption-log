@@ -43,6 +43,7 @@ class MclAdminHooks {
         add_action( 'wp_ajax_mcl_complete', array( 'MclSerialStatus', 'change_complete_status' ) );
         add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
         add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
+        add_action( 'wp_ajax_mcl_rebuild_data', array( 'MclSettings', 'rebuild_data' ) );
     }
 
     public static function update_db_check() {
@@ -57,7 +58,10 @@ class MclAdminHooks {
     }
 
     public static function admin_enqueue_scripts( $hook ) {
-        if ( strpos( $hook, 'mcl-quick-post' ) + strpos( $hook, 'mcl-serial-status' ) + strpos( $hook, 'mcl-forgotten' ) == 0 ) {
+        if ( strpos( $hook, 'mcl-quick-post' ) +
+                strpos( $hook, 'mcl-serial-status' ) +
+                strpos( $hook, 'mcl-forgotten' ) +
+                strpos( $hook, 'mcl-settings' ) == 0 ) {
             return;
         }
 

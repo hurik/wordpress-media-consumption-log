@@ -71,6 +71,19 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    $(".mcl_css_rebuild_data").click(function () {
+        $("#mcl_loading").addClass("mcl_css_loading");
+
+        var data = {
+            'action': 'mcl_rebuild_data'
+        };
+
+        $.post(ajaxurl, data, function (response) {
+            alert(response);
+            $("#mcl_loading").removeClass("mcl_css_loading");
+        });
+    });
+
     var offset = 200;
 
     $(window).scroll(function () {

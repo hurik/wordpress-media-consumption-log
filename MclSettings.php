@@ -220,37 +220,68 @@ isStacked: true,";
         }
     }
 
-    private static function get_posts_without_mcl_number() {
-        global $wpdb;
+    public static function rebuild_data() {
+        MclData::update_data();
 
-        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
-        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+        // From WP Page Load Stats by Mike Jolley
+        // https://wordpress.org/plugins/wp-page-load-stats/
+        $timer_stop = timer_stop();
+        $query_count = get_num_queries();
+        $memory_usage = round( self::convert_bytes_to_hr( memory_get_usage() ), 2 );
+        $memory_peak_usage = round( self::convert_bytes_to_hr( memory_get_peak_usage() ), 2 );
+        $memory_limit = round( self::convert_bytes_to_hr( self::let_to_num( WP_MEMORY_LIMIT ) ), 2 );
 
-        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
-            $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
+        $text = sprintf( __( "Rebuilding data done!\n\n%s queries in %s seconds.\n%s out of %s MB (%s) memory used.\nPeak memory usage %s MB.", 'media-consumption-log' ), $query_count, $timer_stop, $memory_usage, $memory_limit, round( ( $memory_usage / $memory_limit ), 2 ) * 100 . '%', $memory_peak_usage );
 
-            $posts_without_mcl_number = $wpdb->get_results( "
-            SELECT *
-            FROM {$wpdb->prefix}posts as p
-            LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
-            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
-            WHERE
-                p.post_type = 'post'
-                AND p.post_status = 'publish'
-                AND t.taxonomy = 'category'
-                AND t.term_id IN ({$monitored_categories})
-                AND NOT EXISTS (
-                    SELECT *
-                    FROM {$wpdb->prefix}postmeta
-                    WHERE meta_key = 'mcl_number'
-                    AND post_id = p.ID
-                )
-	" );
+        echo $text;
+        wp_die();
+    }
 
-            return $posts_without_mcl_number;
-        } else {
-            return array();
+    /**
+     * From WP Page Load Stats by Mike Jolley
+     * https://wordpress.org/plugins/wp-page-load-stats/
+     * 
+     * let_to_num function.
+     *
+     * This function transforms the php.ini notation for numbers (like '2M') to an integer
+     *
+     * @access public
+     * @param $size
+     * @return int
+     */
+    private function let_to_num( $size ) {
+        $l = substr( $size, -1 );
+        $ret = substr( $size, 0, -1 );
+        switch ( strtoupper( $l ) ) {
+            case 'P':
+                $ret *= 1024;
+            case 'T':
+                $ret *= 1024;
+            case 'G':
+                $ret *= 1024;
+            case 'M':
+                $ret *= 1024;
+            case 'K':
+                $ret *= 1024;
         }
+        return $ret;
+    }
+
+    /**
+     * From WP Page Load Stats by Mike Jolley
+     * https://wordpress.org/plugins/wp-page-load-stats/
+     * 
+     * convert_bytes_to_hr function.
+     *
+     * @access public
+     * @param mixed $bytes
+     */
+    private static function convert_bytes_to_hr( $bytes ) {
+        $units = array( 0 => 'B', 1 => 'kB', 2 => 'MB', 3 => 'GB' );
+        $log = log( $bytes, 1024 );
+        $power = ( int ) $log;
+        $size = pow( 1024, $log - $power );
+        return $size . $units[$power];
     }
 
     public static function create_page() {
@@ -397,6 +428,9 @@ isStacked: true,";
                 <?php submit_button(); ?>
             </form>
 
+            <h3><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3>
+            <input class="button button-primary mcl_css_rebuild_data" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" type="submit">
+
             <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
             <table class="form-table">
                 <tr>
@@ -418,8 +452,42 @@ isStacked: true,";
                     </tr>   
                 <?php } ?>
             </table>
-        </div>	
+            <div id="mcl_loading"></div>
+        </div>
         <?php
+    }
+
+    private static function get_posts_without_mcl_number() {
+        global $wpdb;
+
+        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
+            $monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
+
+            $posts_without_mcl_number = $wpdb->get_results( "
+            SELECT *
+            FROM {$wpdb->prefix}posts as p
+            LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
+            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
+            WHERE
+                p.post_type = 'post'
+                AND p.post_status = 'publish'
+                AND t.taxonomy = 'category'
+                AND t.term_id IN ({$monitored_categories})
+                AND NOT EXISTS (
+                    SELECT *
+                    FROM {$wpdb->prefix}postmeta
+                    WHERE meta_key = 'mcl_number'
+                    AND post_id = p.ID
+                )
+	" );
+
+            return $posts_without_mcl_number;
+        } else {
+            return array();
+        }
     }
 
 }
