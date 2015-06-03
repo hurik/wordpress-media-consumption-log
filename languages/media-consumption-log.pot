@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"POT-Revision-Date: Mon Jun 01 2015 13:16:31 GMT+0200\n"
+"POT-Revision-Date: Wed Jun 03 2015 16:52:35 GMT+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,76 +24,32 @@ msgstr ""
 "esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Generator: Loco - https://localise.biz/"
 
-#: ../MclAdminHooks.php:63
+#: ../MclAdminHooks.php:69
 msgid "Title can't be empty!"
 msgstr ""
 
-#: ../MclAdminHooks.php:75 ../MclAdminHooks.php:75 ../MclHooks.php:44 ..
+#: ../MclAdminHooks.php:81 ../MclAdminHooks.php:81 ../MclHooks.php:44 ..
 #: /MclQuickPost.php:76 ../MclQuickPost.php:242
 msgid "Quick Post"
 msgstr ""
 
-#: ../MclAdminHooks.php:76 ../MclAdminHooks.php:76 ../MclSerialStatus.php:64 ..
+#: ../MclAdminHooks.php:82 ../MclAdminHooks.php:82 ../MclSerialStatus.php:64 ..
 #: /MclSerialStatus.php:318
 msgid "Serial Status"
 msgstr ""
 
-#: ../MclAdminHooks.php:77 ../MclAdminHooks.php:77 ../MclForgotten.php:65 ..
-#: /MclForgotten.php:119 ../MclSettings.php:328
+#: ../MclAdminHooks.php:83 ../MclAdminHooks.php:83 ../MclForgotten.php:65 ..
+#: /MclForgotten.php:119 ../MclSettings.php:395
 msgid "Forgotten"
 msgstr ""
 
-#: ../MclAdminHooks.php:78 ../MclAdminHooks.php:78 ../MclData.php:81
-msgid "Data"
-msgstr ""
-
-#: ../MclAdminHooks.php:79 ../MclAdminHooks.php:79 ../MclSettings.php:236
+#: ../MclAdminHooks.php:84 ../MclAdminHooks.php:84 ../MclSettings.php:303
 msgid "Settings"
 msgstr ""
 
-#: ../MclData.php:65 ../MclForgotten.php:25 ../MclQuickPost.php:67 ..
-#: /MclSerialStatus.php:55 ../MclSettings.php:225
+#: ../MclForgotten.php:25 ../MclQuickPost.php:67 ../MclSerialStatus.php:55 ..
+#: /MclSettings.php:289
 msgid "You do not have sufficient permissions to access this page."
-msgstr ""
-
-#: ../MclData.php:83 ../MclData.php:86
-msgid "Rebuild data"
-msgstr ""
-
-#: ../MclData.php:87 ../MclData.php:108
-msgid "Now!"
-msgstr ""
-
-#: ../MclData.php:90
-msgid "Number of queries"
-msgstr ""
-
-#: ../MclData.php:94
-msgid "Execution time"
-msgstr ""
-
-#: ../MclData.php:99
-msgid "Postmeta orphans"
-msgstr ""
-
-#: ../MclData.php:102
-msgid "Number of postmeta orphans"
-msgstr ""
-
-#: ../MclData.php:107
-msgid "Remove"
-msgstr ""
-
-#: ../MclData.php:113
-msgid "Posts without mcl_number"
-msgstr ""
-
-#: ../MclData.php:116
-msgid "Number of posts without mcl_number"
-msgstr ""
-
-#: ../MclData.php:121
-msgid "Posts"
 msgstr ""
 
 #: ../MclForgotten.php:66 ../MclQuickPost.php:78 ../MclSerialStatus.php:66 ..
@@ -119,7 +75,7 @@ msgstr ""
 msgid "and"
 msgstr ""
 
-#: ../MclQuickPost.php:115 ../MclSettings.php:250 ../MclStatus.php:112 ..
+#: ../MclQuickPost.php:115 ../MclSettings.php:317 ../MclStatus.php:112 ..
 #: /MclStatus.php:322
 msgid "Non serials"
 msgstr ""
@@ -182,71 +138,81 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-#: ../MclSettings.php:242
+#: ../MclSettings.php:234
+#, php-format
+msgid ""
+"Rebuilding data done!\n"
+"\n"
+"%s queries in %s seconds.\n"
+"%s out of %s MB (%s) memory used.\n"
+"Peak memory usage %s MB."
+msgstr ""
+
+#: ../MclSettings.php:309
 msgid "Monitored categories"
 msgstr ""
 
-#: ../MclSettings.php:245 ../MclStatus.php:44 ../MclStatus.php:148
+#: ../MclSettings.php:312 ../MclStatus.php:44 ../MclStatus.php:148
 msgid "Serials"
 msgstr ""
 
-#: ../MclSettings.php:247
+#: ../MclSettings.php:314
 msgid ""
 "IDs of the categories which have epoisodes or chapters. This categories will "
 "be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,"
 "43,50,187,204"
 msgstr ""
 
-#: ../MclSettings.php:252
+#: ../MclSettings.php:319
 msgid ""
 "IDs of the categories which are visible in Statistics and Status, but not in "
 "Quick Post and Complete. Example: 45,75,284"
 msgstr ""
 
-#: ../MclSettings.php:255
+#: ../MclSettings.php:322
 msgid "IDs of the categories:"
 msgstr ""
 
-#: ../MclSettings.php:260
+#: ../MclSettings.php:327
 msgid "Units"
 msgstr ""
 
-#: ../MclSettings.php:261
+#: ../MclSettings.php:328
 msgid "Please define the units of the serial categories."
 msgstr ""
 
-#: ../MclSettings.php:280
+#: ../MclSettings.php:347
 msgid "No monitored serial category!"
 msgstr ""
 
-#: ../MclSettings.php:287
+#: ../MclSettings.php:354
 msgid "Statistics"
 msgstr ""
 
-#: ../MclSettings.php:290
+#: ../MclSettings.php:357
 msgid "Daily statistics size"
 msgstr ""
 
-#: ../MclSettings.php:292
+#: ../MclSettings.php:359
 msgid ""
 "Please insert number of days the daily statistic should cover. If you insert "
 "0 the days since the first post will be covered. <strong>Attention:</strong> "
 "The graph can get really big! Default:"
 msgstr ""
 
-#: ../MclSettings.php:296
+#: ../MclSettings.php:363
 msgid "Daily date format"
 msgstr ""
 
-#: ../MclSettings.php:298
+#: ../MclSettings.php:365
 msgid "Format for dates on the daily statistics page. Default:"
 msgstr ""
 
-#: ../MclSettings.php:302
+#: ../MclSettings.php:369
 msgid "Daily Google Charts Options"
 msgstr ""
 
-#: ../MclSettings.php:304
+#: ../MclSettings.php:371
 msgid ""
 "When the daily graph gets really big it is sometime necessary to change some "
 "Google Charts options. Check the documentation for more information: <a "
@@ -255,29 +221,29 @@ msgid ""
 "Stacked Bar Charts</a><br />Default:<br />"
 msgstr ""
 
-#: ../MclSettings.php:309
+#: ../MclSettings.php:376
 msgid "Monthly statistics size"
 msgstr ""
 
-#: ../MclSettings.php:311
+#: ../MclSettings.php:378
 msgid ""
 "Please insert number of months the statistic should cover. If you insert 0 "
 "the months since the first post will be covered. Default:"
 msgstr ""
 
-#: ../MclSettings.php:315
+#: ../MclSettings.php:382
 msgid "Monthly date format"
 msgstr ""
 
-#: ../MclSettings.php:317
+#: ../MclSettings.php:384
 msgid "Format for dates on the monthly statistics page. Default:"
 msgstr ""
 
-#: ../MclSettings.php:321
+#: ../MclSettings.php:388
 msgid "Monthly Google Charts Options"
 msgstr ""
 
-#: ../MclSettings.php:323
+#: ../MclSettings.php:390
 msgid ""
 "When the monthly graph gets really big it is sometime necessary to change "
 "some Google Charts options. Check the documentation for more information: <a "
@@ -286,54 +252,74 @@ msgid ""
 "Stacked Bar Charts</a><br />Default:<br />"
 msgstr ""
 
-#: ../MclSettings.php:331
+#: ../MclSettings.php:398
 msgid "Minimal count of days"
 msgstr ""
 
-#: ../MclSettings.php:333
+#: ../MclSettings.php:400
 msgid ""
 "Minimal number of days the last post of a serial must be old to be shown in "
 "forgotten. Default:"
 msgstr ""
 
-#: ../MclSettings.php:337
+#: ../MclSettings.php:404
 msgid "Other settings"
 msgstr ""
 
-#: ../MclSettings.php:338
+#: ../MclSettings.php:405
 msgid ""
 "<strong>Attention:</strong> This settings should be changed after using the "
 "plugin for some time! This should only been altered after the installation."
 msgstr ""
 
-#: ../MclSettings.php:342
+#: ../MclSettings.php:409
 msgid "Separator"
 msgstr ""
 
-#: ../MclSettings.php:344
+#: ../MclSettings.php:411
 msgid ""
 "Define a seperator which separates the title from the episode/chapter number."
 " Spaces are added on both side. Default:"
 msgstr ""
 
-#: ../MclSettings.php:348
+#: ../MclSettings.php:415
 msgid "mcl_number \"and\""
 msgstr ""
 
-#: ../MclSettings.php:350
+#: ../MclSettings.php:417
 msgid ""
 "When the keyword is in the episode/chapter number the mcl_number will be set "
 "to 2. Spaces are added on both side. Default:"
 msgstr ""
 
-#: ../MclSettings.php:354
+#: ../MclSettings.php:421
 msgid "mcl_number \"to\""
 msgstr ""
 
-#: ../MclSettings.php:356
+#: ../MclSettings.php:423
 msgid ""
 "When the keyword is in the episode/chapter number the mcl_number will be set "
 "to last number - first number + 1. Spaces are added on both side. Default:"
+msgstr ""
+
+#: ../MclSettings.php:430
+msgid "Rebuild data"
+msgstr ""
+
+#: ../MclSettings.php:431
+msgid "Now!"
+msgstr ""
+
+#: ../MclSettings.php:433
+msgid "Posts without mcl_number"
+msgstr ""
+
+#: ../MclSettings.php:436
+msgid "Posts"
+msgstr ""
+
+#: ../MclSettings.php:447
+msgid "Nothing found!"
 msgstr ""
 
 #: ../MclStatistics.php:217 ../MclStatistics.php:226
