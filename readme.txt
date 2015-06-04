@@ -48,11 +48,8 @@ Here you can set a serial to complete or abandoned. Complete and abandoned seria
 = Forgotten =
 Shows serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
 
-= Data =
-Sometimes it is necessary to rebuild the saved data, because you renamed a category. This is normally not necessary because every time you create a new post or edit a post the data is rebuild. The data is used for the Status, Statistics, Quick Post and Complete pages.
-
 = Settings =
-Here you can change the options of the plugin.
+Here you can change the options of the plugin. You also can rebuild the data and see if there is a post without mcl number in the monitored categories.
 
 = How to use? =
 Here is an example how to use this plugin:
@@ -120,8 +117,7 @@ No questions at the moment.
 3. Quick Post
 4. Serial Status
 5. Forgotten
-6. Data
-7. Settings
+6. Settings
 
 
 == Changelog ==
