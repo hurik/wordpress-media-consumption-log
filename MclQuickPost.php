@@ -83,13 +83,14 @@ class MclQuickPost {
 
         // Create categories navigation
         $cat_nav_html = "";
+        $alternate = false;
 
         foreach ( $data->categories as $category ) {
             if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
-            $cat_nav_html .= "\n  <tr>"
+            $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                     . "\n    <th nowrap valign=\"top\"><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></th>"
                     . "\n    <td>";
 
@@ -106,12 +107,14 @@ class MclQuickPost {
 
             $cat_nav_html .= "</td>"
                     . "\n  </tr>";
+
+            $alternate = !$alternate;
         }
 
         $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
 
         if ( !empty( $monitored_categories_non_serials ) ) {
-            $cat_nav_html .= "\n  <tr>"
+            $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                     . "\n    <th nowrap valign=\"top\">" . __( 'Non serials', 'media-consumption-log' ) . "</th>"
                     . "\n    <td>";
 
@@ -159,7 +162,7 @@ class MclQuickPost {
                     . "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
                     . "\n  </tr>"
                     . "\n</table>"
-                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";
+                    . "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div><br />";
 
             if ( $category->mcl_tags_count_ongoing == 0 ) {
                 continue;
@@ -183,11 +186,16 @@ class MclQuickPost {
                     . "\n    <col width=\"49%\">"
                     . "\n    <col width=\"49%\">"
                     . "\n  </colgroup>"
-                    . "\n  <tr>"
-                    . "\n    <th></th>"
-                    . "\n    <th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n    <th><strong>" . __( 'Last Post', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n  </tr>";
+                    . "\n  <thead>"
+                    . "\n    <tr>"
+                    . "\n      <th></th>"
+                    . "\n      <th><strong>" . __( 'Next Post', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n      <th><strong>" . __( 'Last Post', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n    </tr>"
+                    . "\n  </thead>"
+                    . "\n  <tbody>";
+
+            $alternate = false;
 
             foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
                 $first = true;
@@ -198,24 +206,19 @@ class MclQuickPost {
                     $post_title = htmlspecialchars( $tag->post_title );
                     $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_date );
 
-                    if ( $first ) {
-                        $cats_html .= "\n  <tr>"
-                                . "\n    <th nowrap rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\" valign=\"top\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                . "\n    <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
-                                . "\n  </tr>";
+                    $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                            . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                            . "\n      <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+                            . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
+                            . "\n    </tr>";
 
-                        $first = false;
-                    } else {
-                        $cats_html .= "\n  <tr>"
-                                . "\n    <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
-                                . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
-                                . "\n  </tr>";
-                    }
+                    $first = false;
+                    $alternate = !$alternate;
                 }
             }
 
-            $cats_html .= "\n</table>";
+            $cats_html .= "\n  </tbody>"
+                    . "\n</table>";
         }
 
         foreach ( $data->categories as $category ) {
@@ -239,14 +242,22 @@ class MclQuickPost {
         ?>
 
         <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2><br />
 
             <table class="widefat">
                 <colgroup>
                     <col width="1%">
                     <col width="99%">
                 </colgroup>
-                <?php echo $cat_nav_html; ?>
+                <thead>
+                    <tr>
+                        <th><strong><?php _e( 'Category', 'media-consumption-log' ); ?></strong></th>
+                        <th><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $cat_nav_html; ?>
+                </tbody>
             </table>
 
             <?php echo $cats_html; ?>

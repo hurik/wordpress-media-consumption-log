@@ -93,11 +93,16 @@ class MclForgotten {
                     . "\n    <col width=\"49%\">"
                     . "\n    <col width=\"2%\">"
                     . "\n  </colgroup>"
-                    . "\n  <tr>"
-                    . "\n    <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n    <th><strong>" . __( 'Last', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n    <th nowrap><strong>" . __( 'Days ago', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n  </tr>";
+                    . "\n  <thead>"
+                    . "\n    <tr>"
+                    . "\n      <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n      <th><strong>" . __( 'Last', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n      <th nowrap><strong>" . __( 'Days ago', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n    </tr>"
+                    . "\n  </thead>"
+                    . "\n  <tbody>";
+
+            $alternate = false;
 
             MclCommaInTags::comma_tags_filter( $category->forgotten );
 
@@ -106,31 +111,40 @@ class MclForgotten {
                 $status = MclHelper::get_last_consumed( $tag->post_title );
                 $post_title = htmlspecialchars( $tag->post_title );
 
-                $html .= "\n  <tr>"
-                        . "\n    <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                        . "\n    <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$status}</a></td>"
-                        . "\n    <td nowrap>{$tag->forgotten}</td>"
-                        . "\n  </tr>";
+                $html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                        . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                        . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$status}</a></td>"
+                        . "\n      <td nowrap>{$tag->forgotten}</td>"
+                        . "\n    </tr>";
+
+                $alternate = !$alternate;
             }
 
-            $html .= "\n</table>";
+            $html .= "\n  </tbody>"
+                    . "\n</table>";
         }
         ?><div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2><br />
 
             <table class="widefat">
-                <tr>
-                    <td>
-                        <?php echo $nav; ?> 
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <?php echo $nav; ?> 
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
             <?php echo $html; ?> 
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-        }
-
     }
-    
+
+}

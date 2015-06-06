@@ -71,6 +71,7 @@ class MclSerialStatus {
 
         // Create categories navigation
         $cat_nav_html = "";
+        $alternate = false;
 
         foreach ( $data->categories as $category ) {
             if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
@@ -81,12 +82,11 @@ class MclSerialStatus {
                 continue;
             }
 
-            $cat_nav_html .= "\n  <tr>"
-                    . "\n    <th colspan=\"2\"><strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong></th>"
-                    . "\n  </tr>";
+            $first = true;
 
             if ( $category->mcl_tags_count_ongoing ) {
-                $cat_nav_html .= "\n  <tr>"
+                $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                        . "\n    <th nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</th>"
                         . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td>"
                         . "\n    <td>";
 
@@ -99,10 +99,14 @@ class MclSerialStatus {
 
                 $cat_nav_html .= "</td>"
                         . "\n  </tr>";
+
+                $first = false;
+                $alternate = !$alternate;
             }
 
             if ( $category->mcl_tags_count_complete ) {
-                $cat_nav_html .= "\n  <tr>"
+                $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                        . "\n    <th nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</th>"
                         . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
                         . "\n    <td>";
 
@@ -115,10 +119,14 @@ class MclSerialStatus {
 
                 $cat_nav_html .= "</td>"
                         . "\n  </tr>";
+
+                $first = false;
+                $alternate = !$alternate;
             }
 
             if ( $category->mcl_tags_count_abandoned ) {
-                $cat_nav_html .= "\n  <tr>"
+                $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                        . "\n    <th nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</th>"
                         . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-abandoned\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
                         . "\n    <td>";
 
@@ -131,6 +139,9 @@ class MclSerialStatus {
 
                 $cat_nav_html .= "</td>"
                         . "\n  </tr>";
+
+                $first = false;
+                $alternate = !$alternate;
             }
         }
 
@@ -171,11 +182,16 @@ class MclSerialStatus {
                         . "\n    <col width=\"98%\">"
                         . "\n    <col width=\"1%\">"
                         . "\n  </colgroup>"
-                        . "\n  <tr>"
-                        . "\n    <th></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n  </tr>";
+                        . "\n  <thead>"
+                        . "\n    <tr>"
+                        . "\n      <th></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Change State', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n    </tr>"
+                        . "\n  </thead>"
+                        . "\n  <tbody>";
+
+                $alternate = false;
 
                 foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
                     $first = true;
@@ -184,24 +200,19 @@ class MclSerialStatus {
                         $tag_link = get_tag_link( $tag->tag_id );
                         $tag_title = htmlspecialchars( $tag->name );
 
-                        if ( $first ) {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_ongoing[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
+                        $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
+                                . "\n    </tr>";
 
-                            $first = false;
-                        } else {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
-                        }
+                        $first = false;
+                        $alternate = !$alternate;
                     }
                 }
 
-                $cats_html .= "\n</table>";
+                $cats_html .= "\n  </tbody>"
+                        . "\n</table>";
             }
 
             if ( $category->mcl_tags_count_complete ) {
@@ -225,11 +236,16 @@ class MclSerialStatus {
                         . "\n    <col width=\"98%\">"
                         . "\n    <col width=\"1%\">"
                         . "\n  </colgroup>"
-                        . "\n  <tr>"
-                        . "\n    <th></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n  </tr>";
+                        . "\n  <thead>"
+                        . "\n    <tr>"
+                        . "\n      <th></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Change State', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n    </tr>"
+                        . "\n  </thead>"
+                        . "\n  <tbody>";
+
+                $alternate = false;
 
                 foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
                     $first = true;
@@ -238,24 +254,19 @@ class MclSerialStatus {
                         $tag_link = get_tag_link( $tag->tag_id );
                         $tag_title = htmlspecialchars( $tag->name );
 
-                        if ( $first ) {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_complete[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
+                        $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
+                                . "\n    </tr>";
 
-                            $first = false;
-                        } else {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
-                        }
+                        $first = false;
+                        $alternate = !$alternate;
                     }
                 }
 
-                $cats_html .= "\n</table>";
+                $cats_html .= "\n  </tbody>"
+                        . "\n</table>";
             }
 
             if ( $category->mcl_tags_count_abandoned ) {
@@ -279,11 +290,16 @@ class MclSerialStatus {
                         . "\n    <col width=\"98%\">"
                         . "\n    <col width=\"1%\">"
                         . "\n  </colgroup>"
-                        . "\n  <tr>"
-                        . "\n    <th></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n    <th nowrap><strong>" . __( 'Change state', 'media-consumption-log' ) . "</strong></th>"
-                        . "\n  </tr>";
+                        . "\n  <thead>"
+                        . "\n    <tr>"
+                        . "\n      <th></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n      <th nowrap><strong>" . __( 'Change State', 'media-consumption-log' ) . "</strong></th>"
+                        . "\n    </tr>"
+                        . "\n  </thead>"
+                        . "\n  <tbody>";
+
+                $alternate = false;
 
                 foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
                     $first = true;
@@ -292,37 +308,42 @@ class MclSerialStatus {
                         $tag_link = get_tag_link( $tag->tag_id );
                         $tag_title = htmlspecialchars( $tag->name );
 
-                        if ( $first ) {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <th nowrap valign=\"top\" rowspan=\"" . count( $category->mcl_tags_abandoned[$key] ) . "\"><div class= \"anchor\" id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\"></div><div>{$key}</div></th>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
+                        $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                                . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
+                                . "\n    </tr>";
 
-                            $first = false;
-                        } else {
-                            $cats_html .= "\n  <tr>"
-                                    . "\n    <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                                    . "\n    <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
-                                    . "\n  </tr>";
-                        }
+                        $first = false;
+                        $alternate = !$alternate;
                     }
                 }
 
-                $cats_html .= "\n</table>";
+                $cats_html .= "\n  </tbody>"
+                        . "\n</table>";
             }
         }
         ?>
 
         <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Serial Status', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Serial Status', 'media-consumption-log' ); ?></h2><br />
 
             <table class="widefat">
                 <colgroup>
                     <col width="1%">
-                    <col width="99%">
+                    <col width="1%">
+                    <col width="98%">
                 </colgroup>
-                <?php echo $cat_nav_html; ?>
+                <thead>
+                    <tr>
+                        <th><strong><?php _e( 'Category', 'media-consumption-log' ); ?></strong></th>
+                        <th><strong><?php _e( 'State', 'media-consumption-log' ); ?></strong></th>
+                        <th><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $cat_nav_html; ?>
+                </tbody>
             </table>
 
             <?php echo $cats_html; ?>
