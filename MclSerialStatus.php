@@ -201,7 +201,7 @@ class MclSerialStatus {
                         $tag_title = htmlspecialchars( $tag->name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
                                 . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                 . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
                                 . "\n    </tr>";
@@ -255,7 +255,7 @@ class MclSerialStatus {
                         $tag_title = htmlspecialchars( $tag->name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
                                 . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                 . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"2\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
                                 . "\n    </tr>";
@@ -309,7 +309,7 @@ class MclSerialStatus {
                         $tag_title = htmlspecialchars( $tag->name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                                . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                                . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
                                 . "\n      <td><a href=\"{$tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                                 . "\n      <td nowrap><a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">" . __( 'Running', 'media-consumption-log' ) . "</a> - <a class=\"mcl_css_complete\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"1\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
                                 . "\n    </tr>";

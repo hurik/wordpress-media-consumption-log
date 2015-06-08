@@ -207,7 +207,7 @@ class MclQuickPost {
                     $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_date );
 
                     $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                            . "\n      <th nowrap>" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                            . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
                             . "\n      <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
                             . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
                             . "\n    </tr>";
