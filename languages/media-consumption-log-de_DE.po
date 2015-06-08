@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"PO-Revision-Date: Mon Jun 08 2015 04:03:49 GMT+0200\n"
+"PO-Revision-Date: Mon Jun 08 2015 04:29:26 GMT+0200\n"
 "Last-Translator: Andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -76,11 +76,7 @@ msgstr "Tage zuvor"
 #: ../MclForgotten.php:132 ../MclQuickPost.php:255 ../MclSerialStatus.php:341 ..
 #: MclStatus.php:51 ../MclStatus.php:157
 msgid "Quick Navigation"
-msgstr ""
-"Schnelle N\n"
-"avi\n"
-"gatio\n"
-"n"
+msgstr "Schnelle Navigation"
 
 #: ../MclHelper.php:41 ../MclSettings.php:69
 msgid "and"
