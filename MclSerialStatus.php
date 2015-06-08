@@ -86,7 +86,7 @@ class MclSerialStatus {
 
             if ( $category->mcl_tags_count_ongoing ) {
                 $cat_nav_html .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                        . "\n    <th nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</th>"
+                        . "\n    <th nowrap valign=\"top\">" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</th>"
                         . "\n    <td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td>"
                         . "\n    <td>";
 
