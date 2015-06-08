@@ -238,28 +238,34 @@ class MclStatistics {
                 . "\n    <col width=\"1%\">"
                 . "\n    <col width=\"1%\">"
                 . "\n  </colgroup>"
-                . "\n  <tr>"
-                . "\n    <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>#</th><th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
-                . "\n  </tr>";
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>#</th><th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
 
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
 
-            $html .= "\n  <tr>"
-                    . "\n    <td>{$category->name}</td>"
-                    . "\n    <td nowrap>{$category->mcl_consumption_total}</td>"
-                    . "\n    <td nowrap>{$unit}</td>"
-                    . "\n  </tr>";
+            $html .= "\n    <tr>"
+                    . "\n      <td>{$category->name}</td>"
+                    . "\n      <td nowrap>{$category->mcl_consumption_total}</td>"
+                    . "\n      <td nowrap>{$unit}</td>"
+                    . "\n    </tr>";
         }
 
         $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total comsumption, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
         $since_total_string = str_replace( '%DAYS%', $data->number_of_days, $since_total_string );
 
-        $html .= "\n  <tr>"
-                . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>{$data->consumption_total}</th>"
-                . "\n  </tr>"
+        $html .= "\n  </tbody>"
+                . "\n  <tfoot>"
+                . "\n  <tr>"
+                . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>{$data->consumption_total}</th>"
+                . "\n    </tr>"
+                . "\n  </tfoot>"
                 . "\n</table>"
                 . "\n<p>{$since_total_string}</p>";
 
@@ -271,49 +277,58 @@ class MclStatistics {
                 . "\n    <col width=\"1%\">"
                 . "\n    <col width=\"1%\">"
                 . "\n  </colgroup>"
-                . "\n  <tr>"
-                . "\n    <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>&#216</th>"
-                . "\n    <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
-                . "\n  </tr>";
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>&#216</th>"
+                . "\n      <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
 
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
 
-            $html .= "\n  <tr>"
-                    . "\n    <td>{$category->name}</td>"
-                    . "\n    <td nowrap>" . number_format( $category->mcl_consumption_average, 2 ) . "</td>"
-                    . "\n    <td nowrap>{$unit}</td>"
-                    . "\n  </tr>";
+            $html .= "\n    <tr>"
+                    . "\n      <td>{$category->name}</td>"
+                    . "\n      <td nowrap>" . number_format( $category->mcl_consumption_average, 2 ) . "</td>"
+                    . "\n      <td nowrap>{$unit}</td>"
+                    . "\n    </tr>";
         }
 
         $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Average a day, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
         $since_string = str_replace( '%DAYS%', $data->number_of_days, $since_string );
 
-        $html .= "\n  <tr>"
-                . "\n    <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>" . number_format( $data->consumption_average, 2 ) . "</th>"
-                . "\n  </tr>"
+        $html .= "\n  </tbody>"
+                . "\n  <tfoot>"
+                . "\n    <tr>"
+                . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . number_format( $data->consumption_average, 2 ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </tfoot>"
                 . "\n</table>"
                 . "\n<p>{$since_string}</p>";
 
         // Consumption count
         $html .= "\n\n<h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<table border=\"1\">"
+                . "\n<table>"
                 . "\n  <colgroup>"
-                . "\n    <col width=\"96%\">"
-                . "\n    <col width=\"1%\">"
-                . "\n    <col width=\"1%\">"
-                . "\n    <col width=\"1%\">"
-                . "\n    <col width=\"1%\">"
+                . "\n    <col width=\"20%\">"
+                . "\n    <col width=\"20%\">"
+                . "\n    <col width=\"20%\">"
+                . "\n    <col width=\"20%\">"
+                . "\n    <col width=\"20%\">"
                 . "\n  </colgroup>"
-                . "\n  <tr>"
-                . "\n    <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>" . __( 'Running', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>" . __( 'Complete', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>" . __( 'Abandoned', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n  </tr>";
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th nowrap>" . __( 'Category', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Running', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Complete', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Abandoned', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
 
         foreach ( $data->categories as $category ) {
             if ( $category->mcl_tags_count == 0 ) {
@@ -321,18 +336,18 @@ class MclStatistics {
             }
 
             if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
-                $html .= "\n  <tr>"
-                        . "\n    <td colspan=\"4\">{$category->name}</td>"
-                        . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
-                        . "\n  </tr>";
+                $html .= "\n    <tr>"
+                        . "\n      <td nowrap colspan=\"4\">{$category->name}</td>"
+                        . "\n      <td nowrap>{$category->mcl_tags_count}</td>"
+                        . "\n    </tr>";
             } else {
-                $html .= "\n  <tr>"
-                        . "\n    <td>{$category->name}</td>"
-                        . "\n    <td nowrap>{$category->mcl_tags_count_ongoing}</td>"
-                        . "\n    <td nowrap>{$category->mcl_tags_count_complete}</td>"
-                        . "\n    <td nowrap>{$category->mcl_tags_count_abandoned}</td>"
-                        . "\n    <td nowrap>{$category->mcl_tags_count}</td>"
-                        . "\n  </tr>";
+                $html .= "\n    <tr>"
+                        . "\n      <td nowrap>{$category->name}</td>"
+                        . "\n      <td nowrap>{$category->mcl_tags_count_ongoing}</td>"
+                        . "\n      <td nowrap>{$category->mcl_tags_count_complete}</td>"
+                        . "\n      <td nowrap>{$category->mcl_tags_count_abandoned}</td>"
+                        . "\n      <td nowrap>{$category->mcl_tags_count}</td>"
+                        . "\n    </tr>";
             }
         }
 
@@ -342,13 +357,16 @@ class MclStatistics {
         $since_count_string = str_replace( '%DAYS%', $data->number_of_days, $since_count_string );
         $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
 
-        $html .= "\n  <tr>"
-                . "\n    <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n    <th nowrap>{$data->tags_count_ongoing}</th>"
-                . "\n    <th nowrap>{$data->tags_count_complete}</th>"
-                . "\n    <th nowrap>{$data->tags_count_abandoned}</th>"
-                . "\n    <th nowrap>{$data->tags_count_total}</th>"
-                . "\n  </tr>"
+        $html .= "\n  </tbody>"
+                . "\n  <tfoot>"
+                . "\n    <tr>"
+                . "\n      <th nowrap>" . __( 'Total', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>{$data->tags_count_ongoing}</th>"
+                . "\n      <th nowrap>{$data->tags_count_complete}</th>"
+                . "\n      <th nowrap>{$data->tags_count_abandoned}</th>"
+                . "\n      <th nowrap>{$data->tags_count_total}</th>"
+                . "\n    </tr>"
+                . "\n  </tfoot>"
                 . "\n</table>"
                 . "\n<p>{$since_count_string}</p>";
 
