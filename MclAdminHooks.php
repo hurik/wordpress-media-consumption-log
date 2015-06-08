@@ -38,7 +38,7 @@ class MclAdminHooks {
 
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
 
-        add_action( 'admin_enqueue_scripts', array( get_called_class(), 'admin_enqueue_scripts' ) );
+        //add_action( 'admin_enqueue_scripts', array( get_called_class(), 'admin_enqueue_scripts' ) );
 
         add_action( 'wp_ajax_mcl_complete', array( 'MclSerialStatus', 'change_complete_status' ) );
         add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
@@ -57,20 +57,6 @@ class MclAdminHooks {
         }
     }
 
-    public static function admin_enqueue_scripts( $hook ) {
-        if ( strpos( $hook, 'mcl-quick-post' ) +
-                strpos( $hook, 'mcl-serial-status' ) +
-                strpos( $hook, 'mcl-forgotten' ) +
-                strpos( $hook, 'mcl-settings' ) == 0 ) {
-            return;
-        }
-
-        wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js' );
-        wp_localize_script( 'mcl_admin_js', 'mcl_js_strings', array( 'title_empty_error' => __( 'Title can\'t be empty!', 'media-consumption-log' ) ) );
-
-        wp_enqueue_style( 'mcl_admin_css', plugin_dir_url( __FILE__ ) . 'css/mcl_admin.css' );
-    }
-
     public static function admin_init() {
         MclSettings::register_settings();
     }
@@ -78,10 +64,29 @@ class MclAdminHooks {
     public static function admin_menu() {
         // Add menu
         add_menu_page( 'MCL', 'MCL', 'manage_options', 'mcl-quick-post' );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', array( 'MclQuickPost', 'create_page' ) );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Serial Status', 'media-consumption-log' ), __( 'Serial Status', 'media-consumption-log' ), 'manage_options', 'mcl-serial-status', array( 'MclSerialStatus', 'create_page' ) );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Forgotten', 'media-consumption-log' ), __( 'Forgotten', 'media-consumption-log' ), 'manage_options', 'mcl-forgotten', array( 'MclForgotten', 'create_page' ) );
-        add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
+        $page_hook_quick_post = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', array( 'MclQuickPost', 'create_page' ) );
+        $page_hook_serial_status = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Serial Status', 'media-consumption-log' ), __( 'Serial Status', 'media-consumption-log' ), 'manage_options', 'mcl-serial-status', array( 'MclSerialStatus', 'create_page' ) );
+        $page_hook_forgotten = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Forgotten', 'media-consumption-log' ), __( 'Forgotten', 'media-consumption-log' ), 'manage_options', 'mcl-forgotten', array( 'MclForgotten', 'create_page' ) );
+        $page_hook_settings = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
+
+        add_action( 'admin_print_scripts-' . $page_hook_quick_post, array( get_called_class(), 'load_js_and_css' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_serial_status, array( get_called_class(), 'load_js_and_css' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_forgotten, array( get_called_class(), 'load_css' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_settings, array( get_called_class(), 'load_js' ) );
+    }
+
+    public static function load_js_and_css() {
+        self::load_js();
+        self::load_css();
+    }
+
+    public static function load_js() {
+        wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js' );
+        wp_localize_script( 'mcl_admin_js', 'mcl_js_strings', array( 'title_empty_error' => __( 'Title can\'t be empty!', 'media-consumption-log' ) ) );
+    }
+
+    public static function load_css() {
+        wp_enqueue_style( 'mcl_admin_css', plugin_dir_url( __FILE__ ) . 'css/mcl_admin.css' );
     }
 
     public static function save_post( $post_id ) {
