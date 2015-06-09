@@ -29,32 +29,11 @@ class MclStatistics {
         $data = MclData::get_data_up_to_date();
 
         if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned && !$data->cat_non_serial ) {
-            $html = "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
-
-            return $html;
+            return "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
         }
 
-        // Javascript start
-        $html = "\n<script type=\"text/javascript\" src=\"https://www.google.com/jsapi\"></script>"
-                . "\n<script type=\"text/javascript\">"
-                . "\n  // Load the Visualization API and the piechart package."
-                . "\n  google.load('visualization', '1.0', {"
-                . "\n    'packages': ['corechart']"
-                . "\n  });";
-
         // Daily graph
-        $html .= "\n\n  // Set a callback to run when the Google Visualization API is loaded."
-                . "\n  google.setOnLoadCallback(drawDailyChart);"
-                . "\n  google.setOnLoadCallback(drawMonthlyChart);"
-                . "\n\n  // Callback that creates and populates a data table,"
-                . "\n  // instantiates the pie chart, passes in the data and"
-                . "\n  // draws it."
-                . "\n  function drawDailyChart() {"
-                . "\n    // Some raw data (not necessarily accurate)"
-                . "\n    var data = google.visualization.arrayToDataTable(["
-                . "\n      ['Date', ";
-
-        // Get the last dates
+        // Daily dates array
         $dates_daily = array();
 
         if ( MclSettings::get_statistics_daily_count() != 0 ) {
@@ -72,22 +51,27 @@ class MclStatistics {
             }
         }
 
-        // Data array header
-        foreach ( $data->categories as $category ) {
-            $html .= "'{$category->name}'";
+        // Daily data array
+        $daily_data = array();
 
-            if ( end( $data->categories ) != $category ) {
-                $html .= ", ";
-            }
+        for ( $i = 0; $i < count( $dates_daily ) + 1; $i++ ) {
+            $daily_data[] = array();
         }
 
-        $html .= ", { role: 'annotation' }],";
+        // Daily array header
+        $daily_data[0][] = "Date";
 
-        // Data array
+        foreach ( $data->categories as $category ) {
+            $daily_data[0][] = $category->name;
+        }
+
+        $daily_data[0][] = "ROLE_ANNOTATION";
+
+        // Daily array data
         for ( $i = 0; $i < count( $dates_daily ); $i++ ) {
             $date = DateTime::createFromFormat( 'Y-m-d', $dates_daily[$i] );
 
-            $html .= "\n      ['{$date->format( MclSettings::get_statistics_daily_date_format() )}', ";
+            $daily_data[$i + 1][] = $date->format( MclSettings::get_statistics_daily_date_format() );
 
             $total = 0;
 
@@ -102,34 +86,15 @@ class MclStatistics {
                 }
 
                 $total += $count;
-                $html .= "{$count}";
 
-                if ( end( $data->categories ) != $category ) {
-                    $html .= ", ";
-                }
+                $daily_data[$i + 1][] = $count;
             }
 
-            $html .= ", '{$total}']";
-
-            if ( $i != count( $dates_daily ) - 1 ) {
-                $html .= ", ";
-            }
+            $daily_data[$i + 1][] = $total;
         }
 
-        $html .= "\n    ]);"
-                . "\n\n    var options = {"
-                . "\n      " . MclSettings::get_statistics_daily_options()
-                . "\n    };"
-                . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));"
-                . "\n    chart.draw(data, options);"
-                . "\n  }";
-
         // Monthly graph
-        $html .= "\n\n  function drawMonthlyChart() {"
-                . "\n    // Some raw data (not necessarily accurate)"
-                . "\n    var data = google.visualization.arrayToDataTable(["
-                . "\n      ['Date', ";
-
+        // Monthly dates array
         $dates_monthly = array();
 
         if ( MclSettings::get_statistics_monthly_count() != 0 ) {
@@ -152,20 +117,26 @@ class MclStatistics {
             }
         }
 
-        foreach ( $data->categories as $category ) {
-            $html .= "'{$category->name}'";
+        // Monthly data array
+        $monthly_data = array();
 
-            if ( end( $data->categories ) != $category ) {
-                $html .= ", ";
-            }
+        for ( $i = 0; $i < count( $dates_monthly ) + 1; $i++ ) {
+            $monthly_data[] = array();
         }
 
-        $html .= ", { role: 'annotation' }],";
+        // Monthly array header
+        $monthly_data[0][] = "Date";
+
+        foreach ( $data->categories as $category ) {
+            $monthly_data[0][] = $category->name;
+        }
+
+        $monthly_data[0][] = "ROLE_ANNOTATION";
 
         for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
             $date = DateTime::createFromFormat( 'Y-m', $dates_monthly[$i] );
 
-            $html .= "\n      ['{$date->format( MclSettings::get_statistics_monthly_date_format() )}', ";
+            $monthly_data[$i + 1][] = $date->format( MclSettings::get_statistics_monthly_date_format() );
 
             $total = 0;
 
@@ -180,46 +151,32 @@ class MclStatistics {
                 }
 
                 $total += $count;
-                $html .= "{$count}";
 
-                if ( end( $data->categories ) != $category ) {
-                    $html .= ", ";
-                }
+                $monthly_data[$i + 1][] = $count;
             }
 
-            $html .= ", '{$total}']";
-
-            if ( $i != count( $dates_monthly ) - 1 ) {
-                $html .= ", ";
-            }
+            $monthly_data[$i + 1][] = $total;
         }
 
-        $html .= "\n    ]);"
-                . "\n\n    var options = {"
-                . "\n      " . MclSettings::get_statistics_monthly_options()
-                . "\n    };"
-                . "\n\n    var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));"
-                . "\n    chart.draw(data, options);"
-                . "\n  }";
+        $js_params = array(
+            'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
+            'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK )
+        );
 
-        // Javascript end
-        $html .= "\n\n  jQuery(document).ready(function($) {"
-                . "\n    $(window).resize(function() {"
-                . "\n      drawDailyChart();"
-                . "\n      drawMonthlyChart();"
-                . "\n    });"
-                . "\n  });"
-                . "\n</script>";
+        // Output js
+        wp_enqueue_script( "google-charts", "https://www.google.com/jsapi" );
+        wp_enqueue_script( "mcl-statistics", plugins_url( "js/mcl_statistics.js", __FILE__ ) );
+        wp_localize_script( "mcl-statistics", 'js_params', $js_params );
 
         // Navigation
-        $html .= "\n<div>"
+        $html = "\n<div>"
                 . "\n  <ul>"
                 . "\n    <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
-                . "\n   <ul>"
+                . "\n   </ul>"
                 . "\n</div>";
 
         // Daily graph

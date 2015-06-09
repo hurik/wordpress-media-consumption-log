@@ -27,10 +27,8 @@ class MclSettings {
     const SETTING_MONITORED_CATEGORIES_NON_SERIAL = "mcl_setting_monitored_categories_non_serials";
     const SETTING_STATISTICS_DAILY_COUNT = "mcl_setting_statistics_daily_count";
     const SETTING_STATISTICS_DAILY_DATE_FORMAT = "mcl_setting_statistics_daily_date_format";
-    const SETTING_STATISTICS_DAILY_OPTIONS = "mcl_setting_statistics_daily_options";
     const SETTING_STATISTICS_MONTHLY_COUNT = "mcl_setting_statistics_monthly_count";
     const SETTING_STATISTICS_MONTHLY_DATE_FORMAT = "mcl_setting_statistics_monthly_date_format";
-    const SETTING_STATISTICS_MONTHLY_OPTIONS = "mcl_setting_statistics_monthly_options";
     const SETTING_FORGOTTEN_MIN_DAYS = "mcl_setting_forgotten_min_days";
     const SETTING_OTHER_SEPARATOR = "mcl_setting_other_separator";
     const SETTING_OTHER_AND = "mcl_setting_other_and";
@@ -39,21 +37,7 @@ class MclSettings {
     const SETTING_UNIT_PREFIX = "mcl_unit_";
     // Default values
     const default_statistics_daily_count = 31;
-    const default_statistics_daily_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
-height: data.getNumberOfRows() * 15 + 100,
-legend: { position: 'top', maxLines: 4, alignment: 'center' },
-bar: { groupWidth: '70%' },
-focusTarget: 'category',
-chartArea: {left: 80, top: 80, width: '100%', height: data.getNumberOfRows() * 15},
-isStacked: true,";
     const default_statistics_monthly_count = 0;
-    const default_statistics_monthly_options = "annotations: { textStyle: { color: '#000000', fontSize: 9, bold: true }, highContrast: true, alwaysOutside: true },
-height: data.getNumberOfRows() * 15 + 100,
-legend: { position: 'top', maxLines: 4, alignment: 'center' },
-bar: { groupWidth: '70%' },
-focusTarget: 'category',
-chartArea: { left: 50, top: 80, width: '100%', height: data.getNumberOfRows() * 15 },
-isStacked: true,";
     const default_forgotten_min_days = 91;
     const default_other_separator = "-";
 
@@ -102,16 +86,6 @@ isStacked: true,";
         }
     }
 
-    public static function get_statistics_daily_options() {
-        $value = get_option( self::SETTING_STATISTICS_DAILY_OPTIONS );
-
-        if ( empty( $value ) ) {
-            return self::default_statistics_daily_options;
-        } else {
-            return $value;
-        }
-    }
-
     public static function get_statistics_monthly_count() {
         $value = get_option( self::SETTING_STATISTICS_MONTHLY_COUNT );
 
@@ -127,16 +101,6 @@ isStacked: true,";
 
         if ( empty( $value ) ) {
             return self::default_statistics_monthly_date_format();
-        } else {
-            return $value;
-        }
-    }
-
-    public static function get_statistics_monthly_options() {
-        $value = get_option( self::SETTING_STATISTICS_MONTHLY_OPTIONS );
-
-        if ( empty( $value ) ) {
-            return self::default_statistics_monthly_options;
         } else {
             return $value;
         }
@@ -199,10 +163,8 @@ isStacked: true,";
         register_setting( self::SETTINGS_GROUP, self::SETTING_MONITORED_CATEGORIES_NON_SERIAL );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_DATE_FORMAT );
-        register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_OPTIONS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT );
-        register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_OPTIONS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_FORGOTTEN_MIN_DAYS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_SEPARATOR );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_AND );
@@ -366,13 +328,6 @@ isStacked: true,";
                     </tr>
 
                     <tr>
-                        <th scope="row"><?php _e( 'Daily Google Charts Options', 'media-consumption-log' ); ?></th>
-                        <td><textarea name="<?php echo self::SETTING_STATISTICS_DAILY_OPTIONS; ?>" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_daily_options() ); ?></textarea>
-                            <p class="description"><?php _e( 'When the daily graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::default_statistics_daily_options ); ?></p></td>
-                    </tr>
-
-                    <tr>
                         <th scope="row"><?php _e( 'Monthly statistics size', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MONTHLY_COUNT; ?>" value="<?php echo esc_attr( self::get_statistics_monthly_count() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Please insert number of months the statistic should cover. If you insert 0 the months since the first post will be covered. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_count; ?></p></td>
@@ -382,13 +337,6 @@ isStacked: true,";
                         <th scope="row"><?php _e( 'Monthly date format', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT; ?>" value="<?php echo esc_attr( self::get_statistics_monthly_date_format() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_date_format(); ?></p></td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row"><?php _e( 'Monthly Google Charts Options', 'media-consumption-log' ); ?></th>
-                        <td><textarea name="<?php echo self::SETTING_STATISTICS_MONTHLY_OPTIONS; ?>" rows="6" style="width:100%;"><?php echo esc_attr( self::get_statistics_monthly_options() ); ?></textarea>
-                            <p class="description"><?php _e( 'When the monthly graph gets really big it is sometime necessary to change some Google Charts options. Check the documentation for more information: <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/barchart#StackedBars">Google Charts - Stacked Bar Charts</a><br />Default:<br />', 'media-consumption-log' ); ?>
-                                <?php echo str_replace( "\n", "<br />", self::default_statistics_monthly_options ); ?></p></td>
                     </tr>
                 </table>
 
