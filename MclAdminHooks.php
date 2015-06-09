@@ -67,23 +67,16 @@ class MclAdminHooks {
         $page_hook_forgotten = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Forgotten', 'media-consumption-log' ), __( 'Forgotten', 'media-consumption-log' ), 'manage_options', 'mcl-forgotten', array( 'MclForgotten', 'create_page' ) );
         $page_hook_settings = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
 
-        add_action( 'admin_print_scripts-' . $page_hook_quick_post, array( get_called_class(), 'load_js_and_css' ) );
-        add_action( 'admin_print_scripts-' . $page_hook_serial_status, array( get_called_class(), 'load_js_and_css' ) );
-        add_action( 'admin_print_scripts-' . $page_hook_forgotten, array( get_called_class(), 'load_css' ) );
-        add_action( 'admin_print_scripts-' . $page_hook_settings, array( get_called_class(), 'load_js' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_quick_post, array( get_called_class(), 'enqueue_scripts_and_styles' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_serial_status, array( get_called_class(), 'enqueue_scripts_and_styles' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_forgotten, array( get_called_class(), 'enqueue_scripts_and_styles' ) );
+        add_action( 'admin_print_scripts-' . $page_hook_settings, array( get_called_class(), 'enqueue_scripts_and_styles' ) );
     }
 
-    public static function load_js_and_css() {
-        self::load_js();
-        self::load_css();
-    }
-
-    public static function load_js() {
+    public static function enqueue_scripts_and_styles() {
         wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js' );
         wp_localize_script( 'mcl_admin_js', 'mcl_js_strings', array( 'title_empty_error' => __( 'Title can\'t be empty!', 'media-consumption-log' ) ) );
-    }
 
-    public static function load_css() {
         wp_enqueue_style( 'mcl_admin_css', plugin_dir_url( __FILE__ ) . 'css/mcl_admin.css' );
     }
 
