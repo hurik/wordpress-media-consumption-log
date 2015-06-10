@@ -29,6 +29,8 @@ class MclHooks {
             add_filter( 'get_post_tag', array( 'MclCommaInTags', 'comma_tag_filter' ) );
             add_filter( 'get_terms', array( 'MclCommaInTags', 'comma_tags_filter' ) );
             add_filter( 'get_the_terms', array( 'MclCommaInTags', 'comma_tags_filter' ) );
+
+            add_filter( 'the_posts', array( get_called_class(), 'conditionally_add_style' ) );
         }
 
         add_action( 'admin_bar_menu', array( get_called_class(), 'admin_bar_menu' ), 75 );
@@ -49,6 +51,31 @@ class MclHooks {
         );
 
         $wp_admin_bar->add_node( $args );
+    }
+
+    public static function conditionally_add_style( $posts ) {
+        if ( empty( $posts ) ) {
+            return $posts;
+        }
+
+        $shortcode_found = false; // use this flag to see if styles and scripts need to be enqueued
+        foreach ( $posts as $post ) {
+            if ( stripos( $post->post_content, '[mcl]' ) !== false ) {
+                $shortcode_found = true; // bingo!
+                break;
+            }
+
+            if ( stripos( $post->post_content, '[mcl-stats]' ) !== false ) {
+                $shortcode_found = true; // bingo!
+                break;
+            }
+        }
+
+        if ( $shortcode_found ) {
+            wp_enqueue_style( 'mcl-table', plugin_dir_url( __FILE__ ) . 'css/mcl_table.css' );
+        }
+
+        return $posts;
     }
 
 }

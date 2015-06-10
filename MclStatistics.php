@@ -189,7 +189,7 @@ class MclStatistics {
 
         // Total consumption
         $html .= "\n\n<h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<table border=\"1\">"
+                . "\n<table class=\"mcl_table\">"
                 . "\n  <colgroup>"
                 . "\n    <col width=\"98%\">"
                 . "\n    <col width=\"1%\">"
@@ -221,6 +221,7 @@ class MclStatistics {
                 . "\n  <tr>"
                 . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n      <th nowrap>{$data->consumption_total}</th>"
+                . "\n      <th></th>"
                 . "\n    </tr>"
                 . "\n  </tfoot>"
                 . "\n</table>"
@@ -228,7 +229,7 @@ class MclStatistics {
 
         // Average Consumption
         $html .= "\n\n<h4 id=\"average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<table border=\"1\">"
+                . "\n<table class=\"mcl_table\">"
                 . "\n  <colgroup>"
                 . "\n    <col width=\"98%\">"
                 . "\n    <col width=\"1%\">"
@@ -261,6 +262,7 @@ class MclStatistics {
                 . "\n    <tr>"
                 . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
                 . "\n      <th nowrap>" . number_format( $data->consumption_average, 2 ) . "</th>"
+                . "\n      <th></th>"
                 . "\n    </tr>"
                 . "\n  </tfoot>"
                 . "\n</table>"
@@ -268,7 +270,7 @@ class MclStatistics {
 
         // Consumption count
         $html .= "\n\n<h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<table>"
+                . "\n<table class=\"mcl_table\">"
                 . "\n  <colgroup>"
                 . "\n    <col width=\"20%\">"
                 . "\n    <col width=\"20%\">"
