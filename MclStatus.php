@@ -62,59 +62,17 @@ class MclStatus {
                 $first = true;
 
                 if ( $category->mcl_tags_count_ongoing ) {
-                    $html .= "\n    <tr>"
-                            . "\n      <td nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</td>"
-                            . "\n      <td nowrap><a href=\"#mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . "</a></td>"
-                            . "\n      <td>";
-
-                    foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-ongoing-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "</td>"
-                            . "\n    </tr>";
-
+                    $html .= self::create_nav( $first, $category->mcl_tags_ongoing, $category->name, $category->slug, "ongoing", __( 'Running', 'media-consumption-log' ) );
                     $first = false;
                 }
 
                 if ( $category->mcl_tags_count_complete ) {
-                    $html .= "\n    <tr>"
-                            . "\n      <td nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</td>"
-                            . "\n      <td nowrap><a href=\"#mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . "</a></td>"
-                            . "\n      <td>";
-
-                    foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "</td>"
-                            . "\n    </tr>";
-
+                    $html .= self::create_nav( $first, $category->mcl_tags_complete, $category->name, $category->slug, "complete", __( 'Complete', 'media-consumption-log' ) );
                     $first = false;
                 }
 
                 if ( $category->mcl_tags_count_abandoned ) {
-                    $html .= "\n    <tr>"
-                            . "\n      <td nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$category->slug}\">{$category->name}</a></strong>" : "") . "</td>"
-                            . "\n      <td nowrap><a href=\"#mediastatus-{$category->slug}-abandoned\">" . __( 'Abandoned', 'media-consumption-log' ) . "</a></td>"
-                            . "\n      <td>";
-
-                    foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_abandoned ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "</td>"
-                            . "\n    </tr>";
-
+                    $html .= self::create_nav( $first, $category->mcl_tags_abandoned, $category->name, $category->slug, "abandoned", __( 'Abandoned', 'media-consumption-log' ) );
                     $first = false;
                 }
             }
@@ -273,11 +231,27 @@ class MclStatus {
         return $html;
     }
 
-    private static function create_table( $data, $cat_slug, $state ) {
-        $table = "";
+    private static function create_nav( $first, $data, $cat_name, $cat_slug, $state, $state_string ) {
+        $nav = "\n    <tr>"
+                . "\n      <td nowrap>" . ($first ? "<strong><a href=\"#mediastatus-{$cat_slug}\">{$cat_name}</a></strong>" : "") . "</td>"
+                . "\n      <td nowrap><a href=\"#mediastatus-{$cat_slug}-{$state}\">{$state_string}</a></td>"
+                . "\n      <td>";
 
-        // Create the navigation
-        $table .= "\n<div>"
+        foreach ( array_keys( $data ) as $key ) {
+            $nav .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
+            if ( $key != end( (array_keys( $data ) ) ) ) {
+                $nav .= " | ";
+            }
+        }
+
+        $nav .= "</td>"
+                . "\n    </tr>";
+
+        return $nav;
+    }
+
+    private static function create_table( $data, $cat_slug, $state ) {
+        $table = "\n<div>"
                 . "\n  ";
         foreach ( array_keys( $data ) as $key ) {
             $table .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
