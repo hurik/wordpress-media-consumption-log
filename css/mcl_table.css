@@ -23,6 +23,8 @@ table.mcl_table {
     -webkit-border-radius: 3px;
     border: 1px solid #E5E5E5;
     margin: auto;
+    display: block;
+    overflow-x: auto;
 }
 
 table.mcl_table thead tr td,
