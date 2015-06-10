@@ -74,10 +74,13 @@ class MclAdminHooks {
     }
 
     public static function enqueue_scripts_and_styles() {
-        wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js' );
+        wp_enqueue_script( 'mcl_admin_js', plugin_dir_url( __FILE__ ) . 'js/mcl_admin.js', array( 'jquery' ) );
         wp_localize_script( 'mcl_admin_js', 'mcl_js_strings', array( 'title_empty_error' => __( 'Title can\'t be empty!', 'media-consumption-log' ) ) );
 
         wp_enqueue_style( 'mcl_admin_css', plugin_dir_url( __FILE__ ) . 'css/mcl_admin.css' );
+
+        wp_enqueue_script( 'mcl-back-to-top', plugin_dir_url( __FILE__ ) . 'js/mcl_back_to_top.js', array( 'jquery' ) );
+        wp_enqueue_style( 'mcl-back-to-top', plugin_dir_url( __FILE__ ) . 'css/mcl_back_to_top.css' );
     }
 
     public static function save_post( $post_id ) {

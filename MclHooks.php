@@ -58,20 +58,26 @@ class MclHooks {
             return $posts;
         }
 
-        $shortcode_found = false; // use this flag to see if styles and scripts need to be enqueued
+        $shortcode_mcl = false;
+        $shortcode_mcl_stats = false;
+
         foreach ( $posts as $post ) {
-            if ( stripos( $post->post_content, '[mcl]' ) !== false ) {
-                $shortcode_found = true; // bingo!
-                break;
+            if ( !$shortcode_mcl && stripos( $post->post_content, '[mcl]' ) !== false ) {
+                $shortcode_mcl = true;
             }
 
-            if ( stripos( $post->post_content, '[mcl-stats]' ) !== false ) {
-                $shortcode_found = true; // bingo!
-                break;
+            if ( !$shortcode_mcl_stats && stripos( $post->post_content, '[mcl-stats]' ) !== false ) {
+                $shortcode_mcl_stats = true;
             }
         }
 
-        if ( $shortcode_found ) {
+        if ( $shortcode_mcl ) {
+            wp_enqueue_script( 'mcl-back-to-top', plugin_dir_url( __FILE__ ) . 'js/mcl_back_to_top.js', array( 'jquery' ) );
+            wp_enqueue_style( 'mcl-back-to-top', plugin_dir_url( __FILE__ ) . 'css/mcl_back_to_top.css' );
+            wp_enqueue_style( 'mcl-table', plugin_dir_url( __FILE__ ) . 'css/mcl_table.css' );
+        }
+
+        if ( $shortcode_mcl_stats ) {
             wp_enqueue_style( 'mcl-table', plugin_dir_url( __FILE__ ) . 'css/mcl_table.css' );
         }
 

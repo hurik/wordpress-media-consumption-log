@@ -401,6 +401,8 @@ class MclStatus {
             }
         }
 
+        $html .= "\n\n<div class=\"mcl_css_back_to_top\">^</div>";
+
         return $html;
     }
 

@@ -83,21 +83,4 @@ jQuery(document).ready(function ($) {
             $("#mcl_loading").removeClass("mcl_css_loading");
         });
     });
-
-    var offset = 200;
-
-    $(window).scroll(function () {
-        var position = $(window).scrollTop();
-
-        if (position > offset) {
-            $(".mcl_css_back_to_top").fadeIn();
-        } else {
-            $(".mcl_css_back_to_top").fadeOut();
-        }
-    });
-
-    $(".mcl_css_back_to_top").click(function () {
-        $(window).scrollTop(0);
-        $(this).fadeOut();
-    });
 });
