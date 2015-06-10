@@ -22,7 +22,7 @@ add_shortcode( 'mcl', array( 'MclStatus', 'build_status' ) );
 
 class MclStatus {
 
-    static function build_status() {
+    public static function build_status() {
         // Get the data
         $data = MclData::get_data();
 
@@ -68,7 +68,7 @@ class MclStatus {
                             . "\n      <td>";
 
                     foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+                        $html .= "<a href=\"#mediastatus-{$category->slug}-ongoing-" . strtolower( $key ) . "\">{$key}</a>";
                         if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
                             $html .= " | ";
                         }
@@ -170,6 +170,7 @@ class MclStatus {
                     . "\n</table>";
         }
 
+        // Create the tables
         if ( $data->cat_serial_ongoing || $data->cat_serial_complete || $data->cat_serial_abandoned ) {
             $html .= "\n\n<h4 id=\"serials\">" . __( 'Serials', 'media-consumption-log' ) . "</h4><hr />";
 
@@ -188,151 +189,17 @@ class MclStatus {
 
                 if ( $category->mcl_tags_count_ongoing ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . " ({$category->mcl_tags_count_ongoing})</h6>";
-
-                    // Create the navigation
-                    $html .= "\n<div>"
-                            . "\n  ";
-                    foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "\n</div><br />";
-
-                    // Table
-                    $html .= "\n<table class=\"mcl_table\">"
-                            . "\n  <colgroup>"
-                            . "\n    <col width=\"1%\">"
-                            . "\n    <col width=\"98%\">"
-                            . "\n    <col width=\"1%\">"
-                            . "\n  </colgroup>"
-                            . "\n  <thead>"
-                            . "\n    <tr>"
-                            . "\n      <th></th>"
-                            . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
-                            . "\n      <th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th>"
-                            . "\n    </tr>"
-                            . "\n  </thead>"
-                            . "\n  <tbody>";
-
-                    foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-                        $first = true;
-
-                        foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
-                            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
-                            $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
-                            $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
-
-                            $html .= "\n    <tr>"
-                                    . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div>" : "") . "</th>"
-                                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"
-                                    . "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>"
-                                    . "\n    </tr>";
-
-                            $first = false;
-                        }
-                    }
-
-                    $html .= "\n  </tbody>"
-                            . "\n</table>";
+                    $html .= self::create_table( $category->mcl_tags_ongoing, $category->slug, "ongoing" );
                 }
 
                 if ( $category->mcl_tags_count_complete ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . " ({$category->mcl_tags_count_complete})</h6>";
-
-                    // Create the navigation
-                    $html .= "\n<div>"
-                            . "\n  ";
-                    foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "\n</div><br />";
-
-                    // Table
-                    $html .= "\n<table class=\"mcl_table\">"
-                            . "\n  <colgroup>"
-                            . "\n    <col width=\"1%\">"
-                            . "\n    <col width=\"99%\">"
-                            . "\n  </colgroup>"
-                            . "\n  <thead>"
-                            . "\n    <tr>"
-                            . "\n      <th></th>"
-                            . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
-                            . "\n    </tr>"
-                            . "\n  </thead>"
-                            . "\n  <tbody>";
-
-                    foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-                        $first = true;
-
-                        foreach ( $category->mcl_tags_complete[$key] as $tag ) {
-                            $href_tag_title = htmlspecialchars( $tag->name );
-
-                            $html .= "\n    <tr>"
-                                    . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key} (" . count( $category->mcl_tags_complete[$key] ) . ")</div>" : "") . "</th>"
-                                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$tag->name}\">{$tag->name}</a></td>"
-                                    . "\n    </tr>";
-
-                            $first = false;
-                        }
-                    }
-
-                    $html .= "\n  </tbody>"
-                            . "\n</table>";
+                    $html .= self::create_table( $category->mcl_tags_complete, $category->slug, "complete" );
                 }
 
                 if ( $category->mcl_tags_count_abandoned ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-abandoned\">" . __( 'Abandoned', 'media-consumption-log' ) . " ({$category->mcl_tags_count_abandoned})</h6>";
-
-                    // Create the navigation
-                    $html .= "\n<div>"
-                            . "\n  ";
-                    foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
-                        $html .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
-                        if ( $key != end( (array_keys( $category->mcl_tags_abandoned ) ) ) ) {
-                            $html .= " | ";
-                        }
-                    }
-
-                    $html .= "\n</div><br />";
-
-                    // Table
-                    $html .= "\n<table class=\"mcl_table\">"
-                            . "\n  <colgroup>"
-                            . "\n    <col width=\"1%\">"
-                            . "\n    <col width=\"99%\">"
-                            . "\n  </colgroup>"
-                            . "\n  <thead>"
-                            . "\n    <tr>"
-                            . "\n      <th></th>"
-                            . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
-                            . "\n    </tr>"
-                            . "\n  </thead>"
-                            . "\n  <tbody>";
-
-                    foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
-                        $first = true;
-
-                        foreach ( $category->mcl_tags_abandoned[$key] as $tag ) {
-                            $href_tag_title = htmlspecialchars( $tag->name );
-
-                            $html .= "\n    <tr>"
-                                    . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key} (" . count( $category->mcl_tags_abandoned[$key] ) . ")</div>" : "") . "</th>"
-                                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$tag->name}\">{$tag->name}</a></td>"
-                                    . "\n    </tr>";
-
-                            $first = false;
-                        }
-                    }
-
-                    $html .= "\n  </tbody>"
-                            . "\n</table>";
+                    $html .= self::create_table( $category->mcl_tags_abandoned, $category->slug, "abandoned" );
                 }
             }
         }
@@ -404,6 +271,61 @@ class MclStatus {
         $html .= "\n\n<div class=\"mcl_css_back_to_top\">^</div>";
 
         return $html;
+    }
+
+    private static function create_table( $data, $cat_slug, $state ) {
+        $table = "";
+
+        // Create the navigation
+        $table .= "\n<div>"
+                . "\n  ";
+        foreach ( array_keys( $data ) as $key ) {
+            $table .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
+            if ( $key != end( (array_keys( $data ) ) ) ) {
+                $table .= " | ";
+            }
+        }
+
+        $table .= "\n</div><br />";
+
+        // Table
+        $table .= "\n<table class=\"mcl_table\">"
+                . "\n  <colgroup>"
+                . "\n    <col width=\"1%\">"
+                . "\n    <col width=\"98%\">"
+                . "\n    <col width=\"1%\">"
+                . "\n  </colgroup>"
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th></th>"
+                . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
+
+        foreach ( array_keys( $data ) as $key ) {
+            $first = true;
+
+            foreach ( $data[$key] as $tag ) {
+                $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
+                $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
+                $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
+
+                $table .= "\n    <tr>"
+                        . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $data[$key] ) . ")</div>" : "") . "</th>"
+                        . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"
+                        . "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>"
+                        . "\n    </tr>";
+
+                $first = false;
+            }
+        }
+
+        $table .= "\n  </tbody>"
+                . "\n</table>";
+
+        return $table;
     }
 
 }
