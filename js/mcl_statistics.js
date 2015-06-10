@@ -27,6 +27,9 @@ function drawDailyChart() {
     var daily_data_array = JSON.parse(js_params.daily);
     daily_data_array[0][daily_data_array[0].length - 1] = {role: 'annotation'};
     var data = google.visualization.arrayToDataTable(daily_data_array);
+    for (var i = 1; i < daily_data_array.length; i++) {
+        daily_data_array[i][0] = daily_data_array[i][0] + "";
+    }
 
     var options = {
         annotations: {
@@ -63,6 +66,10 @@ function drawDailyChart() {
 function drawMonthlyChart() {
     var monthly_data_array = JSON.parse(js_params.monthly);
     monthly_data_array[0][monthly_data_array[0].length - 1] = {role: 'annotation'};
+    for (var i = 1; i < monthly_data_array.length; i++) {
+        monthly_data_array[i][0] = monthly_data_array[i][0] + "";
+    }
+
     var data = google.visualization.arrayToDataTable(monthly_data_array);
 
     var options = {
