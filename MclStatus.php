@@ -264,17 +264,28 @@ class MclStatus {
 
         // Table
         $table .= "\n<table class=\"mcl_table\">"
-                . "\n  <colgroup>"
-                . "\n    <col width=\"1%\">"
-                . "\n    <col width=\"98%\">"
-                . "\n    <col width=\"1%\">"
-                . "\n  </colgroup>"
+                . "\n  <colgroup>";
+
+        if ( $state == "ongoing" ) {
+            $table .= "\n    <col width=\"1%\">"
+                    . "\n    <col width=\"98%\">"
+                    . "\n    <col width=\"1%\">";
+        } else {
+            $table .= "\n    <col width=\"1%\">"
+                    . "\n    <col width=\"99%\">";
+        }
+
+        $table .= "\n  </colgroup>"
                 . "\n  <thead>"
                 . "\n    <tr>"
                 . "\n      <th></th>"
-                . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
-                . "\n      <th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th>"
-                . "\n    </tr>"
+                . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>";
+
+        if ( $state == "ongoing" ) {
+            $table .= "\n      <th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th>";
+        }
+
+        $table .= "\n    </tr>"
                 . "\n  </thead>"
                 . "\n  <tbody>";
 
@@ -288,9 +299,13 @@ class MclStatus {
 
                 $table .= "\n    <tr>"
                         . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $data[$key] ) . ")</div>" : "") . "</th>"
-                        . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"
-                        . "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>"
-                        . "\n    </tr>";
+                        . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>";
+
+                if ( $state == "ongoing" ) {
+                    $table .= "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>";
+                }
+
+                $table .= "\n    </tr>";
 
                 $first = false;
             }
