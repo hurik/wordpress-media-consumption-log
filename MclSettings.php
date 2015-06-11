@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014-2015 Andreas Giemza <andreas@giemza.net>
 
@@ -22,6 +21,7 @@ class MclSettings {
 
     // Setting group name
     const SETTINGS_GROUP = "mcl-settings-group";
+    const SETTINGS_UNITS_GROUP = "mcl-settings-units-group";
     // Setting names
     const SETTING_MONITORED_CATEGORIES_SERIAL = "mcl_setting_monitored_categories_serials";
     const SETTING_MONITORED_CATEGORIES_NON_SERIAL = "mcl_setting_monitored_categories_non_serials";
@@ -177,7 +177,7 @@ class MclSettings {
             $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
 
             foreach ( $categories as $category ) {
-                register_setting( self::SETTINGS_GROUP, self::SETTING_UNIT_PREFIX . "{$category->term_id}" );
+                register_setting( self::SETTINGS_UNITS_GROUP, self::SETTING_UNIT_PREFIX . "{$category->term_id}" );
             }
         }
     }
@@ -262,8 +262,20 @@ class MclSettings {
         $posts_without_mcl_number = self::get_posts_without_mcl_number();
         ?>
         <div class="wrap">
-            <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2>
+            <h2>Media Consumption Log - <?php _e( 'Settings', 'media-consumption-log' ); ?></h2><br />
 
+            <table class="widefat">
+                <colgroup>
+                    <col width="1%">
+                    <col width="99%">
+                </colgroup>
+                <tr>
+                    <th nowrap valign="top"><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
+                    <td><a href="#general-settings"><?php _e( 'General settings', 'media-consumption-log' ); ?></a> | <a href="#units"><?php _e( 'Units', 'media-consumption-log' ); ?></a> | <a href="#rebuild-data"><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></a> | <a href="#posts-without-mcl-number"><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></a></td>
+                </tr>
+            </table>
+
+            <h3 id="general-settings"><?php _e( 'General settings', 'media-consumption-log' ); ?></h3><hr />
             <form method="post" action="options.php">
                 <?php settings_fields( self::SETTINGS_GROUP ); ?>
                 <?php do_settings_sections( self::SETTINGS_GROUP ); ?>
@@ -284,33 +296,6 @@ class MclSettings {
                         <th scope="row"><?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?></th>
                         <td><?php echo $cats_text; ?></td>
                     </tr>
-                </table>
-
-                <h3><?php _e( 'Units', 'media-consumption-log' ); ?></h3>
-                <p class="description"><?php _e( 'Please define the units of the serial categories.', 'media-consumption-log' ); ?></p>
-                <table class="form-table">
-                    <?php
-                    $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
-
-                    if ( !empty( $get_monitored_categories_serials ) ) {
-                        $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
-
-                        foreach ( $categories as $category ) {
-                            ?>
-                            <tr>
-                                <th scope="row"><?php echo $category->name; ?></th>
-                                <td><input type="text" name="<?php echo self::SETTING_UNIT_PREFIX . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
-                            </tr>
-                            <?php
-                        }
-                    } else {
-                        ?>
-                        <tr>
-                            <th scope="row"><?php _e( 'No monitored serial category!', 'media-consumption-log' ); ?></th>
-                        </tr>
-                        <?php
-                    }
-                    ?>
                 </table>
 
                 <h3><?php _e( 'Statistics', 'media-consumption-log' ); ?></h3>
@@ -375,28 +360,62 @@ class MclSettings {
                 <?php submit_button(); ?>
             </form>
 
-            <h3><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3>
-            <input class="button button-primary mcl_css_rebuild_data" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" type="submit">
+            <h3 id="units"><?php _e( 'Units', 'media-consumption-log' ); ?></h3><hr />
+            <p class="description"><?php _e( 'Please define the units of the serial categories.', 'media-consumption-log' ); ?></p>
 
-            <h3><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3>
+            <form method="post" action="options.php">
+                <?php settings_fields( self::SETTINGS_UNITS_GROUP ); ?>
+                <?php do_settings_sections( self::SETTINGS_UNITS_GROUP ); ?>
+
+                <table class="form-table">
+                    <?php
+                    $get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+
+                    if ( !empty( $get_monitored_categories_serials ) ) {
+                        $categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
+
+                        foreach ( $categories as $category ) {
+                            ?>
+                            <tr>
+                                <th scope="row"><?php echo $category->name; ?></th>
+                                <td><input type="text" name="<?php echo self::SETTING_UNIT_PREFIX . "{$category->term_id}"; ?>" value="<?php echo esc_attr( self::get_unit_of_category( $category ) ); ?>" style="width:100%;" />
+                            </tr>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <th scope="row"><?php _e( 'No monitored serial category!', 'media-consumption-log' ); ?></th>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+
+                <?php submit_button(); ?>
+            </form>
+
+            <h3 id="rebuild-data"><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3><hr />
+            <input class="button button-primary mcl_css_rebuild_data" value="<?php _e( 'Now!', 'media-consumption-log' ); ?>" type="submit"><br /><br />
+
+            <h3 id="posts-without-mcl-number"><?php _e( 'Posts without mcl_number', 'media-consumption-log' ); ?></h3><hr />
             <table class="form-table">
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                if ( count( $posts_without_mcl_number ) > 0 ) {
-                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                        if ( count( $posts_without_mcl_number ) > 0 ) {
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                            echo "<br />";
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                        } else {
+                            echo _e( 'Nothing found!', 'media-consumption-log' );
                         }
-                    }
-                } else {
-                    echo _e( 'Nothing found!', 'media-consumption-log' );
-                }
-                ?></td>
+                        ?></td>
                 </tr>   
-
             </table>
             <div id="mcl_loading"></div>
         </div>
