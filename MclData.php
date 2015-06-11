@@ -248,8 +248,10 @@ class MclData {
             // Get tag link
             $tag->tag_link = get_tag_link( $tag->tag_id );
 
-            // Get last post data
-            $tag->post_link = get_permalink( $tag->post_id );
+            // Get last post data, only of tag which are running
+            if ( $tag->status == MclSerialStatus::RUNNING ) {
+                $tag->post_link = get_permalink( $tag->post_id );
+            }
 
             if ( $tag->status == MclSerialStatus::RUNNING ) {
                 $tags_count_ongoing++;

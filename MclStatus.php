@@ -294,14 +294,14 @@ class MclStatus {
 
             foreach ( $data[$key] as $tag ) {
                 $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
-                $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
-                $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
 
                 $table .= "\n    <tr>"
                         . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $data[$key] ) . ")</div>" : "") . "</th>"
                         . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>";
 
                 if ( $state == "ongoing" ) {
+                    $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
+                    $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
                     $table .= "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>";
                 }
 
