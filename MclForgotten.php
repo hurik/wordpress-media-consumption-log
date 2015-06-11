@@ -88,14 +88,14 @@ class MclForgotten {
             $html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} (" . count( $category->forgotten ) . ")</h3><hr />"
                     . "\n<table class=\"widefat\">"
                     . "\n  <colgroup>"
-                    . "\n    <col width=\"49%\">"
-                    . "\n    <col width=\"49%\">"
-                    . "\n    <col width=\"2%\">"
+                    . "\n    <col width=\"98%\">"
+                    . "\n    <col width=\"1%\">"
+                    . "\n    <col width=\"1%\">"
                     . "\n  </colgroup>"
                     . "\n  <thead>"
                     . "\n    <tr>"
-                    . "\n      <th><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
-                    . "\n      <th><strong>" . __( 'Last', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n      <th nowrap><strong>" . __( 'Name', 'media-consumption-log' ) . "</strong></th>"
+                    . "\n      <th nowrap><strong>" . __( 'Last', 'media-consumption-log' ) . "</strong></th>"
                     . "\n      <th nowrap><strong>" . __( 'Days ago', 'media-consumption-log' ) . "</strong></th>"
                     . "\n    </tr>"
                     . "\n  </thead>"
@@ -112,7 +112,7 @@ class MclForgotten {
 
                 $html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                         . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
-                        . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$status}</a></td>"
+                        . "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$status}</a></td>"
                         . "\n      <td nowrap>{$tag->forgotten}</td>"
                         . "\n    </tr>";
 
