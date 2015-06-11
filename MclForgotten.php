@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014-2015 Andreas Giemza <andreas@giemza.net>
 
@@ -127,18 +126,14 @@ class MclForgotten {
             <h2>Media Consumption Log - <?php _e( 'Forgotten', 'media-consumption-log' ); ?></h2><br />
 
             <table class="widefat">
-                <thead>
-                    <tr>
-                        <th><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <?php echo $nav; ?> 
-                        </td>
-                    </tr>
-                </tbody>
+                <colgroup>
+                    <col width="1%">
+                    <col width="99%">
+                </colgroup>
+                <tr>
+                    <th nowrap valign="top"><strong><?php _e( 'Quick Navigation', 'media-consumption-log' ); ?></strong></th>
+                    <td><?php echo $nav; ?></td>
+                </tr>
             </table>
 
             <?php echo $html; ?> 
