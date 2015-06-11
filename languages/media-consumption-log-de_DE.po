@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"PO-Revision-Date: Tue Jun 09 2015 03:04:37 GMT+0200\n"
+"PO-Revision-Date: Thu Jun 11 2015 03:49:29 GMT+0200\n"
 "Last-Translator: Andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Loco-Target-Locale: de_DE"
 
-#: ../MclAdminHooks.php:65 ../MclAdminHooks.php:65 ../MclHooks.php:44 ..
+#: ../MclAdminHooks.php:65 ../MclAdminHooks.php:65 ../MclHooks.php:46 ..
 #: MclQuickPost.php:76 ../MclQuickPost.php:245
 msgid "Quick Post"
 msgstr "Schnelles Erstellen"
@@ -36,12 +36,12 @@ msgstr "Schnelles Erstellen"
 msgid "Serial Status"
 msgstr "Serien Status"
 
-#: ../MclAdminHooks.php:67 ../MclAdminHooks.php:67 ../MclForgotten.php:65 ..
-#: MclForgotten.php:127 ../MclSettings.php:343
+#: ../MclAdminHooks.php:67 ../MclAdminHooks.php:67 ../MclForgotten.php:64 ..
+#: MclForgotten.php:126 ../MclSettings.php:329
 msgid "Forgotten"
 msgstr "Vergessene"
 
-#: ../MclAdminHooks.php:68 ../MclAdminHooks.php:68 ../MclSettings.php:265
+#: ../MclAdminHooks.php:68 ../MclAdminHooks.php:68 ../MclSettings.php:266
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -49,41 +49,40 @@ msgstr "Einstellungen"
 msgid "Title can't be empty!"
 msgstr "Titel muss ausgefüllt werden!"
 
-#: ../MclForgotten.php:25 ../MclQuickPost.php:67 ../MclSerialStatus.php:55 ..
-#: MclSettings.php:251
+#: ../MclForgotten.php:24 ../MclQuickPost.php:67 ../MclSerialStatus.php:55 ..
+#: MclSettings.php:252
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Du hast nicht genug Rechte um auf diese Seite zuzugreifen."
 
-#: ../MclForgotten.php:66 ../MclQuickPost.php:78 ../MclSerialStatus.php:66 ..
+#: ../MclForgotten.php:65 ../MclQuickPost.php:78 ../MclSerialStatus.php:66 ..
 #: MclStatistics.php:32 ../MclStatus.php:30
 msgid "Nothing here yet!"
 msgstr "Nichts vorhanden im Moment!"
 
-#: ../MclForgotten.php:98 ../MclSerialStatus.php:188 ../MclSerialStatus.php:242 ..
-#: MclSerialStatus.php:296 ../MclStatus.php:234 ../MclStatus.php:293 ..
-#: MclStatus.php:347 ../MclStatus.php:417
+#: ../MclForgotten.php:97 ../MclSerialStatus.php:188 ../MclSerialStatus.php:242 ..
+#: MclSerialStatus.php:296 ../MclStatus.php:203 ../MclStatus.php:275
 msgid "Name"
 msgstr "Name"
 
-#: ../MclForgotten.php:99 ../MclStatus.php:235
+#: ../MclForgotten.php:98 ../MclStatus.php:276
 msgid "Last"
 msgstr "Letzte(s)"
 
-#: ../MclForgotten.php:100
+#: ../MclForgotten.php:99
 msgid "Days ago"
 msgstr "Tage zuvor"
 
-#: ../MclForgotten.php:132 ../MclQuickPost.php:255 ../MclSerialStatus.php:341 ..
-#: MclStatus.php:51 ../MclStatus.php:157
+#: ../MclForgotten.php:134 ../MclQuickPost.php:255 ../MclSerialStatus.php:341 ..
+#: MclSettings.php:274 ../MclStatus.php:48 ../MclStatus.php:95
 msgid "Quick Navigation"
 msgstr "Schnelle Navigation"
 
-#: ../MclHelper.php:41 ../MclSettings.php:53
+#: ../MclHelper.php:41 ../MclSettings.php:54
 msgid "and"
 msgstr "und"
 
-#: ../MclQuickPost.php:118 ../MclSettings.php:279 ../MclStatus.php:153 ..
-#: MclStatus.php:380
+#: ../MclQuickPost.php:118 ../MclSettings.php:292 ../MclStatus.php:85 ..
+#: MclStatus.php:166
 msgid "Non serials"
 msgstr "Keine Serien"
 
@@ -112,26 +111,26 @@ msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
 
 #: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:200 ..
-#: MclStatistics.php:239 ../MclStatistics.php:281 ../MclStatus.php:49 ..
-#: MclStatus.php:156
+#: MclStatistics.php:240 ../MclStatistics.php:283 ../MclStatus.php:46 ..
+#: MclStatus.php:94
 msgid "Category"
 msgstr "Kategorie"
 
 #: ../MclSerialStatus.php:90 ../MclSerialStatus.php:164 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:282 ../MclStatus.php:91 ..
-#: MclStatus.php:210
+#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:284 ../MclStatus.php:65 ..
+#: MclStatus.php:149
 msgid "Running"
 msgstr "Laufend"
 
 #: ../MclSerialStatus.php:110 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:283 ../MclStatus.php:112 ..
-#: MclStatus.php:270
+#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:285 ../MclStatus.php:70 ..
+#: MclStatus.php:154
 msgid "Complete"
 msgstr "Komplett"
 
 #: ../MclSerialStatus.php:130 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:284 ../MclStatus.php:133 ..
-#: MclStatus.php:324
+#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:286 ../MclStatus.php:75 ..
+#: MclStatus.php:159
 msgid "Abandoned"
 msgstr "Aufgegeben"
 
@@ -139,23 +138,23 @@ msgstr "Aufgegeben"
 msgid "Change State"
 msgstr "Status ändern"
 
-#: ../MclSerialStatus.php:340 ../MclStatus.php:50
+#: ../MclSerialStatus.php:340 ../MclStatus.php:47
 msgid "State"
 msgstr "Status"
 
-#: ../MclSettings.php:45
+#: ../MclSettings.php:46
 msgid "Y-m-d"
 msgstr "j.m.Y"
 
-#: ../MclSettings.php:49
+#: ../MclSettings.php:50
 msgid "Y-m"
 msgstr "n.Y"
 
-#: ../MclSettings.php:57
+#: ../MclSettings.php:58
 msgid "to"
 msgstr "bis"
 
-#: ../MclSettings.php:196
+#: ../MclSettings.php:197
 #, php-format
 msgid ""
 "Rebuilding data done!\n"
@@ -170,15 +169,31 @@ msgstr ""
 "%s von %s MB (%s) Speicher genutzt.\n"
 "Maximale Speicherauslastung %s MB."
 
-#: ../MclSettings.php:271
+#: ../MclSettings.php:275 ../MclSettings.php:279
+msgid "General settings"
+msgstr "Allgemeine Einstellungen"
+
+#: ../MclSettings.php:275 ../MclSettings.php:364
+msgid "Units"
+msgstr "Einheiten"
+
+#: ../MclSettings.php:275 ../MclSettings.php:399
+msgid "Rebuild data"
+msgstr "Erneuere Daten"
+
+#: ../MclSettings.php:275 ../MclSettings.php:402
+msgid "Posts without mcl_number"
+msgstr "Beiträge ohne mcl_number"
+
+#: ../MclSettings.php:284
 msgid "Monitored categories"
 msgstr "Überwachte Kategorien"
 
-#: ../MclSettings.php:274 ../MclStatus.php:46 ../MclStatus.php:194
+#: ../MclSettings.php:287 ../MclStatus.php:37 ../MclStatus.php:133
 msgid "Serials"
 msgstr "Serien"
 
-#: ../MclSettings.php:276
+#: ../MclSettings.php:289
 msgid ""
 "IDs of the categories which have epoisodes or chapters. This categories will "
 "be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,"
@@ -188,7 +203,7 @@ msgstr ""
 "erscheinen in den Statistiken, Status, Schnelles Erstellen und Komplett. "
 "Beispiel: 2,4,43,50,187,204"
 
-#: ../MclSettings.php:281
+#: ../MclSettings.php:294
 msgid ""
 "IDs of the categories which are visible in Statistics and Status, but not in "
 "Quick Post and Complete. Example: 45,75,284"
@@ -196,31 +211,19 @@ msgstr ""
 "IDs der Kategorien erscheinen in den Statistiken und Status, aber nicht in "
 "Schnelles Erstellen und Komplett. Beispiel: 45,75,284"
 
-#: ../MclSettings.php:284
+#: ../MclSettings.php:297
 msgid "IDs of the categories:"
 msgstr "IDs der Kategorien:"
 
-#: ../MclSettings.php:289
-msgid "Units"
-msgstr "Einheiten"
-
-#: ../MclSettings.php:290
-msgid "Please define the units of the serial categories."
-msgstr "Bitte definiere die Einheiten der Serien Kategorien."
-
-#: ../MclSettings.php:309
-msgid "No monitored serial category!"
-msgstr "Keine überwachte Serien Kategorie!"
-
-#: ../MclSettings.php:316
+#: ../MclSettings.php:302
 msgid "Statistics"
 msgstr "Statistiken"
 
-#: ../MclSettings.php:319
+#: ../MclSettings.php:305
 msgid "Daily statistics size"
 msgstr "Größe der täglichen Statistik"
 
-#: ../MclSettings.php:321
+#: ../MclSettings.php:307
 msgid ""
 "Please insert number of days the daily statistic should cover. If you insert "
 "0 the days since the first post will be covered. <strong>Attention:</strong> "
@@ -230,19 +233,19 @@ msgstr ""
 "werden die Tage seit dem ersten Beitrag abgedeckt.<strong>Achtung:</strong> "
 "Die Statistik kann sehr groß werden! Voreinstellung:"
 
-#: ../MclSettings.php:325
+#: ../MclSettings.php:311
 msgid "Daily date format"
 msgstr "Zeitformat der täglichen Statistik"
 
-#: ../MclSettings.php:327
+#: ../MclSettings.php:313
 msgid "Format for dates on the daily statistics page. Default:"
 msgstr "Format der Zeitangabe der täglichen Statistik. Voreinstellung:"
 
-#: ../MclSettings.php:331
+#: ../MclSettings.php:317
 msgid "Monthly statistics size"
 msgstr "Größe der monatlichen Statistik"
 
-#: ../MclSettings.php:333
+#: ../MclSettings.php:319
 msgid ""
 "Please insert number of months the statistic should cover. If you insert 0 "
 "the months since the first post will be covered. Default:"
@@ -250,19 +253,19 @@ msgstr ""
 "Anzahl der Monate für die monatliche Statistik. Wenn eine 0 eingetragen wird,"
 " werden die Monate seit dem ersten Beitrag abgedeckt. Voreinstellung:"
 
-#: ../MclSettings.php:337
+#: ../MclSettings.php:323
 msgid "Monthly date format"
 msgstr "Zeitformat der monatlichen Statistik"
 
-#: ../MclSettings.php:339
+#: ../MclSettings.php:325
 msgid "Format for dates on the monthly statistics page. Default:"
 msgstr "Format der Zeitangabe der monatliche Statistik. Voreinstellung:"
 
-#: ../MclSettings.php:346
+#: ../MclSettings.php:332
 msgid "Minimal count of days"
 msgstr "Minimale Anzahl an Tagen"
 
-#: ../MclSettings.php:348
+#: ../MclSettings.php:334
 msgid ""
 "Minimal number of days the last post of a serial must be old to be shown in "
 "forgotten. Default:"
@@ -270,11 +273,11 @@ msgstr ""
 "Minimale Anzahl an Tagen seit dem letzten Post der Serie um in den "
 "Vergessenen angezeigt zu werden. Voreinstellung:"
 
-#: ../MclSettings.php:352
+#: ../MclSettings.php:338
 msgid "Other settings"
 msgstr "Andere Einstellungen"
 
-#: ../MclSettings.php:353
+#: ../MclSettings.php:339
 msgid ""
 "<strong>Attention:</strong> This settings should be changed after using the "
 "plugin for some time! This should only been altered after the installation."
@@ -283,11 +286,11 @@ msgstr ""
 "werden, wenn das Plugin eine längere Zeit genutzt wurde. Diese Einstellungen "
 "sollten nur nach der Installation eingestellt werden."
 
-#: ../MclSettings.php:357
+#: ../MclSettings.php:343
 msgid "Separator"
 msgstr "Seperator"
 
-#: ../MclSettings.php:359
+#: ../MclSettings.php:345
 msgid ""
 "Define a seperator which separates the title from the episode/chapter number."
 " Spaces are added on both side. Default:"
@@ -295,11 +298,11 @@ msgstr ""
 "Separator der den Namen von der Episode/Kapitel/... trennt. Leerzeichen "
 "werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: ../MclSettings.php:363
+#: ../MclSettings.php:349
 msgid "mcl_number \"and\""
 msgstr "mcl_number \"und\""
 
-#: ../MclSettings.php:365
+#: ../MclSettings.php:351
 msgid ""
 "When the keyword is in the episode/chapter number the mcl_number will be set "
 "to 2. Spaces are added on both side. Default:"
@@ -308,11 +311,11 @@ msgstr ""
 "automatisch die mcl_number auf 2 gesetzt. Leerzeichen werden auf beiden "
 "Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: ../MclSettings.php:369
+#: ../MclSettings.php:355
 msgid "mcl_number \"to\""
 msgstr "mcl_number \"bis\""
 
-#: ../MclSettings.php:371
+#: ../MclSettings.php:357
 msgid ""
 "When the keyword is in the episode/chapter number the mcl_number will be set "
 "to last number - first number + 1. Spaces are added on both side. Default:"
@@ -321,23 +324,23 @@ msgstr ""
 "automatisch die mcl_number berechnet (Letzte Nummer - zweite Nummer + 2). "
 "Leerzeichen werden auf beiden Seiten automatisch hinzugefügt. Voreinstellung:"
 
-#: ../MclSettings.php:378
-msgid "Rebuild data"
-msgstr "Erneuere Daten"
+#: ../MclSettings.php:365
+msgid "Please define the units of the serial categories."
+msgstr "Bitte definiere die Einheiten der Serien Kategorien."
 
-#: ../MclSettings.php:379
+#: ../MclSettings.php:389
+msgid "No monitored serial category!"
+msgstr "Keine überwachte Serien Kategorie!"
+
+#: ../MclSettings.php:400
 msgid "Now!"
 msgstr "Jetzt!"
 
-#: ../MclSettings.php:381
-msgid "Posts without mcl_number"
-msgstr "Beiträge ohne mcl_number"
-
-#: ../MclSettings.php:384
+#: ../MclSettings.php:405
 msgid "Posts"
 msgstr "Beiträge"
 
-#: ../MclSettings.php:395
+#: ../MclSettings.php:416
 msgid "Nothing found!"
 msgstr "Nichts gefunden!"
 
@@ -353,15 +356,15 @@ msgstr "Monatlicher Konsum"
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: ../MclStatistics.php:177 ../MclStatistics.php:230
+#: ../MclStatistics.php:177 ../MclStatistics.php:231
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: ../MclStatistics.php:178 ../MclStatistics.php:270
+#: ../MclStatistics.php:178 ../MclStatistics.php:272
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: ../MclStatistics.php:201 ../MclStatistics.php:241
+#: ../MclStatistics.php:201 ../MclStatistics.php:242
 msgid "Unit"
 msgstr "Einheit"
 
@@ -370,19 +373,19 @@ msgstr "Einheit"
 msgid "Total comsumption, since the first post on the %DATE% (%DAYS% days)."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE% (%DAYS% Tage)."
 
-#: ../MclStatistics.php:222 ../MclStatistics.php:262 ../MclStatistics.php:285 ..
-#: MclStatistics.php:320
+#: ../MclStatistics.php:222 ../MclStatistics.php:263 ../MclStatistics.php:287 ..
+#: MclStatistics.php:322
 msgid "Total"
 msgstr "Insgesamt"
 
-#: ../MclStatistics.php:256
+#: ../MclStatistics.php:257
 #, php-format
 msgid "Average a day, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE% (%DAYS% "
 "Tage)."
 
-#: ../MclStatistics.php:313
+#: ../MclStatistics.php:315
 #, php-format
 msgid ""
 "Total count of different %CATEGORIES%, since the first post on the %DATE% "

@@ -1,4 +1,5 @@
 <?php
+
 /*
   Copyright (C) 2014-2015 Andreas Giemza <andreas@giemza.net>
 
