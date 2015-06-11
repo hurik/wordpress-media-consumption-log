@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"PO-Revision-Date: Thu Jun 11 2015 03:49:29 GMT+0200\n"
+"PO-Revision-Date: Thu Jun 11 2015 04:47:26 GMT+0200\n"
 "Last-Translator: Andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -60,11 +60,11 @@ msgid "Nothing here yet!"
 msgstr "Nichts vorhanden im Moment!"
 
 #: ../MclForgotten.php:97 ../MclSerialStatus.php:188 ../MclSerialStatus.php:242 ..
-#: MclSerialStatus.php:296 ../MclStatus.php:203 ../MclStatus.php:275
+#: MclSerialStatus.php:296 ../MclStatus.php:203 ../MclStatus.php:282
 msgid "Name"
 msgstr "Name"
 
-#: ../MclForgotten.php:98 ../MclStatus.php:276
+#: ../MclForgotten.php:98 ../MclStatus.php:285
 msgid "Last"
 msgstr "Letzte(s)"
 
