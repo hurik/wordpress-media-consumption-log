@@ -4,7 +4,7 @@
   Plugin Name: Media Consumption Log
   Plugin URI: https://github.com/hurik/wordpress-media-consumption-log
   Description: This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
-  Version: 1.4.1
+  Version: 1.5.0
   Author: Andreas Giemza
   Author URI: http://www.andreasgiemza.de
   License: MIT
@@ -30,7 +30,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-define( 'PLUGIN_VERSION', '1.4.1' );
+define( 'PLUGIN_VERSION', '1.5.0' );
 
 require_once dirname( __FILE__ ) . '/MclAdminHooks.php';
 require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
