@@ -33,6 +33,7 @@ Contains the following statistics:
 
 * Daily consumption
 * Monthly consumption
+* Hourly consumption
 * Total consumption
 * Average consumption
 * Consumption amount
