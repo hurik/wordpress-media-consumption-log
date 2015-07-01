@@ -158,9 +158,37 @@ class MclStatistics {
             $monthly_data[$i + 1][] = $total;
         }
 
+        // Hourly graph
+        // Hourly data array
+        $hourly_data = array();
+
+        // Hourly array header
+        $hourly_data[0][] = "Date";
+
+        foreach ( $data->categories as $category ) {
+            $hourly_data[0][] = $category->name;
+        }
+
+        $hourly_data[0][] = "ROLE_ANNOTATION";
+
+        for ( $i = 0; $i < 24; $i++ ) {
+            $hourly_data[$i + 1][] = sprintf( '%02d', $i ) . " - " . sprintf( '%02d', $i + 1 );
+
+            $total = 0;
+
+            foreach ( $data->categories as $category ) {
+                $count = $category->mcl_hourly_data[$i]->number;
+                $total += $count;
+                $hourly_data[$i + 1][] = $count;
+            }
+
+            $hourly_data[$i + 1][] = $total;
+        }
+
         $js_params = array(
             'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
-            'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK )
+            'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK ),
+            'hourly' => json_encode( $hourly_data, JSON_NUMERIC_CHECK )
         );
 
         // Output js
@@ -173,6 +201,7 @@ class MclStatistics {
                 . "\n  <ul>"
                 . "\n    <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
@@ -186,6 +215,10 @@ class MclStatistics {
         // Monthly graph
         $html .= "\n\n<h4 id=\"monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<div id=\"monthly_chart_div\"></div>";
+
+        // Hourly graph
+        $html .= "\n\n<h4 id=\"hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<div id=\"hourly_chart_div\"></div>";
 
         // Total consumption
         $html .= "\n\n<h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />"

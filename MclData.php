@@ -133,6 +133,7 @@ class MclData {
             // Graph data
             $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
             $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
+            $category->mcl_hourly_data = self::get_mcl_number_count_of_category_sorted_by_hour( $category->term_id );
             $category->mcl_consumption_total = self::get_total_mcl_mumber_count_of_category( $category->term_id );
             $category->mcl_consumption_average = $category->mcl_consumption_total / $number_of_days;
 
@@ -351,6 +352,55 @@ class MclData {
 	" );
 
         return $stats[0]->number;
+    }
+
+    private static function get_mcl_number_count_of_category_sorted_by_hour( $category_id ) {
+        global $wpdb;
+
+        $stats = $wpdb->get_results( "
+            SELECT a.hour AS hour,
+                   IFNULL(b.number, 0) number
+            FROM
+              (SELECT 0 AS hour
+               UNION ALL SELECT 1
+               UNION ALL SELECT 2
+               UNION ALL SELECT 3
+               UNION ALL SELECT 4
+               UNION ALL SELECT 5
+               UNION ALL SELECT 6
+               UNION ALL SELECT 7
+               UNION ALL SELECT 8
+               UNION ALL SELECT 9
+               UNION ALL SELECT 10
+               UNION ALL SELECT 11
+               UNION ALL SELECT 12
+               UNION ALL SELECT 13
+               UNION ALL SELECT 14
+               UNION ALL SELECT 15
+               UNION ALL SELECT 16
+               UNION ALL SELECT 17
+               UNION ALL SELECT 18
+               UNION ALL SELECT 19
+               UNION ALL SELECT 20
+               UNION ALL SELECT 21
+               UNION ALL SELECT 22
+               UNION ALL SELECT 23
+              ) a
+            LEFT JOIN
+              (SELECT HOUR(post_date) as hour, SUM(meta_value) AS number
+               FROM {$wpdb->prefix}posts p
+               LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+               LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
+               WHERE (post_status = 'publish'
+                 AND post_type = 'post'
+                 AND meta_key = 'mcl_number')
+                 AND term_taxonomy_id = '{$category_id}'
+               GROUP BY HOUR(post_date)
+              ) b ON b.hour = a.hour
+            ORDER BY hour
+	" );
+
+        return $stats;
     }
 
 }

@@ -22,6 +22,7 @@ google.load('visualization', '1.0', {
 
 google.setOnLoadCallback(drawDailyChart);
 google.setOnLoadCallback(drawMonthlyChart);
+google.setOnLoadCallback(drawHourlyChart);
 
 function drawDailyChart() {
     var daily_data_array = JSON.parse(js_params.daily);
@@ -104,9 +105,51 @@ function drawMonthlyChart() {
     chart.draw(data, options);
 }
 
+function drawHourlyChart() {
+    var hourly_data_array = JSON.parse(js_params.hourly);
+    hourly_data_array[0][hourly_data_array[0].length - 1] = {role: 'annotation'};
+    for (var i = 1; i < hourly_data_array.length; i++) {
+        hourly_data_array[i][0] = hourly_data_array[i][0] + "";
+    }
+    var data = google.visualization.arrayToDataTable(hourly_data_array);
+
+    var options = {
+        annotations: {
+            textStyle: {
+                color: '#000000',
+                fontSize: 9,
+                bold: true
+            },
+            highContrast: true,
+            alwaysOutside: true
+        },
+        height: data.getNumberOfRows() * 15 + 100,
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        bar: {
+            groupWidth: '70%'
+        },
+        focusTarget: 'category',
+        chartArea: {
+            left: 50,
+            top: 80,
+            width: '80%',
+            height: data.getNumberOfRows() * 15
+        },
+        isStacked: true
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('hourly_chart_div'));
+    chart.draw(data, options);
+}
+
 jQuery(document).ready(function ($) {
     $(window).resize(function () {
         drawDailyChart();
         drawMonthlyChart();
+        drawHourlyChart();
     });
 });
