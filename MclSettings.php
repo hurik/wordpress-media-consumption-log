@@ -270,7 +270,7 @@ class MclSettings {
         }
 
         $categories = get_categories( 'hide_empty=0' );
-        $cats_text = MclHelper::build_all_categories_string( $categories, true );
+        $cats_text = MclHelpers::build_all_categories_string( $categories, true );
 
         // Get posts in monitored categories without mcl_number
         $posts_without_mcl_number = self::get_posts_without_mcl_number();

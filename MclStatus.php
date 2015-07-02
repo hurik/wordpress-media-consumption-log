@@ -51,7 +51,7 @@ class MclStatus {
                     . "\n  <tbody>";
 
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -98,7 +98,7 @@ class MclStatus {
                     . "\n  <tbody>";
 
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -134,7 +134,7 @@ class MclStatus {
 
             // Create the tables
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -167,7 +167,7 @@ class MclStatus {
 
             // Create the tables
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -301,7 +301,7 @@ class MclStatus {
 
                 if ( $state == "ongoing" ) {
                     $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
-                    $lastConsumed = MclHelper::get_last_consumed( $tag->post_title );
+                    $lastConsumed = MclHelpers::get_last_consumed( $tag->post_title );
                     $table .= "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$lastConsumed}</a></td>";
                 }
 

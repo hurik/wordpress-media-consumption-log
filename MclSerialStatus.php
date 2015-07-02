@@ -74,7 +74,7 @@ class MclSerialStatus {
         $alternate = false;
 
         foreach ( $data->categories as $category ) {
-            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+            if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -149,7 +149,7 @@ class MclSerialStatus {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+            if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 

@@ -18,7 +18,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class MclHelper {
+class MclHelpers {
 
     public static function build_all_categories_string( $categories, $with_id = false ) {
         $categories_string = "";

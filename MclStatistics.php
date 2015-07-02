@@ -328,7 +328,7 @@ class MclStatistics {
                 continue;
             }
 
-            if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+            if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                 $html .= "\n    <tr>"
                         . "\n      <td nowrap colspan=\"4\">{$category->name}</td>"
                         . "\n      <td nowrap>{$category->mcl_tags_count}</td>"
@@ -344,7 +344,7 @@ class MclStatistics {
             }
         }
 
-        $categories_string = MclHelper::build_all_categories_string( $data->categories, false );
+        $categories_string = MclHelpers::build_all_categories_string( $data->categories, false );
 
         $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
         $since_count_string = str_replace( '%DAYS%', $data->number_of_days, $since_count_string );
@@ -394,7 +394,7 @@ class MclStatistics {
                 $units[] = MclSettings::get_unit_of_category( get_category( $cat ) );
             }
 
-            $categories = MclHelper::build_list_from_array( $units );
+            $categories = MclHelpers::build_list_from_array( $units );
 
             $html .= "\n    <tr>"
                     . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"

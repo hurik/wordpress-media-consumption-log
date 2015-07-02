@@ -142,19 +142,19 @@ class MclData {
 
             $data->categories[] = $category;
 
-            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
                 $cat_serial_ongoing = true;
             }
 
-            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
                 $cat_serial_complete = true;
             }
 
-            if ( MclHelper::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_abandoned > 0 ) {
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_abandoned > 0 ) {
                 $cat_serial_abandoned = true;
             }
 
-            if ( MclHelper::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+            if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
                 $cat_non_serial = true;
             }
         }

@@ -41,7 +41,7 @@ class MclQuickPost {
 
             $tag = $title;
 
-            if ( MclHelper::is_monitored_serial_category( $_POST["cat_id"] ) ) {
+            if ( MclHelpers::is_monitored_serial_category( $_POST["cat_id"] ) ) {
                 $title_exploded = explode( MclSettings::get_other_separator(), $title );
                 $tag = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
             }
@@ -86,7 +86,7 @@ class MclQuickPost {
         $alternate = false;
 
         foreach ( $data->categories as $category ) {
-            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+            if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -119,7 +119,7 @@ class MclQuickPost {
                     . "\n    <td>";
 
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -128,7 +128,7 @@ class MclQuickPost {
 
 
             foreach ( $data->categories as $category ) {
-                if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+                if ( !MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                     continue;
                 }
 
@@ -146,7 +146,7 @@ class MclQuickPost {
 
         // Create the tables
         foreach ( $data->categories as $category ) {
-            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) ) {
+            if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -222,7 +222,7 @@ class MclQuickPost {
         }
 
         foreach ( $data->categories as $category ) {
-            if ( !MclHelper::is_monitored_non_serial_category( $category->term_id ) ) {
+            if ( !MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                 continue;
             }
 
@@ -268,7 +268,7 @@ class MclQuickPost {
     }
 
     private static function build_next_post_title( $last_post_title ) {
-        $last_post_data = MclHelper::parse_last_post_title( $last_post_title );
+        $last_post_data = MclHelpers::parse_last_post_title( $last_post_title );
 
         if ( count( $last_post_data ) == 2 ) {
             return $last_post_data[0] . $last_post_data[1];

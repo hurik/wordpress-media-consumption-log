@@ -35,7 +35,7 @@ class MclForgotten {
         foreach ( $data->categories as $category ) {
             $category->forgotten = array();
 
-            if ( !MclHelper::is_monitored_serial_category( $category->term_id ) || $category->mcl_tags_count_ongoing < 1 ) {
+            if ( !MclHelpers::is_monitored_serial_category( $category->term_id ) || $category->mcl_tags_count_ongoing < 1 ) {
                 continue;
             }
 
@@ -107,7 +107,7 @@ class MclForgotten {
 
             foreach ( $category->forgotten as $tag ) {
                 $tag_title = htmlspecialchars( $tag->name );
-                $status = MclHelper::get_last_consumed( $tag->post_title );
+                $status = MclHelpers::get_last_consumed( $tag->post_title );
                 $post_title = htmlspecialchars( $tag->post_title );
 
                 $html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"

@@ -87,7 +87,7 @@ class MclAdminHooks {
         $cats = get_the_category( $post_id );
 
         if ( count( $cats ) != 0 ) {
-            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            if ( MclHelpers::is_monitored_category( $cats[0]->term_id ) ) {
                 MclNumber::check_mcl_number_after_saving( $post_id );
 
                 if ( get_post_status( $post_id ) == 'publish' ) {
@@ -103,7 +103,7 @@ class MclAdminHooks {
         $cats = get_the_category( $post->ID );
 
         if ( count( $cats ) != 0 ) {
-            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            if ( MclHelpers::is_monitored_category( $cats[0]->term_id ) ) {
                 if ( ($old_status == 'publish' && $new_status != 'publish' ) ) {
                     MclData::update_data();
                 }
@@ -115,7 +115,7 @@ class MclAdminHooks {
         $cats = get_the_category( $post_id );
 
         if ( count( $cats ) != 0 ) {
-            if ( MclHelper::is_monitored_category( $cats[0]->term_id ) ) {
+            if ( MclHelpers::is_monitored_category( $cats[0]->term_id ) ) {
                 add_action( 'delete_post', array( get_called_class(), 'delete_post' ) );
             }
         }
@@ -127,7 +127,7 @@ class MclAdminHooks {
 
     public static function edit_term( $term_id, $tt_id, $taxonomy ) {
         // Check if term is a category and if it is a monitored category
-        if ( $taxonomy == "category" && MclHelper::is_monitored_category( $term_id ) ) {
+        if ( $taxonomy == "category" && MclHelpers::is_monitored_category( $term_id ) ) {
             // Rebuild data to updated changed category in mcl_data
             MclData::update_data();
         }
