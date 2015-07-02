@@ -37,6 +37,7 @@ Contains the following statistics:
 * Total consumption
 * Average consumption
 * Consumption amount
+* Most consumed
 
 To create a statistics page make a new site and add the shortcode "[mcl-stats]" to it.
 
