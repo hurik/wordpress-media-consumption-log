@@ -172,6 +172,8 @@ class MclData {
         $data->cat_serial_abandoned = $cat_serial_abandoned;
         $data->cat_non_serial = $cat_non_serial;
 
+        $data->most_consumed = self::get_most_consumed();
+
         return $data;
     }
 
@@ -399,6 +401,45 @@ class MclData {
               ) b ON b.hour = a.hour
             ORDER BY hour
 	" );
+
+        return $stats;
+    }
+
+    private static function get_most_consumed() {
+        global $wpdb;
+
+        $stats = $wpdb->get_results( "
+            SELECT terms2.term_id AS tag_id,
+                   t2.taxonomy AS taxonomy,
+                   terms2.name AS name,
+                   SUM(m1.meta_value) AS count,
+                   GROUP_CONCAT(DISTINCT r1.term_taxonomy_id
+                                ORDER BY r1.term_taxonomy_id) AS cats
+            FROM wp_posts p1
+            LEFT OUTER JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_id
+            LEFT OUTER JOIN wp_postmeta AS m1 ON p1.ID = m1.post_id,
+                                                 wp_posts AS p2
+            LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
+            LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+            LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+            WHERE p1.post_status = 'publish'
+              AND p1.post_type = 'post'
+              AND m1.meta_key = 'mcl_number'
+              AND r1.term_taxonomy_id IN (" . MclSettings::get_monitored_categories_serials() . ")
+              AND t2.taxonomy = 'post_tag'
+              AND p2.post_status = 'publish'
+              AND p1.ID = p2.ID
+            GROUP BY terms2.name
+            ORDER BY COUNT DESC
+            LIMIT " . MclSettings::get_statistics_most_consumed_count() . "
+	" );
+
+        foreach ( $stats as $tag ) {
+            // Comma in tags
+            $tag = MclCommaInTags::comma_tag_filter( $tag );
+            // Get tag link
+            $tag->tag_link = get_tag_link( $tag->tag_id );
+        }
 
         return $stats;
     }

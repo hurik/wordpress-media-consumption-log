@@ -205,6 +205,7 @@ class MclStatistics {
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#most-consumed\">" . __( 'Most consumed', 'media-consumption-log' ) . "</a></li>"
                 . "\n   </ul>"
                 . "\n</div>";
 
@@ -361,6 +362,50 @@ class MclStatistics {
                 . "\n  </tfoot>"
                 . "\n</table>"
                 . "\n<p>{$since_count_string}</p>";
+
+        // Most consumed
+        $since_most_consumed_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Most consumed serials, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
+        $since_most_consumed_string = str_replace( '%DAYS%', $data->number_of_days, $since_most_consumed_string );
+
+        $html .= "\n\n<h4 id=\"most-consumed\">" . __( 'Most consumed', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<table class=\"mcl_table\">"
+                . "\n  <colgroup>"
+                . "\n    <col width=\"98%\">"
+                . "\n    <col width=\"1%\">"
+                . "\n    <col width=\"1%\">"
+                . "\n  </colgroup>"
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th nowrap>" . __( 'Serial', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Count', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
+
+        foreach ( $data->most_consumed as $tag ) {
+            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
+
+            $cats = explode( ",", $tag->cats );
+
+            $units = array();
+
+            foreach ( $cats as $cat ) {
+                $units[] = MclSettings::get_unit_of_category( get_category( $cat ) );
+            }
+
+            $categories = MclHelper::build_list_from_array( $units );
+
+            $html .= "\n    <tr>"
+                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"
+                    . "\n      <td nowrap>{$tag->count}</td>"
+                    . "\n      <td nowrap>{$categories}</td>"
+                    . "\n    </tr>";
+        }
+
+        $html .= "\n  </tbody>"
+                . "\n</table>"
+                . "\n<p>{$since_most_consumed_string}</p>";
 
         return $html;
     }

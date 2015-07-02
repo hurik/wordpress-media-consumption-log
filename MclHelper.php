@@ -117,4 +117,31 @@ class MclHelper {
         }
     }
 
+    public static function build_list_from_array( $data ) {
+        $data = array_values( array_unique( $data ) );
+
+        if ( count( $data ) == 1 ) {
+            return $data[0];
+        } else {
+            $list = "";
+
+            $forelast_entry = $data[count( $data ) - 2];
+            $last_entry = end( $data );
+
+            foreach ( $data as $entry ) {
+                if ( $entry != $last_entry ) {
+                    $list .= $entry;
+
+                    if ( $entry != $forelast_entry ) {
+                        $list .= ", ";
+                    }
+                } else {
+                    $list .= " " . __( 'and', 'media-consumption-log' ) . " {$entry}";
+                }
+            }
+
+            return $list;
+        }
+    }
+
 }

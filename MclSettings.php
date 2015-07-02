@@ -30,6 +30,7 @@ class MclSettings {
     const SETTING_STATISTICS_DAILY_DATE_FORMAT = "mcl_setting_statistics_daily_date_format";
     const SETTING_STATISTICS_MONTHLY_COUNT = "mcl_setting_statistics_monthly_count";
     const SETTING_STATISTICS_MONTHLY_DATE_FORMAT = "mcl_setting_statistics_monthly_date_format";
+    const SETTING_STATISTICS_MOST_CONSUMED_COUNT = "mcl_setting_statistics_most_consumed_count";
     const SETTING_FORGOTTEN_MIN_DAYS = "mcl_setting_forgotten_min_days";
     const SETTING_OTHER_SEPARATOR = "mcl_setting_other_separator";
     const SETTING_OTHER_AND = "mcl_setting_other_and";
@@ -39,6 +40,7 @@ class MclSettings {
     // Default values
     const default_statistics_daily_count = 31;
     const default_statistics_monthly_count = 0;
+    const default_statistics_most_consumed_count = 10;
     const default_forgotten_min_days = 91;
     const default_other_separator = "-";
 
@@ -107,6 +109,16 @@ class MclSettings {
         }
     }
 
+    public static function get_statistics_most_consumed_count() {
+        $value = get_option( self::SETTING_STATISTICS_MOST_CONSUMED_COUNT );
+
+        if ( ( string ) ( int ) $value === $value && ( int ) $value >= 0 ) {
+            return $value;
+        } else {
+            return self::default_statistics_most_consumed_count;
+        }
+    }
+
     public static function get_forgotten_min_days() {
         $value = get_option( self::SETTING_FORGOTTEN_MIN_DAYS );
 
@@ -166,6 +178,7 @@ class MclSettings {
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_DATE_FORMAT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT );
+        register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MOST_CONSUMED_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_FORGOTTEN_MIN_DAYS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_SEPARATOR );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_AND );
@@ -324,6 +337,12 @@ class MclSettings {
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT; ?>" value="<?php echo esc_attr( self::get_statistics_monthly_date_format() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_date_format(); ?></p></td>
                     </tr>
+
+                    <tr>
+                        <th scope="row"><?php _e( 'Most consumed count', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MOST_CONSUMED_COUNT; ?>" value="<?php echo esc_attr( self::get_statistics_most_consumed_count() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Number of entries in the most cunsumed statistic. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_most_consumed_count; ?></p></td>
+                    </tr>
                 </table>
 
                 <h3><?php _e( 'Forgotten', 'media-consumption-log' ); ?></h3>
@@ -404,18 +423,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                        if ( count( $posts_without_mcl_number ) > 0 ) {
-                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                if ( count( $posts_without_mcl_number ) > 0 ) {
+                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                                    echo "<br />";
-                                }
-                            }
-                        } else {
-                            echo _e( 'Nothing found!', 'media-consumption-log' );
+                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                            echo "<br />";
                         }
-                        ?></td>
+                    }
+                } else {
+                    echo _e( 'Nothing found!', 'media-consumption-log' );
+                }
+                ?></td>
                 </tr>   
             </table>
             <div id="mcl_loading"></div>
