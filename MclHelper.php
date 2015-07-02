@@ -23,25 +23,33 @@ class MclHelper {
     public static function build_all_categories_string( $categories, $with_id = false ) {
         $categories_string = "";
 
-        $forelast_cat = $categories[count( $categories ) - 2];
-        $last_cat = end( $categories );
+        if ( count( $categories ) == 1 ) {
+            $categories_string .= "{$categories[0]->name}";
 
-        foreach ( $categories as $category ) {
-            if ( $category != $last_cat ) {
-                $categories_string .= "{$category->name}";
+            if ( $with_id ) {
+                $categories_string .= " ({$categories[0]->term_id})";
+            }
+        } else {
+            $forelast_cat = $categories[count( $categories ) - 2];
+            $last_cat = end( $categories );
 
-                if ( $with_id ) {
-                    $categories_string .= " ({$category->term_id})";
-                }
+            foreach ( $categories as $category ) {
+                if ( $category != $last_cat ) {
+                    $categories_string .= "{$category->name}";
 
-                if ( $category != $forelast_cat ) {
-                    $categories_string .= ", ";
-                }
-            } else {
-                $categories_string .= " " . __( 'and', 'media-consumption-log' ) . " {$category->name}";
+                    if ( $with_id ) {
+                        $categories_string .= " ({$category->term_id})";
+                    }
 
-                if ( $with_id ) {
-                    $categories_string .= " ({$category->term_id})";
+                    if ( $category != $forelast_cat ) {
+                        $categories_string .= ", ";
+                    }
+                } else {
+                    $categories_string .= " " . __( 'and', 'media-consumption-log' ) . " {$category->name}";
+
+                    if ( $with_id ) {
+                        $categories_string .= " ({$category->term_id})";
+                    }
                 }
             }
         }
