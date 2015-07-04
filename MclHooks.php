@@ -41,16 +41,12 @@ class MclHooks {
     }
 
     public static function admin_bar_menu( $wp_admin_bar ) {
-        $args = array(
+        $wp_admin_bar->add_menu( array(
+            'parent' => 'new-content',
             'id' => 'mcl_admin_bar_button',
             'title' => __( 'Quick Post', 'media-consumption-log' ),
             'href' => admin_url( "admin.php?page=mcl-quick-post" ),
-            'meta' => array(
-                'class' => 'mcl_admin_bar_button_class'
-            )
-        );
-
-        $wp_admin_bar->add_node( $args );
+        ) );
     }
 
     public static function conditionally_add_style( $posts ) {
