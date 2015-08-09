@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -123,6 +123,11 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 1.6.1 =
+* Tested up to changed to 4.3
+* Fixed annotation position in graphs when last category was zero
+* Moved Quick Post button to new content node, for better access on mobile devices
 
 = 1.6.0 =
 * Added Most consumed in Statistics
