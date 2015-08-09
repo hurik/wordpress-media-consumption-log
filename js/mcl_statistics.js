@@ -60,6 +60,16 @@ function drawDailyChart() {
         isStacked: true
     };
 
+    var series = {};
+    series[data.getNumberOfColumns() - 3] = {
+        color: 'transparent',
+        type: "bar",
+        targetAxisIndex: 1,
+        visibleInLegend: false
+    };
+
+    options["series"] = series;
+
     var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));
     chart.draw(data, options);
 }
@@ -101,6 +111,17 @@ function drawMonthlyChart() {
         isStacked: true
     };
 
+    var series = {};
+    series[data.getNumberOfColumns() - 3] = {
+        color: 'transparent',
+        type: "bar",
+        targetAxisIndex: 1,
+        visibleInLegend: false
+    };
+
+    options["series"] = series;
+
+
     var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));
     chart.draw(data, options);
 }
@@ -141,6 +162,17 @@ function drawHourlyChart() {
         },
         isStacked: true
     };
+
+    var series = {};
+    series[data.getNumberOfColumns() - 3] = {
+        color: 'transparent',
+        type: "bar",
+        targetAxisIndex: 1,
+        visibleInLegend: false
+    };
+
+    options["series"] = series;
+
 
     var chart = new google.visualization.BarChart(document.getElementById('hourly_chart_div'));
     chart.draw(data, options);

@@ -65,6 +65,7 @@ class MclStatistics {
             $daily_data[0][] = $category->name;
         }
 
+        $daily_data[0][] = __( 'Total', 'media-consumption-log' );
         $daily_data[0][] = "ROLE_ANNOTATION";
 
         // Daily array data
@@ -90,6 +91,7 @@ class MclStatistics {
                 $daily_data[$i + 1][] = $count;
             }
 
+            $daily_data[$i + 1][] = $total;
             $daily_data[$i + 1][] = $total;
         }
 
@@ -131,6 +133,7 @@ class MclStatistics {
             $monthly_data[0][] = $category->name;
         }
 
+        $monthly_data[0][] = __( 'Total', 'media-consumption-log' );
         $monthly_data[0][] = "ROLE_ANNOTATION";
 
         for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
@@ -156,6 +159,7 @@ class MclStatistics {
             }
 
             $monthly_data[$i + 1][] = $total;
+            $monthly_data[$i + 1][] = $total;
         }
 
         // Hourly graph
@@ -169,6 +173,7 @@ class MclStatistics {
             $hourly_data[0][] = $category->name;
         }
 
+        $hourly_data[0][] = __( 'Total', 'media-consumption-log' );
         $hourly_data[0][] = "ROLE_ANNOTATION";
 
         for ( $i = 0; $i < 24; $i++ ) {
@@ -182,6 +187,7 @@ class MclStatistics {
                 $hourly_data[$i + 1][] = $count;
             }
 
+            $hourly_data[$i + 1][] = $total;
             $hourly_data[$i + 1][] = $total;
         }
 
