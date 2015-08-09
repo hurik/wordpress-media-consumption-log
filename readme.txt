@@ -3,7 +3,7 @@ Contributors: hurik
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W3KL56CXEGRTN
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 3.8
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.6.0
 License: GPLv2 or later
 
