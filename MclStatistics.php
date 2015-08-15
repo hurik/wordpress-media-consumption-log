@@ -206,8 +206,9 @@ class MclStatistics {
         $html = "\n<div>"
                 . "\n  <ul>"
                 . "\n    <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>"
-                . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#monthly-development\">" . __( 'Monthly development', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
@@ -219,13 +220,68 @@ class MclStatistics {
         $html .= "\n\n<h4 id=\"daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<div id=\"daily_chart_div\"></div>";
 
+        // Hourly graph
+        $html .= "\n\n<h4 id=\"hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<div id=\"hourly_chart_div\"></div>";
+
         // Monthly graph
         $html .= "\n\n<h4 id=\"monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<div id=\"monthly_chart_div\"></div>";
 
-        // Hourly graph
-        $html .= "\n\n<h4 id=\"hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<div id=\"hourly_chart_div\"></div>";
+        // Monthly development
+        $html .= "\n\n<h4 id=\"monthly-development\">" . __( 'Monthly development', 'media-consumption-log' ) . "</h4><hr />";
+
+        for ( $c = 1; $c < (sizeof( $monthly_data[0] ) - 1); $c++ ) {
+            $html .= "\n<h5>" . $monthly_data[0][$c] . "</h5>"
+                    . "\n<table class=\"mcl_table\">"
+                    . "\n  <colgroup>"
+                    . "\n    <col width=\"98%\">"
+                    . "\n    <col width=\"1%\">"
+                    . "\n    <col width=\"1%\">"
+                    . "\n  </colgroup>"
+                    . "\n  <thead>"
+                    . "\n    <tr>"
+                    . "\n      <th>" . __( 'Date', 'media-consumption-log' ) . "</th>"
+                    . "\n      <th nowrap>" . __( 'Count', 'media-consumption-log' ) . "</th>"
+                    . "\n      <th nowrap>" . __( 'Development', 'media-consumption-log' ) . "</th>"
+                    . "\n    </tr>"
+                    . "\n  </thead>"
+                    . "\n  <tbody>";
+
+            for ( $i = 1; $i < (sizeof( $monthly_data )); $i++ ) {
+                if ( ($i + 1) <= (sizeof( $monthly_data ) - 1) ) {
+                    $nCurrentPeriod = $monthly_data[$i][$c];
+                    $nLastMonthPeriod = $monthly_data[$i + 1][$c];
+
+                    $dev_count = $nLastMonthPeriod == 0 ? "ERROR" : number_format( ( ( ( $nCurrentPeriod - $nLastMonthPeriod ) / $nLastMonthPeriod ) * 100 ), 2 );
+
+                    if ( $dev_count != "ERROR" ) {
+                        if ( $dev_count == 0 ) {
+                            $sign = "";
+                        } elseif ( $dev_count > 0 ) {
+                            $sign = "+ ";
+                        } else {
+                            $sign = "- ";
+                        }
+
+                        $development = $sign . abs( $dev_count ) . " %";
+                    } else {
+                        $development = "-";
+                    }
+                } else {
+                    $development = "-";
+                }
+
+                $html .="\n    <tr>"
+                        . "\n      <td>" . $monthly_data[$i][0] . "</td>"
+                        . "\n      <td nowrap>" . $monthly_data[$i][$c] . "</td>"
+                        . "\n      <td nowrap>" . $development . "</td>"
+                        . "\n    </tr>";
+            }
+
+            $html .= "\n  </tbody>"
+                    . "\n</table>";
+        }
 
         // Total consumption
         $html .= "\n\n<h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />"
@@ -238,7 +294,8 @@ class MclStatistics {
                 . "\n  <thead>"
                 . "\n    <tr>"
                 . "\n      <th>" . __( 'Category', 'media-consumption-log' ) . "</th>"
-                . "\n      <th nowrap>#</th><th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>#</th>"
+                . "\n      <th nowrap>" . __( 'Unit', 'media-consumption-log' ) . "</th>"
                 . "\n    </tr>"
                 . "\n  </thead>"
                 . "\n  <tbody>";
