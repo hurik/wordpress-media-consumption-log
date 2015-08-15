@@ -255,7 +255,7 @@ class MclStatistics {
 
                     $dev_count = $nLastMonthPeriod == 0 ? "ERROR" : ( ( ( $nCurrentPeriod - $nLastMonthPeriod ) / $nLastMonthPeriod ) * 100 );
 
-                    if ( $dev_count != "ERROR" ) {
+                    if ( is_numeric( $dev_count ) ) {
                         if ( $dev_count == 0 ) {
                             $sign = "";
                         } elseif ( $dev_count > 0 ) {
@@ -266,10 +266,10 @@ class MclStatistics {
 
                         $development = $sign . number_format( abs( $dev_count ), 2 ) . " %";
                     } else {
-                        $development = "-";
+                        $development = "";
                     }
                 } else {
-                    $development = "-";
+                    $development = "";
                 }
 
                 $html .="\n    <tr>"
