@@ -253,7 +253,7 @@ class MclStatistics {
                     $nCurrentPeriod = $monthly_data[$i][$c];
                     $nLastMonthPeriod = $monthly_data[$i + 1][$c];
 
-                    $dev_count = $nLastMonthPeriod == 0 ? "ERROR" : number_format( ( ( ( $nCurrentPeriod - $nLastMonthPeriod ) / $nLastMonthPeriod ) * 100 ), 2 );
+                    $dev_count = $nLastMonthPeriod == 0 ? "ERROR" : ( ( ( $nCurrentPeriod - $nLastMonthPeriod ) / $nLastMonthPeriod ) * 100 );
 
                     if ( $dev_count != "ERROR" ) {
                         if ( $dev_count == 0 ) {
@@ -264,7 +264,7 @@ class MclStatistics {
                             $sign = "- ";
                         }
 
-                        $development = $sign . abs( $dev_count ) . " %";
+                        $development = $sign . number_format( abs( $dev_count ), 2 ) . " %";
                     } else {
                         $development = "-";
                     }
