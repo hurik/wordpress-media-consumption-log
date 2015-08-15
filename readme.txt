@@ -125,7 +125,7 @@ No questions at the moment.
 == Changelog ==
 
 = 1.6.1 =
-* Tested up to changed to 4.3
+* Tested up to 4.3
 * Fixed annotation position in graphs when last category was zero
 * Moved Quick Post button to new content node, for better access on mobile devices
 
@@ -157,7 +157,7 @@ No questions at the moment.
 
 = 1.2.2 =
 * Readme and screenshots improved
-* Tested up to changed to 4.2
+* Tested up to 4.2
 * Default time format for Daily consumption changed
 
 = 1.2.1 =
