@@ -1,4 +1,5 @@
 <?php
+
 /*
   Copyright (C) 2014-2015 Andreas Giemza <andreas@giemza.net>
 
@@ -85,7 +86,7 @@ class MclForgotten {
 
             $nav .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
 
-            $html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} (" . count( $category->forgotten ) . ")</h3><hr />"
+            $html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name} (" . count( $category->forgotten ) . " " . __( 'of', 'media-consumption-log' ) . " " . $category->mcl_tags_count_ongoing . ")</h3><hr />"
                     . "\n<table class=\"widefat\">"
                     . "\n  <colgroup>"
                     . "\n    <col width=\"98%\">"
@@ -140,6 +141,7 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-    }
+        }
 
-}
+    }
+    
