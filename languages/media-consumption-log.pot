@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"POT-Revision-Date: Sat Aug 15 2015 21:43:27 GMT+0200\n"
+"POT-Revision-Date: Fri Aug 28 2015 05:00:18 GMT+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -34,8 +34,8 @@ msgstr ""
 msgid "Serial Status"
 msgstr ""
 
-#: ../MclAdminHooks.php:67 ../MclAdminHooks.php:67 ../MclForgotten.php:64 ..
-#: /MclForgotten.php:126 ../MclSettings.php:348
+#: ../MclAdminHooks.php:67 ../MclAdminHooks.php:67 ../MclForgotten.php:65 ..
+#: /MclForgotten.php:127 ../MclSettings.php:348
 msgid "Forgotten"
 msgstr ""
 
@@ -47,30 +47,34 @@ msgstr ""
 msgid "Title can't be empty!"
 msgstr ""
 
-#: ../MclForgotten.php:24 ../MclQuickPost.php:67 ../MclSerialStatus.php:55 ..
+#: ../MclForgotten.php:25 ../MclQuickPost.php:67 ../MclSerialStatus.php:55 ..
 #: /MclSettings.php:265
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: ../MclForgotten.php:65 ../MclQuickPost.php:78 ../MclSerialStatus.php:66 ..
+#: ../MclForgotten.php:66 ../MclQuickPost.php:78 ../MclSerialStatus.php:66 ..
 #: /MclStatistics.php:32 ../MclStatus.php:30
 msgid "Nothing here yet!"
 msgstr ""
 
-#: ../MclForgotten.php:97 ../MclSerialStatus.php:188 ../MclSerialStatus.php:242 ..
+#: ../MclForgotten.php:89
+msgid "of"
+msgstr ""
+
+#: ../MclForgotten.php:98 ../MclSerialStatus.php:188 ../MclSerialStatus.php:242 ..
 #: /MclSerialStatus.php:296 ../MclStatus.php:203 ../MclStatus.php:282
 msgid "Name"
 msgstr ""
 
-#: ../MclForgotten.php:98 ../MclStatus.php:285
+#: ../MclForgotten.php:99 ../MclStatus.php:285
 msgid "Last"
 msgstr ""
 
-#: ../MclForgotten.php:99
+#: ../MclForgotten.php:100
 msgid "Days ago"
 msgstr ""
 
-#: ../MclForgotten.php:134 ../MclQuickPost.php:255 ../MclSerialStatus.php:341 ..
+#: ../MclForgotten.php:135 ../MclQuickPost.php:255 ../MclSerialStatus.php:341 ..
 #: /MclSettings.php:287 ../MclStatus.php:48 ../MclStatus.php:95
 msgid "Quick Navigation"
 msgstr ""
@@ -108,26 +112,26 @@ msgstr ""
 msgid "Edit before posting"
 msgstr ""
 
-#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:296 ..
-#: /MclStatistics.php:337 ../MclStatistics.php:380 ../MclStatus.php:46 ..
+#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:240 ..
+#: /MclStatistics.php:281 ../MclStatistics.php:324 ../MclStatus.php:46 ..
 #: /MclStatus.php:94
 msgid "Category"
 msgstr ""
 
 #: ../MclSerialStatus.php:90 ../MclSerialStatus.php:164 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:381 ../MclStatus.php:65 ..
+#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:325 ../MclStatus.php:65 ..
 #: /MclStatus.php:149
 msgid "Running"
 msgstr ""
 
 #: ../MclSerialStatus.php:110 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:382 ../MclStatus.php:70 ..
+#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:326 ../MclStatus.php:70 ..
 #: /MclStatus.php:154
 msgid "Complete"
 msgstr ""
 
 #: ../MclSerialStatus.php:130 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:383 ../MclStatus.php:75 ..
+#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:327 ../MclStatus.php:75 ..
 #: /MclStatus.php:159
 msgid "Abandoned"
 msgstr ""
@@ -323,81 +327,69 @@ msgid "Nothing found!"
 msgstr ""
 
 #: ../MclStatistics.php:68 ../MclStatistics.php:136 ../MclStatistics.php:176 ..
-#: /MclStatistics.php:319 ../MclStatistics.php:360 ../MclStatistics.php:384 ..
-#: /MclStatistics.php:419
+#: /MclStatistics.php:263 ../MclStatistics.php:304 ../MclStatistics.php:328 ..
+#: /MclStatistics.php:363
 msgid "Total"
 msgstr ""
 
-#: ../MclStatistics.php:208 ../MclStatistics.php:220
+#: ../MclStatistics.php:208 ../MclStatistics.php:219
 msgid "Daily consumption"
 msgstr ""
 
-#: ../MclStatistics.php:209 ../MclStatistics.php:224
+#: ../MclStatistics.php:209 ../MclStatistics.php:223
 msgid "Hourly consumption"
 msgstr ""
 
-#: ../MclStatistics.php:210 ../MclStatistics.php:228
+#: ../MclStatistics.php:210 ../MclStatistics.php:227
 msgid "Monthly consumption"
 msgstr ""
 
-#: ../MclStatistics.php:211 ../MclStatistics.php:232
-msgid "Monthly development"
-msgstr ""
-
-#: ../MclStatistics.php:212 ../MclStatistics.php:287
+#: ../MclStatistics.php:211 ../MclStatistics.php:231
 msgid "Total consumption"
 msgstr ""
 
-#: ../MclStatistics.php:213 ../MclStatistics.php:328
+#: ../MclStatistics.php:212 ../MclStatistics.php:272
 msgid "Average consumption"
 msgstr ""
 
-#: ../MclStatistics.php:214 ../MclStatistics.php:369
+#: ../MclStatistics.php:213 ../MclStatistics.php:313
 msgid "Consumption amount"
 msgstr ""
 
-#: ../MclStatistics.php:215 ../MclStatistics.php:433
+#: ../MclStatistics.php:214 ../MclStatistics.php:377
 msgid "Most consumed"
 msgstr ""
 
-#: ../MclStatistics.php:244
-msgid "Date"
-msgstr ""
-
-#: ../MclStatistics.php:245 ../MclStatistics.php:443
-msgid "Count"
-msgstr ""
-
-#: ../MclStatistics.php:246
-msgid "Development"
-msgstr ""
-
-#: ../MclStatistics.php:298 ../MclStatistics.php:339 ../MclStatistics.php:444
+#: ../MclStatistics.php:242 ../MclStatistics.php:283 ../MclStatistics.php:388
 msgid "Unit"
 msgstr ""
 
-#: ../MclStatistics.php:313
+#: ../MclStatistics.php:257
 #, php-format
 msgid "Total comsumption, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:354
+#: ../MclStatistics.php:298
 #, php-format
 msgid "Average a day, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:412
+#: ../MclStatistics.php:356
 #, php-format
 msgid ""
 "Total count of different %CATEGORIES%, since the first post on the %DATE% "
 "(%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:430
+#: ../MclStatistics.php:374
 #, php-format
 msgid "Most consumed serials, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:442
+#: ../MclStatistics.php:386
 msgid "Serial"
+msgstr ""
+
+#: ../MclStatistics.php:387
+msgid "Count"
 msgstr ""
