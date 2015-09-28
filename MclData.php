@@ -415,13 +415,13 @@ class MclData {
                    SUM(m1.meta_value) AS count,
                    GROUP_CONCAT(DISTINCT r1.term_taxonomy_id
                                 ORDER BY r1.term_taxonomy_id) AS cats
-            FROM wp_posts p1
-            LEFT OUTER JOIN wp_term_relationships AS r1 ON p1.ID = r1.object_id
-            LEFT OUTER JOIN wp_postmeta AS m1 ON p1.ID = m1.post_id,
-                                                 wp_posts AS p2
-            LEFT JOIN wp_term_relationships AS r2 ON p2.ID = r2.object_ID
-            LEFT JOIN wp_term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-            LEFT JOIN wp_terms AS terms2 ON t2.term_id = terms2.term_id
+            FROM {$wpdb->prefix}posts p1
+            LEFT OUTER JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_id
+            LEFT OUTER JOIN {$wpdb->prefix}postmeta AS m1 ON p1.ID = m1.post_id,
+                 {$wpdb->prefix}posts AS p2
+            LEFT JOIN {$wpdb->prefix}term_relationships AS r2 ON p2.ID = r2.object_ID
+            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
+            LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id
             WHERE p1.post_status = 'publish'
               AND p1.post_type = 'post'
               AND m1.meta_key = 'mcl_number'
