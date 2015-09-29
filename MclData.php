@@ -81,7 +81,7 @@ class MclData {
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
         $first_post = array_shift( $first_post_array );
-        $first_post_date = new DateTime( $first_post->post_date );
+        $first_post_date = new DateTime( (new DateTime( $first_post->post_date ) )->format( 'Y-m-d' ) );
         $data->first_post_date = $first_post_date;
 
         // Get first date an month for the graphs
