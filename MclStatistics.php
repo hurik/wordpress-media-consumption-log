@@ -190,11 +190,12 @@ class MclStatistics {
             $hourly_data[$i + 1][] = $total;
             $hourly_data[$i + 1][] = $total;
         }
-
+        
         $js_params = array(
             'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
             'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK ),
-            'hourly' => json_encode( $hourly_data, JSON_NUMERIC_CHECK )
+            'hourly' => json_encode( $hourly_data, JSON_NUMERIC_CHECK ),
+            'average' => json_encode( $data->average_consumption_development, JSON_NUMERIC_CHECK )
         );
 
         // Output js
@@ -210,6 +211,7 @@ class MclStatistics {
                 . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#most-consumed\">" . __( 'Most consumed', 'media-consumption-log' ) . "</a></li>"
                 . "\n   </ul>"
@@ -308,6 +310,10 @@ class MclStatistics {
                 . "\n  </tfoot>"
                 . "\n</table>"
                 . "\n<p>{$since_string}</p>";
+
+        // Average consumption development
+        $html .= "\n\n<h4 id=\"average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<div id=\"average_consumption_development_chart_div\"></div>";
 
         // Consumption count
         $html .= "\n\n<h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />"

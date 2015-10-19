@@ -174,6 +174,8 @@ class MclData {
 
         $data->most_consumed = self::get_most_consumed();
 
+        $data->average_consumption_development = self::get_average_consumption_development( $first_post_date->format( 'Y-m-d' ), $number_of_days );
+
         return $data;
     }
 
@@ -442,6 +444,60 @@ class MclData {
         }
 
         return $stats;
+    }
+
+    private static function get_average_consumption_development( $first_date, $number_of_days ) {
+        global $wpdb;
+
+        $db_data = $wpdb->get_results( "
+            SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
+            FROM {$wpdb->prefix}posts p
+            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
+            WHERE post_status = 'publish'
+              AND post_type = 'post'
+              AND meta_key = 'mcl_number'
+              AND post_date >= '{$first_date}'
+            GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
+            ORDER BY date DESC
+	" );
+
+        $all_dates = array();
+
+        for ( $i = 0; $i < $number_of_days; $i++ ) {
+            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+            array_push( $all_dates, $day );
+        }
+
+        $data = array();
+        $sum = 0;
+        //$date = "";
+
+        for ( $i = count( $all_dates ) - 1; $i >= 0; $i-- ) {
+            $value = null;
+
+            foreach ( $db_data as $db_day ) {
+                if ( $db_day->date == $all_dates[$i] ) {
+                    $value = $db_day;
+                    break;
+                }
+            }
+
+            if ( $value == null ) {
+                $value = new stdClass();
+                $value->date = $all_dates[$i];
+                $value->number = 0;
+            }
+
+            $sum += $value->number;
+
+            $new_data = array();
+            $new_data[] = $value->date;
+            $new_data[] = number_format( $sum / ($number_of_days - $i), 2 );
+
+            $data[] = $new_data;
+        }
+
+        return $data;
     }
 
 }

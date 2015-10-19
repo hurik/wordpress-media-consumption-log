@@ -23,6 +23,7 @@ google.load('visualization', '1.0', {
 google.setOnLoadCallback(drawDailyChart);
 google.setOnLoadCallback(drawMonthlyChart);
 google.setOnLoadCallback(drawHourlyChart);
+google.setOnLoadCallback(drawAverrageDevelopmentChart);
 
 function drawDailyChart() {
     var daily_data_array = JSON.parse(js_params.daily);
@@ -178,10 +179,41 @@ function drawHourlyChart() {
     chart.draw(data, options);
 }
 
+function drawAverrageDevelopmentChart() {
+    var averrage_data_array = JSON.parse(js_params.average);
+    for (var i = 0; i < averrage_data_array.length; i++) {
+        averrage_data_array[i][0] = new Date(averrage_data_array[i][0]);
+    }
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Date');
+    data.addColumn('number', 'Average consumption');
+
+    data.addRows(averrage_data_array);
+
+    var options = {
+        chartArea: {
+            left: 50,
+            top: 5,
+            width: '80%',
+            height: '70%'
+        },
+        hAxis: {
+            slantedText: true,
+            slantedTextAngle: 45 // here you can even use 180 
+        },
+        legend: {position: 'none'}
+    };
+
+    var chart = new google.visualization.ColumnChart(document.getElementById('average_consumption_development_chart_div'));
+    chart.draw(data, options);
+}
+
 jQuery(document).ready(function ($) {
     $(window).resize(function () {
         drawDailyChart();
         drawMonthlyChart();
         drawHourlyChart();
+        drawAverrageDevelopmentChart();
     });
 });
