@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"PO-Revision-Date: Fri Aug 28 2015 05:00:50 GMT+0200\n"
+"PO-Revision-Date: Mon Oct 19 2015 22:29:15 GMT+0200\n"
 "Last-Translator: Andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -25,6 +25,34 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes\n"
 "X-Loco-Target-Locale: de_DE"
+
+#: ../MclStatistics.php:214 ../MclStatistics.php:315
+msgid "Average consumption development"
+msgstr "Entwicklung des durchschnittlichen Konsums"
+
+#. Name of the plugin
+msgid "Media Consumption Log"
+msgstr "Media Consumption Log"
+
+#. URI of the plugin
+msgid "https://github.com/hurik/wordpress-media-consumption-log"
+msgstr "https://github.com/hurik/wordpress-media-consumption-log"
+
+#. Description of the plugin
+msgid ""
+"This plugin helps you to keep track of the tv shows, movies, books, comics, "
+"games and other things you are consuming."
+msgstr ""
+"Dieses Plugin hilft dir die Übersicht zu behalten, über die ganzen Serien, "
+"Filme, Bücher, Comics, Spiele und andere Dinge die du konsumierst."
+
+#. Author of the plugin
+msgid "Andreas Giemza"
+msgstr "Andreas Giemza"
+
+#. Author URI of the plugin
+msgid "http://www.andreasgiemza.de"
+msgstr "http://www.andreasgiemza.de"
 
 #: ../MclAdminHooks.php:65 ../MclAdminHooks.php:65 ../MclHooks.php:47 ..
 #: MclQuickPost.php:76 ../MclQuickPost.php:245
@@ -114,26 +142,26 @@ msgstr "Letzter Beitrag"
 msgid "Edit before posting"
 msgstr "Bearbeiten vorm posten"
 
-#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:240 ..
-#: MclStatistics.php:281 ../MclStatistics.php:324 ../MclStatus.php:46 ..
+#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:242 ..
+#: MclStatistics.php:283 ../MclStatistics.php:330 ../MclStatus.php:46 ..
 #: MclStatus.php:94
 msgid "Category"
 msgstr "Kategorie"
 
 #: ../MclSerialStatus.php:90 ../MclSerialStatus.php:164 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:325 ../MclStatus.php:65 ..
+#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:331 ../MclStatus.php:65 ..
 #: MclStatus.php:149
 msgid "Running"
 msgstr "Laufend"
 
 #: ../MclSerialStatus.php:110 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:326 ../MclStatus.php:70 ..
+#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:332 ../MclStatus.php:70 ..
 #: MclStatus.php:154
 msgid "Complete"
 msgstr "Komplett"
 
 #: ../MclSerialStatus.php:130 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:327 ../MclStatus.php:75 ..
+#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:333 ../MclStatus.php:75 ..
 #: MclStatus.php:159
 msgid "Abandoned"
 msgstr "Aufgegeben"
@@ -357,56 +385,56 @@ msgid "Nothing found!"
 msgstr "Nichts gefunden!"
 
 #: ../MclStatistics.php:68 ../MclStatistics.php:136 ../MclStatistics.php:176 ..
-#: MclStatistics.php:263 ../MclStatistics.php:304 ../MclStatistics.php:328 ..
-#: MclStatistics.php:363
+#: MclStatistics.php:265 ../MclStatistics.php:306 ../MclStatistics.php:334 ..
+#: MclStatistics.php:369
 msgid "Total"
 msgstr "Insgesamt"
 
-#: ../MclStatistics.php:208 ../MclStatistics.php:219
+#: ../MclStatistics.php:209 ../MclStatistics.php:221
 msgid "Daily consumption"
 msgstr "Täglicher Konsum"
 
-#: ../MclStatistics.php:209 ../MclStatistics.php:223
+#: ../MclStatistics.php:210 ../MclStatistics.php:225
 msgid "Hourly consumption"
 msgstr "Stündlicher Konsum"
 
-#: ../MclStatistics.php:210 ../MclStatistics.php:227
+#: ../MclStatistics.php:211 ../MclStatistics.php:229
 msgid "Monthly consumption"
 msgstr "Monatlicher Konsum"
 
-#: ../MclStatistics.php:211 ../MclStatistics.php:231
+#: ../MclStatistics.php:212 ../MclStatistics.php:233
 msgid "Total consumption"
 msgstr "Gesamter Konsum"
 
-#: ../MclStatistics.php:212 ../MclStatistics.php:272
+#: ../MclStatistics.php:213 ../MclStatistics.php:274
 msgid "Average consumption"
 msgstr "Durchschnittlicher Konsum"
 
-#: ../MclStatistics.php:213 ../MclStatistics.php:313
+#: ../MclStatistics.php:215 ../MclStatistics.php:319
 msgid "Consumption amount"
 msgstr "Konsum Menge"
 
-#: ../MclStatistics.php:214 ../MclStatistics.php:377
+#: ../MclStatistics.php:216 ../MclStatistics.php:383
 msgid "Most consumed"
 msgstr "Am meisten konsumiert"
 
-#: ../MclStatistics.php:242 ../MclStatistics.php:283 ../MclStatistics.php:388
+#: ../MclStatistics.php:244 ../MclStatistics.php:285 ../MclStatistics.php:394
 msgid "Unit"
 msgstr "Einheit"
 
-#: ../MclStatistics.php:257
+#: ../MclStatistics.php:259
 #, php-format
 msgid "Total comsumption, since the first post on the %DATE% (%DAYS% days)."
 msgstr "Gesamter Konsum, seit dem ersten Beitrag am %DATE% (%DAYS% Tage)."
 
-#: ../MclStatistics.php:298
+#: ../MclStatistics.php:300
 #, php-format
 msgid "Average a day, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 "Durchschnittlich Konsum am Tag, seit dem ersten Beitrag am %DATE% (%DAYS% "
 "Tage)."
 
-#: ../MclStatistics.php:356
+#: ../MclStatistics.php:362
 #, php-format
 msgid ""
 "Total count of different %CATEGORIES%, since the first post on the %DATE% "
@@ -415,17 +443,17 @@ msgstr ""
 "Anzahl der verschiedenen %CATEGORIES%, seit dem ersten Beitrag am %DATE% "
 "(%DAYS% Tage)."
 
-#: ../MclStatistics.php:374
+#: ../MclStatistics.php:380
 #, php-format
 msgid "Most consumed serials, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 "Am meisten konsumierte Serie, seit dem ersten Beitrag am %DATE% (%DAYS% "
 "Tage)."
 
-#: ../MclStatistics.php:386
+#: ../MclStatistics.php:392
 msgid "Serial"
 msgstr "Serie"
 
-#: ../MclStatistics.php:387
+#: ../MclStatistics.php:393
 msgid "Count"
 msgstr "Anzahl"
