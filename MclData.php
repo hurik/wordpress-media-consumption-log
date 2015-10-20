@@ -480,6 +480,10 @@ class MclData {
         // Sum array
         $sum = array();
 
+        for ( $i = 0; $i < count( $all_dates ); $i++ ) {
+            $sum[] = 0;
+        }
+
         foreach ( $categories as $wp_category ) {
             $db_data = $wpdb->get_results( "
                 SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
