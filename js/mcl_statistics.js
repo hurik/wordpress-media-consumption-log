@@ -207,20 +207,27 @@ function drawAverrageDevelopmentChart() {
         hAxis: {
             slantedText: true,
             slantedTextAngle: 45
-        }
+        },
+        vAxis: {
+            viewWindow: {
+                max: averrage_data_array[averrage_data_array.length - 1][averrage_data_array[averrage_data_array.length - 1].length - 1] + 5
+            }
+        },
+        lineWidth: 0.1,
+        areaOpacity: 1
     };
 
     var series = {};
     series[data.getNumberOfColumns() - 2] = {
         color: 'transparent',
-        type: "bar",
         targetAxisIndex: 1,
+        pointsVisible: false,
         visibleInLegend: false
     };
 
     options["series"] = series;
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('average_consumption_development_chart_div'));
+    var chart = new google.visualization.AreaChart(document.getElementById('average_consumption_development_chart_div'));
     chart.draw(data, options);
 }
 
