@@ -181,31 +181,47 @@ function drawHourlyChart() {
 
 function drawAverrageDevelopmentChart() {
     var averrage_data_array = JSON.parse(js_params.average);
-    for (var i = 0; i < averrage_data_array.length; i++) {
-        averrage_data_array[i][0] = new Date(averrage_data_array[i][0]);
+    for (var i = 1; i < averrage_data_array.length; i++) {
+        averrage_data_array[i][0] = averrage_data_array[i][0] + "";
     }
-
-    var data = new google.visualization.DataTable();
-    data.addColumn('date', 'Date');
-    data.addColumn('number', 'Average consumption');
-
-    data.addRows(averrage_data_array);
+    var data = google.visualization.arrayToDataTable(averrage_data_array);
 
     var options = {
+        height: 400,
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        bar: {
+            groupWidth: '100%'
+        },
+        focusTarget: 'category',
         chartArea: {
             left: 50,
-            top: 5,
-            width: '80%',
-            height: '70%'
+            top: 80,
+            //width: '90%',
+            height: 260,
         },
+        isStacked: true,
         hAxis: {
             slantedText: true,
-            slantedTextAngle: 45 // here you can even use 180 
+            slantedTextAngle: 45
         },
-        legend: {position: 'none'}
+        lineWidth: 0.5
     };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('average_consumption_development_chart_div'));
+    var series = {};
+    series[data.getNumberOfColumns() - 2] = {
+        color: 'transparent',
+        type: "bar",
+        targetAxisIndex: 1,
+        visibleInLegend: false
+    };
+
+    options["series"] = series;
+
+    var chart = new google.visualization.AreaChart(document.getElementById('average_consumption_development_chart_div'));
     chart.draw(data, options);
 }
 

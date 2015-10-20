@@ -174,7 +174,7 @@ class MclData {
 
         $data->most_consumed = self::get_most_consumed();
 
-        $data->average_consumption_development = self::get_average_consumption_development( $first_post_date->format( 'Y-m-d' ), $number_of_days );
+        $data->average_consumption_development = self::get_average_consumption_development( $categories, $first_post_date->format( 'Y-m-d' ), $number_of_days );
 
         return $data;
     }
@@ -446,55 +446,83 @@ class MclData {
         return $stats;
     }
 
-    private static function get_average_consumption_development( $first_date, $number_of_days ) {
+    private static function get_average_consumption_development( $categories, $first_date, $number_of_days ) {
         global $wpdb;
 
-        $db_data = $wpdb->get_results( "
-            SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND meta_key = 'mcl_number'
-              AND post_date >= '{$first_date}'
-            GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date DESC
-	" );
-
+        // Dates array
         $all_dates = array();
-
         for ( $i = 0; $i < $number_of_days; $i++ ) {
             $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
             array_push( $all_dates, $day );
         }
+        $all_dates = array_reverse( $all_dates );
 
+        // Data array
         $data = array();
-        $sum = 0;
-        //$date = "";
 
-        for ( $i = count( $all_dates ) - 1; $i >= 0; $i-- ) {
-            $value = null;
+        // Legend
+        $legend_array = array();
+        $legend_array[] = "Date";
+        foreach ( $categories as $wp_category ) {
+            $legend_array[] = $wp_category->name;
+        }
+        $legend_array[] = __( 'Total', 'media-consumption-log' );
+        $data[] = $legend_array;
 
-            foreach ( $db_data as $db_day ) {
-                if ( $db_day->date == $all_dates[$i] ) {
-                    $value = $db_day;
-                    break;
+        // Add dates
+        for ( $i = 0; $i < count( $all_dates ); $i++ ) {
+            $dates_array = array();
+            $date = DateTime::createFromFormat( 'Y-m-d', $all_dates[$i] );
+            $dates_array[] = $date->format( MclSettings::get_statistics_daily_date_format() );
+            $data[] = $dates_array;
+        }
+
+        // Sum array
+        $sum = array();
+
+        foreach ( $categories as $wp_category ) {
+            $db_data = $wpdb->get_results( "
+                SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
+                FROM {$wpdb->prefix}posts p
+                LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+                LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
+                WHERE post_status = 'publish'
+                  AND post_type = 'post'
+                  AND meta_key = 'mcl_number'
+                  AND post_date >= '{$first_date}'
+                  AND term_taxonomy_id = '{$wp_category->term_id}'
+                GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
+                ORDER BY date DESC
+            " );
+
+            $cat_sum = 0;
+
+            for ( $i = 0; $i < count( $all_dates ); $i++ ) {
+                $value = null;
+
+                foreach ( $db_data as $db_day ) {
+                    if ( $db_day->date == $all_dates[$i] ) {
+                        $value = $db_day;
+                        break;
+                    }
                 }
+
+                if ( $value == null ) {
+                    $value = new stdClass();
+                    $value->date = $all_dates[$i];
+                    $value->number = 0;
+                }
+
+                $cat_sum += $value->number;
+
+                $sum[$i] += $cat_sum;
+
+                $data[$i + 1][] = number_format( $cat_sum / ($i + 1), 2 );
             }
+        }
 
-            if ( $value == null ) {
-                $value = new stdClass();
-                $value->date = $all_dates[$i];
-                $value->number = 0;
-            }
-
-            $sum += $value->number;
-
-            $new_data = array();
-            $new_data[] = $value->date;
-            $new_data[] = number_format( $sum / ($number_of_days - $i), 2 );
-
-            $data[] = $new_data;
+        for ( $i = 0; $i < count( $sum ); $i++ ) {
+            $data[$i + 1][] = number_format( $sum[$i] / ($i + 1), 2 );
         }
 
         return $data;
