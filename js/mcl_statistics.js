@@ -200,7 +200,7 @@ function drawAverrageDevelopmentChart() {
         chartArea: {
             left: 50,
             top: 80,
-            //width: '90%',
+            width: '90%',
             height: 260,
         },
         isStacked: true,
