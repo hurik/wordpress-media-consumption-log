@@ -208,7 +208,8 @@ function drawAverrageDevelopmentChart() {
             slantedText: true,
             slantedTextAngle: 45
         },
-        lineWidth: 0.5
+        lineWidth: 0.1,
+        areaOpacity: 1
     };
 
     var series = {};
