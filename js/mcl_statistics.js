@@ -207,9 +207,7 @@ function drawAverrageDevelopmentChart() {
         hAxis: {
             slantedText: true,
             slantedTextAngle: 45
-        },
-        lineWidth: 0.1,
-        areaOpacity: 1
+        }
     };
 
     var series = {};
@@ -222,7 +220,7 @@ function drawAverrageDevelopmentChart() {
 
     options["series"] = series;
 
-    var chart = new google.visualization.AreaChart(document.getElementById('average_consumption_development_chart_div'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('average_consumption_development_chart_div'));
     chart.draw(data, options);
 }
 
