@@ -137,7 +137,7 @@ class MclStatistics {
         $monthly_data[0][] = "ROLE_ANNOTATION";
 
         for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
-            $date = DateTime::createFromFormat( 'Y-m', $dates_monthly[$i] );
+            $date = DateTime::createFromFormat( 'Y-m-d', $dates_monthly[$i] . "-01" );
 
             $monthly_data[$i + 1][] = $date->format( MclSettings::get_statistics_monthly_date_format() );
 
@@ -190,7 +190,7 @@ class MclStatistics {
             $hourly_data[$i + 1][] = $total;
             $hourly_data[$i + 1][] = $total;
         }
-        
+
         $js_params = array(
             'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
             'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK ),
