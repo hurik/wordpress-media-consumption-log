@@ -354,7 +354,7 @@ class MclSettings {
                     <tr>
                         <th scope="row"><?php _e( 'Average consumption development max delta', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA; ?>" value="<?php echo esc_attr( self::get_statistics_average_consumption_development_max_delta() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'When you start to track your consumption, there could be a big fluctuation of the average consumption. So with this number you can restrict the max y value, the max delta is added to the last value. When you enter 0 Google Chart API automatically show all data. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_average_consumption_development_max_delta; ?></p></td>
+                            <p class="description"><?php _e( 'When you start to track your consumption, there could be big fluctuation of the average consumption development. So with this option you can restrict the max y-value, the max delta is added to the last value. When you enter 0 Google Chart API automatically show all data. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_average_consumption_development_max_delta; ?></p></td>
                     </tr>
 
                     <tr>
