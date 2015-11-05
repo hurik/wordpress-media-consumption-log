@@ -208,14 +208,19 @@ function drawAverrageDevelopmentChart() {
             slantedText: true,
             slantedTextAngle: 45
         },
-        vAxis: {
-            viewWindow: {
-                max: averrage_data_array[averrage_data_array.length - 1][averrage_data_array[averrage_data_array.length - 1].length - 1] + 5
-            }
-        },
         lineWidth: 0.1,
         areaOpacity: 1
     };
+
+    if (parseFloat(js_params.average_max_delta) > 0) {
+        var average_max_delta = {
+            viewWindow: {
+                max: averrage_data_array[averrage_data_array.length - 1][averrage_data_array[averrage_data_array.length - 1].length - 1] + parseFloat(js_params.average_max_delta)
+            }
+        }
+
+        options["vAxis"] = average_max_delta;
+    }
 
     var series = {};
     series[data.getNumberOfColumns() - 2] = {

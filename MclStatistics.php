@@ -195,7 +195,8 @@ class MclStatistics {
             'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
             'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK ),
             'hourly' => json_encode( $hourly_data, JSON_NUMERIC_CHECK ),
-            'average' => json_encode( $data->average_consumption_development, JSON_NUMERIC_CHECK )
+            'average' => json_encode( $data->average_consumption_development, JSON_NUMERIC_CHECK ),
+            'average_max_delta' => json_encode( MclSettings::get_statistics_average_consumption_development_max_delta(), JSON_NUMERIC_CHECK )
         );
 
         // Output js

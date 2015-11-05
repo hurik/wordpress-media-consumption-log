@@ -30,6 +30,7 @@ class MclSettings {
     const SETTING_STATISTICS_DAILY_DATE_FORMAT = "mcl_setting_statistics_daily_date_format";
     const SETTING_STATISTICS_MONTHLY_COUNT = "mcl_setting_statistics_monthly_count";
     const SETTING_STATISTICS_MONTHLY_DATE_FORMAT = "mcl_setting_statistics_monthly_date_format";
+    const SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA = "mcl_setting_statistics_average_consumption_development_max_delta";
     const SETTING_STATISTICS_MOST_CONSUMED_COUNT = "mcl_setting_statistics_most_consumed_count";
     const SETTING_FORGOTTEN_MIN_DAYS = "mcl_setting_forgotten_min_days";
     const SETTING_OTHER_SEPARATOR = "mcl_setting_other_separator";
@@ -40,6 +41,7 @@ class MclSettings {
     // Default values
     const default_statistics_daily_count = 31;
     const default_statistics_monthly_count = 0;
+    const default_statistics_average_consumption_development_max_delta = 5;
     const default_statistics_most_consumed_count = 10;
     const default_forgotten_min_days = 91;
     const default_other_separator = "-";
@@ -106,6 +108,16 @@ class MclSettings {
             return self::default_statistics_monthly_date_format();
         } else {
             return $value;
+        }
+    }
+
+    public static function get_statistics_average_consumption_development_max_delta() {
+        $value = get_option( self::SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA );
+
+        if ( is_numeric( $value ) && $value >= 0 ) {
+            return $value;
+        } else {
+            return self::default_statistics_average_consumption_development_max_delta;
         }
     }
 
@@ -178,6 +190,7 @@ class MclSettings {
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_DATE_FORMAT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT );
+        register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MOST_CONSUMED_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_FORGOTTEN_MIN_DAYS );
         register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_SEPARATOR );
@@ -339,6 +352,12 @@ class MclSettings {
                     </tr>
 
                     <tr>
+                        <th scope="row"><?php _e( 'Average consumption development max delta', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="<?php echo self::SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA; ?>" value="<?php echo esc_attr( self::get_statistics_average_consumption_development_max_delta() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'When you start to track your consumption, there could be a big fluctuation of the average consumption. So with this number you can restrict the max y value, the max delta is added to the last value. When you enter 0 Google Chart API automatically show all data. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_average_consumption_development_max_delta; ?></p></td>
+                    </tr>
+
+                    <tr>
                         <th scope="row"><?php _e( 'Most consumed count', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MOST_CONSUMED_COUNT; ?>" value="<?php echo esc_attr( self::get_statistics_most_consumed_count() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Number of entries in the most cunsumed statistic. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_most_consumed_count; ?></p></td>
@@ -423,18 +442,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                if ( count( $posts_without_mcl_number ) > 0 ) {
-                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                        if ( count( $posts_without_mcl_number ) > 0 ) {
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                            echo "<br />";
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                        } else {
+                            echo _e( 'Nothing found!', 'media-consumption-log' );
                         }
-                    }
-                } else {
-                    echo _e( 'Nothing found!', 'media-consumption-log' );
-                }
-                ?></td>
+                        ?></td>
                 </tr>   
             </table>
             <div id="mcl_loading"></div>
