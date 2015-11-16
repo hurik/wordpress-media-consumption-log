@@ -338,10 +338,6 @@ class MclStatistics {
                 . "\n  <tbody>";
 
         foreach ( $data->categories as $category ) {
-            if ( $category->mcl_tags_count == 0 ) {
-                continue;
-            }
-
             if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
                 $html .= "\n    <tr>"
                         . "\n      <td nowrap colspan=\"4\">{$category->name}</td>"
