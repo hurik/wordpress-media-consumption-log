@@ -355,7 +355,11 @@ class MclData {
               AND term_taxonomy_id = '{$category_id}'
 	" );
 
-        return $stats[0]->number;
+        if ( $stats[0]->number != null ) {
+            return $stats[0]->number;
+        } else {
+            return 0;
+        }
     }
 
     private static function get_mcl_number_count_of_category_sorted_by_hour( $category_id ) {
