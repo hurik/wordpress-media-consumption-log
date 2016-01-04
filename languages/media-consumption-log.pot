@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"POT-Revision-Date: Thu Nov 05 2015 22:17:12 GMT+0100\n"
+"POT-Revision-Date: Mon Jan 04 2016 03:02:28 GMT+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,9 +47,9 @@ msgstr ""
 msgid "Title can't be empty!"
 msgstr ""
 
-#: ../MclData.php:469 ../MclStatistics.php:68 ../MclStatistics.php:136 ..
-#: /MclStatistics.php:176 ../MclStatistics.php:266 ../MclStatistics.php:307 ..
-#: /MclStatistics.php:335 ../MclStatistics.php:370
+#: ../MclData.php:475 ../MclStatistics.php:68 ../MclStatistics.php:136 ..
+#: /MclStatistics.php:176 ../MclStatistics.php:267 ../MclStatistics.php:308 ..
+#: /MclStatistics.php:336 ../MclStatistics.php:367
 msgid "Total"
 msgstr ""
 
@@ -118,26 +118,26 @@ msgstr ""
 msgid "Edit before posting"
 msgstr ""
 
-#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:243 ..
-#: /MclStatistics.php:284 ../MclStatistics.php:331 ../MclStatus.php:46 ..
+#: ../MclQuickPost.php:254 ../MclSerialStatus.php:339 ../MclStatistics.php:244 ..
+#: /MclStatistics.php:285 ../MclStatistics.php:332 ../MclStatus.php:46 ..
 #: /MclStatus.php:94
 msgid "Category"
 msgstr ""
 
 #: ../MclSerialStatus.php:90 ../MclSerialStatus.php:164 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:332 ../MclStatus.php:65 ..
+#: 260 ../MclSerialStatus.php:314 ../MclStatistics.php:333 ../MclStatus.php:65 ..
 #: /MclStatus.php:149
 msgid "Running"
 msgstr ""
 
 #: ../MclSerialStatus.php:110 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:333 ../MclStatus.php:70 ..
+#: 219 ../MclSerialStatus.php:314 ../MclStatistics.php:334 ../MclStatus.php:70 ..
 #: /MclStatus.php:154
 msgid "Complete"
 msgstr ""
 
 #: ../MclSerialStatus.php:130 ../MclSerialStatus.php:206 ../MclSerialStatus.php:
-#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:334 ../MclStatus.php:75 ..
+#: 260 ../MclSerialStatus.php:273 ../MclStatistics.php:335 ../MclStatus.php:75 ..
 #: /MclStatus.php:159
 msgid "Abandoned"
 msgstr ""
@@ -344,70 +344,90 @@ msgstr ""
 msgid "Nothing found!"
 msgstr ""
 
-#: ../MclStatistics.php:210 ../MclStatistics.php:222
+#: ../MclStatistics.php:210 ../MclStatistics.php:223
 msgid "Daily consumption"
 msgstr ""
 
-#: ../MclStatistics.php:211 ../MclStatistics.php:226
+#: ../MclStatistics.php:211 ../MclStatistics.php:227
 msgid "Hourly consumption"
 msgstr ""
 
-#: ../MclStatistics.php:212 ../MclStatistics.php:230
+#: ../MclStatistics.php:212 ../MclStatistics.php:231
 msgid "Monthly consumption"
 msgstr ""
 
-#: ../MclStatistics.php:213 ../MclStatistics.php:234
+#: ../MclStatistics.php:213 ../MclStatistics.php:235
 msgid "Total consumption"
 msgstr ""
 
-#: ../MclStatistics.php:214 ../MclStatistics.php:275
+#: ../MclStatistics.php:214 ../MclStatistics.php:276
 msgid "Average consumption"
 msgstr ""
 
-#: ../MclStatistics.php:215 ../MclStatistics.php:316
+#: ../MclStatistics.php:215 ../MclStatistics.php:317
 msgid "Average consumption development"
 msgstr ""
 
-#: ../MclStatistics.php:216 ../MclStatistics.php:320
+#: ../MclStatistics.php:216 ../MclStatistics.php:321
 msgid "Consumption amount"
 msgstr ""
 
-#: ../MclStatistics.php:217 ../MclStatistics.php:384
+#: ../MclStatistics.php:217 ../MclStatistics.php:381
 msgid "Most consumed"
 msgstr ""
 
-#: ../MclStatistics.php:245 ../MclStatistics.php:286 ../MclStatistics.php:395
+#: ../MclStatistics.php:218 ../MclStatistics.php:421
+msgid "Milestones"
+msgstr ""
+
+#: ../MclStatistics.php:246 ../MclStatistics.php:287 ../MclStatistics.php:392
 msgid "Unit"
 msgstr ""
 
-#: ../MclStatistics.php:260
+#: ../MclStatistics.php:261
 #, php-format
 msgid "Total comsumption, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:301
+#: ../MclStatistics.php:302
 #, php-format
 msgid "Average a day, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:363
+#: ../MclStatistics.php:360
 #, php-format
 msgid ""
 "Total count of different %CATEGORIES%, since the first post on the %DATE% "
 "(%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:381
+#: ../MclStatistics.php:378
 #, php-format
 msgid "Most consumed serials, since the first post on the %DATE% (%DAYS% days)."
 msgstr ""
 
-#: ../MclStatistics.php:393
+#: ../MclStatistics.php:390
 msgid "Serial"
 msgstr ""
 
-#: ../MclStatistics.php:394
+#: ../MclStatistics.php:391
 msgid "Count"
+msgstr ""
+
+#: ../MclStatistics.php:430
+msgid "Milestone"
+msgstr ""
+
+#: ../MclStatistics.php:431
+msgid "Post"
+msgstr ""
+
+#: ../MclStatistics.php:432
+msgid "Date"
+msgstr ""
+
+#: ../MclStatistics.php:448
+msgid "days ago"
 msgstr ""
 
 #. Name of the plugin
