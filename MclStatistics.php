@@ -215,6 +215,7 @@ class MclStatistics {
                 . "\n    <li><a href=\"#average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#most-consumed\">" . __( 'Most consumed', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#milestones\">" . __( 'Milestones', 'media-consumption-log' ) . "</a></li>"
                 . "\n   </ul>"
                 . "\n</div>";
 
@@ -416,6 +417,40 @@ class MclStatistics {
         $html .= "\n  </tbody>"
                 . "\n</table>"
                 . "\n<p>{$since_most_consumed_string}</p>";
+
+        $html .= "\n\n<h4 id=\"milestones\">" . __( 'Milestones', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<table class=\"mcl_table\">"
+                . "\n  <colgroup>"
+                . "\n    <col width=\"1%\">"
+                . "\n    <col width=\"98%\">"
+                . "\n    <col width=\"1%\">"
+                . "\n  </colgroup>"
+                . "\n  <thead>"
+                . "\n    <tr>"
+                . "\n      <th nowrap>" . __( 'Milestone', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Post', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap>" . __( 'Date', 'media-consumption-log' ) . "</th>"
+                . "\n    </tr>"
+                . "\n  </thead>"
+                . "\n  <tbody>";
+
+        foreach ( $data->milestones as $milestone ) {
+            $current_date = new DateTime();
+            $current_date->setTime( 0, 0, 0 );
+            $milestone_date = new DateTime( $milestone->post_date );
+            $milestone_date->setTime( 0, 0, 0 );
+            $interval = $milestone_date->diff( $current_date );
+            $interval_days = $interval->format( '%a' );
+
+            $html .= "\n    <tr>"
+                    . "\n      <td nowrap>{$milestone->milestone}</td>"
+                    . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"
+                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . " ({$interval_days} days ago)</td>"
+                    . "\n    </tr>";
+        }
+
+        $html .= "\n  </tbody>"
+                . "\n</table>";
 
         return $html;
     }

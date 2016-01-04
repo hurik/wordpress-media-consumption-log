@@ -176,6 +176,8 @@ class MclData {
 
         $data->average_consumption_development = self::get_average_consumption_development( $categories, $first_post_date->format( 'Y-m-d' ), $number_of_days );
 
+        $data->milestones = self::get_milestones();
+
         return $data;
     }
 
@@ -532,6 +534,42 @@ class MclData {
         for ( $i = 0; $i < count( $sum ); $i++ ) {
             $data[$i + 1][] = number_format( $sum[$i] / ($i + 1), 2 );
         }
+
+        return $data;
+    }
+
+    private static function get_milestones() {
+        global $wpdb;
+
+        $posts = $wpdb->get_results( "
+            SELECT ID, post_date, post_title, meta_value AS mcl_number
+            FROM {$wpdb->prefix}posts p
+            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
+            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
+            WHERE post_status = 'publish'
+              AND post_type = 'post'
+              AND meta_key = 'mcl_number'
+            GROUP BY ID
+            ORDER BY post_date ASC
+
+	" );
+
+        $data = array();
+        $current_mcl_count = 0;
+        $milestone = 0;
+
+        foreach ( $posts as $post ) {
+            $current_mcl_count += $post->mcl_number;
+
+            if ( $milestone <= $current_mcl_count ) {
+                $post->milestone = $milestone;
+                $post->post_link = get_permalink( $post->ID );
+                $milestone += 2500;
+
+                $data[] = $post;
+            }
+        }
+
 
         return $data;
     }
