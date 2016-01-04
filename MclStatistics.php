@@ -445,7 +445,7 @@ class MclStatistics {
             $html .= "\n    <tr>"
                     . "\n      <td nowrap>{$milestone->milestone}</td>"
                     . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"
-                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . " ({$interval_days} days ago)</td>"
+                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . " ({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")</td>"
                     . "\n    </tr>";
         }
 
