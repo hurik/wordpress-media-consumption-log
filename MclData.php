@@ -543,15 +543,13 @@ class MclData {
 
         $posts = $wpdb->get_results( "
             SELECT ID, post_date, post_title, meta_value AS mcl_number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND meta_key = 'mcl_number'
+            FROM {$wpdb->prefix}posts posts
+            LEFT OUTER JOIN {$wpdb->prefix}postmeta postmeta ON postmeta.post_id = posts.ID
+            WHERE posts.post_status = 'publish'
+              AND posts.post_type = 'post'
+              AND postmeta.meta_key = 'mcl_number'
             GROUP BY ID
             ORDER BY post_date ASC
-
 	" );
 
         $data = array();
