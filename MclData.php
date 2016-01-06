@@ -233,7 +233,7 @@ class MclData {
     }
 
     private static function get_tags( &$data, $post ) {
-        if ( array_key_exists( $post->tag_name, $data ) ) {
+        if ( array_key_exists( $post->tag_id, $data ) ) {
             $post->mcl_total = $data[$post->tag_id]->mcl_total + $post->post_mcl;
             $post->cats = $data[$post->tag_id]->cats;
 
