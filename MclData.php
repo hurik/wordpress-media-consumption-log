@@ -76,12 +76,12 @@ class MclData {
         $data->milestones = array();
 
         foreach ( $posts as $post ) {
-            //self::most_consumed( $data->most_consumed, $post );
+            self::most_consumed( $data->most_consumed, $post );
             self::milestones( $data->milestones, $post );
         }
 
         // Post processing fields
-        //self::post_processing_most_consumed( $data->most_consumed );
+        self::post_processing_most_consumed( $data->most_consumed );
 
         // Get the categories
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
