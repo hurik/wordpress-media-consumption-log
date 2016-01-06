@@ -71,6 +71,10 @@ class MclData {
         // Get all posts with category, tag, mcl_number and tag status
         $posts = self::get_posts();
 
+        // Get first post date (with mcl number)
+        $first_post_date = new DateTime( (new DateTime( $posts[0]->post_date ) )->format( 'Y-m-d' ) );
+        $data->first_post_date = $first_post_date;
+
         // Get the categories
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
         $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
@@ -95,12 +99,6 @@ class MclData {
         // Process data
         self::get_tag_links( $data->tags );
         $data->most_consumed = self::most_consumed( $data->tags );
-
-        // Get the first post
-        $first_post_array = get_posts( "posts_per_page=1&order=asc" );
-        $first_post = array_shift( $first_post_array );
-        $first_post_date = new DateTime( (new DateTime( $first_post->post_date ) )->format( 'Y-m-d' ) );
-        $data->first_post_date = $first_post_date;
 
         // Get first date an month for the graphs
         if ( MclSettings::get_statistics_daily_count() != 0 ) {
@@ -230,7 +228,10 @@ class MclData {
     }
 
     private static function total_consumption( &$total_consumption, $post ) {
-        $total_consumption[$post->cat_id] += $post->post_mcl;
+        if ( array_key_exists( $post->cat_id, $total_consumption ) )
+            $total_consumption[$post->cat_id] += $post->post_mcl;
+        else
+            $total_consumption[$post->cat_id] = $post->post_mcl;
     }
 
     private static function get_tags( &$data, $post ) {
@@ -242,7 +243,7 @@ class MclData {
                 $post->cats[] = $post->cat_id;
             }
         } else {
-            $post->mcl_total = 0 + $post->post_mcl;
+            $post->mcl_total = $post->post_mcl;
             $post->cats = array( $post->cat_id );
         }
 
