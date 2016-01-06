@@ -228,10 +228,11 @@ class MclData {
     }
 
     private static function total_consumption( &$total_consumption, $post ) {
-        if ( array_key_exists( $post->cat_id, $total_consumption ) )
+        if ( array_key_exists( $post->cat_id, $total_consumption ) ) {
             $total_consumption[$post->cat_id] += $post->post_mcl;
-        else
+        } else {
             $total_consumption[$post->cat_id] = $post->post_mcl;
+        }
     }
 
     private static function get_tags( &$data, $post ) {
