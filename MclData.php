@@ -68,6 +68,21 @@ class MclData {
 
         $data->plugin_version = PLUGIN_VERSION;
 
+        // Get all posts with category, tag, mcl_number and tag status
+        $posts = self::get_posts();
+
+        // Prepare fields for data
+        $data->most_consumed = array();
+        $data->milestones = array();
+
+        foreach ( $posts as $post ) {
+            //self::most_consumed( $data->most_consumed, $post );
+            self::milestones( $data->milestones, $post );
+        }
+
+        // Post processing fields
+        //self::post_processing_most_consumed( $data->most_consumed );
+
         // Get the categories
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
         $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
@@ -172,13 +187,96 @@ class MclData {
         $data->cat_serial_abandoned = $cat_serial_abandoned;
         $data->cat_non_serial = $cat_non_serial;
 
-        $data->most_consumed = self::get_most_consumed();
-
         $data->average_consumption_development = self::get_average_consumption_development( $categories, $first_post_date->format( 'Y-m-d' ), $number_of_days );
 
-        $data->milestones = self::get_milestones();
-
         return $data;
+    }
+
+    private static function get_posts() {
+        global $wpdb;
+
+        $posts = $wpdb->get_results( "
+            SELECT posts_with_data.post_id,
+                   posts_with_data.post_date,
+                   posts_with_data.post_title,
+                   posts_with_data.post_mcl,
+                   posts_with_data.cat_id,
+                   posts_with_data.cat_name,
+                   posts_with_data.tag_id,
+                   posts_with_data.tag_name,
+                   IFNULL(mcl_status.status, 0) AS tag_in_cat_status
+            FROM
+              (SELECT posts.ID AS post_id,
+                      posts.post_date,
+                      posts.post_title,
+                      postmeta.meta_value AS post_mcl,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'category', terms.term_id, NULL)) AS cat_id,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'category', terms.name, NULL)) AS cat_name,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.term_id, NULL)) AS tag_id,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.name, NULL)) AS tag_name
+               FROM {$wpdb->prefix}posts posts
+               LEFT OUTER JOIN {$wpdb->prefix}term_relationships term_relationships ON term_relationships.object_id = posts.ID
+               LEFT OUTER JOIN {$wpdb->prefix}terms terms ON terms.term_id = term_relationships.term_taxonomy_id
+               LEFT OUTER JOIN {$wpdb->prefix}term_taxonomy term_taxonomy ON term_taxonomy.term_taxonomy_id = term_relationships.term_taxonomy_id
+               LEFT OUTER JOIN {$wpdb->prefix}postmeta postmeta ON postmeta.post_id = posts.ID
+               WHERE posts.post_status = 'publish'
+                 AND posts.post_type = 'post'
+                 AND postmeta.meta_key = 'mcl_number'
+               GROUP BY posts.ID
+               ORDER BY posts.post_date ASC) AS posts_with_data
+            LEFT JOIN {$wpdb->prefix}mcl_status AS mcl_status ON posts_with_data.tag_id = mcl_status.tag_id
+                                                             AND posts_with_data.cat_id = mcl_status.cat_id
+        " );
+
+        return $posts;
+    }
+
+    private static function most_consumed( &$data, $post ) {
+        if ( array_key_exists( $post->tag_name, $data ) ) {
+            $post->mcl_total = $data[$post->tag_name]->mcl_total + $post->post_mcl;
+            $post->cats = $data[$post->tag_name]->cats;
+
+            if ( !in_array( $post->cat_id, $post->cats ) ) {
+                $post->cats[] = $post->cat_id;
+            }
+        } else {
+            $post->mcl_total = 0 + $post->post_mcl;
+            $post->cats = array( $post->cat_id );
+        }
+
+        $data[$post->tag_name] = $post;
+    }
+
+    private static function post_processing_most_consumed( &$data ) {
+        // Sort
+        usort( $data, function($a, $b) {
+            if ( $a->mcl_total == $b->mcl_total ) {
+                return 0;
+            }
+            return $a->mcl_total < $b->mcl_total ? 1 : -1;
+        } );
+
+        // Get only the needed data
+        $data = array_slice( $data, 0, MclSettings::get_statistics_most_consumed_count() );
+
+        foreach ( $data as $most_consumed ) {
+            $most_consumed->tag_link = get_tag_link( $most_consumed->tag_id );
+        }
+    }
+
+    private static function milestones( &$data, $post ) {
+        static $current_mcl_count = 0;
+        static $milestone = 0;
+
+        $current_mcl_count += $post->post_mcl;
+
+        if ( $milestone <= $current_mcl_count ) {
+            $post->milestone = $milestone;
+            $post->post_link = get_permalink( $post->post_id );
+            $milestone += 2500;
+
+            $data[] = $post;
+        }
     }
 
     private static function get_tags_of_category( $category ) {
@@ -413,45 +511,6 @@ class MclData {
         return $stats;
     }
 
-    private static function get_most_consumed() {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT terms2.term_id AS tag_id,
-                   t2.taxonomy AS taxonomy,
-                   terms2.name AS name,
-                   SUM(m1.meta_value) AS count,
-                   GROUP_CONCAT(DISTINCT r1.term_taxonomy_id
-                                ORDER BY r1.term_taxonomy_id) AS cats
-            FROM {$wpdb->prefix}posts p1
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships AS r1 ON p1.ID = r1.object_id
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta AS m1 ON p1.ID = m1.post_id,
-                 {$wpdb->prefix}posts AS p2
-            LEFT JOIN {$wpdb->prefix}term_relationships AS r2 ON p2.ID = r2.object_ID
-            LEFT JOIN {$wpdb->prefix}term_taxonomy AS t2 ON r2.term_taxonomy_id = t2.term_taxonomy_id
-            LEFT JOIN {$wpdb->prefix}terms AS terms2 ON t2.term_id = terms2.term_id
-            WHERE p1.post_status = 'publish'
-              AND p1.post_type = 'post'
-              AND m1.meta_key = 'mcl_number'
-              AND r1.term_taxonomy_id IN (" . MclSettings::get_monitored_categories_serials() . ")
-              AND t2.taxonomy = 'post_tag'
-              AND p2.post_status = 'publish'
-              AND p1.ID = p2.ID
-            GROUP BY terms2.name
-            ORDER BY COUNT DESC
-            LIMIT " . MclSettings::get_statistics_most_consumed_count() . "
-	" );
-
-        foreach ( $stats as $tag ) {
-            // Comma in tags
-            $tag = MclCommaInTags::comma_tag_filter( $tag );
-            // Get tag link
-            $tag->tag_link = get_tag_link( $tag->tag_id );
-        }
-
-        return $stats;
-    }
-
     private static function get_average_consumption_development( $categories, $first_date, $number_of_days ) {
         global $wpdb;
 
@@ -534,40 +593,6 @@ class MclData {
         for ( $i = 0; $i < count( $sum ); $i++ ) {
             $data[$i + 1][] = number_format( $sum[$i] / ($i + 1), 2 );
         }
-
-        return $data;
-    }
-
-    private static function get_milestones() {
-        global $wpdb;
-
-        $posts = $wpdb->get_results( "
-            SELECT ID, post_date, post_title, meta_value AS mcl_number
-            FROM {$wpdb->prefix}posts posts
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta postmeta ON postmeta.post_id = posts.ID
-            WHERE posts.post_status = 'publish'
-              AND posts.post_type = 'post'
-              AND postmeta.meta_key = 'mcl_number'
-            GROUP BY ID
-            ORDER BY post_date ASC
-	" );
-
-        $data = array();
-        $current_mcl_count = 0;
-        $milestone = 0;
-
-        foreach ( $posts as $post ) {
-            $current_mcl_count += $post->mcl_number;
-
-            if ( $milestone <= $current_mcl_count ) {
-                $post->milestone = $milestone;
-                $post->post_link = get_permalink( $post->ID );
-                $milestone += 2500;
-
-                $data[] = $post;
-            }
-        }
-
 
         return $data;
     }

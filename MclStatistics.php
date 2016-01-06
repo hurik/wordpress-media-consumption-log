@@ -395,21 +395,19 @@ class MclStatistics {
                 . "\n  <tbody>";
 
         foreach ( $data->most_consumed as $tag ) {
-            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->name ) );
-
-            $cats = explode( ",", $tag->cats );
+            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->tag_name ) );
 
             $units = array();
 
-            foreach ( $cats as $cat ) {
+            foreach ( $tag->cats as $cat ) {
                 $units[] = MclSettings::get_unit_of_category( get_category( $cat ) );
             }
 
             $categories = MclHelpers::build_list_from_array( $units );
 
             $html .= "\n    <tr>"
-                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->name}</a></td>"
-                    . "\n      <td nowrap>{$tag->count}</td>"
+                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->tag_name}</a></td>"
+                    . "\n      <td nowrap>{$tag->mcl_total}</td>"
                     . "\n      <td nowrap>{$categories}</td>"
                     . "\n    </tr>";
         }
