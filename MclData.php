@@ -71,18 +71,6 @@ class MclData {
         // Get all posts with category, tag, mcl_number and tag status
         $posts = self::get_posts();
 
-        // Prepare fields for data
-        $data->most_consumed = array();
-        $data->milestones = array();
-
-        foreach ( $posts as $post ) {
-            self::most_consumed( $data->most_consumed, $post );
-            self::milestones( $data->milestones, $post );
-        }
-
-        // Post processing fields
-        self::post_processing_most_consumed( $data->most_consumed );
-
         // Get the categories
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
         $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
@@ -92,6 +80,20 @@ class MclData {
         } else {
             $categories = array();
         }
+
+        // Prepare fields for data
+        $tags = array();
+        $data->total_consumption = array();
+        $data->milestones = array();
+
+        foreach ( $posts as $post ) {
+            self::total_consumption( $data->total_consumption, $post );
+            self::get_tags( $tags, $post );
+            self::milestones( $data->milestones, $post );
+        }
+
+        // Process data
+        $data->most_consumed = self::most_consumed( $tags );
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
@@ -149,11 +151,6 @@ class MclData {
             $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
             $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
             $category->mcl_hourly_data = self::get_mcl_number_count_of_category_sorted_by_hour( $category->term_id );
-            $category->mcl_consumption_total = self::get_total_mcl_mumber_count_of_category( $category->term_id );
-            $category->mcl_consumption_average = $category->mcl_consumption_total / $number_of_days;
-
-            $consumption_total += $category->mcl_consumption_total;
-            $consumption_average += $category->mcl_consumption_average;
 
             $data->categories[] = $category;
 
@@ -231,10 +228,14 @@ class MclData {
         return $posts;
     }
 
-    private static function most_consumed( &$data, $post ) {
+    private static function total_consumption( &$total_consumption, $post ) {
+        $total_consumption[$post->cat_id] += $post->post_mcl;
+    }
+
+    private static function get_tags( &$data, $post ) {
         if ( array_key_exists( $post->tag_name, $data ) ) {
-            $post->mcl_total = $data[$post->tag_name]->mcl_total + $post->post_mcl;
-            $post->cats = $data[$post->tag_name]->cats;
+            $post->mcl_total = $data[$post->tag_id]->mcl_total + $post->post_mcl;
+            $post->cats = $data[$post->tag_id]->cats;
 
             if ( !in_array( $post->cat_id, $post->cats ) ) {
                 $post->cats[] = $post->cat_id;
@@ -244,12 +245,12 @@ class MclData {
             $post->cats = array( $post->cat_id );
         }
 
-        $data[$post->tag_name] = $post;
+        $data[$post->tag_id] = $post;
     }
 
-    private static function post_processing_most_consumed( &$data ) {
+    private static function most_consumed( $tags ) {
         // Sort
-        usort( $data, function($a, $b) {
+        usort( $tags, function($a, $b) {
             if ( $a->mcl_total == $b->mcl_total ) {
                 return 0;
             }
@@ -257,11 +258,13 @@ class MclData {
         } );
 
         // Get only the needed data
-        $data = array_slice( $data, 0, MclSettings::get_statistics_most_consumed_count() );
+        $most_consumed = array_slice( $tags, 0, MclSettings::get_statistics_most_consumed_count() );
 
-        foreach ( $data as $most_consumed ) {
-            $most_consumed->tag_link = get_tag_link( $most_consumed->tag_id );
+        // Get link of the tags
+        foreach ( $tags as $tags ) {
+            $tags->tag_link = get_tag_link( $tags->tag_id );
         }
+        return $most_consumed;
     }
 
     private static function milestones( &$data, $post ) {
@@ -439,27 +442,6 @@ class MclData {
 	" );
 
         return $stats;
-    }
-
-    private static function get_total_mcl_mumber_count_of_category( $category_id ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT SUM(meta_value) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '{$category_id}'
-	" );
-
-        if ( $stats[0]->number != null ) {
-            return $stats[0]->number;
-        } else {
-            return 0;
-        }
     }
 
     private static function get_mcl_number_count_of_category_sorted_by_hour( $category_id ) {

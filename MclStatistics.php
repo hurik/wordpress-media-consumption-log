@@ -248,12 +248,15 @@ class MclStatistics {
                 . "\n  </thead>"
                 . "\n  <tbody>";
 
+        $sum = 0;
+
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
+            $sum += $data->total_consumption[$category->term_id];
 
             $html .= "\n    <tr>"
                     . "\n      <td>{$category->name}</td>"
-                    . "\n      <td nowrap>{$category->mcl_consumption_total}</td>"
+                    . "\n      <td nowrap>{$data->total_consumption[$category->term_id]}</td>"
                     . "\n      <td nowrap>{$unit}</td>"
                     . "\n    </tr>";
         }
@@ -265,7 +268,7 @@ class MclStatistics {
                 . "\n  <tfoot>"
                 . "\n  <tr>"
                 . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n      <th nowrap>{$data->consumption_total}</th>"
+                . "\n      <th nowrap>{$sum}</th>"
                 . "\n      <th></th>"
                 . "\n    </tr>"
                 . "\n  </tfoot>"
@@ -289,12 +292,15 @@ class MclStatistics {
                 . "\n  </thead>"
                 . "\n  <tbody>";
 
+        $sum = 0;
+
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
+            $sum += $data->total_consumption[$category->term_id];
 
             $html .= "\n    <tr>"
                     . "\n      <td>{$category->name}</td>"
-                    . "\n      <td nowrap>" . number_format( $category->mcl_consumption_average, 2 ) . "</td>"
+                    . "\n      <td nowrap>" . number_format( ($data->total_consumption[$category->term_id] / $data->number_of_days ), 2 ) . "</td>"
                     . "\n      <td nowrap>{$unit}</td>"
                     . "\n    </tr>";
         }
@@ -306,7 +312,7 @@ class MclStatistics {
                 . "\n  <tfoot>"
                 . "\n    <tr>"
                 . "\n      <th>" . __( 'Total', 'media-consumption-log' ) . "</th>"
-                . "\n      <th nowrap>" . number_format( $data->consumption_average, 2 ) . "</th>"
+                . "\n      <th nowrap>" . number_format( ($sum / $data->number_of_days ), 2 ) . "</th>"
                 . "\n      <th></th>"
                 . "\n    </tr>"
                 . "\n  </tfoot>"
