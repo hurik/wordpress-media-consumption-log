@@ -82,18 +82,19 @@ class MclData {
         }
 
         // Prepare fields for data
-        $tags = array();
+        $data->tags = array();
         $data->total_consumption = array();
         $data->milestones = array();
 
         foreach ( $posts as $post ) {
             self::total_consumption( $data->total_consumption, $post );
-            self::get_tags( $tags, $post );
+            self::get_tags( $data->tags, $post );
             self::milestones( $data->milestones, $post );
         }
 
         // Process data
-        $data->most_consumed = self::most_consumed( $tags );
+        self::get_tag_links( $data->tags );
+        $data->most_consumed = self::most_consumed( $data->tags );
 
         // Get the first post
         $first_post_array = get_posts( "posts_per_page=1&order=asc" );
@@ -248,6 +249,13 @@ class MclData {
         $data[$post->tag_id] = $post;
     }
 
+    private static function get_tag_links( &$tags ) {
+        // Get link of the tags
+        foreach ( $tags as $tag ) {
+            $tag->tag_link = get_tag_link( $tag->tag_id );
+        }
+    }
+
     private static function most_consumed( $tags ) {
         // Sort
         usort( $tags, function($a, $b) {
@@ -260,10 +268,6 @@ class MclData {
         // Get only the needed data
         $most_consumed = array_slice( $tags, 0, MclSettings::get_statistics_most_consumed_count() );
 
-        // Get link of the tags
-        foreach ( $tags as $tags ) {
-            $tags->tag_link = get_tag_link( $tags->tag_id );
-        }
         return $most_consumed;
     }
 
