@@ -200,6 +200,7 @@ class MclData {
     private static function get_tag_links( &$tags ) {
         // Get link of the tags
         foreach ( $tags as $tag ) {
+            $tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
             $tag->tag_link = get_tag_link( $tag->tag_id );
         }
     }

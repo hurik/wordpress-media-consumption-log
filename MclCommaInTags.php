@@ -42,4 +42,8 @@ class MclCommaInTags {
         return $tags_arr_new;
     }
 
+    public static function replace( &$string ) {
+        return str_replace( '--', ', ', $string );
+    }
+
 }

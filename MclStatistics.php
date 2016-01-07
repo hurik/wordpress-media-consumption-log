@@ -401,7 +401,7 @@ class MclStatistics {
                 . "\n  <tbody>";
 
         foreach ( $data->most_consumed as $tag ) {
-            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $tag->tag_name ) );
+            $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $data->tags[$tag->tag_id]->tag_name ) );
 
             $units = array();
 
@@ -412,7 +412,7 @@ class MclStatistics {
             $categories = MclHelpers::build_list_from_array( $units );
 
             $html .= "\n    <tr>"
-                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$tag->tag_name}</a></td>"
+                    . "\n      <td><a href=\"{$tag->tag_link}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_id]->tag_name}</a></td>"
                     . "\n      <td nowrap>{$tag->mcl_total}</td>"
                     . "\n      <td nowrap>{$categories}</td>"
                     . "\n    </tr>";

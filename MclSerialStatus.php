@@ -197,7 +197,7 @@ class MclSerialStatus {
                     $first = true;
 
                     foreach ( $category->mcl_tags_ongoing[$key] as $tag ) {
-                        $tag_title = htmlspecialchars( $tag->tag_name );
+                        $tag_title = htmlspecialchars( $data->tags[$tag->tag_id]->tag_name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                                 . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
@@ -250,7 +250,7 @@ class MclSerialStatus {
                     $first = true;
 
                     foreach ( $category->mcl_tags_complete[$key] as $tag ) {
-                        $tag_title = htmlspecialchars( $tag->tag_name );
+                        $tag_title = htmlspecialchars( $data->tags[$tag->tag_id]->tag_name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                                 . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
@@ -303,7 +303,7 @@ class MclSerialStatus {
                     $first = true;
 
                     foreach ( $category->mcl_tags_abandoned[$key] as $tag ) {
-                        $tag_title = htmlspecialchars( $tag->tag_name );
+                        $tag_title = htmlspecialchars( $data->tags[$tag->tag_id]->tag_name );
 
                         $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                                 . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"

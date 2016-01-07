@@ -104,10 +104,8 @@ class MclForgotten {
 
             $alternate = false;
 
-            MclCommaInTags::comma_tags_filter( $category->forgotten );
-
             foreach ( $category->forgotten as $tag ) {
-                $tag_title = htmlspecialchars( $tag->tag_name );
+                $tag_title = htmlspecialchars( $data->tags[$tag->tag_id]->tag_name );
                 $status = MclHelpers::get_last_consumed( $tag->post_title );
                 $post_title = htmlspecialchars( $tag->post_title );
 
