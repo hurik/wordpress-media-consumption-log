@@ -273,9 +273,19 @@ class MclData {
             ksort( $daily_consumption_one_cat );
         }
 
+        // Average consumption development
         $data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
 
-        echo "";
+        // Daily graph
+        foreach ( $data->categories as &$category ) {
+            if ( MclSettings::get_statistics_daily_count() != 0 ) {
+                $category->mcl_daily_data = array_slice( $daily_consumption[$category->term_id], - MclSettings::get_statistics_daily_count(), MclSettings::get_statistics_daily_count() );
+                krsort( $category->mcl_daily_data );
+            } else {
+                $category->mcl_daily_data = $daily_consumption[$category->term_id];
+                krsort( $category->mcl_daily_data );
+            }
+        }
     }
 
     private static function total_consumption( &$total_consumption, $post ) {
@@ -430,9 +440,6 @@ class MclData {
             if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
                 $data->cat_non_serial = true;
             }
-
-            // Graph data
-            $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
         }
     }
 
@@ -463,26 +470,6 @@ class MclData {
 
             $data[] = $post;
         }
-    }
-
-    private static function get_mcl_number_count_of_category_sorted_by_day( $category_id, $first_date ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '{$category_id}'
-              AND post_date >= '{$first_date}'
-            GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date DESC
-	" );
-
-        return $stats;
     }
 
     private static function get_average_consumption_development( &$data, &$daily_consumption ) {

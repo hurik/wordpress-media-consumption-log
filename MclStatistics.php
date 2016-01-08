@@ -33,32 +33,14 @@ class MclStatistics {
         }
 
         // Daily graph
-        // Daily dates array
-        $dates_daily = array();
-
-        if ( MclSettings::get_statistics_daily_count() != 0 ) {
-            for ( $i = 0; $i < MclSettings::get_statistics_daily_count(); $i++ ) {
-                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-                array_push( $dates_daily, $day );
-            }
-        } else {
-            $date_current = new DateTime( date( 'Y-m-d' ) );
-            $number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
-
-            for ( $i = 0; $i < $number_of_days; $i++ ) {
-                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-                array_push( $dates_daily, $day );
-            }
-        }
-
         // Daily data array
         $daily_data = array();
 
-        for ( $i = 0; $i < count( $dates_daily ) + 1; $i++ ) {
+        for ( $i = 0; $i < count( reset( $data->categories )->mcl_daily_data ) + 1; $i++ ) {
             $daily_data[] = array();
         }
 
-        // Daily array header
+        // Monthly array header
         $daily_data[0][] = "Date";
 
         foreach ( $data->categories as $category ) {
@@ -68,31 +50,40 @@ class MclStatistics {
         $daily_data[0][] = __( 'Total', 'media-consumption-log' );
         $daily_data[0][] = "ROLE_ANNOTATION";
 
-        // Daily array data
-        for ( $i = 0; $i < count( $dates_daily ); $i++ ) {
-            $date = DateTime::createFromFormat( 'Y-m-d', $dates_daily[$i] );
+        $first = true;
 
-            $daily_data[$i + 1][] = $date->format( MclSettings::get_statistics_daily_date_format() );
+        foreach ( $data->categories as $category ) {
+            $c = 1;
 
-            $total = 0;
+            if ( $first ) {
+                foreach ( $category->mcl_daily_data as $key => $value ) {
+                    $date = DateTime::createFromFormat( 'Y-m-d', $key );
 
-            foreach ( $data->categories as $category ) {
-                $count = 0;
+                    $daily_data[$c][] = $date->format( MclSettings::get_statistics_daily_date_format() );
+                    $daily_data[$c][] = intval( $value );
 
-                foreach ( $category->mcl_daily_data as $cat_count ) {
-                    if ( $dates_daily[$i] == $cat_count->date ) {
-                        $count = $cat_count->number;
-                        break;
-                    }
+                    $c++;
                 }
 
-                $total += $count;
+                $first = false;
+            } else {
+                foreach ( $category->mcl_daily_data as $value ) {
+                    $daily_data[$c][] = intval( $value );
 
-                $daily_data[$i + 1][] = $count;
+                    $c++;
+                }
+            }
+        }
+
+        for ( $i = 1; $i < count( $daily_data ); $i++ ) {
+            $total = 0;
+
+            for ( $j = 1; $j < count( $daily_data[0] ) - 2; $j++ ) {
+                $total += $daily_data[$i][$j];
             }
 
-            $daily_data[$i + 1][] = $total;
-            $daily_data[$i + 1][] = $total;
+            $daily_data[$i][] = $total;
+            $daily_data[$i][] = $total;
         }
 
         // Monthly graph
