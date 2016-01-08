@@ -95,13 +95,14 @@ class MclData {
         $data->total_consumption = array();
         $data->milestones = array();
         $hourly_consumption = array();
+        $monthly_consumption = array();
 
         foreach ( $posts as $post ) {
             self::total_consumption( $data->total_consumption, $post );
             self::get_tags( $data->tags, $post );
             self::status( $status, $post );
             self::milestones( $data->milestones, $post );
-            self::hourly_consumption( $hourly_consumption, $post );
+            self::graphs( $post, $hourly_consumption, $monthly_consumption );
         }
 
         // Process data
@@ -109,6 +110,7 @@ class MclData {
         self::sort_status( $status );
         self::process_data( $data, $status );
         self::hourly_consumption_pp( $data->categories, $hourly_consumption );
+        self::monthly_consumption_pp( $data, $monthly_consumption );
         $data->most_consumed = self::most_consumed( $data->tags );
 
         $data->average_consumption_development = self::get_average_consumption_development( $data->categories, $data->first_post_date->format( 'Y-m-d' ), $number_of_days );
@@ -155,17 +157,26 @@ class MclData {
         return $posts;
     }
 
-    private static function hourly_consumption( &$hourly_consumption, &$post ) {
+    private static function graphs( &$post, &$hourly_consumption, &$monthly_consumption ) {
         if ( !array_key_exists( $post->cat_id, $hourly_consumption ) ) {
             $hourly_consumption[$post->cat_id] = array();
+            $monthly_consumption[$post->cat_id] = array();
         }
 
-        $hour = (new DateTime( $post->post_date ) )->format( "G" );
+        $date = new DateTime( $post->post_date );
 
-        if ( array_key_exists( $hour, $hourly_consumption[$post->cat_id] ) ) {
-            $hourly_consumption[$post->cat_id][$hour] += $post->post_mcl;
+        // Hourly graph
+        if ( array_key_exists( $date->format( "G" ), $hourly_consumption[$post->cat_id] ) ) {
+            $hourly_consumption[$post->cat_id][$date->format( "G" )] += $post->post_mcl;
         } else {
-            $hourly_consumption[$post->cat_id][$hour] = $post->post_mcl;
+            $hourly_consumption[$post->cat_id][$date->format( "G" )] = $post->post_mcl;
+        }
+
+        // Monthly graph
+        if ( array_key_exists( $date->format( "Y-m" ), $monthly_consumption[$post->cat_id] ) ) {
+            $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] += $post->post_mcl;
+        } else {
+            $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] = $post->post_mcl;
         }
     }
 
@@ -181,6 +192,51 @@ class MclData {
                 ksort( $hourly_consumption[$category->term_id] );
 
                 $category->mcl_hourly_data = $hourly_consumption[$category->term_id];
+            }
+        }
+    }
+
+    private static function monthly_consumption_pp( &$data, &$monthly_consumption ) {
+        // Get all months needed months
+        $dates_monthly = array();
+
+        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+            for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
+                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+                array_push( $dates_monthly, $month );
+            }
+        } else {
+            $i = 0;
+
+            while ( true ) {
+                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+                array_push( $dates_monthly, $month );
+
+                $i++;
+
+                if ( $month == $data->first_post_date->format( 'Y-m' ) ) {
+                    break;
+                }
+            }
+        }
+
+        foreach ( $monthly_consumption as &$monthly_consumption_one_cat ) {
+            // Add missing months
+            foreach ( $dates_monthly as &$month ) {
+                if ( !array_key_exists( $month, $monthly_consumption_one_cat ) ) {
+                    $monthly_consumption_one_cat[$month] = 0;
+                }
+            }
+
+            // Sort array in reverse order
+            krsort( $monthly_consumption_one_cat );
+        }
+
+        foreach ( $data->categories as &$category ) {
+            if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+                $category->mcl_monthly_data = array_slice( $monthly_consumption[$category->term_id], 0, MclSettings::get_statistics_monthly_count() );
+            } else {
+                $category->mcl_monthly_data = $monthly_consumption[$category->term_id];
             }
         }
     }
@@ -340,7 +396,6 @@ class MclData {
 
             // Graph data
             $category->mcl_daily_data = self::get_mcl_number_count_of_category_sorted_by_day( $category->term_id, $first_date );
-            $category->mcl_monthly_data = self::get_mcl_number_count_of_category_sorted_by_month( $category->term_id, $first_month );
         }
     }
 
@@ -387,26 +442,6 @@ class MclData {
               AND term_taxonomy_id = '{$category_id}'
               AND post_date >= '{$first_date}'
             GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-            ORDER BY date DESC
-	" );
-
-        return $stats;
-    }
-
-    private static function get_mcl_number_count_of_category_sorted_by_month( $category_id, $first_month ) {
-        global $wpdb;
-
-        $stats = $wpdb->get_results( "
-            SELECT DATE_FORMAT(post_date, '%Y-%m') AS date, SUM(meta_value) AS number
-            FROM {$wpdb->prefix}posts p
-            LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-            LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-            WHERE post_status = 'publish'
-              AND post_type = 'post'
-              AND meta_key = 'mcl_number'
-              AND term_taxonomy_id = '{$category_id}'
-              AND post_date >= '{$first_month}'
-            GROUP BY DATE_FORMAT(post_date, '%Y-%m')
             ORDER BY date DESC
 	" );
 

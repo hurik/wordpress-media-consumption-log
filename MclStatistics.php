@@ -96,33 +96,10 @@ class MclStatistics {
         }
 
         // Monthly graph
-        // Monthly dates array
-        $dates_monthly = array();
-
-        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
-            for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
-                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-                array_push( $dates_monthly, $month );
-            }
-        } else {
-            $i = 0;
-
-            while ( true ) {
-                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-                array_push( $dates_monthly, $month );
-
-                $i++;
-
-                if ( $month == $data->first_post_date->format( 'Y-m' ) ) {
-                    break;
-                }
-            }
-        }
-
         // Monthly data array
         $monthly_data = array();
 
-        for ( $i = 0; $i < count( $dates_monthly ) + 1; $i++ ) {
+        for ( $i = 0; $i < count( reset( $data->categories )->mcl_monthly_data ) + 1; $i++ ) {
             $monthly_data[] = array();
         }
 
@@ -136,30 +113,40 @@ class MclStatistics {
         $monthly_data[0][] = __( 'Total', 'media-consumption-log' );
         $monthly_data[0][] = "ROLE_ANNOTATION";
 
-        for ( $i = 0; $i < count( $dates_monthly ); $i++ ) {
-            $date = DateTime::createFromFormat( 'Y-m-d', $dates_monthly[$i] . "-01" );
+        $first = true;
 
-            $monthly_data[$i + 1][] = $date->format( MclSettings::get_statistics_monthly_date_format() );
+        foreach ( $data->categories as $category ) {
+            $c = 1;
 
-            $total = 0;
+            if ( $first ) {
+                foreach ( $category->mcl_monthly_data as $key => $value ) {
+                    $date = DateTime::createFromFormat( 'Y-m-d', $key . "-01" );
 
-            foreach ( $data->categories as $category ) {
-                $count = 0;
+                    $monthly_data[$c][] = $date->format( MclSettings::get_statistics_monthly_date_format() );
+                    $monthly_data[$c][] = intval( $value );
 
-                foreach ( $category->mcl_monthly_data as $cat_count ) {
-                    if ( $dates_monthly[$i] == $cat_count->date ) {
-                        $count = $cat_count->number;
-                        break;
-                    }
+                    $c++;
                 }
 
-                $total += $count;
+                $first = false;
+            } else {
+                foreach ( $category->mcl_monthly_data as $value ) {
+                    $monthly_data[$c][] = intval( $value );
 
-                $monthly_data[$i + 1][] = $count;
+                    $c++;
+                }
+            }
+        }
+
+        for ( $i = 1; $i < count( $monthly_data ); $i++ ) {
+            $total = 0;
+
+            for ( $j = 1; $j < count( $monthly_data[0] ) - 2; $j++ ) {
+                $total += $monthly_data[$i][$j];
             }
 
-            $monthly_data[$i + 1][] = $total;
-            $monthly_data[$i + 1][] = $total;
+            $monthly_data[$i][] = $total;
+            $monthly_data[$i][] = $total;
         }
 
         // Hourly graph
