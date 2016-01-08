@@ -182,7 +182,7 @@ class MclStatistics {
             $total = 0;
 
             foreach ( $data->categories as $category ) {
-                $count = $category->mcl_hourly_data[$i]->number;
+                $count = $category->mcl_hourly_data[$i];
                 $total += $count;
                 $hourly_data[$i + 1][] = $count;
             }
