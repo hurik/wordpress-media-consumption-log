@@ -96,13 +96,14 @@ class MclData {
         $data->milestones = array();
         $hourly_consumption = array();
         $monthly_consumption = array();
+        $daily_consumption = array();
 
         foreach ( $posts as $post ) {
             self::total_consumption( $data->total_consumption, $post );
             self::get_tags( $data->tags, $post );
             self::status( $status, $post );
             self::milestones( $data->milestones, $post );
-            self::graphs( $post, $hourly_consumption, $monthly_consumption );
+            self::graphs( $post, $hourly_consumption, $monthly_consumption, $daily_consumption );
         }
 
         // Process data
@@ -111,9 +112,8 @@ class MclData {
         self::process_data( $data, $status );
         self::hourly_consumption_pp( $data->categories, $hourly_consumption );
         self::monthly_consumption_pp( $data, $monthly_consumption );
+        self::daily_consumption_pp( $data, $daily_consumption );
         $data->most_consumed = self::most_consumed( $data->tags );
-
-        $data->average_consumption_development = self::get_average_consumption_development( $data->categories, $data->first_post_date->format( 'Y-m-d' ), $number_of_days );
 
         return $data;
     }
@@ -157,10 +157,11 @@ class MclData {
         return $posts;
     }
 
-    private static function graphs( &$post, &$hourly_consumption, &$monthly_consumption ) {
+    private static function graphs( &$post, &$hourly_consumption, &$monthly_consumption, &$daily_consumption ) {
         if ( !array_key_exists( $post->cat_id, $hourly_consumption ) ) {
             $hourly_consumption[$post->cat_id] = array();
             $monthly_consumption[$post->cat_id] = array();
+            $daily_consumption[$post->cat_id] = array();
         }
 
         $date = new DateTime( $post->post_date );
@@ -177,6 +178,13 @@ class MclData {
             $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] += $post->post_mcl;
         } else {
             $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] = $post->post_mcl;
+        }
+
+        // Daily graph
+        if ( array_key_exists( $date->format( "Y-m-d" ), $daily_consumption[$post->cat_id] ) ) {
+            $daily_consumption[$post->cat_id][$date->format( "Y-m-d" )] += $post->post_mcl;
+        } else {
+            $daily_consumption[$post->cat_id][$date->format( "Y-m-d" )] = $post->post_mcl;
         }
     }
 
@@ -239,6 +247,35 @@ class MclData {
                 $category->mcl_monthly_data = $monthly_consumption[$category->term_id];
             }
         }
+    }
+
+    private static function daily_consumption_pp( &$data, &$daily_consumption ) {
+        // Get all months needed months
+        $dates_daily = array();
+
+        $date_current = new DateTime( date( 'Y-m-d' ) );
+        $number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
+
+        for ( $i = 0; $i < $number_of_days; $i++ ) {
+            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+            array_push( $dates_daily, $day );
+        }
+
+        foreach ( $daily_consumption as &$daily_consumption_one_cat ) {
+            // Add missing months
+            foreach ( $dates_daily as &$day ) {
+                if ( !array_key_exists( $day, $daily_consumption_one_cat ) ) {
+                    $daily_consumption_one_cat[$day] = 0;
+                }
+            }
+
+            // Sort array
+            ksort( $daily_consumption_one_cat );
+        }
+
+        $data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
+
+        echo "";
     }
 
     private static function total_consumption( &$total_consumption, $post ) {
@@ -448,90 +485,55 @@ class MclData {
         return $stats;
     }
 
-    private static function get_average_consumption_development( $categories, $first_date, $number_of_days ) {
+    private static function get_average_consumption_development( &$data, &$daily_consumption ) {
         global $wpdb;
 
-        // Dates array
-        $all_dates = array();
-        for ( $i = 0; $i < $number_of_days; $i++ ) {
-            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-            array_push( $all_dates, $day );
-        }
-        $all_dates = array_reverse( $all_dates );
-
         // Data array
-        $data = array();
+        $acd = array();
 
         // Legend
         $legend_array = array();
         $legend_array[] = "Date";
-        foreach ( $categories as $wp_category ) {
-            $legend_array[] = $wp_category->name;
+        foreach ( $data->categories as $category ) {
+            $legend_array[] = $category->name;
         }
         $legend_array[] = __( 'Total', 'media-consumption-log' );
-        $data[] = $legend_array;
+        $acd[] = $legend_array;
 
         // Add dates
-        for ( $i = 0; $i < count( $all_dates ); $i++ ) {
+        foreach ( reset( $daily_consumption ) as $key => $value ) {
             $dates_array = array();
-            $date = DateTime::createFromFormat( 'Y-m-d', $all_dates[$i] );
+            $date = DateTime::createFromFormat( 'Y-m-d', $key );
             $dates_array[] = $date->format( MclSettings::get_statistics_daily_date_format() );
-            $data[] = $dates_array;
+            $acd[] = $dates_array;
         }
 
         // Sum array
         $sum = array();
 
-        for ( $i = 0; $i < count( $all_dates ); $i++ ) {
+        for ( $i = 0; $i < $data->number_of_days; $i++ ) {
             $sum[] = 0;
         }
 
-        foreach ( $categories as $wp_category ) {
-            $db_data = $wpdb->get_results( "
-                SELECT DATE_FORMAT(post_date, '%Y-%m-%d') AS date, SUM(meta_value) AS number
-                FROM {$wpdb->prefix}posts p
-                LEFT OUTER JOIN {$wpdb->prefix}term_relationships r ON r.object_id = p.ID
-                LEFT OUTER JOIN {$wpdb->prefix}postmeta m ON m.post_id = p.ID
-                WHERE post_status = 'publish'
-                  AND post_type = 'post'
-                  AND meta_key = 'mcl_number'
-                  AND post_date >= '{$first_date}'
-                  AND term_taxonomy_id = '{$wp_category->term_id}'
-                GROUP BY DATE_FORMAT(post_date, '%Y-%m-%d')
-                ORDER BY date DESC
-            " );
-
+        foreach ( $data->categories as $category ) {
             $cat_sum = 0;
 
-            for ( $i = 0; $i < count( $all_dates ); $i++ ) {
-                $value = null;
+            $i = 0;
 
-                foreach ( $db_data as $db_day ) {
-                    if ( $db_day->date == $all_dates[$i] ) {
-                        $value = $db_day;
-                        break;
-                    }
-                }
-
-                if ( $value == null ) {
-                    $value = new stdClass();
-                    $value->date = $all_dates[$i];
-                    $value->number = 0;
-                }
-
-                $cat_sum += $value->number;
-
+            foreach ( $daily_consumption[$category->term_id] as &$day ) {
+                $cat_sum += $day;
                 $sum[$i] += $cat_sum;
+                $acd[$i + 1][] = number_format( $cat_sum / ($i + 1), 2 );
 
-                $data[$i + 1][] = number_format( $cat_sum / ($i + 1), 2 );
+                $i++;
             }
         }
 
         for ( $i = 0; $i < count( $sum ); $i++ ) {
-            $data[$i + 1][] = number_format( $sum[$i] / ($i + 1), 2 );
+            $acd[$i + 1][] = number_format( $sum[$i] / ($i + 1), 2 );
         }
 
-        return $data;
+        return $acd;
     }
 
 }
