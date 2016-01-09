@@ -330,7 +330,27 @@ class MclData {
             $status[$post->cat_id][$post->tag_in_cat_status][$firstletter] = array();
         }
 
-        $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id] = $post;
+        if ( !array_key_exists( $post->tag_id, $status[$post->cat_id][$post->tag_in_cat_status][$firstletter] ) ) {
+            $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id] = $post;
+        } else {
+            $old_number_array = explode( " ", trim( $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id]->post_title ) );
+            $new_number_array = explode( " ", trim( $post->post_title ) );
+
+            $old_number = end( $old_number_array );
+            $new_number = end( $new_number_array );
+
+            if ( !is_numeric( $old_number ) && (preg_match( '/[SE]/', $old_number ) || preg_match( '/[VC]/', $old_number ) || preg_match( '/[CP]/', $old_number )) ) {
+                $old_number = preg_replace( "/[SEVCP]/", "", $old_number );
+            }
+
+            if ( !is_numeric( $new_number ) && (preg_match( '/[SE]/', $new_number ) || preg_match( '/[VC]/', $new_number ) || preg_match( '/[CP]/', $new_number )) ) {
+                $new_number = preg_replace( "/[SEVCP]/", "", $new_number );
+            }
+
+            if ( !is_numeric( $new_number ) || !is_numeric( $old_number ) || $new_number >= $old_number ) {
+                $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id] = $post;
+            }
+        }
     }
 
     private static function get_tag_links( &$tags ) {
