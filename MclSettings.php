@@ -71,6 +71,17 @@ class MclSettings {
         return get_option( self::SETTING_MONITORED_CATEGORIES_NON_SERIAL );
     }
 
+    public static function get_all_monitored_categories() {
+        $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+        $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
+
+        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
+            return get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
+        } else {
+            return array();
+        }
+    }
+
     public static function get_statistics_daily_count() {
         $value = get_option( self::SETTING_STATISTICS_DAILY_COUNT );
 
@@ -312,7 +323,7 @@ class MclSettings {
                     <tr>
                         <th scope="row"><?php _e( 'Serials', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_SERIAL; ?>" value="<?php echo esc_attr( self::get_monitored_categories_serials() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204', 'media-consumption-log' ); ?></p></td>
+                            <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204,548', 'media-consumption-log' ); ?></p></td>
                     </tr>
                     <tr>
                         <th scope="row"><?php _e( 'Non serials', 'media-consumption-log' ); ?></th>
@@ -442,18 +453,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                        if ( count( $posts_without_mcl_number ) > 0 ) {
-                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                if ( count( $posts_without_mcl_number ) > 0 ) {
+                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                                    echo "<br />";
-                                }
-                            }
-                        } else {
-                            echo _e( 'Nothing found!', 'media-consumption-log' );
+                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                            echo "<br />";
                         }
-                        ?></td>
+                    }
+                } else {
+                    echo _e( 'Nothing found!', 'media-consumption-log' );
+                }
+                ?></td>
                 </tr>   
             </table>
             <div id="mcl_loading"></div>
