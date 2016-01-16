@@ -134,7 +134,7 @@ class MclData {
         $current_mcl_count = 0;
         $milestone = 0;
 
-        foreach ( $posts as $post ) {
+        foreach ( $posts as &$post ) {
             // Count mcl_number of categories
             if ( array_key_exists( $post->cat_id, $data->total_consumption ) ) {
                 $data->total_consumption[$post->cat_id] += $post->post_mcl;
@@ -252,31 +252,74 @@ class MclData {
 
             foreach ( $category as &$stati ) {
                 ksort( $stati, SORT_NATURAL );
-            }
-        }
 
-        foreach ( $status as &$category ) {
-            foreach ( $category as &$stati ) {
-                foreach ( $stati as &$tags ) {
-                    usort( $tags, function($a, $b) {
+                foreach ( $stati as &$letter ) {
+                    usort( $letter, function($a, $b) {
                         return strcmp( $a->tag_name, $b->tag_name );
                     } );
                 }
             }
         }
 
+        $data->tags_count_ongoing = 0;
+        $data->tags_count_complete = 0;
+        $data->tags_count_abandoned = 0;
+        $data->tags_count_total = 0;
+        $data->cat_serial_ongoing = false;
+        $data->cat_serial_complete = false;
+        $data->cat_serial_abandoned = false;
+        $data->cat_non_serial = false;
 
-        self::process_data( $data, $status );
-        self::hourly_consumption_pp( $data->categories, $hourly_consumption );
-        self::monthly_consumption_pp( $data, $monthly_consumption );
-        self::daily_consumption_pp( $data, $daily_consumption );
-        $data->most_consumed = self::most_consumed( $data->tags );
+        foreach ( $data->categories as &$category ) {
+            if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
+                $category->mcl_tags_ongoing = $status[$category->term_id][MclSerialStatus::RUNNING];
 
-        return $data;
-    }
+                foreach ( $category->mcl_tags_ongoing as &$letter ) {
+                    foreach ( $letter as &$tag ) {
+                        $tag->post_link = get_permalink( $tag->post_id );
+                    }
+                }
+            } else {
+                $category->mcl_tags_ongoing = array();
+            }
+            if ( array_key_exists( MclSerialStatus::COMPLETE, $status[$category->term_id] ) ) {
+                $category->mcl_tags_complete = $status[$category->term_id][MclSerialStatus::COMPLETE];
+            } else {
+                $category->mcl_tags_complete = array();
+            }
+            if ( array_key_exists( MclSerialStatus::ABANDONED, $status[$category->term_id] ) ) {
+                $category->mcl_tags_abandoned = $status[$category->term_id][MclSerialStatus::ABANDONED];
+            } else {
+                $category->mcl_tags_abandoned = array();
+            }
 
-    private static function hourly_consumption_pp( &$categories, &$hourly_consumption ) {
-        foreach ( $categories as &$category ) {
+            $category->mcl_tags_count_ongoing = self::count_tags_in_status( $category->mcl_tags_ongoing );
+            $category->mcl_tags_count_complete = self::count_tags_in_status( $category->mcl_tags_complete );
+            $category->mcl_tags_count_abandoned = self::count_tags_in_status( $category->mcl_tags_abandoned );
+            $category->mcl_tags_count = $category->mcl_tags_count_ongoing + $category->mcl_tags_count_complete + $category->mcl_tags_count_abandoned;
+
+            $data->tags_count_ongoing += $category->mcl_tags_count_ongoing;
+            $data->tags_count_complete += $category->mcl_tags_count_complete;
+            $data->tags_count_abandoned += $category->mcl_tags_count_abandoned;
+            $data->tags_count_total += $category->mcl_tags_count;
+
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+                $data->cat_serial_ongoing = true;
+            }
+
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
+                $data->cat_serial_complete = true;
+            }
+
+            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_abandoned > 0 ) {
+                $data->cat_serial_abandoned = true;
+            }
+
+            if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+                $data->cat_non_serial = true;
+            }
+
+            // Hourly graph
             if ( array_key_exists( $category->term_id, $hourly_consumption ) ) {
                 for ( $i = 0; $i < 24; $i++ ) {
                     if ( !array_key_exists( $i, $hourly_consumption[$category->term_id] ) ) {
@@ -289,6 +332,24 @@ class MclData {
                 $category->mcl_hourly_data = $hourly_consumption[$category->term_id];
             }
         }
+
+        self::monthly_consumption_pp( $data, $monthly_consumption );
+        self::daily_consumption_pp( $data, $daily_consumption );
+        $data->most_consumed = self::most_consumed( $data->tags );
+
+        return $data;
+    }
+
+    private static function count_tags_in_status( &$letters ) {
+        $i = 0;
+
+        foreach ( $letters as &$letter ) {
+            foreach ( $letter as &$tag ) {
+                $i++;
+            }
+        }
+
+        return $i;
     }
 
     private static function monthly_consumption_pp( &$data, &$monthly_consumption ) {
@@ -390,89 +451,6 @@ class MclData {
         return $most_consumed;
     }
 
-    private static function process_data( &$data, $status ) {
-        // Get first date an month for the graphs
-        if ( MclSettings::get_statistics_daily_count() != 0 ) {
-            $first_date = date( 'Y-m-d', strtotime( "-" . (MclSettings::get_statistics_daily_count() - 1) . " day", strtotime( date( 'Y-m-d' ) ) ) );
-        } else {
-            $first_date = $data->first_post_date->format( 'Y-m-d' );
-        }
-
-        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
-            $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
-        } else {
-            $first_month = $data->first_post_date->format( 'Y-m' );
-        }
-
-        $data->tags_count_ongoing = 0;
-        $data->tags_count_complete = 0;
-        $data->tags_count_abandoned = 0;
-        $data->tags_count_total = 0;
-
-        $data->cat_serial_ongoing = false;
-        $data->cat_serial_complete = false;
-        $data->cat_serial_abandoned = false;
-        $data->cat_non_serial = false;
-
-        foreach ( $data->categories as &$category ) {
-            if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
-                $category->mcl_tags_ongoing = $status[$category->term_id][MclSerialStatus::RUNNING];
-
-                foreach ( $category->mcl_tags_ongoing as $letter ) {
-                    foreach ( $letter as $tag ) {
-                        $tag->post_link = get_permalink( $tag->post_id );
-                    }
-                }
-            }
-            if ( array_key_exists( MclSerialStatus::COMPLETE, $status[$category->term_id] ) ) {
-                $category->mcl_tags_complete = $status[$category->term_id][MclSerialStatus::COMPLETE];
-            }
-            if ( array_key_exists( MclSerialStatus::ABANDONED, $status[$category->term_id] ) ) {
-                $category->mcl_tags_abandoned = $status[$category->term_id][MclSerialStatus::ABANDONED];
-            }
-
-            $category->mcl_tags_count_ongoing = self::count_tags_in_status( $category->mcl_tags_ongoing );
-            $category->mcl_tags_count_complete = self::count_tags_in_status( $category->mcl_tags_complete );
-            $category->mcl_tags_count_abandoned = self::count_tags_in_status( $category->mcl_tags_abandoned );
-            $category->mcl_tags_count = $category->mcl_tags_count_ongoing + $category->mcl_tags_count_complete + $category->mcl_tags_count_abandoned;
-
-            $data->tags_count_ongoing += $category->mcl_tags_count_ongoing;
-            $data->tags_count_complete += $category->mcl_tags_count_complete;
-            $data->tags_count_abandoned += $category->mcl_tags_count_abandoned;
-            $data->tags_count_total += $category->mcl_tags_count;
-
-            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
-                $data->cat_serial_ongoing = true;
-            }
-
-            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_complete > 0 ) {
-                $data->cat_serial_complete = true;
-            }
-
-            if ( MclHelpers::is_monitored_serial_category( $category->term_id ) && $category->mcl_tags_count_abandoned > 0 ) {
-                $data->cat_serial_abandoned = true;
-            }
-
-            if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
-                $data->cat_non_serial = true;
-            }
-        }
-    }
-
-    private static function count_tags_in_status( $letters ) {
-        $i = 0;
-
-        if ( is_array( $letters ) ) {
-            foreach ( $letters as $letter ) {
-                foreach ( $letter as $tag ) {
-                    $i++;
-                }
-            }
-        }
-
-        return $i;
-    }
-
     private static function get_average_consumption_development( &$data, &$daily_consumption ) {
         global $wpdb;
 
@@ -482,7 +460,7 @@ class MclData {
         // Legend
         $legend_array = array();
         $legend_array[] = "Date";
-        foreach ( $data->categories as $category ) {
+        foreach ( $data->categories as &$category ) {
             $legend_array[] = $category->name;
         }
         $legend_array[] = __( 'Total', 'media-consumption-log' );
@@ -503,7 +481,7 @@ class MclData {
             $sum[] = 0;
         }
 
-        foreach ( $data->categories as $category ) {
+        foreach ( $data->categories as &$category ) {
             $cat_sum = 0;
 
             $i = 0;
