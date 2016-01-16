@@ -155,7 +155,7 @@ class MclData {
                 $post->cats = array( $post->cat_id );
             }
 
-            $tags[$post->tag_id] = $post;
+            $data->tags[$post->tag_id] = $post;
 
             // Sort tags by category, status and letter
             if ( !array_key_exists( $post->cat_id, $status ) ) {
