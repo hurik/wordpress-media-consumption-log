@@ -18,7 +18,7 @@ This plugin helps you to keep track of the tv shows, movies, books, comics, game
 
 There are two kind of tracked categories:
 
-* **Serials** are for tv shows and other things which have more than one part.
+* **Serials** are for tv shows, mangas and other things which have more than one part.
 * **Non serials** are for games or books which have only one part.
 
 Different serials and non serials are separated by the tag.
@@ -32,12 +32,14 @@ To create a status page make a new site and add the shortcode "[mcl]" to it.
 Contains the following statistics:
 
 * Daily consumption
-* Monthly consumption
 * Hourly consumption
+* Monthly consumption
 * Total consumption
 * Average consumption
+* Average consumption development
 * Consumption amount
 * Most consumed
+* Milestones
 
 To create a statistics page make a new site and add the shortcode "[mcl-stats]" to it.
 
@@ -45,10 +47,10 @@ To create a statistics page make a new site and add the shortcode "[mcl-stats]" 
 In Quick post you can easily create a new post for a running serial. Check the screenshots for example.
 
 = Serial Status =
-Here you can set a serial to complete or abandoned. Complete and abandoned serials will not show up in Quick post and also will be separated on the status page.
+Here you can change the status of a serial to running, complete or abandoned. Complete and abandoned serials will not show up in Quick post and also will be separated on the status page.
 
 = Forgotten =
-Shows serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
+Shows running serials which haven't got a new post in the last 91 days (The number of days can be changed in the settings).
 
 = Settings =
 Here you can change the options of the plugin. You also can rebuild the data and see if there is a post without mcl number in the monitored categories.
