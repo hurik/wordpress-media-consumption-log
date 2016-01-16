@@ -240,8 +240,32 @@ class MclData {
         }
 
         // Process data
-        self::get_tag_links( $data->tags );
-        self::sort_status( $status );
+        // Get link of the tags and replace "--" with ", "
+        foreach ( $data->tags as &$tag ) {
+            $tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
+            $tag->tag_link = get_tag_link( $tag->tag_id );
+        }
+
+        // Sort status array
+        foreach ( $status as &$category ) {
+            ksort( $category, SORT_NATURAL );
+
+            foreach ( $category as &$stati ) {
+                ksort( $stati, SORT_NATURAL );
+            }
+        }
+
+        foreach ( $status as &$category ) {
+            foreach ( $category as &$stati ) {
+                foreach ( $stati as &$tags ) {
+                    usort( $tags, function($a, $b) {
+                        return strcmp( $a->tag_name, $b->tag_name );
+                    } );
+                }
+            }
+        }
+
+
         self::process_data( $data, $status );
         self::hourly_consumption_pp( $data->categories, $hourly_consumption );
         self::monthly_consumption_pp( $data, $monthly_consumption );
@@ -351,14 +375,6 @@ class MclData {
         }
     }
 
-    private static function get_tag_links( &$tags ) {
-        // Get link of the tags
-        foreach ( $tags as $tag ) {
-            $tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
-            $tag->tag_link = get_tag_link( $tag->tag_id );
-        }
-    }
-
     private static function most_consumed( $tags ) {
         // Sort
         usort( $tags, function($a, $b) {
@@ -372,24 +388,6 @@ class MclData {
         $most_consumed = array_slice( $tags, 0, MclSettings::get_statistics_most_consumed_count() );
 
         return $most_consumed;
-    }
-
-    private static function sort_status( &$categories ) {
-        foreach ( $categories as &$category ) {
-            foreach ( $category as &$stati ) {
-                ksort( $stati, SORT_NATURAL );
-            }
-        }
-
-        foreach ( $categories as &$category ) {
-            foreach ( $category as &$stati ) {
-                foreach ( $stati as &$status ) {
-                    usort( $status, function($a, $b) {
-                        return strcmp( $a->tag_name, $b->tag_name );
-                    } );
-                }
-            }
-        }
     }
 
     private static function process_data( &$data, $status ) {
