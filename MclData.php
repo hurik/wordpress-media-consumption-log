@@ -277,7 +277,39 @@ class MclData {
             $first_month = $data->first_post_date->format( 'Y-m' );
         }
 
+        $monthly_dates = array();
+
+        $i = 0;
+
+        while ( true ) {
+            $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+
+            $monthly_dates[] = $month;
+
+            if ( $month == $first_month ) {
+                break;
+            }
+
+            $i++;
+        }
+
         $first_day = $data->first_post_date->format( 'Y-m-d' );
+
+        $daily_dates = array();
+
+        $i = 0;
+
+        while ( true ) {
+            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+
+            $daily_dates[] = $day;
+
+            if ( $day == $first_day ) {
+                break;
+            }
+
+            $i++;
+        }
 
         foreach ( $data->categories as &$category ) {
             if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
@@ -345,26 +377,15 @@ class MclData {
 
             $category->mcl_hourly_data = $hourly_consumption[$category->term_id];
 
-
             // Monthly graph
             if ( !array_key_exists( $category->term_id, $monthly_consumption ) ) {
                 $monthly_consumption[$category->term_id] = array();
             }
 
-            $i = 0;
-
-            while ( true ) {
-                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-
-                if ( !array_key_exists( $month, $monthly_consumption[$category->term_id] ) ) {
-                    $monthly_consumption[$category->term_id][$month] = 0;
+            foreach ( $monthly_dates as $monthly_date ) {
+                if ( !array_key_exists( $monthly_date, $monthly_consumption[$category->term_id] ) ) {
+                    $monthly_consumption[$category->term_id][$monthly_date] = 0;
                 }
-
-                if ( $month == $first_month ) {
-                    break;
-                }
-
-                $i++;
             }
 
             krsort( $monthly_consumption[$category->term_id] );
@@ -380,30 +401,20 @@ class MclData {
                 $daily_consumption[$category->term_id] = array();
             }
 
-            $i = 0;
-
-            while ( true ) {
-                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-
-                if ( !array_key_exists( $day, $daily_consumption[$category->term_id] ) ) {
-                    $daily_consumption[$category->term_id][$day] = 0;
+            foreach ( $daily_dates as $daily_date ) {
+                if ( !array_key_exists( $daily_date, $daily_consumption[$category->term_id] ) ) {
+                    $daily_consumption[$category->term_id][$daily_date] = 0;
                 }
+            }
 
-                if ( $day == $first_day ) {
-                    break;
-                }
+            ksort( $daily_consumption[$category->term_id] );
 
-                $i++;
-
-                ksort( $daily_consumption[$category->term_id] );
-
-                if ( MclSettings::get_statistics_daily_count() != 0 ) {
-                    $category->mcl_daily_data = array_slice( $daily_consumption[$category->term_id], - MclSettings::get_statistics_daily_count(), MclSettings::get_statistics_daily_count() );
-                    krsort( $category->mcl_daily_data );
-                } else {
-                    $category->mcl_daily_data = $daily_consumption[$category->term_id];
-                    krsort( $category->mcl_daily_data );
-                }
+            if ( MclSettings::get_statistics_daily_count() != 0 ) {
+                $category->mcl_daily_data = array_slice( $daily_consumption[$category->term_id], - MclSettings::get_statistics_daily_count(), MclSettings::get_statistics_daily_count() );
+                krsort( $category->mcl_daily_data );
+            } else {
+                $category->mcl_daily_data = $daily_consumption[$category->term_id];
+                krsort( $category->mcl_daily_data );
             }
         }
 
