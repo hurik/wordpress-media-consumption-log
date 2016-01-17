@@ -423,9 +423,14 @@ class MclStatistics {
             $milestone_date->setTime( 0, 0, 0 );
             $interval = $milestone_date->diff( $current_date );
             $interval_days = $interval->format( '%a' );
+            $current_milestone = $milestone->milestone;
+
+            if ( $current_milestone == 0 ) {
+                $current_milestone = 1;
+            }
 
             $html .= "\n    <tr>"
-                    . "\n      <td nowrap>{$milestone->milestone}</td>"
+                    . "\n      <td nowrap>{$current_milestone}</td>"
                     . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"
                     . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . " ({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")</td>"
                     . "\n    </tr>";

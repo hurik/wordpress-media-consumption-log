@@ -419,7 +419,17 @@ class MclData {
         }
 
         $data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
-        $data->most_consumed = self::most_consumed( $data->tags );
+
+        // Most consumed
+        uasort( $data->tags, function($a, $b) {
+            if ( $a->mcl_total == $b->mcl_total ) {
+                return 0;
+            }
+            return $a->mcl_total < $b->mcl_total ? 1 : -1;
+        } );
+
+        // Get only the needed data
+        $data->most_consumed = array_slice( $data->tags, 0, MclSettings::get_statistics_most_consumed_count(), true );
 
         return $data;
     }
@@ -434,21 +444,6 @@ class MclData {
         }
 
         return $i;
-    }
-
-    private static function most_consumed( $tags ) {
-        // Sort
-        usort( $tags, function($a, $b) {
-            if ( $a->mcl_total == $b->mcl_total ) {
-                return 0;
-            }
-            return $a->mcl_total < $b->mcl_total ? 1 : -1;
-        } );
-
-        // Get only the needed data
-        $most_consumed = array_slice( $tags, 0, MclSettings::get_statistics_most_consumed_count() );
-
-        return $most_consumed;
     }
 
     private static function get_average_consumption_development( &$data, &$daily_consumption ) {
