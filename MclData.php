@@ -270,6 +270,15 @@ class MclData {
         $data->cat_serial_abandoned = false;
         $data->cat_non_serial = false;
 
+        // Graphs variables
+        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+            $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+        } else {
+            $first_month = $data->first_post_date->format( 'Y-m' );
+        }
+
+        $first_day = $data->first_post_date->format( 'Y-m-d' );
+
         foreach ( $data->categories as &$category ) {
             if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
                 $category->mcl_tags_ongoing = $status[$category->term_id][MclSerialStatus::RUNNING];
@@ -320,21 +329,85 @@ class MclData {
             }
 
             // Hourly graph
-            if ( array_key_exists( $category->term_id, $hourly_consumption ) ) {
-                for ( $i = 0; $i < 24; $i++ ) {
-                    if ( !array_key_exists( $i, $hourly_consumption[$category->term_id] ) ) {
-                        $hourly_consumption[$category->term_id][$i] = 0;
-                    }
+            if ( !array_key_exists( $category->term_id, $hourly_consumption ) ) {
+                $hourly_consumption[$category->term_id] = array();
+            }
+
+            // Add missing hours
+            for ( $i = 0; $i < 24; $i++ ) {
+                if ( !array_key_exists( $i, $hourly_consumption[$category->term_id] ) ) {
+                    $hourly_consumption[$category->term_id][$i] = 0;
+                }
+            }
+
+            // Sort hours
+            ksort( $hourly_consumption[$category->term_id] );
+
+            $category->mcl_hourly_data = $hourly_consumption[$category->term_id];
+
+
+            // Monthly graph
+            if ( !array_key_exists( $category->term_id, $monthly_consumption ) ) {
+                $monthly_consumption[$category->term_id] = array();
+            }
+
+            $i = 0;
+
+            while ( true ) {
+                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+
+                if ( !array_key_exists( $month, $monthly_consumption[$category->term_id] ) ) {
+                    $monthly_consumption[$category->term_id][$month] = 0;
                 }
 
-                ksort( $hourly_consumption[$category->term_id] );
+                if ( $month == $first_month ) {
+                    break;
+                }
 
-                $category->mcl_hourly_data = $hourly_consumption[$category->term_id];
+                $i++;
+            }
+
+            krsort( $monthly_consumption[$category->term_id] );
+
+            if ( MclSettings::get_statistics_monthly_count() != 0 ) {
+                $category->mcl_monthly_data = array_slice( $monthly_consumption[$category->term_id], 0, MclSettings::get_statistics_monthly_count() );
+            } else {
+                $category->mcl_monthly_data = $monthly_consumption[$category->term_id];
+            }
+
+            // Daily cgraph
+            if ( !array_key_exists( $category->term_id, $daily_consumption ) ) {
+                $daily_consumption[$category->term_id] = array();
+            }
+
+            $i = 0;
+
+            while ( true ) {
+                $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+
+                if ( !array_key_exists( $day, $daily_consumption[$category->term_id] ) ) {
+                    $daily_consumption[$category->term_id][$day] = 0;
+                }
+
+                if ( $day == $first_day ) {
+                    break;
+                }
+
+                $i++;
+
+                ksort( $daily_consumption[$category->term_id] );
+
+                if ( MclSettings::get_statistics_daily_count() != 0 ) {
+                    $category->mcl_daily_data = array_slice( $daily_consumption[$category->term_id], - MclSettings::get_statistics_daily_count(), MclSettings::get_statistics_daily_count() );
+                    krsort( $category->mcl_daily_data );
+                } else {
+                    $category->mcl_daily_data = $daily_consumption[$category->term_id];
+                    krsort( $category->mcl_daily_data );
+                }
             }
         }
 
-        self::monthly_consumption_pp( $data, $monthly_consumption );
-        self::daily_consumption_pp( $data, $daily_consumption );
+        $data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
         $data->most_consumed = self::most_consumed( $data->tags );
 
         return $data;
@@ -350,90 +423,6 @@ class MclData {
         }
 
         return $i;
-    }
-
-    private static function monthly_consumption_pp( &$data, &$monthly_consumption ) {
-        // Get all months needed months
-        $dates_monthly = array();
-
-        if ( MclSettings::get_statistics_monthly_count() != 0 ) {
-            for ( $i = 0; $i < MclSettings::get_statistics_monthly_count(); $i++ ) {
-                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-                array_push( $dates_monthly, $month );
-            }
-        } else {
-            $i = 0;
-
-            while ( true ) {
-                $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
-                array_push( $dates_monthly, $month );
-
-                $i++;
-
-                if ( $month == $data->first_post_date->format( 'Y-m' ) ) {
-                    break;
-                }
-            }
-        }
-
-        foreach ( $monthly_consumption as &$monthly_consumption_one_cat ) {
-            // Add missing months
-            foreach ( $dates_monthly as &$month ) {
-                if ( !array_key_exists( $month, $monthly_consumption_one_cat ) ) {
-                    $monthly_consumption_one_cat[$month] = 0;
-                }
-            }
-
-            // Sort array in reverse order
-            krsort( $monthly_consumption_one_cat );
-        }
-
-        foreach ( $data->categories as &$category ) {
-            if ( MclSettings::get_statistics_monthly_count() != 0 ) {
-                $category->mcl_monthly_data = array_slice( $monthly_consumption[$category->term_id], 0, MclSettings::get_statistics_monthly_count() );
-            } else {
-                $category->mcl_monthly_data = $monthly_consumption[$category->term_id];
-            }
-        }
-    }
-
-    private static function daily_consumption_pp( &$data, &$daily_consumption ) {
-        // Get all months needed months
-        $dates_daily = array();
-
-        $date_current = new DateTime( date( 'Y-m-d' ) );
-        $data->number_of_days = $date_current->diff( $data->first_post_date )->format( "%a" ) + 1;
-
-        for ( $i = 0; $i < $data->number_of_days; $i++ ) {
-            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
-            array_push( $dates_daily, $day );
-        }
-
-        foreach ( $daily_consumption as &$daily_consumption_one_cat ) {
-            // Add missing months
-            foreach ( $dates_daily as &$day ) {
-                if ( !array_key_exists( $day, $daily_consumption_one_cat ) ) {
-                    $daily_consumption_one_cat[$day] = 0;
-                }
-            }
-
-            // Sort array
-            ksort( $daily_consumption_one_cat );
-        }
-
-        // Average consumption development
-        $data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
-
-        // Daily graph
-        foreach ( $data->categories as &$category ) {
-            if ( MclSettings::get_statistics_daily_count() != 0 ) {
-                $category->mcl_daily_data = array_slice( $daily_consumption[$category->term_id], - MclSettings::get_statistics_daily_count(), MclSettings::get_statistics_daily_count() );
-                krsort( $category->mcl_daily_data );
-            } else {
-                $category->mcl_daily_data = $daily_consumption[$category->term_id];
-                krsort( $category->mcl_daily_data );
-            }
-        }
     }
 
     private static function most_consumed( $tags ) {
