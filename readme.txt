@@ -2,9 +2,9 @@
 Contributors: hurik
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W3KL56CXEGRTN
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
-Requires at least: 3.8
+Requires at least: 4.4
 Tested up to: 4.4
-Stable tag: 1.7.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -125,6 +125,18 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 2.0.0 =
+* Improved MclData! Query count and time highly reduced!
+* Added Milestones
+* Status, Quick Post and Forgotten now showing post with biggest number instead of last post
+* A lot of other improvements in the background
+
+My blog has 6153 post with 513 tags, in 10 monitored categories. 7 categories are for serials with 428 tags and 3 categories are for non serials with 106 tags (428 + 106 = 534 > 513, because some tags are used in more than one category!).
+
+Statistics of the improvement:
+* **Version 1.7.1:** 1021 Queries, 4,323 seconds, 30,22 MB memory, 33,16 MB peak memory
+* **Version 2.0.0:** 15 Queries, 2,337 seconds, 23,67 MB memory, 43,19 MB peak memory
 
 = 1.7.1 =
 * Added option for Average consumption development
