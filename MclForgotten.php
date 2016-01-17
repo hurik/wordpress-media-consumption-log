@@ -105,12 +105,12 @@ class MclForgotten {
             $alternate = false;
 
             foreach ( $category->forgotten as $tag ) {
-                $tag_title = htmlspecialchars( $data->tags[$tag->tag_id]->tag_name );
+                $tag_title = htmlspecialchars( $data->tags[$tag->tag_term_id]->tag_name );
                 $status = MclHelpers::get_last_consumed( $tag->post_title );
                 $post_title = htmlspecialchars( $tag->post_title );
 
                 $html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                        . "\n      <td><a href=\"{$data->tags[$tag->tag_id]->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
+                        . "\n      <td><a href=\"{$data->tags[$tag->tag_term_id]->tag_link}\" title=\"{$tag_title}\">{$tag_title}</a></td>"
                         . "\n      <td nowrap><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$status}</a></td>"
                         . "\n      <td nowrap>{$tag->forgotten}</td>"
                         . "\n    </tr>";
@@ -139,6 +139,7 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-    }
+        }
 
-}
+    }
+    

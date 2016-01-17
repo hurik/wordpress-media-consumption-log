@@ -213,7 +213,7 @@ class MclStatus {
 
                             $html .= "\n    <tr>"
                                     . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key} (" . count( $category->mcl_tags_ongoing[$key] ) . ")</div>" : "") . "</th>"
-                                    . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$data->tags[$tag->tag_id]->tag_name}</a></td>"
+                                    . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$href_post_title}\">{$data->tags[$tag->tag_term_id]->tag_name}</a></td>"
                                     . "\n    </tr>";
 
                             $first = false;
@@ -293,11 +293,11 @@ class MclStatus {
             $first = true;
 
             foreach ( $array[$key] as $tag ) {
-                $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $data->tags[$tag->tag_id]->tag_name ) );
+                $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $data->tags[$tag->tag_term_id]->tag_name ) );
 
                 $table .= "\n    <tr>"
                         . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $array[$key] ) . ")</div>" : "") . "</th>"
-                        . "\n      <td><a href=\"{$data->tags[$tag->tag_id]->tag_link}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_id]->tag_name}</a></td>";
+                        . "\n      <td><a href=\"{$data->tags[$tag->tag_term_id]->tag_link}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_term_id]->tag_name}</a></td>";
 
                 if ( $state == "ongoing" ) {
                     $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );

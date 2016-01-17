@@ -77,24 +77,22 @@ class MclData {
 
         // Get all posts with category, tag, mcl_number and tag status
         $posts = $wpdb->get_results( "
-            SELECT posts_with_data.post_id,
-                   posts_with_data.post_date,
-                   posts_with_data.post_title,
-                   posts_with_data.post_mcl,
-                   posts_with_data.cat_id,
-                   posts_with_data.cat_name,
-                   posts_with_data.tag_id,
-                   posts_with_data.tag_name,
+            SELECT posts_with_data.*,
                    IFNULL(mcl_status.status, 0) AS tag_in_cat_status
             FROM
-              (SELECT posts.ID AS post_id,
-                      posts.post_date,
-                      posts.post_title,
+              (SELECT posts.*,
                       postmeta.meta_value AS post_mcl,
                       GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'category', terms.term_id, NULL)) AS cat_id,
                       GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'category', terms.name, NULL)) AS cat_name,
-                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.term_id, NULL)) AS tag_id,
-                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.name, NULL)) AS tag_name
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.term_id, NULL)) AS tag_term_id,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.name, NULL)) AS tag_name,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.slug, NULL)) AS tag_slug,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', terms.term_group, NULL)) AS tag_term_group,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', term_taxonomy.term_taxonomy_id, NULL)) AS tag_term_taxonomy_id,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', term_taxonomy.taxonomy, NULL)) AS tag_taxonomy,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', term_taxonomy.description, NULL)) AS tag_description,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', term_taxonomy.parent, NULL)) AS tag_parent,
+                      GROUP_CONCAT(IF(term_taxonomy.taxonomy = 'post_tag', term_taxonomy.count, NULL)) AS tag_count
                FROM {$wpdb->prefix}posts posts
                LEFT OUTER JOIN {$wpdb->prefix}term_relationships term_relationships ON term_relationships.object_id = posts.ID
                LEFT OUTER JOIN {$wpdb->prefix}terms terms ON terms.term_id = term_relationships.term_taxonomy_id
@@ -105,7 +103,7 @@ class MclData {
                  AND postmeta.meta_key = 'mcl_number'
                GROUP BY posts.ID
                ORDER BY posts.post_date ASC) AS posts_with_data
-            LEFT JOIN {$wpdb->prefix}mcl_status AS mcl_status ON posts_with_data.tag_id = mcl_status.tag_id
+            LEFT JOIN {$wpdb->prefix}mcl_status AS mcl_status ON posts_with_data.tag_term_id = mcl_status.tag_id
                                                              AND posts_with_data.cat_id = mcl_status.cat_id
         " );
 
@@ -143,9 +141,9 @@ class MclData {
             }
 
             // Get tags, mcl_number of tag and cats in which they are used
-            if ( array_key_exists( $post->tag_id, $data->tags ) ) {
-                $post->mcl_total = $data->tags[$post->tag_id]->mcl_total + $post->post_mcl;
-                $post->cats = $data->tags[$post->tag_id]->cats;
+            if ( array_key_exists( $post->tag_term_id, $data->tags ) ) {
+                $post->mcl_total = $data->tags[$post->tag_term_id]->mcl_total + $post->post_mcl;
+                $post->cats = $data->tags[$post->tag_term_id]->cats;
 
                 if ( !in_array( $post->cat_id, $post->cats ) ) {
                     $post->cats[] = $post->cat_id;
@@ -155,7 +153,7 @@ class MclData {
                 $post->cats = array( $post->cat_id );
             }
 
-            $data->tags[$post->tag_id] = $post;
+            $data->tags[$post->tag_term_id] = $post;
 
             // Sort tags by category, status and letter
             if ( !array_key_exists( $post->cat_id, $status ) ) {
@@ -175,10 +173,10 @@ class MclData {
                 $status[$post->cat_id][$post->tag_in_cat_status][$firstletter] = array();
             }
 
-            if ( !array_key_exists( $post->tag_id, $status[$post->cat_id][$post->tag_in_cat_status][$firstletter] ) ) {
-                $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id] = $post;
+            if ( !array_key_exists( $post->tag_term_id, $status[$post->cat_id][$post->tag_in_cat_status][$firstletter] ) ) {
+                $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_term_id] = $post;
             } else {
-                $old_number_array = explode( " ", trim( $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id]->post_title ) );
+                $old_number_array = explode( " ", trim( $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_term_id]->post_title ) );
                 $new_number_array = explode( " ", trim( $post->post_title ) );
 
                 $old_number = end( $old_number_array );
@@ -193,7 +191,7 @@ class MclData {
                 }
 
                 if ( !is_numeric( $new_number ) || !is_numeric( $old_number ) || $new_number >= $old_number ) {
-                    $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_id] = $post;
+                    $status[$post->cat_id][$post->tag_in_cat_status][$firstletter][$post->tag_term_id] = $post;
                 }
             }
 
@@ -202,7 +200,7 @@ class MclData {
 
             if ( $milestone <= $current_mcl_count ) {
                 $post->milestone = $milestone;
-                $post->post_link = get_permalink( $post->post_id );
+                $post->post_link = get_permalink( $post );
                 $milestone += 2500;
 
                 $data->milestones[] = $post;
@@ -243,7 +241,18 @@ class MclData {
         // Get link of the tags and replace "--" with ", "
         foreach ( $data->tags as &$tag ) {
             $tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
-            $tag->tag_link = get_tag_link( $tag->tag_id );
+
+            $temp_tag = new stdClass();
+            $temp_tag->term_id = $tag->tag_term_id;
+            $temp_tag->name = $tag->tag_name;
+            $temp_tag->slug = $tag->tag_slug;
+            $temp_tag->term_group = $tag->tag_term_group;
+            $temp_tag->term_taxonomy_id = $tag->tag_term_taxonomy_id;
+            $temp_tag->taxonomy = $tag->tag_taxonomy;
+            $temp_tag->description = $tag->tag_description;
+            $temp_tag->parent = $tag->tag_parent;
+            $temp_tag->count = $tag->tag_count;
+            $tag->tag_link = get_tag_link( $temp_tag );
         }
 
         // Sort status array
@@ -317,7 +326,7 @@ class MclData {
 
                 foreach ( $category->mcl_tags_ongoing as &$letter ) {
                     foreach ( $letter as &$tag ) {
-                        $tag->post_link = get_permalink( $tag->post_id );
+                        $tag->post_link = get_permalink( $tag );
                     }
                 }
             } else {
