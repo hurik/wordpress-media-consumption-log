@@ -131,6 +131,9 @@ class MclData {
         // Variables for milestones
         $current_mcl_count = 0;
         $milestone = 0;
+        $milestone_year_int = 1;
+        $milestone_year = new DateTime( $posts[0]->post_date );
+        $milestone_year->modify( "+1 years" );
 
         foreach ( $posts as &$post ) {
             // Count mcl_number of categories
@@ -197,11 +200,21 @@ class MclData {
 
             // Get milestones
             $current_mcl_count += $post->post_mcl;
+            $post_datetime = new DateTime( $post->post_date );
 
             if ( $milestone <= $current_mcl_count ) {
                 $post->milestone = $milestone;
                 $post->post_link = get_permalink( $post );
                 $milestone += 2500;
+
+                $data->milestones[] = $post;
+            }
+
+            if ( $post_datetime >= $milestone_year ) {
+                $post->milestone = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' )) . " (" . $current_mcl_count . ")";
+                $post->post_link = get_permalink( $post );
+                $milestone_year_int++;
+                $milestone_year->modify( "+1 years" );
 
                 $data->milestones[] = $post;
             }
