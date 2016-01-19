@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"PO-Revision-Date: Sun Jan 17 2016 15:36:04 GMT+0100\n"
+"PO-Revision-Date: Tue Jan 19 2016 17:57:35 GMT+0100\n"
 "Last-Translator: Andreas <andreas@xn--inderhlle-57a.de>\n"
 "Language-Team: \n"
 "Language: German\n"
@@ -26,15 +26,13 @@ msgstr ""
 "X-Textdomain-Support: yes\n"
 "X-Loco-Target-Locale: de_DE"
 
-#: ../MclSettings.php:326
-msgid ""
-"IDs of the categories which have epoisodes or chapters. This categories will "
-"be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,"
-"43,50,187,204,548"
-msgstr ""
-"IDs der Kategorien die Folgen oder Kapitel haben. Diese Kategorien "
-"erscheinen in den Statistiken, Status, Schnelles Erstellen und Komplett. "
-"Beispiel: 2,4,43,50,187,204,548"
+#: ../MclData.php:214
+msgid "year"
+msgstr "Jahr"
+
+#: ../MclData.php:214
+msgid "years"
+msgstr "Jahre"
 
 #: ../MclAdminHooks.php:65 ../MclAdminHooks.php:65 ../MclHooks.php:47 ..
 #: MclQuickPost.php:76 ../MclQuickPost.php:245
@@ -59,7 +57,7 @@ msgstr "Einstellungen"
 msgid "Title can't be empty!"
 msgstr "Titel muss ausgefüllt werden!"
 
-#: ../MclData.php:461 ../MclStatistics.php:50 ../MclStatistics.php:104 ..
+#: ../MclData.php:483 ../MclStatistics.php:50 ../MclStatistics.php:104 ..
 #: MclStatistics.php:154 ../MclStatistics.php:248 ../MclStatistics.php:292 ..
 #: MclStatistics.php:320 ../MclStatistics.php:351
 msgid "Total"
@@ -212,6 +210,16 @@ msgstr "Überwachte Kategorien"
 #: ../MclSettings.php:324 ../MclStatus.php:37 ../MclStatus.php:133
 msgid "Serials"
 msgstr "Serien"
+
+#: ../MclSettings.php:326
+msgid ""
+"IDs of the categories which have epoisodes or chapters. This categories will "
+"be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,"
+"43,50,187,204,548"
+msgstr ""
+"IDs der Kategorien die Folgen oder Kapitel haben. Diese Kategorien "
+"erscheinen in den Statistiken, Status, Schnelles Erstellen und Komplett. "
+"Beispiel: 2,4,43,50,187,204,548"
 
 #: ../MclSettings.php:331
 msgid ""

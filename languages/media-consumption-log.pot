@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Media Consumption Log\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: Mon Jun 01 2015 13:16:15 GMT+0200\n"
-"POT-Revision-Date: Sun Jan 17 2016 15:34:43 GMT+0100\n"
+"POT-Revision-Date: Tue Jan 19 2016 17:57:18 GMT+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,7 +47,15 @@ msgstr ""
 msgid "Title can't be empty!"
 msgstr ""
 
-#: ../MclData.php:461 ../MclStatistics.php:50 ../MclStatistics.php:104 ..
+#: ../MclData.php:214
+msgid "year"
+msgstr ""
+
+#: ../MclData.php:214
+msgid "years"
+msgstr ""
+
+#: ../MclData.php:483 ../MclStatistics.php:50 ../MclStatistics.php:104 ..
 #: /MclStatistics.php:154 ../MclStatistics.php:248 ../MclStatistics.php:292 ..
 #: /MclStatistics.php:320 ../MclStatistics.php:351
 msgid "Total"
