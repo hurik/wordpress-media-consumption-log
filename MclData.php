@@ -253,8 +253,9 @@ class MclData {
         // Process data
         // Get link of the tags and replace "--" with ", "
         foreach ( $data->tags as &$tag ) {
-            $tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
+            $small_tag = new stdClass();
 
+            // To get link without query
             $temp_tag = new stdClass();
             $temp_tag->term_id = $tag->tag_term_id;
             $temp_tag->name = $tag->tag_name;
@@ -265,7 +266,14 @@ class MclData {
             $temp_tag->description = $tag->tag_description;
             $temp_tag->parent = $tag->tag_parent;
             $temp_tag->count = $tag->tag_count;
-            $tag->tag_link = get_tag_link( $temp_tag );
+
+            $small_tag->tag_term_id = $tag->tag_term_id;
+            $small_tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
+            $small_tag->tag_link = get_tag_link( $temp_tag );
+            $small_tag->cats = $tag->cats;
+            $small_tag->mcl_total = $tag->mcl_total;
+
+            $tag = $small_tag;
         }
 
         // Sort status array
@@ -334,12 +342,24 @@ class MclData {
         }
 
         foreach ( $data->categories as &$category ) {
+            $small_category = new stdClass();
+            $small_category->term_id = $category->term_id;
+            $small_category->name = $category->name;
+            $small_category->slug = $category->slug;
+            $category = $small_category;
+
             if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
                 $category->mcl_tags_ongoing = $status[$category->term_id][MclSerialStatus::RUNNING];
 
                 foreach ( $category->mcl_tags_ongoing as &$letter ) {
-                    foreach ( $letter as &$tag ) {
-                        $tag->post_link = get_permalink( $tag );
+                    foreach ( $letter as &$tag_letter ) {
+                        $small_tag_letter = new stdClass();
+                        $small_tag_letter->tag_term_id = $tag_letter->tag_term_id;
+                        $small_tag_letter->post_title = $tag_letter->post_title;
+                        $small_tag_letter->post_date = $tag_letter->post_date;
+                        $small_tag_letter->post_link = get_permalink( $tag_letter );
+
+                        $tag_letter = $small_tag_letter;
                     }
                 }
             } else {
