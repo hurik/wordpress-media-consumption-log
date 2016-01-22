@@ -211,7 +211,7 @@ class MclData {
             }
 
             if ( $post_datetime >= $milestone_year ) {
-                $post->milestone = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' )) . " (" . $current_mcl_count . ")";
+                $post->milestone = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' )) . "<br />(" . $current_mcl_count . ")";
                 $post->post_link = get_permalink( $post );
                 $milestone_year_int++;
                 $milestone_year->modify( "+1 years" );

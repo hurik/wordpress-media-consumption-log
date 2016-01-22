@@ -403,9 +403,9 @@ class MclStatistics {
         $html .= "\n\n<h4 id=\"milestones\">" . __( 'Milestones', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<table class=\"mcl_table\">"
                 . "\n  <colgroup>"
-                . "\n    <col width=\"10%\">"
-                . "\n    <col width=\"67%\">"
-                . "\n    <col width=\"23%\">"
+                . "\n    <col width=\"1%\">"
+                . "\n    <col width=\"98%\">"
+                . "\n    <col width=\"1%\">"
                 . "\n  </colgroup>"
                 . "\n  <thead>"
                 . "\n    <tr>"
@@ -430,9 +430,9 @@ class MclStatistics {
             }
 
             $html .= "\n    <tr>"
-                    . "\n      <td>{$current_milestone}</td>"
+                    . "\n      <td nowrap>{$current_milestone}</td>"
                     . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"
-                    . "\n      <td>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . " ({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")</td>"
+                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . "<br />({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")</td>"
                     . "\n    </tr>";
         }
 
