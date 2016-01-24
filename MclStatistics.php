@@ -227,11 +227,18 @@ class MclStatistics {
 
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
-            $sum += $data->total_consumption[$category->term_id];
+
+            if ( array_key_exists( $category->term_id, $data->total_consumption ) ) {
+                $total = $data->total_consumption[$category->term_id];
+            } else {
+                $total = 0;
+            }
+
+            $sum += $total;
 
             $html .= "\n    <tr>"
                     . "\n      <td>{$category->name}</td>"
-                    . "\n      <td nowrap>{$data->total_consumption[$category->term_id]}</td>"
+                    . "\n      <td nowrap>{$total}</td>"
                     . "\n      <td nowrap>{$unit}</td>"
                     . "\n    </tr>";
         }
@@ -271,11 +278,18 @@ class MclStatistics {
 
         foreach ( $data->categories as $category ) {
             $unit = MclSettings::get_unit_of_category( $category );
-            $sum += $data->total_consumption[$category->term_id];
+
+            if ( array_key_exists( $category->term_id, $data->total_consumption ) ) {
+                $total = $data->total_consumption[$category->term_id];
+            } else {
+                $total = 0;
+            }
+
+            $sum += $total;
 
             $html .= "\n    <tr>"
                     . "\n      <td>{$category->name}</td>"
-                    . "\n      <td nowrap>" . number_format( ($data->total_consumption[$category->term_id] / $data->number_of_days ), 2 ) . "</td>"
+                    . "\n      <td nowrap>" . number_format( ($total / $data->number_of_days ), 2 ) . "</td>"
                     . "\n      <td nowrap>{$unit}</td>"
                     . "\n    </tr>";
         }

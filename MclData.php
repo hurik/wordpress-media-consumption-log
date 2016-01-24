@@ -390,7 +390,7 @@ class MclData {
             $small_category->slug = $category->slug;
             $category = $small_category;
 
-            if ( array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
+            if ( array_key_exists( $category->term_id, $status ) && array_key_exists( MclSerialStatus::RUNNING, $status[$category->term_id] ) ) {
                 $category->mcl_tags_ongoing = $status[$category->term_id][MclSerialStatus::RUNNING];
 
                 foreach ( $category->mcl_tags_ongoing as &$letter ) {
@@ -407,12 +407,12 @@ class MclData {
             } else {
                 $category->mcl_tags_ongoing = array();
             }
-            if ( array_key_exists( MclSerialStatus::COMPLETE, $status[$category->term_id] ) ) {
+            if ( array_key_exists( $category->term_id, $status ) && array_key_exists( MclSerialStatus::COMPLETE, $status[$category->term_id] ) ) {
                 $category->mcl_tags_complete = $status[$category->term_id][MclSerialStatus::COMPLETE];
             } else {
                 $category->mcl_tags_complete = array();
             }
-            if ( array_key_exists( MclSerialStatus::ABANDONED, $status[$category->term_id] ) ) {
+            if ( array_key_exists( $category->term_id, $status ) && array_key_exists( MclSerialStatus::ABANDONED, $status[$category->term_id] ) ) {
                 $category->mcl_tags_abandoned = $status[$category->term_id][MclSerialStatus::ABANDONED];
             } else {
                 $category->mcl_tags_abandoned = array();
