@@ -156,7 +156,7 @@ class MclAdminHooks {
 
         $table_name = $wpdb->prefix . 'mcl_status';
 
-        if ( $wpdb->get_var( "SHOW TABLES LIKE {$table_name}" ) != $table_name ) {
+        if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table_name}'" ) != $table_name ) {
             $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
 
             if ( !empty( $wpdb->collate ) ) {
