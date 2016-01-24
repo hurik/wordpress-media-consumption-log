@@ -25,9 +25,6 @@ class MclForgotten {
             wp_die( __( 'You do not have sufficient permissions to access this page.', 'media-consumption-log' ) );
         }
 
-        // Set the default timezone
-        date_default_timezone_set( get_option( 'timezone_string' ) );
-
         // Get the data
         $data = MclData::get_data_up_to_date();
 

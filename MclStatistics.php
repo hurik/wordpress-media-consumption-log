@@ -23,9 +23,6 @@ add_shortcode( 'mcl-stats', array( 'MclStatistics', 'build_statistics' ) );
 class MclStatistics {
 
     static function build_statistics() {
-        // Set the default timezone
-        date_default_timezone_set( get_option( 'timezone_string' ) );
-
         $data = MclData::get_data_up_to_date();
 
         if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) {

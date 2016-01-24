@@ -36,9 +36,6 @@ class MclData {
     public static function get_data_up_to_date() {
         $data = self::get_data();
 
-        // Set the default timezone
-        date_default_timezone_set( get_option( 'timezone_string' ) );
-
         // Check if mcl_data is up to date
         if ( $data->creation_date != date( 'Y-m-d' ) ) {
             return self::update_data();
@@ -62,9 +59,6 @@ class MclData {
 
     public static function build_data() {
         global $wpdb;
-
-        // Set the default timezone
-        date_default_timezone_set( get_option( 'timezone_string' ) );
 
         // Create the data field
         $data = new stdClass;
