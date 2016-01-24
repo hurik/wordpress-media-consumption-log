@@ -31,6 +31,17 @@ class MclForgotten {
         // Get the data
         $data = MclData::get_data_up_to_date();
 
+        if ( !property_exists( $data, "categories" ) ) {
+            ?>
+            <div class="wrap">
+                <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
+
+                <p><strong><?php _e( 'Nothing here yet!', 'media-consumption-log' ); ?></strong></p>
+            </div>
+            <?php
+            return;
+        }
+
         $empty = true;
 
         foreach ( $data->categories as $category ) {
@@ -139,7 +150,6 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-        }
-
     }
-    
+
+}

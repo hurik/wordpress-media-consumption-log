@@ -28,7 +28,7 @@ class MclStatistics {
 
         $data = MclData::get_data_up_to_date();
 
-        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned && !$data->cat_non_serial ) {
+        if ( !property_exists( $data, "categories" ) || (!$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) ) {
             return "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
         }
 

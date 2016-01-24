@@ -107,6 +107,10 @@ class MclData {
                                                              AND posts_with_data.cat_id = mcl_status.cat_id
         " );
 
+        if ( empty( $posts ) ) {
+            return $data;
+        }
+
         // Get first post date (with mcl number)
         $data->first_post_date = new DateTime( (new DateTime( $posts[0]->post_date ) )->format( 'Y-m-d' ) );
 

@@ -70,7 +70,7 @@ class MclQuickPost {
         // Get the data
         $data = MclData::get_data();
 
-        if ( empty( $data->categories ) ) {
+        if ( !property_exists( $data, "categories" ) ) {
             ?>
             <div class="wrap">
                 <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>

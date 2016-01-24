@@ -26,7 +26,7 @@ class MclStatus {
         // Get the data
         $data = MclData::get_data();
 
-        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned && !$data->cat_non_serial ) {
+        if ( !property_exists( $data, "categories" ) || (!$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) ) {
             $html = "<p><strong>" . __( 'Nothing here yet!', 'media-consumption-log' ) . "</strong></p>";
 
             return $html;
