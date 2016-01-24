@@ -422,10 +422,6 @@ class MclStatistics {
             $interval_days = $interval->format( '%a' );
             $current_milestone = $milestone->milestone;
 
-            if ( $current_milestone == 0 ) {
-                $current_milestone = 1;
-            }
-
             $html .= "\n    <tr>"
                     . "\n      <td nowrap>{$current_milestone}</td>"
                     . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"

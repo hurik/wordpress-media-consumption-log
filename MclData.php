@@ -133,10 +133,15 @@ class MclData {
 
         // Variables for milestones
         $current_mcl_count = 0;
+        $current_post_count = 0;
         $milestone = 0;
+        $milestone_post = 0;
         $milestone_year_int = 1;
         $milestone_year = new DateTime( $posts[0]->post_date );
         $milestone_year->modify( "+1 years" );
+        $milstone_mcl_indicator = "";
+        $milstone_date_indicator = "";
+        $milstone_post_indicator = "";
 
         foreach ( $posts as &$post ) {
             // Count mcl_number of categories
@@ -203,23 +208,61 @@ class MclData {
 
             // Get milestones
             $current_mcl_count += $post->post_mcl;
+            $current_post_count++;
             $post_datetime = new DateTime( $post->post_date );
 
-            if ( $milestone <= $current_mcl_count ) {
-                $post->milestone = $milestone;
-                $post->post_link = get_permalink( $post );
-                $milestone += 2500;
+            $milstone_mcl_indicator = "";
+            $milstone_date_indicator = "";
+            $milstone_post_indicator = "";
 
-                $data->milestones[] = $post;
+            if ( $milestone <= $current_mcl_count ) {
+                $milstone_mcl_indicator = ($milestone == 0 ? 1 : $milestone);
+                $milestone += 2500;
             }
 
             if ( $post_datetime >= $milestone_year ) {
-                $post->milestone = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' )) . "<br />(" . $current_mcl_count . ")";
-                $post->post_link = get_permalink( $post );
+                $milstone_date_indicator = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' ));
                 $milestone_year_int++;
                 $milestone_year->modify( "+1 years" );
+            }
 
-                $data->milestones[] = $post;
+            if ( $milestone_post <= $current_post_count ) {
+                $milstone_post_indicator = ($milestone_post == 0 ? 1 : $milestone_post) . " " . ($milestone_post == 0 ? __( 'post', 'media-consumption-log' ) : __( 'posts', 'media-consumption-log' ));
+                $milestone_post += 2500;
+            }
+
+            if ( !empty( $milstone_mcl_indicator ) || !empty( $milstone_date_indicator ) || !empty( $milstone_post_indicator ) ) {
+                $test = new stdClass();
+                $test->post_date = $post->post_date;
+                $test->post_title = $post->post_title;
+                $test->post_link = get_permalink( $post );
+                $test->milestone = "";
+
+                if ( !empty( $milstone_mcl_indicator ) ) {
+                    $test->milestone .= $milstone_mcl_indicator;
+                }
+
+                if ( !empty( $milstone_date_indicator ) ) {
+                    if ( !empty( $milstone_mcl_indicator ) ) {
+                        $test->milestone .= "<br />";
+                    }
+
+                    $test->milestone .= $milstone_date_indicator;
+                }
+
+                if ( !empty( $milstone_post_indicator ) ) {
+                    if ( !empty( $milstone_mcl_indicator ) || !empty( $milstone_date_indicator ) ) {
+                        $test->milestone .= "<br />";
+                    }
+
+                    $test->milestone .= $milstone_post_indicator;
+                }
+
+                if ( empty( $milstone_mcl_indicator ) && (!empty( $milstone_date_indicator ) || !empty( $milstone_post_indicator ) ) ) {
+                    $test->milestone .= "<br />(" . $current_mcl_count . ")";
+                }
+
+                $data->milestones[] = $test;
             }
 
             // Build graph data
