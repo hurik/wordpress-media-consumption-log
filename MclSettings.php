@@ -442,7 +442,11 @@ class MclSettings {
                     ?>
                 </table>
 
-                <?php submit_button(); ?>
+                <?php
+                if ( !empty( $get_monitored_categories_serials ) ) {
+                    submit_button();
+                }
+                ?>
             </form>
 
             <h3 id="rebuild-data"><?php _e( 'Rebuild data', 'media-consumption-log' ); ?></h3><hr />
@@ -453,18 +457,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                if ( count( $posts_without_mcl_number ) > 0 ) {
-                    foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                        edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                        if ( count( $posts_without_mcl_number ) > 0 ) {
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                        if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                            echo "<br />";
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                        } else {
+                            echo _e( 'Nothing found!', 'media-consumption-log' );
                         }
-                    }
-                } else {
-                    echo _e( 'Nothing found!', 'media-consumption-log' );
-                }
-                ?></td>
+                        ?></td>
                 </tr>   
             </table>
             <div id="mcl_loading"></div>
