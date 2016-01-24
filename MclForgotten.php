@@ -31,7 +31,7 @@ class MclForgotten {
         // Get the data
         $data = MclData::get_data_up_to_date();
 
-        if ( !property_exists( $data, "categories" ) ) {
+        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) {
             ?>
             <div class="wrap">
                 <h2>Media Consumption Log - <?php _e( 'Quick Post', 'media-consumption-log' ); ?></h2>
@@ -150,6 +150,7 @@ class MclForgotten {
 
             <div class="mcl_css_back_to_top">^</div>
         </div><?php
-    }
+        }
 
-}
+    }
+    

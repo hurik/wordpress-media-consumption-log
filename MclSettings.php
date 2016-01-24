@@ -75,7 +75,7 @@ class MclSettings {
         $monitored_categories_serials = MclSettings::get_monitored_categories_serials();
         $monitored_categories_non_serials = MclSettings::get_monitored_categories_non_serials();
 
-        if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
+        if ( !empty( $monitored_categories_serials ) || !empty( $monitored_categories_non_serials ) ) {
             return get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
         } else {
             return array();

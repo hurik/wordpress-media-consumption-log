@@ -75,6 +75,14 @@ class MclData {
         // Save the creation date of data for get_data_up_to_date()
         $data->creation_date = date( 'Y-m-d' );
 
+        // Get the categories
+        $data->categories = MclSettings::get_all_monitored_categories();
+
+        $data->cat_serial_ongoing = false;
+        $data->cat_serial_complete = false;
+        $data->cat_serial_abandoned = false;
+        $data->cat_non_serial = false;
+
         // Get all posts with category, tag, mcl_number and tag status
         $posts = $wpdb->get_results( "
             SELECT posts_with_data.*,
@@ -116,9 +124,6 @@ class MclData {
 
         // Get the number of days since first post
         $data->number_of_days = (new DateTime( date( 'Y-m-d' ) ) )->diff( $data->first_post_date )->format( "%a" ) + 1;
-
-        // Get the categories
-        $data->categories = MclSettings::get_all_monitored_categories();
 
         // mcl_number count of categories
         $data->total_consumption = array();
@@ -299,10 +304,6 @@ class MclData {
         $data->tags_count_complete = 0;
         $data->tags_count_abandoned = 0;
         $data->tags_count_total = 0;
-        $data->cat_serial_ongoing = false;
-        $data->cat_serial_complete = false;
-        $data->cat_serial_abandoned = false;
-        $data->cat_non_serial = false;
 
         // Graphs variables
         if ( MclSettings::get_statistics_monthly_count() != 0 ) {

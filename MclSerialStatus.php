@@ -58,7 +58,7 @@ class MclSerialStatus {
         // Get the data
         $data = MclData::get_data();
 
-        if ( !property_exists( $data, "categories" ) || (!$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) ) {
+        if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) {
             ?>
             <div class="wrap">
                 <h2>Media Consumption Log - <?php _e( 'Serial Status', 'media-consumption-log' ); ?></h2>
