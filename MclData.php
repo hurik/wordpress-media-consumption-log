@@ -221,13 +221,13 @@ class MclData {
             }
 
             if ( $post_datetime >= $milestone_year ) {
-                $milstone_date_indicator = $milestone_year_int . " " . ($milestone_year_int == 1 ? __( 'year', 'media-consumption-log' ) : __( 'years', 'media-consumption-log' ));
+                $milstone_date_indicator = sprintf( _n( '%s year', '%s years', $milestone_year_int, 'media-consumption-log' ), $milestone_year_int );
                 $milestone_year_int++;
                 $milestone_year->modify( "+1 years" );
             }
 
             if ( $milestone_post <= $current_post_count ) {
-                $milstone_post_indicator = ($milestone_post == 0 ? 1 : $milestone_post) . " " . ($milestone_post == 0 ? __( 'post', 'media-consumption-log' ) : __( 'posts', 'media-consumption-log' ));
+                $milstone_post_indicator = sprintf( _n( '%s post', '%s posts', $current_post_count, 'media-consumption-log' ), $current_post_count );
                 $milestone_post += 2500;
             }
 

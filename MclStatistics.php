@@ -243,8 +243,7 @@ class MclStatistics {
                     . "\n    </tr>";
         }
 
-        $since_total_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total comsumption, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
-        $since_total_string = str_replace( '%DAYS%', $data->number_of_days, $since_total_string );
+        $since_string = sprintf( __( 'Total comsumption, since the first post on the %s (%s).', 'media-consumption-log' ), $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), sprintf( _n( '%s day', '%s days', $data->number_of_days, 'media-consumption-log' ), $data->number_of_days ) );
 
         $html .= "\n  </tbody>"
                 . "\n  <tfoot>"
@@ -255,7 +254,7 @@ class MclStatistics {
                 . "\n    </tr>"
                 . "\n  </tfoot>"
                 . "\n</table>"
-                . "\n<p>{$since_total_string}</p>";
+                . "\n<p>{$since_string}</p>";
 
         // Average Consumption
         $html .= "\n\n<h4 id=\"average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</h4><hr />"
@@ -294,8 +293,7 @@ class MclStatistics {
                     . "\n    </tr>";
         }
 
-        $since_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Average a day, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
-        $since_string = str_replace( '%DAYS%', $data->number_of_days, $since_string );
+        $since_string = sprintf( __( 'Average a day, since the first post on the %s (%s).', 'media-consumption-log' ), $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), sprintf( _n( '%s day', '%s days', $data->number_of_days, 'media-consumption-log' ), $data->number_of_days ) );
 
         $html .= "\n  </tbody>"
                 . "\n  <tfoot>"
@@ -354,11 +352,7 @@ class MclStatistics {
             }
         }
 
-        $categories_string = MclHelpers::build_all_categories_string( $data->categories, false );
-
-        $since_count_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Total count of different %CATEGORIES%, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
-        $since_count_string = str_replace( '%DAYS%', $data->number_of_days, $since_count_string );
-        $since_count_string = str_replace( '%CATEGORIES%', $categories_string, $since_count_string );
+        $since_string = sprintf( __( 'Total count of different %s, since the first post on the %s (%s).', 'media-consumption-log' ), MclHelpers::build_all_categories_string( $data->categories, false ), $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), sprintf( _n( '%s day', '%s days', $data->number_of_days, 'media-consumption-log' ), $data->number_of_days ) );
 
         $html .= "\n  </tbody>"
                 . "\n  <tfoot>"
@@ -371,11 +365,10 @@ class MclStatistics {
                 . "\n    </tr>"
                 . "\n  </tfoot>"
                 . "\n</table>"
-                . "\n<p>{$since_count_string}</p>";
+                . "\n<p>{$since_string}</p>";
 
         // Most consumed
-        $since_most_consumed_string = str_replace( '%DATE%', $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), __( 'Most consumed serials, since the first post on the %DATE% (%DAYS% days).', 'media-consumption-log' ) );
-        $since_most_consumed_string = str_replace( '%DAYS%', $data->number_of_days, $since_most_consumed_string );
+        $since_string = sprintf( __( 'Most consumed serials, since the first post on the %s (%s).', 'media-consumption-log' ), $data->first_post_date->format( MclSettings::get_statistics_daily_date_format() ), sprintf( _n( '%s day', '%s days', $data->number_of_days, 'media-consumption-log' ), $data->number_of_days ) );
 
         $html .= "\n\n<h4 id=\"most-consumed\">" . __( 'Most consumed', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<table class=\"mcl_table\">"
@@ -413,7 +406,7 @@ class MclStatistics {
 
         $html .= "\n  </tbody>"
                 . "\n</table>"
-                . "\n<p>{$since_most_consumed_string}</p>";
+                . "\n<p>{$since_string}</p>";
 
         $html .= "\n\n<h4 id=\"milestones\">" . __( 'Milestones', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<table class=\"mcl_table\">"
