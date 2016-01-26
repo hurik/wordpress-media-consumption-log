@@ -309,8 +309,12 @@ class MclStatistics {
                 . "\n<p>{$since_string}</p>";
 
         // Average consumption development
-        $html .= "\n\n<h4 id=\"average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</h4><hr />"
-                . "\n<div id=\"average_consumption_development_chart_div\"></div>";
+        $html .= "\n\n<h4 id=\"average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</h4><hr />";
+        if ( $data->number_of_days > 1 ) {
+            $html .= "\n<div id=\"average_consumption_development_chart_div\"></div>";
+        } else {
+            $html .= "\n<p>" . __( 'Average consumption development graph will be visible tomorrow.', 'media-consumption-log' ) . "</p>";
+        }
 
         // Consumption count
         $html .= "\n\n<h4 id=\"consumption-count\">" . __( 'Consumption amount', 'media-consumption-log' ) . "</h4><hr />"
