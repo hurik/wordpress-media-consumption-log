@@ -435,11 +435,18 @@ class MclStatistics {
             $interval = $milestone_date->diff( $current_date );
             $interval_days = $interval->format( '%a' );
             $current_milestone = $milestone->milestone;
+            if ( $interval_days == 0 ) {
+                $ago_string = "(" . __( 'today', 'media-consumption-log' ) . ")";
+            } else if ( $interval_days == 1 ) {
+                $ago_string = "(" . __( 'yesterday', 'media-consumption-log' ) . ")";
+            } else {
+                $ago_string = "({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")";
+            }
 
             $html .= "\n    <tr>"
                     . "\n      <td nowrap>{$current_milestone}</td>"
                     . "\n      <td><a href=\"{$milestone->post_link}\">{$milestone->post_title}</a>" . "</td>"
-                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . "<br />({$interval_days} " . __( 'days ago', 'media-consumption-log' ) . ")</td>"
+                    . "\n      <td nowrap>" . $milestone_date->format( MclSettings::get_statistics_daily_date_format() ) . "<br />{$ago_string}</td>"
                     . "\n    </tr>";
         }
 
