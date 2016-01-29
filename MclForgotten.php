@@ -28,6 +28,9 @@ class MclForgotten {
         // Get the data
         $data = MclData::get_data_up_to_date();
 
+        // Current date
+        $date_current = new DateTime( current_time( "Y-m-d H:i:s" ) );
+
         if ( !$data->cat_serial_ongoing && !$data->cat_serial_complete && !$data->cat_serial_abandoned ) {
             ?>
             <div class="wrap">
@@ -51,7 +54,6 @@ class MclForgotten {
             foreach ( $category->mcl_tags_ongoing as $letter ) {
                 foreach ( $letter as $tag ) {
                     $date = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_date );
-                    $date_current = new DateTime( date( "Y-m-d H:i:s" ) );
                     $number_of_days = $date_current->diff( $date )->format( "%a" ) + 1;
 
                     if ( $number_of_days >= MclSettings::get_forgotten_min_days() ) {

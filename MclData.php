@@ -37,7 +37,7 @@ class MclData {
         $data = self::get_data();
 
         // Check if mcl_data is up to date
-        if ( $data->creation_date != date( 'Y-m-d' ) ) {
+        if ( $data->creation_date != current_time( 'Y-m-d' ) ) {
             return self::update_data();
         }
 
@@ -67,7 +67,8 @@ class MclData {
         $data->plugin_version = PLUGIN_VERSION;
 
         // Save the creation date of data for get_data_up_to_date()
-        $data->creation_date = date( 'Y-m-d' );
+        $data->creation_date = current_time( 'Y-m-d' );
+        $creation_month = current_time( 'Y-m' );
 
         // Get the categories
         $data->categories = MclSettings::get_all_monitored_categories();
@@ -117,7 +118,7 @@ class MclData {
         $data->first_post_date = new DateTime( (new DateTime( $posts[0]->post_date ) )->format( 'Y-m-d' ) );
 
         // Get the number of days since first post
-        $data->number_of_days = (new DateTime( date( 'Y-m-d' ) ) )->diff( $data->first_post_date )->format( "%a" ) + 1;
+        $data->number_of_days = (new DateTime( $data->creation_date ) )->diff( $data->first_post_date )->format( "%a" ) + 1;
 
         // mcl_number count of categories
         $data->total_consumption = array();
@@ -344,7 +345,7 @@ class MclData {
 
         // Graphs variables
         if ( MclSettings::get_statistics_monthly_count() != 0 ) {
-            $first_month = date( 'Y-m', strtotime( "-" . (MclSettings::get_statistics_monthly_count() - 1) . " month", strtotime( date( 'Y-m' ) ) ) );
+            $first_month = date( 'Y-m', strtotime( $creation_month . " -" . (MclSettings::get_statistics_monthly_count() - 1) . " month" ) );
         } else {
             $first_month = $data->first_post_date->format( 'Y-m' );
         }
@@ -354,7 +355,7 @@ class MclData {
         $i = 0;
 
         while ( true ) {
-            $month = date( 'Y-m', strtotime( "-" . $i . " month", strtotime( date( 'Y-m' ) ) ) );
+            $month = date( 'Y-m', strtotime( $creation_month . " -" . $i . " month" ) );
 
             $monthly_dates[] = $month;
 
@@ -372,7 +373,7 @@ class MclData {
         $i = 0;
 
         while ( true ) {
-            $day = date( 'Y-m-d', strtotime( "-" . $i . " day", strtotime( date( 'Y-m-d' ) ) ) );
+            $day = date( 'Y-m-d', strtotime( $data->creation_date . " -" . $i . " day" ) );
 
             $daily_dates[] = $day;
 
