@@ -83,4 +83,19 @@ jQuery(document).ready(function ($) {
             $("#mcl_loading").removeClass("mcl_css_loading");
         });
     });
+
+    $(".mcl_css_rename_serial").click(function () {
+        $("#mcl_loading").addClass("mcl_css_loading");
+
+        var data = {
+            'action': 'mcl_rename_serial',
+            'current_name': $("#mcl_rename_serial_current_name").val(),
+            'new_name': $("#mcl_rename_serial_new_name").val()
+        };
+
+        $.post(ajaxurl, data, function (response) {
+            alert(response);
+            $("#mcl_loading").removeClass("mcl_css_loading");
+        });
+    });
 });

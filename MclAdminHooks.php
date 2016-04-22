@@ -42,6 +42,7 @@ class MclAdminHooks {
         add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
         add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
         add_action( 'wp_ajax_mcl_rebuild_data', array( 'MclSettings', 'rebuild_data' ) );
+        add_action( 'wp_ajax_mcl_rename_serial', array( 'MclSettings', 'rename_serial' ) );
     }
 
     public static function update_db_check() {

@@ -237,6 +237,52 @@ class MclSettings {
         wp_die();
     }
 
+    public static function rename_serial() {
+        global $wpdb;
+
+        $old_name = trim( $_POST['current_name'] );
+        $new_name = trim( $_POST['new_name'] );
+
+        if ( empty( $old_name ) || empty( $new_name ) ) {
+            echo __( "\"Current serial name\" and/or \"New serial name\" can't be empty!", 'media-consumption-log' );
+            wp_die();
+        }
+
+        // Check if tag exists
+        $tag = get_term_by( "name", $old_name, "post_tag" );
+
+        if ( empty( $tag ) ) {
+            echo __( "Can't find the serial!", 'media-consumption-log' );
+            wp_die();
+        }
+
+        // chekc if the new title isn't in use already
+        $is_tag_free = get_term_by( "name", $new_name, "post_tag" );
+
+        if ( !empty( $is_tag_free ) ) {
+            echo __( "There is already a serial with this name!", 'media-consumption-log' );
+            wp_die();
+        }
+
+        // Build strings for MySQL query
+        $old_title = $tag->name . MclSettings::get_other_separator();
+        $new_title = $new_name . MclSettings::get_other_separator();
+
+        // Change post titles
+        $renamed_posts = $wpdb->query(
+                "UPDATE {$wpdb->prefix}posts SET post_title = REPLACE( post_title, '{$old_title}', '{$new_title}')"
+        );
+
+        // Rename the tag and also update the slug
+        wp_update_term( $tag->term_id, 'post_tag', array(
+            'name' => $new_name,
+            'slug' => ''
+        ) );
+
+        echo sprintf( __( "Renamed \"%s\" to \"%s\"!\n%s post titles changed.", 'media-consumption-log' ), $old_name, $new_name, $renamed_posts );
+        wp_die();
+    }
+
     /**
      * From WP Page Load Stats by Mike Jolley
      * https://wordpress.org/plugins/wp-page-load-stats/
@@ -471,6 +517,24 @@ class MclSettings {
                         ?></td>
                 </tr>   
             </table>
+
+            <h3 id="posts-without-mcl-number"><?php _e( 'Rename serial', 'media-consumption-log' ); ?></h3><hr />
+            <p class="description"><?php _e( '<strong>Attention:</strong> This will rename the tag and all post which have the serial name in the titel!', 'media-consumption-log' ); ?></p>
+
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><?php _e( 'Current serial name', 'media-consumption-log' ); ?></th>
+                    <td><input type="text" id="mcl_rename_serial_current_name" style="width:100%;" /></td>
+                </tr>
+
+                <tr>
+                    <th scope="row"><?php _e( 'New serial name', 'media-consumption-log' ); ?></th>
+                    <td><input type="text" id="mcl_rename_serial_new_name" style="width:100%;" /></td>
+                </tr>     
+            </table>
+
+            <input class="button button-primary mcl_css_rename_serial" value="<?php _e( 'Rename serial', 'media-consumption-log' ); ?>" type="submit"><br /><br />
+
             <div id="mcl_loading"></div>
         </div>
         <?php
