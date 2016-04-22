@@ -279,6 +279,9 @@ class MclSettings {
             'slug' => ''
         ) );
 
+        // Update data
+        MclData::update_data();
+
         echo sprintf( __( "Renamed \"%s\" to \"%s\"!\n%s post titles changed.", 'media-consumption-log' ), $old_name, $new_name, $renamed_posts );
         wp_die();
     }
@@ -503,18 +506,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-                        if ( count( $posts_without_mcl_number ) > 0 ) {
-                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+        if ( count( $posts_without_mcl_number ) > 0 ) {
+            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                                    echo "<br />";
-                                }
-                            }
-                        } else {
-                            echo _e( 'Nothing found!', 'media-consumption-log' );
-                        }
-                        ?></td>
+                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                    echo "<br />";
+                }
+            }
+        } else {
+            echo _e( 'Nothing found!', 'media-consumption-log' );
+        }
+                ?></td>
                 </tr>   
             </table>
 
