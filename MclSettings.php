@@ -268,10 +268,21 @@ class MclSettings {
         $old_title = $tag->name . MclSettings::get_other_separator();
         $new_title = $new_name . MclSettings::get_other_separator();
 
-        // Change post titles
-        $renamed_posts = $wpdb->query(
-                "UPDATE {$wpdb->prefix}posts SET post_title = REPLACE( post_title, '{$old_title}', '{$new_title}')"
-        );
+        $args = array(
+            'tag__in' => $tag->term_id,
+            'posts_per_page' => -1 );
+
+        $posts = get_posts( $args );
+
+        foreach ( $posts as $post ) {
+            $updated_post = array(
+                'ID' => $post->ID,
+                'post_title' => str_replace( $old_title, $new_title, $post->post_title ),
+                'post_name' => '',
+            );
+
+            wp_update_post( $updated_post );
+        }
 
         // Rename the tag and also update the slug
         wp_update_term( $tag->term_id, 'post_tag', array(
@@ -282,7 +293,7 @@ class MclSettings {
         // Update data
         MclData::update_data();
 
-        echo sprintf( __( "Renamed \"%s\" to \"%s\"!\n%s post titles changed.", 'media-consumption-log' ), $old_name, $new_name, $renamed_posts );
+        echo sprintf( __( "Renamed \"%s\" to \"%s\"!\n%s post titles changed.", 'media-consumption-log' ), $old_name, $new_name, count( $posts ) );
         wp_die();
     }
 
@@ -506,18 +517,18 @@ class MclSettings {
                 <tr>
                     <th scope="row"><?php _e( 'Posts', 'media-consumption-log' ); ?></th>
                     <td><?php
-        if ( count( $posts_without_mcl_number ) > 0 ) {
-            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
-                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
+                        if ( count( $posts_without_mcl_number ) > 0 ) {
+                            foreach ( $posts_without_mcl_number as $post_without_mcl_number ) {
+                                edit_post_link( $post_without_mcl_number->post_title, "", "", $post_without_mcl_number->ID );
 
-                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
-                    echo "<br />";
-                }
-            }
-        } else {
-            echo _e( 'Nothing found!', 'media-consumption-log' );
-        }
-                ?></td>
+                                if ( $post_without_mcl_number != end( $posts_without_mcl_number ) ) {
+                                    echo "<br />";
+                                }
+                            }
+                        } else {
+                            echo _e( 'Nothing found!', 'media-consumption-log' );
+                        }
+                        ?></td>
                 </tr>   
             </table>
 
