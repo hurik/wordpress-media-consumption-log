@@ -264,7 +264,7 @@ class MclSettings {
             wp_die();
         }
 
-        // Build strings for MySQL query
+        // Build strings for the str_replace
         $old_title = $tag->name . MclSettings::get_other_separator();
         $new_title = $new_name . MclSettings::get_other_separator();
 
@@ -273,6 +273,9 @@ class MclSettings {
             'posts_per_page' => -1 );
 
         $posts = get_posts( $args );
+
+        // Remove the rebuild of MclData after post was changed
+        remove_action( 'save_post', array( 'MclAdminHooks', 'save_post' ) );
 
         foreach ( $posts as $post ) {
             $updated_post = array(
@@ -283,6 +286,9 @@ class MclSettings {
 
             wp_update_post( $updated_post );
         }
+
+        // Readd the rebuild of MclData after post was changed
+        add_action( 'save_post', array( 'MclAdminHooks', 'save_post' ) );
 
         // Rename the tag and also update the slug
         wp_update_term( $tag->term_id, 'post_tag', array(
