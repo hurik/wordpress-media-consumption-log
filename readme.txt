@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 4.4
 Tested up to: 4.5
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -127,6 +127,9 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 2.2.3 =
+* Improved bar graphs in Statistics
 
 = 2.2.2 =
 * Improved Rename serial, now using wordpress function and also renames the post_name (slug)
