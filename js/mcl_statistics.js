@@ -34,15 +34,19 @@ function drawDailyChart() {
     var data = google.visualization.arrayToDataTable(daily_data_array);
 
     var options = {
+        height: data.getNumberOfRows() * 15 + 100,
+        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
-                fontSize: 9, bold: true
+                fontSize: 9,
+                bold: true
             },
             highContrast: true,
-            alwaysOutside: true
+            alwaysOutside: true,
+            stemColor: 'transparent',
+            stemLength: 3
         },
-        height: data.getNumberOfRows() * 15 + 100,
         legend: {
             position: 'top',
             maxLines: 4,
@@ -51,13 +55,15 @@ function drawDailyChart() {
         bar: {
             groupWidth: '70%'
         },
-        focusTarget: 'category',
         chartArea: {
             left: 70,
-            top: 80,
-            width: '80%',
-            height: data.getNumberOfRows() * 15
+            top: 60,
+            bottom: 20,
+            right: 20,
+            width: '100%',
+            height: '100%'
         },
+        focusTarget: 'category',
         isStacked: true
     };
 
@@ -84,6 +90,8 @@ function drawMonthlyChart() {
     var data = google.visualization.arrayToDataTable(monthly_data_array);
 
     var options = {
+        height: data.getNumberOfRows() * 15 + 100,
+        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -91,9 +99,10 @@ function drawMonthlyChart() {
                 bold: true
             },
             highContrast: true,
-            alwaysOutside: true
+            alwaysOutside: true,
+            stemColor: 'transparent',
+            stemLength: 3
         },
-        height: data.getNumberOfRows() * 15 + 100,
         legend: {
             position: 'top',
             maxLines: 4,
@@ -102,13 +111,15 @@ function drawMonthlyChart() {
         bar: {
             groupWidth: '70%'
         },
-        focusTarget: 'category',
         chartArea: {
-            left: 50,
-            top: 80,
-            width: '80%',
-            height: data.getNumberOfRows() * 15
+            left: 70,
+            top: 60,
+            bottom: 20,
+            right: 20,
+            width: '100%',
+            height: '100%'
         },
+        focusTarget: 'category',
         isStacked: true
     };
 
@@ -136,6 +147,8 @@ function drawHourlyChart() {
     var data = google.visualization.arrayToDataTable(hourly_data_array);
 
     var options = {
+        height: data.getNumberOfRows() * 15 + 100,
+        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -143,9 +156,10 @@ function drawHourlyChart() {
                 bold: true
             },
             highContrast: true,
-            alwaysOutside: true
+            alwaysOutside: true,
+            stemColor: 'transparent',
+            stemLength: 3
         },
-        height: data.getNumberOfRows() * 15 + 100,
         legend: {
             position: 'top',
             maxLines: 4,
@@ -154,13 +168,15 @@ function drawHourlyChart() {
         bar: {
             groupWidth: '70%'
         },
-        focusTarget: 'category',
         chartArea: {
-            left: 50,
-            top: 80,
-            width: '80%',
-            height: data.getNumberOfRows() * 15
+            left: 70,
+            top: 60,
+            bottom: 20,
+            right: 20,
+            width: '100%',
+            height: '100%'
         },
+        focusTarget: 'category',
         isStacked: true
     };
 
