@@ -426,6 +426,7 @@ class MclStatistics {
 
         foreach ( $data->milestones as $milestone ) {
             $current_date = new DateTime();
+            $current_date->setTimestamp( current_time( 'timestamp' ) );
             $current_date->setTime( 0, 0, 0 );
             $milestone_date = new DateTime( $milestone->post_date );
             $milestone_date->setTime( 0, 0, 0 );
