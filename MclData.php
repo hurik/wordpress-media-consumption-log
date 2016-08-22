@@ -157,12 +157,20 @@ class MclData {
                 $post->mcl_total = $data->tags[$post->tag_term_id]->mcl_total + $post->post_mcl;
                 $post->cats = $data->tags[$post->tag_term_id]->cats;
 
+                $post->mcl_total_in_cats = $data->tags[$post->tag_term_id]->mcl_total_in_cats;
+                if ( array_key_exists( $post->cat_id, $post->mcl_total_in_cats ) ) {
+                    $post->mcl_total_in_cats[$post->cat_id] += $post->post_mcl;
+                } else {
+                    $post->mcl_total_in_cats[$post->cat_id] = $post->post_mcl;
+                }
+
                 if ( !in_array( $post->cat_id, $post->cats ) ) {
                     $post->cats[] = $post->cat_id;
                 }
             } else {
                 $post->mcl_total = $post->post_mcl;
                 $post->cats = array( $post->cat_id );
+                $post->mcl_total_in_cats = array( $post->cat_id => $post->post_mcl );
             }
 
             $data->tags[$post->tag_term_id] = $post;
@@ -319,6 +327,7 @@ class MclData {
             $small_tag->tag_link = get_tag_link( $temp_tag );
             $small_tag->cats = $tag->cats;
             $small_tag->mcl_total = $tag->mcl_total;
+            $small_tag->mcl_total_in_cats = $tag->mcl_total_in_cats;
 
             $tag = $small_tag;
         }

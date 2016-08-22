@@ -149,17 +149,17 @@ class MclStatus {
 
                 if ( $category->mcl_tags_count_ongoing ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-ongoing\">" . __( 'Running', 'media-consumption-log' ) . " ({$category->mcl_tags_count_ongoing})</h6>";
-                    $html .= self::create_table( $data, $category->mcl_tags_ongoing, $category->slug, "ongoing" );
+                    $html .= self::create_table( $data, $category->mcl_tags_ongoing, $category, "ongoing" );
                 }
 
                 if ( $category->mcl_tags_count_complete ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-complete\">" . __( 'Complete', 'media-consumption-log' ) . " ({$category->mcl_tags_count_complete})</h6>";
-                    $html .= self::create_table( $data, $category->mcl_tags_complete, $category->slug, "complete" );
+                    $html .= self::create_table( $data, $category->mcl_tags_complete, $category, "complete" );
                 }
 
                 if ( $category->mcl_tags_count_abandoned ) {
                     $html .= "\n<h6 id=\"mediastatus-{$category->slug}-abandoned\">" . __( 'Abandoned', 'media-consumption-log' ) . " ({$category->mcl_tags_count_abandoned})</h6>";
-                    $html .= self::create_table( $data, $category->mcl_tags_abandoned, $category->slug, "abandoned" );
+                    $html .= self::create_table( $data, $category->mcl_tags_abandoned, $category, "abandoned" );
                 }
             }
         }
@@ -252,11 +252,11 @@ class MclStatus {
         return $nav;
     }
 
-    private static function create_table( $data, $array, $cat_slug, $state ) {
+    private static function create_table( $data, $array, $cat, $state ) {
         $table = "\n<div>"
                 . "\n  ";
         foreach ( array_keys( $array ) as $key ) {
-            $table .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
+            $table .= "<a href=\"#mediastatus-{$cat->slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
             if ( $key != end( (array_keys( $array ) ) ) ) {
                 $table .= " | ";
             }
@@ -271,17 +271,20 @@ class MclStatus {
         if ( $state == "ongoing" ) {
             $table .= "\n    <col width=\"1%\">"
                     . "\n    <col width=\"98%\">"
+                    . "\n    <col width=\"1%\">"
                     . "\n    <col width=\"1%\">";
         } else {
             $table .= "\n    <col width=\"1%\">"
-                    . "\n    <col width=\"99%\">";
+                    . "\n    <col width=\"99%\">"
+                    . "\n    <col width=\"1%\">";
         }
 
         $table .= "\n  </colgroup>"
                 . "\n  <thead>"
                 . "\n    <tr>"
                 . "\n      <th></th>"
-                . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>";
+                . "\n      <th>" . __( 'Name', 'media-consumption-log' ) . "</th>"
+                . "\n      <th nowrap style='text-align:center;'>" . __( 'Consumed', 'media-consumption-log' ) . "</th>";
 
         if ( $state == "ongoing" ) {
             $table .= "\n      <th nowrap>" . __( 'Last', 'media-consumption-log' ) . "</th>";
@@ -298,8 +301,14 @@ class MclStatus {
                 $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $data->tags[$tag->tag_term_id]->tag_name ) );
 
                 $table .= "\n    <tr>"
-                        . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $array[$key] ) . ")</div>" : "") . "</th>"
+                        . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat->slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $array[$key] ) . ")</div>" : "") . "</th>"
                         . "\n      <td><a href=\"{$data->tags[$tag->tag_term_id]->tag_link}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_term_id]->tag_name}</a></td>";
+
+                if ( $data->tags[$tag->tag_term_id]->mcl_total != 0 ) {
+                    $table .= "\n      <td nowrap style='text-align:center;'>{$data->tags[$tag->tag_term_id]->mcl_total_in_cats[$cat->term_id]}</td>";
+                } else {
+                    $table .= "\n      <td nowrap style='text-align:center;'>-</td>";
+                }
 
                 if ( $state == "ongoing" ) {
                     $href_post_title = htmlspecialchars( htmlspecialchars_decode( $tag->post_title ) );
