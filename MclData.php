@@ -323,6 +323,7 @@ class MclData {
             $temp_tag->count = $tag->tag_count;
 
             $small_tag->tag_term_id = $tag->tag_term_id;
+            $small_tag->tag_slug = $tag->tag_slug;
             $small_tag->tag_name = MclCommaInTags::replace( $tag->tag_name );
             $small_tag->tag_link = get_tag_link( $temp_tag );
             $small_tag->cats = $tag->cats;

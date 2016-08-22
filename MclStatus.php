@@ -299,10 +299,11 @@ class MclStatus {
 
             foreach ( $array[$key] as $tag ) {
                 $href_tag_title = htmlspecialchars( htmlspecialchars_decode( $data->tags[$tag->tag_term_id]->tag_name ) );
+                $category_link_filtered_by_tag = get_category_link( $cat->term_id ) . "?tag=" . $data->tags[$tag->tag_term_id]->tag_slug;
 
                 $table .= "\n    <tr>"
                         . "\n      <th nowrap>" . ($first ? "<div id=\"mediastatus-{$cat->slug}-{$state}-" . strtolower( $key ) . "\">{$key} (" . count( $array[$key] ) . ")</div>" : "") . "</th>"
-                        . "\n      <td><a href=\"{$data->tags[$tag->tag_term_id]->tag_link}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_term_id]->tag_name}</a></td>";
+                        . "\n      <td><a href=\"{$category_link_filtered_by_tag}\" title=\"{$href_tag_title}\">{$data->tags[$tag->tag_term_id]->tag_name}</a></td>";
 
                 if ( $data->tags[$tag->tag_term_id]->mcl_total != 0 ) {
                     $table .= "\n      <td nowrap style='text-align:center;'>{$data->tags[$tag->tag_term_id]->mcl_total_in_cats[$cat->term_id]}</td>";
