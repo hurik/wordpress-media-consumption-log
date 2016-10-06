@@ -389,12 +389,12 @@ class MclSettings {
                     <tr>
                         <th scope="row"><?php _e( 'Serials', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_SERIAL; ?>" value="<?php echo esc_attr( self::get_monitored_categories_serials() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Complete. Example: 2,4,43,50,187,204,548', 'media-consumption-log' ); ?></p></td>
+                            <p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Serials Status. Example: 2,4,43,50,187,204,548', 'media-consumption-log' ); ?></p></td>
                     </tr>
                     <tr>
                         <th scope="row"><?php _e( 'Non serials', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_NON_SERIAL; ?>" value="<?php echo esc_attr( self::get_monitored_categories_non_serials() ); ?>" style="width:100%;" />
-                            <p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Complete. Example: 45,75,284', 'media-consumption-log' ); ?></p></td>
+                            <p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Serials Status. Example: 45,75,284', 'media-consumption-log' ); ?></p></td>
                     </tr>
                     <tr>
                         <th scope="row"><?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?></th>

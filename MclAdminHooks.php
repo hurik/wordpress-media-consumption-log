@@ -38,7 +38,7 @@ class MclAdminHooks {
 
         add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
 
-        add_action( 'wp_ajax_mcl_complete', array( 'MclSerialStatus', 'change_complete_status' ) );
+        add_action( 'wp_ajax_mcl_complete', array( 'MclSerialsStatus', 'change_complete_status' ) );
         add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
         add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
         add_action( 'wp_ajax_mcl_rebuild_data', array( 'MclSettings', 'rebuild_data' ) );
@@ -64,7 +64,7 @@ class MclAdminHooks {
         // Add menu
         add_menu_page( 'MCL', 'MCL', 'manage_options', 'mcl-quick-post' );
         $page_hook_quick_post = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Quick Post', 'media-consumption-log' ), __( 'Quick Post', 'media-consumption-log' ), 'manage_options', 'mcl-quick-post', array( 'MclQuickPost', 'create_page' ) );
-        $page_hook_serial_status = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Serial Status', 'media-consumption-log' ), __( 'Serial Status', 'media-consumption-log' ), 'manage_options', 'mcl-serial-status', array( 'MclSerialStatus', 'create_page' ) );
+        $page_hook_serial_status = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Serials Status', 'media-consumption-log' ), __( 'Serials Status', 'media-consumption-log' ), 'manage_options', 'mcl-serials-status', array( 'MclSerialsStatus', 'create_page' ) );
         $page_hook_forgotten = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Forgotten', 'media-consumption-log' ), __( 'Forgotten', 'media-consumption-log' ), 'manage_options', 'mcl-forgotten', array( 'MclForgotten', 'create_page' ) );
         $page_hook_settings = add_submenu_page( 'mcl-quick-post', 'MCL - ' . __( 'Settings', 'media-consumption-log' ), __( 'Settings', 'media-consumption-log' ), 'manage_options', 'mcl-settings', array( 'MclSettings', 'create_page' ) );
 

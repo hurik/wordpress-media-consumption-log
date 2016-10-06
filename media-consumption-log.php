@@ -40,7 +40,7 @@ require_once dirname( __FILE__ ) . '/MclHelpers.php';
 require_once dirname( __FILE__ ) . '/MclHooks.php';
 require_once dirname( __FILE__ ) . '/MclNumber.php';
 require_once dirname( __FILE__ ) . '/MclQuickPost.php';
-require_once dirname( __FILE__ ) . '/MclSerialStatus.php';
+require_once dirname( __FILE__ ) . '/MclSerialsStatus.php';
 require_once dirname( __FILE__ ) . '/MclSettings.php';
 require_once dirname( __FILE__ ) . '/MclStatistics.php';
 require_once dirname( __FILE__ ) . '/MclStatus.php';

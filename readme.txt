@@ -48,7 +48,7 @@ To create a statistics page make a new site and add the shortcode "[mcl-stats]" 
 = Quick Post =
 In Quick post you can easily create a new post for a running serial. Check the screenshots for example.
 
-= Serial Status =
+= Serials Status =
 Here you can change the status of a serial to running, complete or abandoned. Complete and abandoned serials will not show up in Quick post and also will be separated on the status page.
 
 = Forgotten =
@@ -121,7 +121,7 @@ No questions at the moment.
 1. Status
 2. Statistics
 3. Quick Post
-4. Serial Status
+4. Serials Status
 5. Forgotten
 6. Settings
 
