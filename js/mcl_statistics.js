@@ -22,6 +22,7 @@ google.load('visualization', '1.0', {
 
 google.setOnLoadCallback(drawDailyChart);
 google.setOnLoadCallback(drawMonthlyChart);
+google.setOnLoadCallback(drawYearlyChart);
 google.setOnLoadCallback(drawHourlyChart);
 google.setOnLoadCallback(drawAverrageDevelopmentChart);
 
@@ -135,6 +136,63 @@ function drawMonthlyChart() {
 
 
     var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));
+    chart.draw(data, options);
+}
+
+function drawYearlyChart() {
+    var yearly_data_array = JSON.parse(js_params.yearly);
+    yearly_data_array[0][yearly_data_array[0].length - 1] = {role: 'annotation'};
+    for (var i = 1; i < yearly_data_array.length; i++) {
+        yearly_data_array[i][0] = yearly_data_array[i][0] + "";
+    }
+    var data = google.visualization.arrayToDataTable(yearly_data_array);
+
+    var options = {
+        height: data.getNumberOfRows() * 15 + 100,
+        width: '100%',
+        annotations: {
+            textStyle: {
+                color: '#000000',
+                fontSize: 9,
+                bold: true
+            },
+            highContrast: true,
+            alwaysOutside: true,
+            stemColor: 'transparent',
+            stemLength: 3
+        },
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        bar: {
+            groupWidth: '70%'
+        },
+        chartArea: {
+            left: 70,
+            top: 60,
+            bottom: 20,
+            right: 20,
+            width: '100%',
+            height: '100%'
+        },
+        focusTarget: 'category',
+        isStacked: true
+    };
+
+    var series = {};
+    series[data.getNumberOfColumns() - 3] = {
+        color: 'transparent',
+        type: "bar",
+        targetAxisIndex: 1,
+        visibleInLegend: false
+    };
+
+    options["series"] = series;
+
+
+    var chart = new google.visualization.BarChart(document.getElementById('yearly_chart_div'));
     chart.draw(data, options);
 }
 
@@ -256,6 +314,7 @@ jQuery(document).ready(function ($) {
     $(window).resize(function () {
         drawDailyChart();
         drawMonthlyChart();
+        drawYearlyChart();
         drawHourlyChart();
         drawAverrageDevelopmentChart();
     });

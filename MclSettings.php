@@ -30,6 +30,7 @@ class MclSettings {
     const SETTING_STATISTICS_DAILY_DATE_FORMAT = "mcl_setting_statistics_daily_date_format";
     const SETTING_STATISTICS_MONTHLY_COUNT = "mcl_setting_statistics_monthly_count";
     const SETTING_STATISTICS_MONTHLY_DATE_FORMAT = "mcl_setting_statistics_monthly_date_format";
+    const SETTING_STATISTICS_YEARLY_COUNT = "mcl_setting_statistics_yearly_count";
     const SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA = "mcl_setting_statistics_average_consumption_development_max_delta";
     const SETTING_STATISTICS_MOST_CONSUMED_COUNT = "mcl_setting_statistics_most_consumed_count";
     const SETTING_FORGOTTEN_MIN_DAYS = "mcl_setting_forgotten_min_days";
@@ -41,6 +42,7 @@ class MclSettings {
     // Default values
     const default_statistics_daily_count = 31;
     const default_statistics_monthly_count = 0;
+    const default_statistics_yearly_count = 0;
     const default_statistics_average_consumption_development_max_delta = 5;
     const default_statistics_most_consumed_count = 10;
     const default_forgotten_min_days = 91;
@@ -119,6 +121,16 @@ class MclSettings {
             return self::default_statistics_monthly_date_format();
         } else {
             return $value;
+        }
+    }
+
+    public static function get_statistics_yearly_count() {
+        $value = get_option( self::SETTING_STATISTICS_YEARLY_COUNT );
+
+        if ( ( string ) ( int ) $value === $value && ( int ) $value >= 0 ) {
+            return $value;
+        } else {
+            return self::default_statistics_yearly_count;
         }
     }
 
@@ -201,6 +213,7 @@ class MclSettings {
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_DATE_FORMAT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT );
+        register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_YEARLY_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_AVERAGE_CONSUMPTION_DEVELOPMENT_MAX_DELTA );
         register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_MOST_CONSUMED_COUNT );
         register_setting( self::SETTINGS_GROUP, self::SETTING_FORGOTTEN_MIN_DAYS );
@@ -426,6 +439,12 @@ class MclSettings {
                         <th scope="row"><?php _e( 'Monthly date format', 'media-consumption-log' ); ?></th>
                         <td><input type="text" name="<?php echo self::SETTING_STATISTICS_MONTHLY_DATE_FORMAT; ?>" value="<?php echo esc_attr( self::get_statistics_monthly_date_format() ); ?>" style="width:100%;" />
                             <p class="description"><?php _e( 'Format for dates on the monthly statistics page. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_monthly_date_format(); ?></p></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><?php _e( 'Yearly statistics size', 'media-consumption-log' ); ?></th>
+                        <td><input type="text" name="<?php echo self::SETTING_STATISTICS_YEARLY_COUNT; ?>" value="<?php echo esc_attr( self::get_statistics_yearly_count() ); ?>" style="width:100%;" />
+                            <p class="description"><?php _e( 'Please insert number of years the statistic should cover. If you insert 0 the years since the first post will be covered. Default:', 'media-consumption-log' ); ?> <?php echo self::default_statistics_yearly_count; ?></p></td>
                     </tr>
 
                     <tr>

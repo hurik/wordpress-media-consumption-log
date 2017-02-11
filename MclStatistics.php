@@ -137,6 +137,57 @@ class MclStatistics {
             $monthly_data[$i][] = $total;
         }
 
+        // Yearly graph
+        $yearly_data = array();
+
+        for ( $i = 0; $i < count( reset( $data->categories )->mcl_yearly_data ) + 1; $i++ ) {
+            $yearly_data[] = array();
+        }
+
+        // Monthly array header
+        $yearly_data[0][] = "Date";
+
+        foreach ( $data->categories as $category ) {
+            $yearly_data[0][] = $category->name;
+        }
+
+        $yearly_data[0][] = __( 'Total', 'media-consumption-log' );
+        $yearly_data[0][] = "ROLE_ANNOTATION";
+
+        $first = true;
+
+        foreach ( $data->categories as $category ) {
+            $c = 1;
+
+            if ( $first ) {
+                foreach ( $category->mcl_yearly_data as $key => $value ) {
+                    $yearly_data[$c][] = intval( $key );
+                    $yearly_data[$c][] = intval( $value );
+
+                    $c++;
+                }
+
+                $first = false;
+            } else {
+                foreach ( $category->mcl_yearly_data as $value ) {
+                    $yearly_data[$c][] = intval( $value );
+
+                    $c++;
+                }
+            }
+        }
+
+        for ( $i = 1; $i < count( $yearly_data ); $i++ ) {
+            $total = 0;
+
+            for ( $j = 1; $j < count( $yearly_data[0] ) - 2; $j++ ) {
+                $total += $yearly_data[$i][$j];
+            }
+
+            $yearly_data[$i][] = $total;
+            $yearly_data[$i][] = $total;
+        }
+
         // Hourly graph
         // Hourly data array
         $hourly_data = array();
@@ -169,6 +220,7 @@ class MclStatistics {
         $js_params = array(
             'daily' => json_encode( $daily_data, JSON_NUMERIC_CHECK ),
             'monthly' => json_encode( $monthly_data, JSON_NUMERIC_CHECK ),
+            'yearly' => json_encode( $yearly_data, JSON_NUMERIC_CHECK ),
             'hourly' => json_encode( $hourly_data, JSON_NUMERIC_CHECK ),
             'average' => json_encode( $data->average_consumption_development, JSON_NUMERIC_CHECK ),
             'average_max_delta' => json_encode( MclSettings::get_statistics_average_consumption_development_max_delta(), JSON_NUMERIC_CHECK )
@@ -185,6 +237,7 @@ class MclStatistics {
                 . "\n    <li><a href=\"#daily-consumption-chart\">" . __( 'Daily consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#hourly-consumption-chart\">" . __( 'Hourly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</a></li>"
+                . "\n    <li><a href=\"#yearly-consumption-chart\">" . __( 'Yearly consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption\">" . __( 'Average consumption', 'media-consumption-log' ) . "</a></li>"
                 . "\n    <li><a href=\"#average-consumption-development-chart\">" . __( 'Average consumption development', 'media-consumption-log' ) . "</a></li>"
@@ -205,6 +258,10 @@ class MclStatistics {
         // Monthly graph
         $html .= "\n\n<h4 id=\"monthly-consumption-chart\">" . __( 'Monthly consumption', 'media-consumption-log' ) . "</h4><hr />"
                 . "\n<div id=\"monthly_chart_div\"></div>";
+
+        // Yearly graph
+        $html .= "\n\n<h4 id=\"yearly-consumption-chart\">" . __( 'Yearly consumption', 'media-consumption-log' ) . "</h4><hr />"
+                . "\n<div id=\"yearly_chart_div\"></div>";
 
         // Total consumption
         $html .= "\n\n<h4 id=\"total-consumption\">" . __( 'Total consumption', 'media-consumption-log' ) . "</h4><hr />"

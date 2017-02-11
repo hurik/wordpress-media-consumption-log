@@ -69,6 +69,7 @@ class MclData {
         // Save the creation date of data for get_data_up_to_date()
         $data->creation_date = current_time( 'Y-m-d' );
         $creation_month = current_time( 'Y-m' );
+        $creation_year = current_time( 'Y' );
 
         // Get the categories
         $data->categories = MclSettings::get_all_monitored_categories();
@@ -130,6 +131,7 @@ class MclData {
         $status = array();
         $hourly_consumption = array();
         $monthly_consumption = array();
+        $yearly_consumption = array();
         $daily_consumption = array();
 
         // Variables for milestones
@@ -278,6 +280,7 @@ class MclData {
             if ( !array_key_exists( $post->cat_id, $hourly_consumption ) ) {
                 $hourly_consumption[$post->cat_id] = array();
                 $monthly_consumption[$post->cat_id] = array();
+                $yearly_consumption[$post->cat_id] = array();
                 $daily_consumption[$post->cat_id] = array();
             }
 
@@ -295,6 +298,13 @@ class MclData {
                 $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] += $post->post_mcl;
             } else {
                 $monthly_consumption[$post->cat_id][$date->format( "Y-m" )] = $post->post_mcl;
+            }
+
+            // Yearly graph
+            if ( array_key_exists( $date->format( "Y" ), $yearly_consumption[$post->cat_id] ) ) {
+                $yearly_consumption[$post->cat_id][$date->format( "Y" )] += $post->post_mcl;
+            } else {
+                $yearly_consumption[$post->cat_id][$date->format( "Y" )] = $post->post_mcl;
             }
 
             // Daily graph
@@ -354,6 +364,30 @@ class MclData {
         $data->tags_count_total = 0;
 
         // Graphs variables
+        // Yearly
+        if ( MclSettings::get_statistics_yearly_count() != 0 ) {
+            $first_year = date( 'Y', strtotime( $creation_year . " -" . (MclSettings::get_statistics_yearly_count() - 1) . " year" ) );
+        } else {
+            $first_year = $data->first_post_date->format( 'Y' );
+        }
+
+        $yearly_dates = array();
+
+        $i = 0;
+
+        while ( true ) {
+            $year = date( 'Y', strtotime( $creation_year . " -" . $i . " year" ) );
+
+            $yearly_dates[] = $year;
+
+            if ( $year == $first_year ) {
+                break;
+            }
+
+            $i++;
+        }
+
+        // Monthly        
         if ( MclSettings::get_statistics_monthly_count() != 0 ) {
             $first_month = date( 'Y-m', strtotime( $creation_month . " -" . (MclSettings::get_statistics_monthly_count() - 1) . " month" ) );
         } else {
@@ -489,6 +523,30 @@ class MclData {
                 $category->mcl_monthly_data = array_slice( $monthly_consumption[$category->term_id], 0, MclSettings::get_statistics_monthly_count() );
             } else {
                 $category->mcl_monthly_data = $monthly_consumption[$category->term_id];
+            }
+
+            // Yearly graph
+            // Add categorie when not already added
+            if ( !array_key_exists( $category->term_id, $yearly_consumption ) ) {
+                $yearly_consumption[$category->term_id] = array();
+            }
+
+            // Add missing dates in category
+            foreach ( $yearly_dates as $yearly_date ) {
+                if ( !array_key_exists( $yearly_date, $yearly_consumption[$category->term_id] ) ) {
+                    $yearly_consumption[$category->term_id][$yearly_date] = 0;
+                }
+            }
+
+            // Sort dates
+            ksort( $yearly_consumption[$category->term_id] );
+
+            if ( MclSettings::get_statistics_yearly_count() != 0 ) {
+                $category->mcl_yearly_data = array_slice( $yearly_consumption[$category->term_id], - MclSettings::get_statistics_yearly_count(), MclSettings::get_statistics_yearly_count() );
+                krsort( $category->mcl_yearly_data );
+            } else {
+                $category->mcl_yearly_data = $yearly_consumption[$category->term_id];
+                krsort( $category->mcl_yearly_data );
             }
 
             // Daily cgraph
