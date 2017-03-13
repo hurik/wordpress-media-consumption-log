@@ -16,23 +16,23 @@
  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-google.load('visualization', '1.0', {
-    'packages': ['corechart']
-});
+google.load( 'visualization', '1.0', {
+    'packages': [ 'corechart' ]
+} );
 
-google.setOnLoadCallback(drawDailyChart);
-google.setOnLoadCallback(drawMonthlyChart);
-google.setOnLoadCallback(drawYearlyChart);
-google.setOnLoadCallback(drawHourlyChart);
-google.setOnLoadCallback(drawAverrageDevelopmentChart);
+google.setOnLoadCallback( drawDailyChart );
+google.setOnLoadCallback( drawMonthlyChart );
+google.setOnLoadCallback( drawYearlyChart );
+google.setOnLoadCallback( drawHourlyChart );
+google.setOnLoadCallback( drawAverrageDevelopmentChart );
 
 function drawDailyChart() {
-    var daily_data_array = JSON.parse(js_params.daily);
-    daily_data_array[0][daily_data_array[0].length - 1] = {role: 'annotation'};
-    for (var i = 1; i < daily_data_array.length; i++) {
+    var daily_data_array = JSON.parse( js_params.daily );
+    daily_data_array[0][daily_data_array[0].length - 1] = { role: 'annotation' };
+    for ( var i = 1; i < daily_data_array.length; i++ ) {
         daily_data_array[i][0] = daily_data_array[i][0] + "";
     }
-    var data = google.visualization.arrayToDataTable(daily_data_array);
+    var data = google.visualization.arrayToDataTable( daily_data_array );
 
     var options = {
         height: data.getNumberOfRows() * 15 + 100,
@@ -68,7 +68,7 @@ function drawDailyChart() {
         isStacked: true
     };
 
-    var series = {};
+    var series = { };
     series[data.getNumberOfColumns() - 3] = {
         color: 'transparent',
         type: "bar",
@@ -78,17 +78,17 @@ function drawDailyChart() {
 
     options["series"] = series;
 
-    var chart = new google.visualization.BarChart(document.getElementById('daily_chart_div'));
-    chart.draw(data, options);
+    var chart = new google.visualization.BarChart( document.getElementById( 'daily_chart_div' ) );
+    chart.draw( data, options );
 }
 
 function drawMonthlyChart() {
-    var monthly_data_array = JSON.parse(js_params.monthly);
-    monthly_data_array[0][monthly_data_array[0].length - 1] = {role: 'annotation'};
-    for (var i = 1; i < monthly_data_array.length; i++) {
+    var monthly_data_array = JSON.parse( js_params.monthly );
+    monthly_data_array[0][monthly_data_array[0].length - 1] = { role: 'annotation' };
+    for ( var i = 1; i < monthly_data_array.length; i++ ) {
         monthly_data_array[i][0] = monthly_data_array[i][0] + "";
     }
-    var data = google.visualization.arrayToDataTable(monthly_data_array);
+    var data = google.visualization.arrayToDataTable( monthly_data_array );
 
     var options = {
         height: data.getNumberOfRows() * 15 + 100,
@@ -124,7 +124,7 @@ function drawMonthlyChart() {
         isStacked: true
     };
 
-    var series = {};
+    var series = { };
     series[data.getNumberOfColumns() - 3] = {
         color: 'transparent',
         type: "bar",
@@ -135,17 +135,17 @@ function drawMonthlyChart() {
     options["series"] = series;
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('monthly_chart_div'));
-    chart.draw(data, options);
+    var chart = new google.visualization.BarChart( document.getElementById( 'monthly_chart_div' ) );
+    chart.draw( data, options );
 }
 
 function drawYearlyChart() {
-    var yearly_data_array = JSON.parse(js_params.yearly);
-    yearly_data_array[0][yearly_data_array[0].length - 1] = {role: 'annotation'};
-    for (var i = 1; i < yearly_data_array.length; i++) {
+    var yearly_data_array = JSON.parse( js_params.yearly );
+    yearly_data_array[0][yearly_data_array[0].length - 1] = { role: 'annotation' };
+    for ( var i = 1; i < yearly_data_array.length; i++ ) {
         yearly_data_array[i][0] = yearly_data_array[i][0] + "";
     }
-    var data = google.visualization.arrayToDataTable(yearly_data_array);
+    var data = google.visualization.arrayToDataTable( yearly_data_array );
 
     var options = {
         height: data.getNumberOfRows() * 15 + 100,
@@ -181,7 +181,7 @@ function drawYearlyChart() {
         isStacked: true
     };
 
-    var series = {};
+    var series = { };
     series[data.getNumberOfColumns() - 3] = {
         color: 'transparent',
         type: "bar",
@@ -192,17 +192,17 @@ function drawYearlyChart() {
     options["series"] = series;
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('yearly_chart_div'));
-    chart.draw(data, options);
+    var chart = new google.visualization.BarChart( document.getElementById( 'yearly_chart_div' ) );
+    chart.draw( data, options );
 }
 
 function drawHourlyChart() {
-    var hourly_data_array = JSON.parse(js_params.hourly);
-    hourly_data_array[0][hourly_data_array[0].length - 1] = {role: 'annotation'};
-    for (var i = 1; i < hourly_data_array.length; i++) {
+    var hourly_data_array = JSON.parse( js_params.hourly );
+    hourly_data_array[0][hourly_data_array[0].length - 1] = { role: 'annotation' };
+    for ( var i = 1; i < hourly_data_array.length; i++ ) {
         hourly_data_array[i][0] = hourly_data_array[i][0] + "";
     }
-    var data = google.visualization.arrayToDataTable(hourly_data_array);
+    var data = google.visualization.arrayToDataTable( hourly_data_array );
 
     var options = {
         height: data.getNumberOfRows() * 15 + 100,
@@ -238,7 +238,7 @@ function drawHourlyChart() {
         isStacked: true
     };
 
-    var series = {};
+    var series = { };
     series[data.getNumberOfColumns() - 3] = {
         color: 'transparent',
         type: "bar",
@@ -249,16 +249,16 @@ function drawHourlyChart() {
     options["series"] = series;
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('hourly_chart_div'));
-    chart.draw(data, options);
+    var chart = new google.visualization.BarChart( document.getElementById( 'hourly_chart_div' ) );
+    chart.draw( data, options );
 }
 
 function drawAverrageDevelopmentChart() {
-    var averrage_data_array = JSON.parse(js_params.average);
-    for (var i = 1; i < averrage_data_array.length; i++) {
+    var averrage_data_array = JSON.parse( js_params.average );
+    for ( var i = 1; i < averrage_data_array.length; i++ ) {
         averrage_data_array[i][0] = averrage_data_array[i][0] + "";
     }
-    var data = google.visualization.arrayToDataTable(averrage_data_array);
+    var data = google.visualization.arrayToDataTable( averrage_data_array );
 
     var options = {
         height: 400,
@@ -286,17 +286,17 @@ function drawAverrageDevelopmentChart() {
         areaOpacity: 1
     };
 
-    if (parseFloat(js_params.average_max_delta) > 0) {
+    if ( parseFloat( js_params.average_max_delta ) > 0 ) {
         var average_max_delta = {
             viewWindow: {
-                max: averrage_data_array[averrage_data_array.length - 1][averrage_data_array[averrage_data_array.length - 1].length - 1] + parseFloat(js_params.average_max_delta)
+                max: averrage_data_array[averrage_data_array.length - 1][averrage_data_array[averrage_data_array.length - 1].length - 1] + parseFloat( js_params.average_max_delta )
             }
         }
 
         options["vAxis"] = average_max_delta;
     }
 
-    var series = {};
+    var series = { };
     series[data.getNumberOfColumns() - 2] = {
         color: 'transparent',
         targetAxisIndex: 1,
@@ -306,16 +306,16 @@ function drawAverrageDevelopmentChart() {
 
     options["series"] = series;
 
-    var chart = new google.visualization.AreaChart(document.getElementById('average_consumption_development_chart_div'));
-    chart.draw(data, options);
+    var chart = new google.visualization.AreaChart( document.getElementById( 'average_consumption_development_chart_div' ) );
+    chart.draw( data, options );
 }
 
-jQuery(document).ready(function ($) {
-    $(window).resize(function () {
+jQuery( document ).ready( function ( $ ) {
+    $( window ).resize( function () {
         drawDailyChart();
         drawMonthlyChart();
         drawYearlyChart();
         drawHourlyChart();
         drawAverrageDevelopmentChart();
-    });
-});
+    } );
+} );
