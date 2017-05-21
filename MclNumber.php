@@ -54,6 +54,10 @@ class MclNumber {
 				}
 			}
 
+			if ( $mcl_number < 0 ) {
+				$mcl_number = 0;
+			}
+
 			update_post_meta( $post_id, 'mcl_number', $mcl_number );
 		}
 	}
