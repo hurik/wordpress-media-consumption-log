@@ -201,14 +201,12 @@ class MclQuickPost {
 				$first = true;
 
 				foreach ( $category->mcl_tags_ongoing[ $key ] as $tag ) {
-					$title			 = self::build_next_post_title( $tag->post_title );
-					$title_urlencode = urlencode( $title );
-					$post_title		 = htmlspecialchars( $tag->post_title );
-					$date			 = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_date );
+					$post_title	 = htmlspecialchars( $tag->post_title );
+					$date		 = DateTime::createFromFormat( "Y-m-d H:i:s", $tag->post_date );
 
 					$cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
 					. "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower( $key ) . "\"></div><div>{$key}</div>" : "") . "</th>"
-					. "\n      <td><a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)</td>"
+					. "\n      <td>" . self::build_next_post_titles( $tag, $category ) . "</td>"
 					. "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format( get_option( 'time_format' ) )}, {$date->format( MclSettings::get_statistics_daily_date_format() )})</td>"
 					. "\n    </tr>";
 
@@ -267,26 +265,51 @@ class MclQuickPost {
 		<?php
 	}
 
-	private static function build_next_post_title( $last_post_title ) {
-		$last_post_data = MclHelpers::parse_last_post_title( $last_post_title );
+	private static function build_next_post_titles( $tag, $category ) {
+		$prefix	 = array();
+		$numbers = array();
 
-		if ( count( $last_post_data ) == 2 ) {
-			return $last_post_data[ 0 ] . $last_post_data[ 1 ];
+		$last_post_data = MclHelpers::parse_last_post_title( $tag->post_title );
+
+		$last = end( $last_post_data );
+
+		preg_match_all( "/[a-zA-Z]+/", $last, $prefix );
+		preg_match_all( "/\d+\.\d+|\d+/", $last, $numbers );
+
+		if ( count( $prefix[ 0 ] ) == count( $numbers[ 0 ] ) && count( $prefix[ 0 ] ) > 1 ) {
+			$links = "";
+
+			for ( $i = count( $numbers[ 0 ] ) - 1; $i >= 0; $i-- ) {
+				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " ";
+
+				for ( $j = 0; $j < count( $numbers[ 0 ] ); $j++ ) {
+					$title .= $prefix[ 0 ][ $j ];
+
+					if ( $i == $j ) {
+						$title .= str_pad( $numbers[ 0 ][ $j ] + 1, strlen( $numbers[ 0 ][ $j ] ), '0', STR_PAD_LEFT );
+					} elseif ( $i < $j ) {
+						$title .= str_pad( 1, strlen( $numbers[ 0 ][ $j ] ), '0', STR_PAD_LEFT );
+					} else {
+						$title .= str_pad( $numbers[ 0 ][ $j ], strlen( $numbers[ 0 ][ $j ] ), '0', STR_PAD_LEFT );
+					}
+				}
+
+				$title_urlencode = urlencode( $title );
+
+				$links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
+
+				if ( $i != 0 ) {
+					$links .= "<br />";
+				}
+			}
+
+			return $links;
+		} else {
+			$title			 = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . ($last_post_data[ 2 ] + 1);
+			$title_urlencode = urlencode( $title );
+
+			return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
 		}
-
-		$next = $last_post_data[ 2 ];
-
-		if ( is_numeric( $next ) ) {
-			$next	 = floatval( $next );
-			$next++;
-			$next	 = floor( $next );
-		}
-
-		if ( preg_match( '/[SE]/', $next ) || preg_match( '/[VC]/', $next ) || preg_match( '/[CP]/', $next ) ) {
-			$next++;
-		}
-
-		return $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . $next;
 	}
 
 }
