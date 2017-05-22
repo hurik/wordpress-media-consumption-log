@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014-2017 Andreas Giemza <andreas@giemza.net>
 
@@ -271,10 +270,8 @@ class MclQuickPost {
 
 		$last_post_data = MclHelpers::parse_last_post_title( $tag->post_title );
 
-		$last = end( $last_post_data );
-
-		preg_match_all( "/[a-zA-Z]+/", $last, $prefix );
-		preg_match_all( "/\d+\.\d+|\d+/", $last, $numbers );
+		preg_match_all( "/[a-zA-Z]+/", $last_post_data[ 2 ], $prefix );
+		preg_match_all( "/\d+\.\d+|\d+/", $last_post_data[ 2 ], $numbers );
 
 		if ( count( $prefix[ 0 ] ) == count( $numbers[ 0 ] ) && count( $prefix[ 0 ] ) > 1 ) {
 			$links = "";
@@ -305,7 +302,11 @@ class MclQuickPost {
 
 			return $links;
 		} else {
-			$title			 = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . ($last_post_data[ 2 ] + 1);
+			if ( is_numeric( $last_post_data[ 2 ] ) ) {
+				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . (floor( $last_post_data[ 2 ] ) + 1);
+			} else {
+				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . ($last_post_data[ 2 ] + 1);
+			}
 			$title_urlencode = urlencode( $title );
 
 			return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
