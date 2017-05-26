@@ -277,7 +277,7 @@ class MclQuickPost {
 			$links = "";
 
 			for ( $i = count( $numbers[ 0 ] ) - 1; $i >= 0; $i-- ) {
-				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " ";
+				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " <strong>";
 
 				for ( $j = 0; $j < count( $numbers[ 0 ] ); $j++ ) {
 					$title .= $prefix[ 0 ][ $j ];
@@ -291,6 +291,8 @@ class MclQuickPost {
 					}
 				}
 
+				$title .= "</strong>";
+
 				$title_urlencode = urlencode( $title );
 
 				$links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
@@ -302,11 +304,16 @@ class MclQuickPost {
 
 			return $links;
 		} else {
+			$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " <strong>";
+
 			if ( is_numeric( $last_post_data[ 2 ] ) ) {
-				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . (floor( $last_post_data[ 2 ] ) + 1);
+				$title .= (floor( $last_post_data[ 2 ] ) + 1);
 			} else {
-				$title = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " " . ($last_post_data[ 2 ] + 1);
+				$title .= ($last_post_data[ 2 ] + 1);
 			}
+
+			$title .= "</strong>";
+
 			$title_urlencode = urlencode( $title );
 
 			return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
