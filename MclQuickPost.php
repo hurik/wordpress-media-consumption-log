@@ -293,7 +293,8 @@ class MclQuickPost {
 
 				$title .= "</strong>";
 
-				$title_urlencode = urlencode( $title );
+				$title_without_html	 = strip_tags( $title );
+				$title_urlencode	 = urlencode( $title_without_html );
 
 				$links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
 
@@ -314,7 +315,8 @@ class MclQuickPost {
 
 			$title .= "</strong>";
 
-			$title_urlencode = urlencode( $title );
+			$title_without_html	 = strip_tags( $title );
+			$title_urlencode	 = urlencode( $title_without_html );
 
 			return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
 		}
