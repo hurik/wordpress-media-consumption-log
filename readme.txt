@@ -3,8 +3,8 @@ Contributors: hurik
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=W3KL56CXEGRTN
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 4.4
-Tested up to: 4.6
-Stable tag: 2.3.0
+Tested up to: 4.8
+Stable tag: 2.4.0
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -36,6 +36,7 @@ Contains the following statistics:
 * Daily consumption
 * Hourly consumption
 * Monthly consumption
+* Yearly consumption
 * Total consumption
 * Average consumption
 * Average consumption development
@@ -120,13 +121,19 @@ No questions at the moment.
 
 1. Status
 2. Statistics
-3. Quick Post
-4. Serials Status
-5. Forgotten
-6. Settings
+3. Quick Post - Serials
+4- Quick Post - Non Serials
+5. Serials Status
+6. Forgotten
+7. Settings
 
 
 == Changelog ==
+
+= 2.4.0 =
+* Added Yearly consumption in statistics
+* Improved Quick Post
+* Tested up to 4.8
 
 = 2.3.0 =
 * Added consumed in Status
