@@ -40,7 +40,7 @@ class MclSettings {
 	const SETTING_UNIT_PREFIX											 = "mcl_unit_";
 	// Default values
 	const default_statistics_daily_count								 = 31;
-	const default_statistics_monthly_count							 = 0;
+	const default_statistics_monthly_count							 = 12;
 	const default_statistics_yearly_count								 = 0;
 	const default_statistics_average_consumption_development_max_delta = 5;
 	const default_statistics_most_consumed_count						 = 10;
