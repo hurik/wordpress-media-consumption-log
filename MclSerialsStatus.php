@@ -91,8 +91,9 @@ class MclSerialsStatus {
 				. "\n    <td>";
 
 				foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-					$cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+					$cat_nav_html	 .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_on			 = array_keys( $category->mcl_tags_ongoing );
+					if ( $key != end( $ak_on ) ) {
 						$cat_nav_html .= " | ";
 					}
 				}
@@ -111,8 +112,9 @@ class MclSerialsStatus {
 				. "\n    <td>";
 
 				foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-					$cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
+					$cat_nav_html	 .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_co			 = array_keys( $category->mcl_tags_complete );
+					if ( $key != end( $ak_co ) ) {
 						$cat_nav_html .= " | ";
 					}
 				}
@@ -131,8 +133,9 @@ class MclSerialsStatus {
 				. "\n    <td>";
 
 				foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
-					$cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_abandoned ) ) ) ) {
+					$cat_nav_html	 .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_ab			 = array_keys( $category->mcl_tags_abandoned );
+					if ( $key != end( $ak_ab ) ) {
 						$cat_nav_html .= " | ";
 					}
 				}
@@ -168,7 +171,8 @@ class MclSerialsStatus {
 				foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
 					$cats_html	 .= "<a href=\"#mediastatus-{$category->slug}-";
 					$cats_html	 .= strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+					$ak_on		 = array_keys( $category->mcl_tags_ongoing );
+					if ( $key != end( $ak_on ) ) {
 						$cats_html .= " | ";
 					}
 				}
@@ -220,8 +224,9 @@ class MclSerialsStatus {
 				// Create the navigation
 				$cats_html .= "\n<div>";
 				foreach ( array_keys( $category->mcl_tags_complete ) as $key ) {
-					$cats_html .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_complete ) ) ) ) {
+					$cats_html	 .= "<a href=\"#mediastatus-{$category->slug}-complete-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_co		 = array_keys( $category->mcl_tags_complete );
+					if ( $key != end( $ak_co ) ) {
 						$cats_html .= " | ";
 					}
 				}
@@ -273,8 +278,9 @@ class MclSerialsStatus {
 				// Create the navigation
 				$cats_html .= "\n<div>";
 				foreach ( array_keys( $category->mcl_tags_abandoned ) as $key ) {
-					$cats_html .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_abandoned ) ) ) ) {
+					$cats_html	 .= "<a href=\"#mediastatus-{$category->slug}-abandoned-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_ab		 = array_keys( $category->mcl_tags_abandoned );
+					if ( $key != end( $ak_ab ) ) {
 						$cats_html .= " | ";
 					}
 				}
