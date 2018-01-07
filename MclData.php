@@ -151,6 +151,10 @@ class MclData {
 		$milstone_post_indicator = "";
 
 		foreach ( $posts as &$post ) {
+			if ( !MclHelpers::is_monitored_category( $post->cat_id ) ) {
+				continue;
+			}
+
 			// Count mcl_number of categories
 			if ( array_key_exists( $post->cat_id, $data->total_consumption ) ) {
 				$data->total_consumption[ $post->cat_id ] += $post->post_mcl;
