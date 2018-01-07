@@ -79,6 +79,10 @@ class MclData {
 		$data->cat_serial_abandoned	 = false;
 		$data->cat_non_serial		 = false;
 
+		if ( empty( $data->categories ) ) {
+			return $data;
+		}
+
 		// Get all posts with category, tag, mcl_number and tag status
 		$posts = $wpdb->get_results( "
             SELECT posts_with_data.*,
