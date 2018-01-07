@@ -97,8 +97,9 @@ class MclQuickPost {
 				$cat_nav_html .= "-";
 			} else {
 				foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-					$cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-					if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+					$cat_nav_html	 .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+					$ak_on			 = array_keys( $category->mcl_tags_ongoing );
+					if ( $key != end( $ak_on ) ) {
 						$cat_nav_html .= " | ";
 					}
 				}
@@ -170,8 +171,9 @@ class MclQuickPost {
 			// Create the navigation
 			$cats_html .= "\n<div>";
 			foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-				$cats_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-				if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+				$cats_html	 .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+				$ak_on		 = array_keys( $category->mcl_tags_ongoing );
+				if ( $key != end( $ak_on ) ) {
 					$cats_html .= " | ";
 				}
 			}
@@ -310,7 +312,7 @@ class MclQuickPost {
 			if ( is_numeric( $last_post_data[ 2 ] ) ) {
 				$title .= (floor( $last_post_data[ 2 ] ) + 1);
 			} else {
-				$title .= ($last_post_data[ 2 ] + 1);
+				$title .= (intval( $last_post_data[ 2 ] ) + 1);
 			}
 
 			$title .= "</strong>";
