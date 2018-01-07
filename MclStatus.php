@@ -115,8 +115,9 @@ class MclStatus {
 					$html .= "\n      <td>";
 
 					foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-						$html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-						if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+						$html	 .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+						$ak_on	 = array_keys( $category->mcl_tags_ongoing );
+						if ( $key != end( $ak_on ) ) {
 							$html .= " | ";
 						}
 					}
@@ -185,8 +186,9 @@ class MclStatus {
 					$html .= "\n<div>"
 					. "\n  ";
 					foreach ( array_keys( $category->mcl_tags_ongoing ) as $key ) {
-						$html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
-						if ( $key != end( (array_keys( $category->mcl_tags_ongoing ) ) ) ) {
+						$html	 .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower( $key ) . "\">{$key}</a>";
+						$ak_on	 = array_keys( $category->mcl_tags_ongoing );
+						if ( $key != end( $ak_on ) ) {
 							$html .= " | ";
 						}
 					}
