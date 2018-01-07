@@ -242,8 +242,9 @@ class MclStatus {
 		. "\n      <td>";
 
 		foreach ( array_keys( $data ) as $key ) {
-			$nav .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
-			if ( $key != end( (array_keys( $data ) ) ) ) {
+			$nav	 .= "<a href=\"#mediastatus-{$cat_slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
+			$ak_d	 = array_keys( $data );
+			if ( $key != end( $ak_d ) ) {
 				$nav .= " | ";
 			}
 		}
@@ -258,8 +259,9 @@ class MclStatus {
 		$table = "\n<div>"
 		. "\n  ";
 		foreach ( array_keys( $array ) as $key ) {
-			$table .= "<a href=\"#mediastatus-{$cat->slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
-			if ( $key != end( (array_keys( $array ) ) ) ) {
+			$table	 .= "<a href=\"#mediastatus-{$cat->slug}-{$state}-" . strtolower( $key ) . "\">{$key}</a>";
+			$ak_a	 = array_keys( $array );
+			if ( $key != end( $ak_a ) ) {
 				$table .= " | ";
 			}
 		}
