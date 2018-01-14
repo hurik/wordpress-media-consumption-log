@@ -1,4 +1,5 @@
 <?php
+
 /*
   Copyright (C) 2014-2017 Andreas Giemza <andreas@giemza.net>
 
@@ -588,21 +589,18 @@ class MclSettings {
 			$monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
 
 			$posts_without_mcl_number = $wpdb->get_results( "
-                SELECT *
-                FROM {$wpdb->prefix}posts as p
-                LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
-                LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
-                WHERE
-                    p.post_type = 'post'
-                    AND p.post_status = 'publish'
-                    AND t.taxonomy = 'category'
-                    AND t.term_id IN ({$monitored_categories})
-                    AND NOT EXISTS (
-                        SELECT *
-                        FROM {$wpdb->prefix}postmeta
-                        WHERE meta_key = 'mcl_number'
-                        AND post_id = p.ID
-                    )
+				SELECT *
+				FROM {$wpdb->prefix}posts AS p
+				LEFT JOIN {$wpdb->prefix}term_relationships AS r ON p.ID = r.object_ID
+				LEFT JOIN {$wpdb->prefix}term_taxonomy AS t ON r.term_taxonomy_id = t.term_taxonomy_id
+				LEFT JOIN {$wpdb->prefix}postmeta AS m ON p.ID = m.post_id
+				AND m.meta_key = 'mcl_number'
+				WHERE p.post_type = 'post'
+				  AND p.post_status = 'publish'
+				  AND t.taxonomy = 'category'
+				  AND t.term_id IN ({$monitored_categories})
+				  AND (m.meta_value IS NULL
+					   OR TRIM(m.meta_value) = '')
             " );
 
 			return $posts_without_mcl_number;
