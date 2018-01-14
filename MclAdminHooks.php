@@ -37,6 +37,7 @@ class MclAdminHooks {
 		add_action( 'edit_term', array( get_called_class(), 'edit_term' ), 10, 3 );
 
 		add_filter( 'load-post-new.php', array( get_called_class(), 'load_post_new_php' ) );
+		add_action( 'load-post.php', array( get_called_class(), 'load_post_php' ) );
 
 		add_action( 'wp_ajax_mcl_complete', array( 'MclSerialsStatus', 'change_complete_status' ) );
 		add_action( 'wp_ajax_mcl_quick_post_next', array( 'MclQuickPost', 'post_next' ) );
@@ -149,7 +150,29 @@ class MclAdminHooks {
 		}
 
 		// Add default custom fields
-		MclNumber::add_default_custom_field_in_new_post( $post_id );
+		MclNumber::add_default_custom_field( $post_id );
+	}
+
+	public static function load_post_php() {
+		if ( !empty( $_GET[ 'post' ] ) ) {
+
+			$result = get_post_meta( $_GET[ 'post' ], 'mcl_number' );
+			if ( empty( $result ) ) {
+				$categories = get_the_category( $_GET[ 'post' ] );
+
+				$monitored_cat = false;
+				foreach ( $categories as $cat ) {
+					if ( MclHelpers::is_monitored_category( $cat->term_id ) ) {
+						$monitored_cat = true;
+						break;
+					}
+				}
+
+				if ( $monitored_cat ) {
+					MclNumber::add_default_custom_field( $_GET[ 'post' ] );
+				}
+			}
+		}
 	}
 
 	public static function register_activation_hook() {

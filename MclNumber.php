@@ -20,7 +20,7 @@
 
 class MclNumber {
 
-	public static function add_default_custom_field_in_new_post( $post_id ) {
+	public static function add_default_custom_field( $post_id ) {
 		add_post_meta( $post_id, 'mcl_number', '', true );
 	}
 
