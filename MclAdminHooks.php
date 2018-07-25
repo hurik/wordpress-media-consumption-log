@@ -44,6 +44,27 @@ class MclAdminHooks {
 		add_action( 'wp_ajax_mcl_quick_post_new', array( 'MclQuickPost', 'post_new' ) );
 		add_action( 'wp_ajax_mcl_rebuild_data', array( 'MclSettings', 'rebuild_data' ) );
 		add_action( 'wp_ajax_mcl_rename_serial', array( 'MclSettings', 'rename_serial' ) );
+
+		add_filter( 'manage_posts_columns', array( get_called_class(), 'manage_posts_columns' ) );
+		add_action( 'manage_posts_custom_column', array( get_called_class(), 'manage_posts_custom_column' ), 10, 2 );
+		add_action( 'admin_head', array( get_called_class(), 'admin_head' ) );
+	}
+
+	public static function manage_posts_columns( $defaults ) {
+		$test = array_slice( $defaults, 0, 2, true ) + array( "mcl_number" => "mcl_number" ) + array_slice( $defaults, 2, NULL, true );
+		return $test;
+	}
+
+	public static function manage_posts_custom_column( $column_name, $post_id ) {
+		if ( $column_name == 'mcl_number' ) {
+			echo get_post_meta( $post_id, 'mcl_number', true );
+		}
+	}
+
+	public static function admin_head() {
+		echo '<style type="text/css">';
+		echo '.column-mcl_number { width: 5%; }';
+		echo '</style>';
 	}
 
 	public static function update_db_check() {
