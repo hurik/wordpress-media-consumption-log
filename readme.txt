@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: media consumption log, track, tv shows, movies, books, comics, games, serials, media
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 2.4.1
+Stable tag: 2.5.0
 License: GPLv2 or later
 
 This plugin helps you to keep track of the tv shows, movies, books, comics, games and other things you are consuming.
@@ -129,6 +129,10 @@ No questions at the moment.
 
 
 == Changelog ==
+
+= 2.5.0 =
+* Added mcl_number column in admin posts view
+* Added mcl_number calculating support for chapters which have three or more segments (for example B4C01P02 to B4C01P04)
 
 = 2.4.1 =
 * Minor fixes and improvements
