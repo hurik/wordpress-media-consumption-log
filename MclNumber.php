@@ -47,11 +47,7 @@ class MclNumber {
 			} else if ( strpos( $current_number, MclSettings::get_other_to() ) !== false ) {
 				preg_match_all( '!\d+(?:\.\d+)?!', $current_number, $matches );
 
-				if ( count( $matches[ 0 ] ) == 2 ) {
-					$mcl_number = ceil( floatval( $matches[ 0 ][ 1 ] ) - floatval( $matches[ 0 ][ 0 ] ) + 1 );
-				} else if ( count( $matches[ 0 ] ) == 4 ) {
-					$mcl_number = ceil( floatval( $matches[ 0 ][ 3 ] ) - floatval( $matches[ 0 ][ 1 ] ) + 1 );
-				}
+				$mcl_number = ceil( floatval( $matches[ 0 ][ (count( $matches[ 0 ] ) - 1) ] ) - floatval( $matches[ 0 ][ ((count( $matches[ 0 ] ) / 2) - 1) ] ) + 1 );
 			}
 
 			if ( $mcl_number < 0 ) {
