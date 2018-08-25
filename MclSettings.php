@@ -328,7 +328,7 @@ class MclSettings {
 	 * @param $size
 	 * @return int
 	 */
-	private function let_to_num( $size ) {
+	private static function let_to_num( $size ) {
 		$l	 = substr( $size, -1 );
 		$ret = substr( $size, 0, -1 );
 		switch ( strtoupper( $l ) ) {
