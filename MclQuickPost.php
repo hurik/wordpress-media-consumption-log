@@ -35,17 +35,21 @@ class MclQuickPost {
 	}
 
 	public static function post_new() {
-		if ( isset( $_POST[ "title" ] ) && isset( $_POST[ "text" ] ) && isset( $_POST[ "cat_id" ] ) ) {
+		if ( isset( $_POST[ "title" ] ) && isset( $_POST[ "text" ] ) && isset( $_POST[ "tag" ] ) && isset( $_POST[ "cat_id" ] ) ) {
 			$title = urldecode( $_POST[ "title" ] );
 
-			$tag = $title;
+			$tag = urldecode( $_POST[ "tag" ] );
 
-			if ( MclHelpers::is_monitored_serial_category( $_POST[ "cat_id" ] ) ) {
-				$title_exploded	 = explode( MclSettings::get_other_separator(), $title );
-				$tag			 = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
+			if ( empty( $tag ) ) {
+				$tag = $title;
+
+				if ( MclHelpers::is_monitored_serial_category( $_POST[ "cat_id" ] ) ) {
+					$title_exploded	 = explode( MclSettings::get_other_separator(), $title );
+					$tag			 = str_replace( MclSettings::get_other_separator() . end( $title_exploded ), "", $title );
+				}
+
+				$tag = str_replace( ", ", "--", $tag );
 			}
-
-			$tag = str_replace( ", ", "--", $tag );
 
 			$my_post = array(
 				'post_title'	 => $title,
@@ -154,7 +158,7 @@ class MclQuickPost {
 			$cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
 			. "\n<table class=\"form-table\">"
 			. "\n  <tr>"
-			. "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . "</th>"
+			. "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . " *</th>"
 			. "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
 			. "\n  </tr>"
 			. "\n  <tr>"
@@ -162,6 +166,7 @@ class MclQuickPost {
 			. "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
 			. "\n  </tr>"
 			. "\n</table>"
+			. "\n<input type=\"hidden\" id=\"{$category->term_id}-tag\" value=\"\">"
 			. "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div><br />";
 
 			if ( $category->mcl_tags_count_ongoing == 0 ) {
@@ -228,12 +233,16 @@ class MclQuickPost {
 			$cats_html .= "\n\n<div class=\"anchor\" id=\"mediastatus-{$category->slug}\"></div><h3>{$category->name}</h3><hr />"
 			. "\n<table class=\"form-table\">"
 			. "\n  <tr>"
-			. "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . "</th>"
+			. "\n    <th scope=\"row\">" . __( 'Title', 'media-consumption-log' ) . " *</th>"
 			. "\n    <td><input type=\"text\" id=\"{$category->term_id}-titel\" style=\"width:100%;\" /></td>"
 			. "\n  </tr>"
 			. "\n  <tr>"
 			. "\n    <th scope=\"row\">" . __( 'Text', 'media-consumption-log' ) . "</th>"
 			. "\n    <td><textarea id=\"{$category->term_id}-text\" rows=\"4\" style=\"width:100%;\"></textarea></td>"
+			. "\n  </tr>"
+			. "\n  <tr>"
+			. "\n    <th scope=\"row\">" . __( 'Tag', 'media-consumption-log' ) . "</th>"
+			. "\n    <td><input type=\"text\" id=\"{$category->term_id}-tag\" style=\"width:100%;\" /></td>"
 			. "\n  </tr>"
 			. "\n</table>"
 			. "\n<div align=\"right\"><input id=\"{$category->term_id}\" class=\"mcl_quick_post_new_entry button-primary button-large\" value=\"" . __( 'Publish', 'media-consumption-log' ) . "\" type=\"submit\"></div>";

@@ -46,12 +46,14 @@ jQuery( document ).ready( function ( $ ) {
             'action': 'mcl_quick_post_new',
             'title': encodeURIComponent( $( "#" + e.currentTarget.id + "-titel" ).val() ),
             'cat_id': e.currentTarget.id,
-            'text': encodeURIComponent( $( "#" + e.currentTarget.id + "-text" ).val() )
+            'text': encodeURIComponent( $( "#" + e.currentTarget.id + "-text" ).val() ),
+            'tag': encodeURIComponent( $( "#" + e.currentTarget.id + "-tag" ).val() )
         };
 
         $.post( ajaxurl, data, function () {
             $( "#" + e.currentTarget.id + "-titel" ).val( "" );
             $( "#" + e.currentTarget.id + "-text" ).val( "" );
+            $( "#" + e.currentTarget.id + "-tag" ).val( "" );
             location.reload();
         } );
     } );
