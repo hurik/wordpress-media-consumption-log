@@ -329,7 +329,26 @@ class MclQuickPost {
 			$title_without_html	 = strip_tags( $title );
 			$title_urlencode	 = urlencode( $title_without_html );
 
-			return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
+			$title05 = $last_post_data[ 0 ] . $last_post_data[ 1 ] . " <strong>";
+
+			if ( is_numeric( $last_post_data[ 2 ] ) ) {
+				$title05 .= (floor( $last_post_data[ 2 ] ) + 0.5);
+			} else {
+				$title05 .= (intval( $last_post_data[ 2 ] ) + 0.5);
+			}
+
+			$title05 .= "</strong>";
+
+			$title05_without_html	 = strip_tags( $title05 );
+			$title05_urlencode		 = urlencode( $title05_without_html );
+
+			$text05 = str_replace( $last_post_data[ 0 ] . $last_post_data[ 1 ] . " ", '', $title05 );
+
+			if ( $last_post_data[ 2 ] - floor( $last_post_data[ 2 ] ) == 0 ) {
+				return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a> " . __( 'or', 'media-consumption-log' ) . " <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$text05}</a>)";
+			} else {
+				return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __( 'Edit before posting', 'media-consumption-log' ) . "</a>)";
+			}
 		}
 	}
 
