@@ -1,5 +1,4 @@
 <?php
-
 /*
   Copyright (C) 2014-2018 Andreas Giemza <andreas@giemza.net>
 
@@ -25,6 +24,7 @@ class MclSettings {
 	const SETTINGS_UNITS_GROUP										 = "mcl-settings-units-group";
 	// Setting names
 	const SETTING_MONITORED_CATEGORIES_SERIAL							 = "mcl_setting_monitored_categories_serials";
+	const SETTING_MONITORED_CATEGORIES_RECURRING						 = "mcl_setting_monitored_categories_recurring";
 	const SETTING_MONITORED_CATEGORIES_NON_SERIAL						 = "mcl_setting_monitored_categories_non_serials";
 	const SETTING_STATISTICS_DAILY_COUNT								 = "mcl_setting_statistics_daily_count";
 	const SETTING_STATISTICS_DAILY_DATE_FORMAT						 = "mcl_setting_statistics_daily_date_format";
@@ -69,16 +69,21 @@ class MclSettings {
 		return get_option( self::SETTING_MONITORED_CATEGORIES_SERIAL );
 	}
 
+	public static function get_monitored_categories_recurring() {
+		return get_option( self::SETTING_MONITORED_CATEGORIES_RECURRING );
+	}
+
 	public static function get_monitored_categories_non_serials() {
 		return get_option( self::SETTING_MONITORED_CATEGORIES_NON_SERIAL );
 	}
 
 	public static function get_all_monitored_categories() {
 		$monitored_categories_serials		 = MclSettings::get_monitored_categories_serials();
+		$monitored_categories_recurring		 = MclSettings::get_monitored_categories_recurring();
 		$monitored_categories_non_serials	 = MclSettings::get_monitored_categories_non_serials();
 
-		if ( !empty( $monitored_categories_serials ) || !empty( $monitored_categories_non_serials ) ) {
-			return get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials() );
+		if ( !empty( $monitored_categories_serials ) || !empty( $monitored_categories_non_serials ) || !empty( $monitored_categories_recurring ) ) {
+			return get_categories( "hide_empty=0&include=" . $monitored_categories_serials . "," . $monitored_categories_recurring . "," . $monitored_categories_non_serials );
 		} else {
 			return array();
 		}
@@ -208,6 +213,7 @@ class MclSettings {
 	// Setting page
 	public static function register_settings() {
 		register_setting( self::SETTINGS_GROUP, self::SETTING_MONITORED_CATEGORIES_SERIAL );
+		register_setting( self::SETTINGS_GROUP, self::SETTING_MONITORED_CATEGORIES_RECURRING );
 		register_setting( self::SETTINGS_GROUP, self::SETTING_MONITORED_CATEGORIES_NON_SERIAL );
 		register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_COUNT );
 		register_setting( self::SETTINGS_GROUP, self::SETTING_STATISTICS_DAILY_DATE_FORMAT );
@@ -402,12 +408,17 @@ class MclSettings {
 					<tr>
 						<th scope="row"><?php _e( 'Serials', 'media-consumption-log' ); ?></th>
 						<td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_SERIAL; ?>" value="<?php echo esc_attr( self::get_monitored_categories_serials() ); ?>" style="width:100%;" />
-							<p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Serials Status. Example: 2,4,43,50,187,204,548', 'media-consumption-log' ); ?></p></td>
+							<p class="description"><?php _e( 'IDs of the categories which have epoisodes or chapters. This categories will be visible in the Statistics, Status, Quick Post and Serials Status. Example: 2,4,43,50,187,204,548,727', 'media-consumption-log' ); ?></p></td>
+					</tr>
+					<tr>
+						<th scope="row"><?php _e( 'Recurring', 'media-consumption-log' ); ?></th>
+						<td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_RECURRING; ?>" value="<?php echo esc_attr( self::get_monitored_categories_recurring() ); ?>" style="width:100%;" />
+							<p class="description"><?php _e( 'IDs of the categories which have reacurring things but have no numbering. This categories will be visible in the Statistics, Status and Quick Post, but not in Serials Status. Example: 1012', 'media-consumption-log' ); ?></p></td>
 					</tr>
 					<tr>
 						<th scope="row"><?php _e( 'Non serials', 'media-consumption-log' ); ?></th>
 						<td><input type="text" name="<?php echo self::SETTING_MONITORED_CATEGORIES_NON_SERIAL; ?>" value="<?php echo esc_attr( self::get_monitored_categories_non_serials() ); ?>" style="width:100%;" />
-							<p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Serials Status. Example: 45,75,284', 'media-consumption-log' ); ?></p></td>
+							<p class="description"><?php _e( 'IDs of the categories which are visible in Statistics and Status, but not in Quick Post and Serials Status. Example: 45,75,284,873', 'media-consumption-log' ); ?></p></td>
 					</tr>
 					<tr>
 						<th scope="row"><?php _e( 'IDs of the categories:', 'media-consumption-log' ); ?></th>
@@ -583,10 +594,11 @@ class MclSettings {
 		global $wpdb;
 
 		$monitored_categories_serials		 = MclSettings::get_monitored_categories_serials();
+		$monitored_categories_recurring		 = MclSettings::get_monitored_categories_recurring();
 		$monitored_categories_non_serials	 = MclSettings::get_monitored_categories_non_serials();
 
-		if ( !empty( $monitored_categories_serials ) && !empty( $monitored_categories_non_serials ) ) {
-			$monitored_categories = MclSettings::get_monitored_categories_serials() . "," . MclSettings::get_monitored_categories_non_serials();
+		if ( !empty( $monitored_categories_serials ) || !empty( $monitored_categories_non_serials ) || !empty( $monitored_categories_recurring ) ) {
+			$monitored_categories = $monitored_categories_serials . "," . $monitored_categories_recurring . "," . $monitored_categories_non_serials;
 
 			$posts_without_mcl_number = $wpdb->get_results( "
 				SELECT *
@@ -608,5 +620,4 @@ class MclSettings {
 			return array();
 		}
 	}
-
 }

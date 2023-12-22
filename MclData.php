@@ -77,6 +77,7 @@ class MclData {
 		$data->cat_serial_ongoing	 = false;
 		$data->cat_serial_complete	 = false;
 		$data->cat_serial_abandoned	 = false;
+		$data->cat_recurring		 = false;
 		$data->cat_non_serial		 = false;
 
 		if ( empty( $data->categories ) ) {
@@ -359,7 +360,7 @@ class MclData {
 				ksort( $stati, SORT_NATURAL );
 
 				foreach ( $stati as &$letter ) {
-					usort( $letter, function($a, $b) {
+					usort( $letter, function ( $a, $b ) {
 						return strcmp( $a->tag_name, $b->tag_name );
 					} );
 				}
@@ -493,6 +494,10 @@ class MclData {
 				$data->cat_serial_abandoned = true;
 			}
 
+			if ( MclHelpers::is_monitored_recurring_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
+				$data->cat_recurring = true;
+			}
+
 			if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) && $category->mcl_tags_count_ongoing > 0 ) {
 				$data->cat_non_serial = true;
 			}
@@ -582,7 +587,7 @@ class MclData {
 		$data->average_consumption_development = self::get_average_consumption_development( $data, $daily_consumption );
 
 		// Most consumed
-		uasort( $data->tags, function($a, $b) {
+		uasort( $data->tags, function ( $a, $b ) {
 			if ( $a->mcl_total == $b->mcl_total ) {
 				return 0;
 			}
@@ -657,5 +662,4 @@ class MclData {
 
 		return $acd;
 	}
-
 }

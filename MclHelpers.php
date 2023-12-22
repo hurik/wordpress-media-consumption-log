@@ -88,9 +88,10 @@ class MclHelpers {
 
 	public static function is_monitored_category( $cat_id ) {
 		$monitored_categories_serials		 = explode( ",", MclSettings::get_monitored_categories_serials() );
+		$monitored_categories_recurring		 = explode( ",", MclSettings::get_monitored_categories_recurring() );
 		$monitored_categories_non_serials	 = explode( ",", MclSettings::get_monitored_categories_non_serials() );
 
-		if ( in_array( $cat_id, array_merge( $monitored_categories_serials, $monitored_categories_non_serials ) ) ) {
+		if ( in_array( $cat_id, array_merge( $monitored_categories_serials, $monitored_categories_recurring, $monitored_categories_non_serials ) ) ) {
 			return true;
 		} else {
 			return false;
@@ -101,6 +102,16 @@ class MclHelpers {
 		$monitored_categories_serials = explode( ",", MclSettings::get_monitored_categories_serials() );
 
 		if ( in_array( $cat_id, $monitored_categories_serials ) ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static function is_monitored_recurring_category( $cat_id ) {
+		$monitored_categories_recurring = explode( ",", MclSettings::get_monitored_categories_recurring() );
+
+		if ( in_array( $cat_id, $monitored_categories_recurring ) ) {
 			return true;
 		} else {
 			return false;
@@ -143,5 +154,4 @@ class MclHelpers {
 			return $list;
 		}
 	}
-
 }
