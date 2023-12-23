@@ -228,10 +228,11 @@ class MclSettings {
 		register_setting( self::SETTINGS_GROUP, self::SETTING_OTHER_TO );
 
 		// Register units
-		$get_monitored_categories_serials = MclSettings::get_monitored_categories_serials();
+		$get_monitored_categories_serials	 = MclSettings::get_monitored_categories_serials();
+		$get_monitored_categories_recurring	 = MclSettings::get_monitored_categories_recurring();
 
-		if ( !empty( $get_monitored_categories_serials ) ) {
-			$categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
+		if ( !empty( $get_monitored_categories_serials ) || !empty( $get_monitored_categories_recurring ) ) {
+			$categories = get_categories( "hide_empty=0&include=" . $get_monitored_categories_serials . "," . $get_monitored_categories_recurring );
 
 			foreach ( $categories as $category ) {
 				register_setting( self::SETTINGS_UNITS_GROUP, self::SETTING_UNIT_PREFIX . "{$category->term_id}" );
@@ -516,9 +517,10 @@ class MclSettings {
 				<table class="form-table">
 					<?php
 					$get_monitored_categories_serials	 = MclSettings::get_monitored_categories_serials();
+					$get_monitored_categories_recurring	 = MclSettings::get_monitored_categories_recurring();
 
-					if ( !empty( $get_monitored_categories_serials ) ) {
-						$categories = get_categories( "hide_empty=0&include=" . MclSettings::get_monitored_categories_serials() );
+					if ( !empty( $get_monitored_categories_serials ) || !empty( $get_monitored_categories_recurring ) ) {
+						$categories = get_categories( "hide_empty=0&include=" . $get_monitored_categories_serials . "," . $get_monitored_categories_recurring );
 
 						foreach ( $categories as $category ) {
 							?>

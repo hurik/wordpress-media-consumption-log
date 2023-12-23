@@ -345,7 +345,7 @@ class MclStatistics {
 
 			$html .= "\n    <tr>"
 			. "\n      <td>{$category->name}</td>"
-			. "\n      <td nowrap>" . number_format( ($total / $data->number_of_days ), 2 ) . "</td>"
+			. "\n      <td nowrap>" . number_format( ($total / $data->number_of_days ), 4 ) . "</td>"
 			. "\n      <td nowrap>{$unit}</td>"
 			. "\n    </tr>";
 		}
@@ -393,7 +393,8 @@ class MclStatistics {
 		. "\n  <tbody>";
 
 		foreach ( $data->categories as $category ) {
-			if ( MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
+			if ( MclHelpers::is_monitored_recurring_category( $category->term_id ) ||
+			MclHelpers::is_monitored_non_serial_category( $category->term_id ) ) {
 				$html .= "\n    <tr>"
 				. "\n      <td nowrap colspan=\"4\">{$category->name}</td>"
 				. "\n      <td nowrap>{$category->mcl_tags_count}</td>"
@@ -510,5 +511,4 @@ class MclStatistics {
 
 		return $html;
 	}
-
 }
