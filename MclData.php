@@ -156,6 +156,11 @@ class MclData {
 				continue;
 			}
 
+                        // When post_mcl exists, but it is empty, set it to to prevent errors
+                        if ( empty( $post->post_mcl ) ) {
+                            $post->post_mcl = 1;
+                        }
+
 			// Count mcl_number of categories
 			if ( array_key_exists( $post->cat_id, $data->total_consumption ) ) {
 				$data->total_consumption[ $post->cat_id ] += $post->post_mcl;
