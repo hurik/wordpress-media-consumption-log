@@ -270,9 +270,9 @@ class MclSettings
         // https://wordpress.org/plugins/wp-page-load-stats/
         $timer_stop = timer_stop();
         $query_count = get_num_queries();
-        $memory_usage = round(self::convert_bytes_to_hr(memory_get_usage()), 2);
-        $memory_peak_usage = round(self::convert_bytes_to_hr(memory_get_peak_usage()), 2);
-        $memory_limit = round(self::convert_bytes_to_hr(self::let_to_num(WP_MEMORY_LIMIT)), 2);
+        $memory_usage = self::convert_bytes_to_hr(memory_get_usage());
+        $memory_peak_usage = self::convert_bytes_to_hr(memory_get_peak_usage());
+        $memory_limit = self::convert_bytes_to_hr(self::let_to_num(WP_MEMORY_LIMIT));
 
         $text = sprintf(__("Rebuilding data done!\n\n%s queries in %s seconds.\n%s out of %s MB (%s) memory used.\nPeak memory usage %s MB.", 'media-consumption-log'), $query_count, $timer_stop, $memory_usage, $memory_limit, round(($memory_usage / $memory_limit), 2) * 100 . '%', $memory_peak_usage);
 
@@ -393,7 +393,7 @@ class MclSettings
         $log = log($bytes, 1024);
         $power = (int) $log;
         $size = pow(1024, $log - $power);
-        return $size . $units[$power];
+        return round($size, 2) . $units[$power];
     }
 
     public static function create_page()
