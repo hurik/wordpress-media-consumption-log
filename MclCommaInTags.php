@@ -25,7 +25,8 @@ class MclCommaInTags
     {
         $tag_arr_new = $tag_arr;
 
-        if (property_exists($tag_arr, "taxonomy") &&
+        if (is_a($tag_arr, 'WP_Term') &&
+                property_exists($tag_arr, "taxonomy") &&
                 $tag_arr->taxonomy == 'post_tag' &&
                 strpos($tag_arr->name, '--')) {
             $tag_arr_new->name = str_replace('--', ', ', $tag_arr->name);
