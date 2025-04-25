@@ -28,7 +28,7 @@ table.mcl_table {
 }
 
 table.mcl_table thead tr td,
-table.mcl_table thead tr th { 
+table.mcl_table thead tr th {
     vertical-align: top;
     border:         none;
     border-bottom:  1px solid #E1E1E1;
@@ -46,7 +46,7 @@ table.mcl_table tbody tr:nth-child(even){
 }
 
 table.mcl_table tfoot tr td,
-table.mcl_table tfoot tr th { 
+table.mcl_table tfoot tr th {
     vertical-align: top;
     border:         none;
     border-top:     1px solid #E1E1E1;

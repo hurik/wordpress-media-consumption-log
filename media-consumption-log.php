@@ -30,19 +30,19 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-define( 'PLUGIN_VERSION', '2.5.0' );
+define('PLUGIN_VERSION', '2.5.0');
 
-require_once dirname( __FILE__ ) . '/MclAdminHooks.php';
-require_once dirname( __FILE__ ) . '/MclCommaInTags.php';
-require_once dirname( __FILE__ ) . '/MclData.php';
-require_once dirname( __FILE__ ) . '/MclForgotten.php';
-require_once dirname( __FILE__ ) . '/MclHelpers.php';
-require_once dirname( __FILE__ ) . '/MclHooks.php';
-require_once dirname( __FILE__ ) . '/MclNumber.php';
-require_once dirname( __FILE__ ) . '/MclQuickPost.php';
-require_once dirname( __FILE__ ) . '/MclSerialsStatus.php';
-require_once dirname( __FILE__ ) . '/MclSettings.php';
-require_once dirname( __FILE__ ) . '/MclStatistics.php';
-require_once dirname( __FILE__ ) . '/MclStatus.php';
+require_once dirname(__FILE__) . '/MclAdminHooks.php';
+require_once dirname(__FILE__) . '/MclCommaInTags.php';
+require_once dirname(__FILE__) . '/MclData.php';
+require_once dirname(__FILE__) . '/MclForgotten.php';
+require_once dirname(__FILE__) . '/MclHelpers.php';
+require_once dirname(__FILE__) . '/MclHooks.php';
+require_once dirname(__FILE__) . '/MclNumber.php';
+require_once dirname(__FILE__) . '/MclQuickPost.php';
+require_once dirname(__FILE__) . '/MclSerialsStatus.php';
+require_once dirname(__FILE__) . '/MclSettings.php';
+require_once dirname(__FILE__) . '/MclStatistics.php';
+require_once dirname(__FILE__) . '/MclStatus.php';
 
-register_activation_hook( __FILE__, array( 'MclAdminHooks', 'register_activation_hook' ) );
+register_activation_hook(__FILE__, array('MclAdminHooks', 'register_activation_hook'));

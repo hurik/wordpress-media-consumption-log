@@ -18,32 +18,35 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-class MclCommaInTags {
+class MclCommaInTags
+{
 
-	public static function comma_tag_filter( $tag_arr ) {
-		$tag_arr_new = $tag_arr;
+    public static function comma_tag_filter($tag_arr)
+    {
+        $tag_arr_new = $tag_arr;
 
-		if ( property_exists( $tag_arr, "taxonomy" ) &&
-		$tag_arr->taxonomy == 'post_tag' &&
-		strpos( $tag_arr->name, '--' ) ) {
-			$tag_arr_new->name = str_replace( '--', ', ', $tag_arr->name );
-		}
+        if (property_exists($tag_arr, "taxonomy") &&
+                $tag_arr->taxonomy == 'post_tag' &&
+                strpos($tag_arr->name, '--')) {
+            $tag_arr_new->name = str_replace('--', ', ', $tag_arr->name);
+        }
 
-		return $tag_arr_new;
-	}
+        return $tag_arr_new;
+    }
 
-	public static function comma_tags_filter( $tags_arr ) {
-		$tags_arr_new = array();
+    public static function comma_tags_filter($tags_arr)
+    {
+        $tags_arr_new = array();
 
-		foreach ( $tags_arr as $tag_arr ) {
-			$tags_arr_new[] = self::comma_tag_filter( $tag_arr );
-		}
+        foreach ($tags_arr as $tag_arr) {
+            $tags_arr_new[] = self::comma_tag_filter($tag_arr);
+        }
 
-		return $tags_arr_new;
-	}
+        return $tags_arr_new;
+    }
 
-	public static function replace( &$string ) {
-		return str_replace( '--', ', ', $string );
-	}
-
+    public static function replace(&$string)
+    {
+        return str_replace('--', ', ', $string);
+    }
 }
