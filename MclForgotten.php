@@ -66,7 +66,7 @@ class MclForgotten {
 			}
 
 			usort( $category->forgotten, function( $a, $b ) {
-				return $a->forgotten < $b->forgotten;
+				return $a->forgotten < $b->forgotten ? 1 : -1;
 			} );
 		}
 
