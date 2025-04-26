@@ -28,15 +28,13 @@ google.setOnLoadCallback(drawAverrageDevelopmentChart);
 
 function drawDailyChart() {
     var daily_data_array = JSON.parse(js_params.daily);
-    daily_data_array[0][daily_data_array[0].length - 1] = {role: 'annotation'};
+    daily_data_array[0][daily_data_array[0].length - 2] = {role: 'annotation'};
     for (var i = 1; i < daily_data_array.length; i++) {
         daily_data_array[i][0] = daily_data_array[i][0] + "";
     }
     var data = google.visualization.arrayToDataTable(daily_data_array);
 
     var options = {
-        height: data.getNumberOfRows() * 15 + 100,
-        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -48,24 +46,24 @@ function drawDailyChart() {
             stemColor: 'transparent',
             stemLength: 3
         },
-        legend: {
-            position: 'top',
-            maxLines: 4,
-            alignment: 'center'
-        },
         bar: {
             groupWidth: '70%'
         },
         chartArea: {
             left: 70,
-            top: 60,
-            bottom: 20,
-            right: 20,
+            top: 80,
             width: '100%',
-            height: '100%'
+            height: data.getNumberOfRows() * 15
         },
+        height: data.getNumberOfRows() * 15 + 100,
+        isStacked: true,
         focusTarget: 'category',
-        isStacked: true
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        width: '100%'
     };
 
     var series = {};
@@ -84,15 +82,13 @@ function drawDailyChart() {
 
 function drawMonthlyChart() {
     var monthly_data_array = JSON.parse(js_params.monthly);
-    monthly_data_array[0][monthly_data_array[0].length - 1] = {role: 'annotation'};
+    monthly_data_array[0][monthly_data_array[0].length - 2] = {role: 'annotation'};
     for (var i = 1; i < monthly_data_array.length; i++) {
         monthly_data_array[i][0] = monthly_data_array[i][0] + "";
     }
     var data = google.visualization.arrayToDataTable(monthly_data_array);
 
     var options = {
-        height: data.getNumberOfRows() * 15 + 100,
-        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -104,24 +100,24 @@ function drawMonthlyChart() {
             stemColor: 'transparent',
             stemLength: 3
         },
-        legend: {
-            position: 'top',
-            maxLines: 4,
-            alignment: 'center'
-        },
         bar: {
             groupWidth: '70%'
         },
         chartArea: {
             left: 70,
-            top: 60,
-            bottom: 20,
-            right: 20,
+            top: 80,
             width: '100%',
-            height: '100%'
+            height: data.getNumberOfRows() * 15
         },
+        height: data.getNumberOfRows() * 15 + 100,
+        isStacked: true,
         focusTarget: 'category',
-        isStacked: true
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        width: '100%'
     };
 
     var series = {};
@@ -141,15 +137,13 @@ function drawMonthlyChart() {
 
 function drawYearlyChart() {
     var yearly_data_array = JSON.parse(js_params.yearly);
-    yearly_data_array[0][yearly_data_array[0].length - 1] = {role: 'annotation'};
+    yearly_data_array[0][yearly_data_array[0].length - 2] = {role: 'annotation'};
     for (var i = 1; i < yearly_data_array.length; i++) {
         yearly_data_array[i][0] = yearly_data_array[i][0] + "";
     }
     var data = google.visualization.arrayToDataTable(yearly_data_array);
 
     var options = {
-        height: data.getNumberOfRows() * 15 + 100,
-        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -161,24 +155,24 @@ function drawYearlyChart() {
             stemColor: 'transparent',
             stemLength: 3
         },
-        legend: {
-            position: 'top',
-            maxLines: 4,
-            alignment: 'center'
-        },
         bar: {
             groupWidth: '70%'
         },
         chartArea: {
             left: 70,
-            top: 60,
-            bottom: 20,
-            right: 20,
+            top: 80,
             width: '100%',
-            height: '100%'
+            height: data.getNumberOfRows() * 15
         },
+        height: data.getNumberOfRows() * 15 + 100,
+        isStacked: true,
         focusTarget: 'category',
-        isStacked: true
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        width: '100%'
     };
 
     var series = {};
@@ -198,15 +192,13 @@ function drawYearlyChart() {
 
 function drawHourlyChart() {
     var hourly_data_array = JSON.parse(js_params.hourly);
-    hourly_data_array[0][hourly_data_array[0].length - 1] = {role: 'annotation'};
+    hourly_data_array[0][hourly_data_array[0].length - 2] = {role: 'annotation'};
     for (var i = 1; i < hourly_data_array.length; i++) {
         hourly_data_array[i][0] = hourly_data_array[i][0] + "";
     }
     var data = google.visualization.arrayToDataTable(hourly_data_array);
 
     var options = {
-        height: data.getNumberOfRows() * 15 + 100,
-        width: '100%',
         annotations: {
             textStyle: {
                 color: '#000000',
@@ -218,24 +210,24 @@ function drawHourlyChart() {
             stemColor: 'transparent',
             stemLength: 3
         },
-        legend: {
-            position: 'top',
-            maxLines: 4,
-            alignment: 'center'
-        },
         bar: {
             groupWidth: '70%'
         },
         chartArea: {
             left: 70,
-            top: 60,
-            bottom: 20,
-            right: 20,
+            top: 80,
             width: '100%',
-            height: '100%'
+            height: data.getNumberOfRows() * 15
         },
+        height: data.getNumberOfRows() * 15 + 100,
+        isStacked: true,
         focusTarget: 'category',
-        isStacked: true
+        legend: {
+            position: 'top',
+            maxLines: 4,
+            alignment: 'center'
+        },
+        width: '100%'
     };
 
     var series = {};
@@ -275,7 +267,7 @@ function drawAverrageDevelopmentChart() {
             left: 50,
             top: 80,
             width: '90%',
-            height: 260,
+            height: 260
         },
         isStacked: true,
         hAxis: {

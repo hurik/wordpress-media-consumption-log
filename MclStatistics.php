@@ -46,8 +46,8 @@ class MclStatistics
             $daily_data[0][] = $category->name;
         }
 
-        $daily_data[0][] = __('Total', 'media-consumption-log');
         $daily_data[0][] = "ROLE_ANNOTATION";
+        $daily_data[0][] = __('Total', 'media-consumption-log');
 
         $first = true;
 
@@ -100,8 +100,8 @@ class MclStatistics
             $monthly_data[0][] = $category->name;
         }
 
-        $monthly_data[0][] = __('Total', 'media-consumption-log');
         $monthly_data[0][] = "ROLE_ANNOTATION";
+        $monthly_data[0][] = __('Total', 'media-consumption-log');
 
         $first = true;
 
@@ -140,6 +140,7 @@ class MclStatistics
         }
 
         // Yearly graph
+        // Yearly data array
         $yearly_data = array();
 
         for ($i = 0; $i < count(reset($data->categories)->mcl_yearly_data) + 1; $i++) {
@@ -153,8 +154,8 @@ class MclStatistics
             $yearly_data[0][] = $category->name;
         }
 
-        $yearly_data[0][] = __('Total', 'media-consumption-log');
         $yearly_data[0][] = "ROLE_ANNOTATION";
+        $yearly_data[0][] = __('Total', 'media-consumption-log');
 
         $first = true;
 
@@ -201,8 +202,8 @@ class MclStatistics
             $hourly_data[0][] = $category->name;
         }
 
-        $hourly_data[0][] = __('Total', 'media-consumption-log');
         $hourly_data[0][] = "ROLE_ANNOTATION";
+        $hourly_data[0][] = __('Total', 'media-consumption-log');
 
         for ($i = 0; $i < 24; $i++) {
             $hourly_data[$i + 1][] = sprintf('%02d', $i) . " - " . sprintf('%02d', $i + 1);
