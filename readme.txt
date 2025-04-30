@@ -122,13 +122,17 @@ No questions at the moment.
 1. Status
 2. Statistics
 3. Quick Post - Serials
-4- Quick Post - Non Serials
+4. Quick Post - Non Serials
 5. Serials Status
 6. Forgotten
 7. Settings
 
 
 == Changelog ==
+
+= 2.5.3 =
+* Minor fixes
+* Text improvements
 
 = 2.5.2 =
 * Fixed annotations in Google Charts

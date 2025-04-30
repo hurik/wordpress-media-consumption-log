@@ -274,11 +274,8 @@ class MclSettings
         $memory_peak_usage = memory_get_peak_usage();
         $memory_limit = self::let_to_num(WP_MEMORY_LIMIT);
 
-        $text = "Rebuilding data done!\n\n" .
-                $query_count . " queries in " . $timer_stop . " seconds.\n" .
-                self::convert_bytes_to_hr($memory_usage) . " out of " . self::convert_bytes_to_hr($memory_limit) . " (" . (round(($memory_usage / $memory_limit), 2) * 100) . "%) memory used.\n" .
-                "Peak memory usage " . self::convert_bytes_to_hr($memory_peak_usage) . " MB.";
-
+        $text = sprintf(__("Rebuilding data done!\n\n%s queries in %s seconds.\n%s out of %s (%s%%) memory used.\nPeak memory usage %s.", 'media-consumption-log'), $query_count, $timer_stop, self::convert_bytes_to_hr($memory_usage), self::convert_bytes_to_hr($memory_limit), (round(($memory_usage / $memory_limit), 2) * 100), self::convert_bytes_to_hr($memory_peak_usage));
+        
         echo $text;
         wp_die();
     }
