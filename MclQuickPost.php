@@ -426,26 +426,32 @@ class MclQuickPost
             $links = "";
 
             for ($i = count($numbers[0]) - 1; $i >= 0; $i--) {
-                $title = $last_post_data[0] . $last_post_data[1] . " <strong>";
+                $title_text = $last_post_data[0] . $last_post_data[1];
+                $title_number = '';
 
                 for ($j = 0; $j < count($numbers[0]); $j++) {
-                    $title .= $prefix[0][$j];
+                    $title_number .= $prefix[0][$j];
 
                     if ($i == $j) {
-                        $title .= str_pad($numbers[0][$j] + 1, strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
+                        $title_number .= str_pad($numbers[0][$j] + 1, strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
                     } elseif ($i < $j) {
-                        $title .= str_pad(1, strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
+                        $title_number .= str_pad(1, strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
                     } else {
-                        $title .= str_pad($numbers[0][$j], strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
+                        $title_number .= str_pad($numbers[0][$j], strlen($numbers[0][$j]), '0', STR_PAD_LEFT);
                     }
                 }
 
-                $title .= "</strong>";
+                $title_urlencode = urlencode($title_text . ' ' . $title_number);
 
-                $title_without_html = strip_tags($title);
-                $title_urlencode = urlencode($title_without_html);
+                $title_and_number = $title_number . MclSettings::get_other_and() . self::incrementLastNumber($title_number);
+                $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
 
-                $links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __('Edit before posting', 'media-consumption-log') . "</a>)";
+                $title_to_number = $title_number . MclSettings::get_other_to() . preg_replace('/\d+$/', '', $title_number);
+                $title_to_urlencode = urlencode($title_text . ' ' . $title_to_number);
+
+                $links .= "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                        . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
 
                 if ($i != 0) {
                     $links .= "<br />";
@@ -454,39 +460,72 @@ class MclQuickPost
 
             return $links;
         } else {
-            $title = $last_post_data[0] . $last_post_data[1] . " <strong>";
+            $title_text = $last_post_data[0] . $last_post_data[1];
+            $title_number = intval($last_post_data[2]) + 1;
 
-            if (is_numeric($last_post_data[2])) {
-                $title .= (floor($last_post_data[2]) + 1);
-            } else {
-                $title .= (intval($last_post_data[2]) + 1);
-            }
+            $title_urlencode = urlencode($title_text . ' ' . $title_number);
 
-            $title .= "</strong>";
-
-            $title_without_html = strip_tags($title);
-            $title_urlencode = urlencode($title_without_html);
-
-            $title05 = $last_post_data[0] . $last_post_data[1] . " <strong>";
-
-            if (is_numeric($last_post_data[2])) {
-                $title05 .= (floor($last_post_data[2]) + 0.5);
-            } else {
-                $title05 .= (intval($last_post_data[2]) + 0.5);
-            }
-
-            $title05 .= "</strong>";
-
-            $title05_without_html = strip_tags($title05);
-            $title05_urlencode = urlencode($title05_without_html);
-
-            $text05 = str_replace($last_post_data[0] . $last_post_data[1] . " ", '', $title05);
+            $title_to_number = $title_number . MclSettings::get_other_to();
+            $title_to_urlencode = urlencode($title_text . ' ' . $title_to_number);
 
             if (floatval($last_post_data[2]) - floor(floatval($last_post_data[2])) == 0) {
-                return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __('Edit before posting', 'media-consumption-log') . "</a> " . __('or', 'media-consumption-log') . " <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$text05}</a>)";
+                $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 1);
+                $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
+
+                $links = "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                        . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
+
+                $links .= "<br />";
+
+                $title05_text = $last_post_data[0] . $last_post_data[1];
+                $title05_number = intval($last_post_data[2]) + 0.5;
+
+                $title05_urlencode = urlencode($title05_text . ' ' . $title05_number);
+
+                $title05_to_number = $title05_number . MclSettings::get_other_to();
+                $title05_to_urlencode = urlencode($title05_text . ' ' . $title05_to_number);
+
+                $title05_and_number = $title05_number . MclSettings::get_other_and() . ($title05_number + 0.5);
+                $title05_and_urlencode = urlencode($title05_text . ' ' . $title05_and_number);
+
+                $links .= "{$title05_text} <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_number}</strong></a> | "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title05_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_and_number}</strong></a> | "
+                        . "<a href=\"post-new.php?post_title={$title05_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title05_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
+
+                return $links;
             } else {
-                return "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\">{$title}</a> (<a href=\"post-new.php?post_title={$title_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\">" . __('Edit before posting', 'media-consumption-log') . "</a>)";
+                $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 0.5);
+                $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
+
+                return "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                        . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
             }
         }
+    }
+
+    // Qwen 3 235B A22B 2507
+    private static function incrementLastNumber($input)
+    {
+        return preg_replace_callback(
+                '/([a-zA-Z])(\d+)$/', // Matches the last letter followed by numbers at the end of the string
+                function ($matches) {
+                    $letter = $matches[1];
+                    $digits = $matches[2];
+
+                    $originalLength = strlen($digits);
+                    $newNumber = (int) $digits + 1;
+                    $newDigits = (string) $newNumber;
+
+                    // Preserve leading zeros only if the new number's length hasn't increased
+                    if (strlen($newDigits) < $originalLength) {
+                        $newDigits = str_pad($newDigits, $originalLength, '0', STR_PAD_LEFT);
+                    }
+
+                    return $letter . $newDigits;
+                },
+                $input
+        );
     }
 }
