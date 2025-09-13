@@ -198,6 +198,28 @@ class MclQuickPost
         $cat_nav_html .= "</td>"
                 . "\n  </tr>";
 
+        // Create Recently Published
+        $recently_published = "";
+        $alternate = true;
+
+        $latest_posts = get_posts(array(
+            'numberposts' => 5, // Number of posts to retrieve
+            'post_type' => 'post', // Default post type
+            'orderby' => 'date', // Sort by date
+            'order' => 'DESC'  // Newest first
+        ));
+
+        foreach ($latest_posts as $post) {
+            $title = $post->post_title;
+            $link = get_permalink($post->ID);
+
+            $recently_published .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
+                    . "\n    <td><a href=\"{$link}\">{$title}</td>"
+                    . "\n  </tr>";
+
+            $alternate = !$alternate;
+        }
+
         $cats_html = "";
 
         // Create the tables
@@ -253,7 +275,7 @@ class MclQuickPost
                     . "\n  </thead>"
                     . "\n  <tbody>";
 
-            $alternate = false;
+            $alternate = true;
 
             foreach (array_keys($category->mcl_tags_ongoing) as $key) {
                 $first = true;
@@ -402,6 +424,19 @@ class MclQuickPost
                 </thead>
                 <tbody>
                     <?php echo $cat_nav_html; ?>
+                </tbody>
+            </table>
+
+            <br />
+
+            <table class="widefat">
+                <thead>
+                    <tr>
+                        <th><strong><?php _e('Recently Published', 'media-consumption-log'); ?></strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php echo $recently_published; ?>
                 </tbody>
             </table>
 
