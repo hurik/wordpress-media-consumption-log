@@ -464,7 +464,7 @@ class MclData
                         $small_tag_letter->post_title = $tag_letter->post_title;
                         $small_tag_letter->post_date = $tag_letter->post_date;
                         $small_tag_letter->post_link = get_permalink($tag_letter);
-                        $small_tag_letter->post_link_edit = get_edit_post_link($tag_letter);
+                        $small_tag_letter->post_link_edit = get_admin_url() . "post.php?post=" . $tag_letter->ID . "&action=edit";
 
                         $tag_letter = $small_tag_letter;
                     }
