@@ -265,7 +265,7 @@ class MclQuickPost
                     . "\n  <colgroup>"
                     . "\n    <col width=\"1%\">"
                     . "\n    <col />"
-                    . "\n    <col />"
+                    . "\n    <col width=\"50%\">"
                     . "\n    <col />"
                     . "\n  </colgroup>"
                     . "\n  <thead>"
