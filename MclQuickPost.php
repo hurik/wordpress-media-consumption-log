@@ -212,9 +212,10 @@ class MclQuickPost
         foreach ($latest_posts as $post) {
             $title = $post->post_title;
             $link = get_permalink($post->ID);
+            $link_edit = get_edit_post_link($post->ID);
 
             $recently_published .= "\n  <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
-                    . "\n    <td><a href=\"{$link}\">{$title}</td>"
+                    . "\n    <td><a href=\"{$link}\">{$title}</a> (<a href=\"{$link_edit}\">" . __('Edit', 'media-consumption-log') . "</a>)</td>"
                     . "\n  </tr>";
 
             $alternate = !$alternate;
@@ -262,13 +263,15 @@ class MclQuickPost
             // Table
             $cats_html .= "\n<table class=\"widefat\">"
                     . "\n  <colgroup>"
-                    . "\n    <col width=\"2%\">"
-                    . "\n    <col width=\"49%\">"
-                    . "\n    <col width=\"49%\">"
+                    . "\n    <col width=\"1%\">"
+                    . "\n    <col />"
+                    . "\n    <col />"
+                    . "\n    <col />"
                     . "\n  </colgroup>"
                     . "\n  <thead>"
                     . "\n    <tr>"
                     . "\n      <th></th>"
+                    . "\n      <th><strong>" . __('Name', 'media-consumption-log') . "</strong></th>"
                     . "\n      <th><strong>" . __('Next Post', 'media-consumption-log') . "</strong></th>"
                     . "\n      <th><strong>" . __('Last Post', 'media-consumption-log') . "</strong></th>"
                     . "\n    </tr>"
@@ -283,11 +286,13 @@ class MclQuickPost
                 foreach ($category->mcl_tags_ongoing[$key] as $tag) {
                     $post_title = htmlspecialchars($tag->post_title);
                     $date = DateTime::createFromFormat("Y-m-d H:i:s", $tag->post_date);
+                    $name = (strrpos($post_title, MclSettings::get_other_separator()) !== false) ? substr($post_title, 0, strrpos($post_title, MclSettings::get_other_separator())) : $post_title;
 
                     $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                             . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower($key) . "\"></div><div>{$key}</div>" : "") . "</th>"
+                            . "\n      <td>" . $name . "</td>"
                             . "\n      <td>" . self::build_next_post_titles($tag, $category) . "</td>"
-                            . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format(get_option('time_format'))}, {$date->format(MclSettings::get_statistics_daily_date_format())})</td>"
+                            . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> (<a href=\"{$tag->post_link_edit}\">" . __('Edit', 'media-consumption-log') . "</a>, {$date->format(MclSettings::get_statistics_daily_date_format())} " . __('at', 'media-consumption-log') . " {$date->format(get_option('time_format'))})</td>"
                             . "\n    </tr>";
 
                     $first = false;
@@ -371,7 +376,7 @@ class MclQuickPost
                     $cats_html .= "\n    <tr" . ($alternate ? " class=\"alternate\"" : "") . ">"
                             . "\n      <th nowrap valign=\"top\">" . ($first ? "<div class= \"anchor\" id=\"mediastatus-{$category->slug}-" . strtolower($key) . "\"></div><div>{$key}</div>" : "") . "</th>"
                             . "\n      <td><a href=\"post-new.php?post_title=" . $title_urlencode . "&tag={$tag->tag_term_id}&category={$category->term_id}\">" . $title . "</a></td>"
-                            . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> ({$date->format(get_option('time_format'))}, {$date->format(MclSettings::get_statistics_daily_date_format())})</td>"
+                            . "\n      <td><a href=\"{$tag->post_link}\" title=\"{$post_title}\">{$post_title}</a> (<a href=\"{$tag->post_link_edit}\">" . __('Edit', 'media-consumption-log') . "</a>, {$date->format(MclSettings::get_statistics_daily_date_format())} " . __('at', 'media-consumption-log') . " {$date->format(get_option('time_format'))})</td>"
                             . "\n    </tr>";
 
                     $first = false;
@@ -484,7 +489,7 @@ class MclQuickPost
                 $title_to_number = $title_number . MclSettings::get_other_to() . preg_replace('/\d+$/', '', $title_number);
                 $title_to_urlencode = urlencode($title_text . ' ' . $title_to_number);
 
-                $links .= "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                $links .= "{$last_post_data[1]} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
                         . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
 
@@ -507,24 +512,23 @@ class MclQuickPost
                 $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 1);
                 $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
 
-                $links = "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                $links = "{$last_post_data[1]} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
                         . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
 
                 $links .= "<br />";
 
-                $title05_text = $last_post_data[0] . $last_post_data[1];
                 $title05_number = intval($last_post_data[2]) + 0.5;
 
-                $title05_urlencode = urlencode($title05_text . ' ' . $title05_number);
+                $title05_urlencode = urlencode($title_text . ' ' . $title05_number);
 
                 $title05_to_number = $title05_number . MclSettings::get_other_to();
-                $title05_to_urlencode = urlencode($title05_text . ' ' . $title05_to_number);
+                $title05_to_urlencode = urlencode($title_text . ' ' . $title05_to_number);
 
                 $title05_and_number = $title05_number . MclSettings::get_other_and() . ($title05_number + 0.5);
-                $title05_and_urlencode = urlencode($title05_text . ' ' . $title05_and_number);
+                $title05_and_urlencode = urlencode($title_text . ' ' . $title05_and_number);
 
-                $links .= "{$title05_text} <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_number}</strong></a> | "
+                $links .= "{$last_post_data[1]} <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_number}</strong></a> | "
                         . "<a class=\"mcl_css_quick_post\" headline=\"{$title05_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_and_number}</strong></a> | "
                         . "<a href=\"post-new.php?post_title={$title05_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title05_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
 
@@ -533,7 +537,7 @@ class MclQuickPost
                 $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 0.5);
                 $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
 
-                return "{$title_text} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
+                return "{$last_post_data[1]} <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
                         . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}</strong></a> (" . __('Edit before posting', 'media-consumption-log') . ")";
             }
