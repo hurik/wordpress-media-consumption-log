@@ -108,7 +108,7 @@ class MclQuickPost
                     $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower($key) . "\">{$key}</a>";
                     $ak_on = array_keys($category->mcl_tags_ongoing);
                     if ($key != end($ak_on)) {
-                        $cat_nav_html .= " | ";
+                        $cat_nav_html .= " ❘ ";
                     }
                 }
             }
@@ -147,7 +147,7 @@ class MclQuickPost
                     $recurring_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower($key) . "\">{$key}</a>";
                     $ak_on = array_keys($category->mcl_tags_ongoing);
                     if ($key != end($ak_on)) {
-                        $recurring_html .= " | ";
+                        $recurring_html .= " ❘ ";
                     }
                 }
             }
@@ -190,7 +190,7 @@ class MclQuickPost
 
                 $cat_nav_html .= "<a href=\"#mediastatus-{$category->slug}\">{$category->name}</a>";
                 if ($category->term_id != $last_non_serials) {
-                    $cat_nav_html .= " | ";
+                    $cat_nav_html .= " ❘ ";
                 }
             }
         }
@@ -254,7 +254,7 @@ class MclQuickPost
                 $cats_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower($key) . "\">{$key}</a>";
                 $ak_on = array_keys($category->mcl_tags_ongoing);
                 if ($key != end($ak_on)) {
-                    $cats_html .= " | ";
+                    $cats_html .= " ❘ ";
                 }
             }
 
@@ -338,7 +338,7 @@ class MclQuickPost
                 $cats_html .= "<a href=\"#mediastatus-{$category->slug}-" . strtolower($key) . "\">{$key}</a>";
                 $ak_on = array_keys($category->mcl_tags_ongoing);
                 if ($key != end($ak_on)) {
-                    $cats_html .= " | ";
+                    $cats_html .= " ❘ ";
                 }
             }
 
@@ -491,11 +491,11 @@ class MclQuickPost
                 if (empty($links)) {
                     $links .= $title_text . " ";
                 } else {
-                    $links .= " | ";
+                    $links .= " ❚ ";
                 }
 
-                $links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
-                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                $links .= "<a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> ❘ "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> ❘ "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number}X</strong></a>";
             }
 
@@ -513,8 +513,8 @@ class MclQuickPost
                 $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 1);
                 $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
 
-                $links = $title_text . " <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
-                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                $links = $title_text . " <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> ❘ "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> ❘ "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number} X</strong></a>";
 
                 $title05_number = intval($last_post_data[2]) + 0.5;
@@ -527,8 +527,8 @@ class MclQuickPost
                 $title05_and_number = $title05_number . MclSettings::get_other_and() . ($title05_number + 0.5);
                 $title05_and_urlencode = urlencode($title_text . ' ' . $title05_and_number);
 
-                $links .= " | <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_number}</strong></a> | "
-                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title05_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_and_number}</strong></a> | "
+                $links .= " ❚ <a class=\"mcl_css_quick_post\" headline=\"{$title05_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_number}</strong></a> ❘ "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title05_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title05_and_number}</strong></a> ❘ "
                         . "<a href=\"post-new.php?post_title={$title05_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title05_to_number} X</strong></a>";
 
                 return $links;
@@ -536,8 +536,8 @@ class MclQuickPost
                 $title_and_number = $title_number . MclSettings::get_other_and() . ($title_number + 0.5);
                 $title_and_urlencode = urlencode($title_text . ' ' . $title_and_number);
 
-                return $title_text . " <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> | "
-                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> | "
+                return $title_text . " <a class=\"mcl_css_quick_post\" headline=\"{$title_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_number}</strong></a> ❘ "
+                        . "<a class=\"mcl_css_quick_post\" headline=\"{$title_and_urlencode}\" tag-id=\"{$tag->tag_term_id}\" cat-id=\"{$category->term_id}\" set-to=\"0\"><strong>{$title_and_number}</strong></a> ❘ "
                         . "<a href=\"post-new.php?post_title={$title_to_urlencode}&tag={$tag->tag_term_id}&category={$category->term_id}\"><strong>{$title_to_number} X</strong></a>";
             }
         }
